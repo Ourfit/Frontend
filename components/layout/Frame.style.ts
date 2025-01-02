@@ -11,7 +11,6 @@ export const FrameContainer = styled.div`
   background-color: #d9d9d9;
 `;
 
-// Content 스타일
 export const Content = styled.div`
   width: calc(100% - 40px);
   position: absolute;
