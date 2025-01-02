@@ -9,7 +9,7 @@ interface FrameProps {
 export default function Frame({ children }: FrameProps) {
   return (
     <S.FrameContainer>
-      <Header /> {/* common 폴더의 Header를 그대로 사용 */}
+      <Header />
       <S.Content>{children}</S.Content>
     </S.FrameContainer>
   );

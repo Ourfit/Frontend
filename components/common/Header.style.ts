@@ -12,7 +12,6 @@ export const HeaderContainer = styled.header`
   justify-content: center;
   position: absolute; //Frame 레이아웃 기준으로 배치
   top: 49px;
-  z-index: 1000;
 `;
 
 // 헤더 안의 텍스트
