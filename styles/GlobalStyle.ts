@@ -16,13 +16,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    width: 390px;/* 기본 넓이 설정 */
+    width: 390px;
     max-width: 390px; 
-    height: 844px; /* 기본 높이 설정 */
-    min-height: 100vh;
+    min-height: 100svh;
     border: 1px solid gray; 
     align-items: center;
-    overflow: hidden; /* 필요 시 스크롤 숨김 */
+    overflow: hidden; 
   }
   * {
     margin: 0;

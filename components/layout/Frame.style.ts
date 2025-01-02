@@ -13,10 +13,11 @@ export const FrameContainer = styled.div`
 
 // Content 스타일
 export const Content = styled.div`
-  margin: 0 auto;
-  width: calc(390px - 40px);
+  width: calc(100% - 40px);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   height: 100%;
-  overflow-y: auto;
   box-sizing: border-box;
   background-color: #f6f6f6;
 
