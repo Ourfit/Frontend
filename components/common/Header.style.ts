@@ -10,7 +10,7 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 49px;
+  top: 0px;
 `;
 
 export const HeaderTitle = styled.h1`
