@@ -6,7 +6,7 @@ interface FrameProps {
   children: React.ReactNode;
 }
 
-export default function Frame({ children }: FrameProps) {
+export default function Frame({ children }: Readonly<FrameProps>) {
   return (
     <S.FrameContainer>
       <Header />
