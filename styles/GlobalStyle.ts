@@ -5,7 +5,6 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
   html {
-    height: 100dvh;
   }
 
   #root {
@@ -16,18 +15,16 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
   }
+  
   body {
     position: relative;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 390px; 
     height: 100%;
-    border: 1px solid gray; 
     align-items: center;
-    overflow: hidden;
   }
+  
   * {
     margin: 0;
     padding: 0;

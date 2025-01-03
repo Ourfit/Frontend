@@ -10,12 +10,5 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 0px;
-`;
-
-export const HeaderTitle = styled.h1`
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-  margin: 0;
+  top: 0;
 `;

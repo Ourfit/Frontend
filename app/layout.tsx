@@ -2,6 +2,7 @@ import GlobalStyle from "@/styles/GlobalStyle";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ThemeClient from "@/components/common/ThemeClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <GlobalStyle />
-        {children}
+        <ThemeClient>
+          <GlobalStyle />
+          {children}
+        </ThemeClient>
       </body>
     </html>
   );

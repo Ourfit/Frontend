@@ -5,7 +5,8 @@ import styled from "styled-components";
 export const FrameContainer = styled.div`
   width: 100%;
   max-width: 390px;
-  min-height: 100vh;
+  height: 100%;
+  min-height: 100svh;
   padding-top: 48px;
   box-sizing: border-box;
   position: relative;
@@ -13,17 +14,10 @@ export const FrameContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  width: calc(100% - 40px);
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
   box-sizing: border-box;
   background-color: #f6f6f6;
-
+  margin: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 8px;
 `;
