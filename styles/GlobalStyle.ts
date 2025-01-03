@@ -3,6 +3,11 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
+  html {
+    height: 100dvh;
+  }
+
   #root {
     display: flex;
     flex-direction: column;
@@ -16,12 +21,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    width: 390px;
+    width: 100%;
     max-width: 390px; 
-    min-height: 100svh;
+    height: 100%;
     border: 1px solid gray; 
     align-items: center;
-    overflow: hidden; 
+    overflow: hidden;
   }
   * {
     margin: 0;

@@ -3,9 +3,10 @@
 import styled from "styled-components";
 
 export const FrameContainer = styled.div`
-  width: 390px;
-  min-height: 100svh;
-  padding-top: 97px;
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  padding-top: 48px;
   box-sizing: border-box;
   position: relative;
   background-color: #d9d9d9;
