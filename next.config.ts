@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   webpack(config) {
-    // ✅ SVG 파일을 React 컴포넌트로 변환하는 로더 추가
     config.module.rules.push({
       test: /\.svg$/,
       use: [
