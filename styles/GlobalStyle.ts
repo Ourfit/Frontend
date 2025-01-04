@@ -3,6 +3,10 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
+  html {
+  }
+
   #root {
     display: flex;
     flex-direction: column;
@@ -11,19 +15,16 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
   }
+  
   body {
     position: relative;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    width: 390px;/* 기본 넓이 설정 */
-    max-width: 390px; 
-    height: 844px; /* 기본 높이 설정 */
-    min-height: 100vh;
-    border: 1px solid gray; 
+    width: 100%;
+    height: 100%;
     align-items: center;
-    overflow: hidden; /* 필요 시 스크롤 숨김 */
   }
+  
   * {
     margin: 0;
     padding: 0;

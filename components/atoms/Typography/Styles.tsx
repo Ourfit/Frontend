@@ -49,14 +49,13 @@ const H2Sb = css`
   letter-spacing: -0.18px;
 `;
 
-const H3Bd = css`.
-${DefaultTypographyCss}
-;
+const H3Bd = css`
+  ${DefaultTypographyCss};
 
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 150%;
-    letter-spacing: -0.16px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: -0.16px;
 `;
 
 const H3Sb = css`

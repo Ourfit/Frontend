@@ -1,7 +1,12 @@
-"use client";
-
-import { Typography } from "@/components/atoms/Typography";
+import Frame from "@/components/layout/Frame";
 
 export default function Home() {
-  return <Typography.H1Bd color="blue">Team Ourfit</Typography.H1Bd>;
+  return (
+    <Frame>
+      <div style={{ textAlign: "center", height: "100px" }}>test</div>
+      <div style={{ textAlign: "center", height: "100px" }}>test</div>
+      <div style={{ textAlign: "center", height: "100px" }}>test</div>
+      <div style={{ textAlign: "center", height: "100px" }}>test</div>
+    </Frame>
+  );
 }
