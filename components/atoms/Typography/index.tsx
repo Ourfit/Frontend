@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TypographyCss from "./Styles";
+import TypographyCss from "./Typography.style";
 
 const H1Bd = styled.span`
   ${TypographyCss.H1Bd};
