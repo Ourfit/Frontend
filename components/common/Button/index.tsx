@@ -4,7 +4,7 @@ import React from "react";
 import * as S from "./Button.style";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 
-export interface ButtonProps {
+interface ButtonProps {
   children?: React.ReactNode;
   disabled?: boolean;
   size?: (typeof BUTTON_SIZES)[keyof typeof BUTTON_SIZES];
