@@ -1,7 +1,7 @@
 "use client";
-
-import { theme } from "@/styles/theme";
 import { ThemeProvider } from "styled-components";
+import React from "react";
+import theme from "@/styles/Theme";
 
 export default function ThemeClient({
   children,
