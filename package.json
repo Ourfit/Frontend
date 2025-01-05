@@ -23,6 +23,7 @@
     "@babel/eslint-parser": "^7.25.9",
     "@babel/preset-react": "^7.26.3",
     "@eslint/eslintrc": "^3",
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
