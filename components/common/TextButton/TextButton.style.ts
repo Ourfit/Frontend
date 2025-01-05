@@ -3,10 +3,10 @@ import { TypographyCss } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 
 interface TextButtonStyleProps {
-  isActive?: boolean;
+  $isActive?: boolean;
 }
 
-const getTextButtonStyle = ({ isActive }: TextButtonStyleProps) => {
+const getTextButtonStyle = ({ $isActive }: TextButtonStyleProps) => {
   const COMMON_CSS = css`
     display: flex;
     align-items: center;
@@ -15,9 +15,9 @@ const getTextButtonStyle = ({ isActive }: TextButtonStyleProps) => {
     padding: 12px 20px;
     border-radius: 12px;
 
-    border: 1px solid ${isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
-    color: ${isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
-    background: ${isActive ? COLORS.BLUE_50 : COLORS.BASE_WHITE};
+    border: 1px solid ${$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
+    color: ${$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
+    background: ${$isActive ? COLORS.BLUE_50 : COLORS.BASE_WHITE};
     ${TypographyCss.H4Md};
 
     &:hover {
@@ -33,5 +33,5 @@ const getTextButtonStyle = ({ isActive }: TextButtonStyleProps) => {
 };
 
 export const TextButton = styled.button<TextButtonStyleProps>`
-  ${({ isActive }) => getTextButtonStyle({ isActive })}
+  ${({ $isActive }) => getTextButtonStyle({ $isActive: $isActive })}
 `;

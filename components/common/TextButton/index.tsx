@@ -20,7 +20,7 @@ const TextButton = ({
   onClick,
 }: TextButtonProps) => {
   return (
-    <S.TextButton isActive={isActive} onClick={onClick}>
+    <S.TextButton $isActive={isActive} onClick={onClick}>
       {icon && <IconWrapper isPlusIcon={isPlusIcon}>{icon}</IconWrapper>}
       {children}
     </S.TextButton>

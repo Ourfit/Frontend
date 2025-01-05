@@ -8,7 +8,7 @@ interface IconWrapperProps {
 
 const IconWrapper = ({ isPlusIcon = false, children }: IconWrapperProps) => {
   return (
-    <StyledIconWrapper isPlusIcon={isPlusIcon}>{children}</StyledIconWrapper>
+    <StyledIconWrapper $isPlusIcon={isPlusIcon}>{children}</StyledIconWrapper>
   );
 };
 
