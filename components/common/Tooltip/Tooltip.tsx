@@ -1,11 +1,12 @@
 "use client";
 
 import { Typography } from "@/components/atoms/Typography";
+import { TooltipPosition } from "@/constants/TooltipPositions";
 import * as S from "./Tooltip.style";
 
 interface TooltipProps {
   text: string;
-  position: "top" | "bottom" | "top-left" | "top-right" | "left" | "right";
+  position: TooltipPosition;
 }
 
 export default function Tooltip({ text, position }: TooltipProps) {
