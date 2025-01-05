@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <>
       {pathname === "/" ? (
-        <S.HeaderContainer paddingleft="20px" paddingright="20px">
+        <S.HeaderContainer $paddingLeft="20px" $paddingRight="20px">
           <Image src={OurfitLogo} alt="로고" />
           <S.LocationContainer>
             <Image src={Location} alt="위치 아이콘" />
@@ -30,13 +30,13 @@ export default function Header() {
           </S.LocationContainer>
         </S.HeaderContainer>
       ) : pathname.split("/").length - 1 === 1 ? (
-        <S.HeaderContainer paddingleft="20px" paddingright="12px">
+        <S.HeaderContainer $paddingLeft="20px" $paddingRight="12px">
           <Typography.H1Sb color={theme.colors.grayscale[900]}>
             {pageNames[pathname]}
           </Typography.H1Sb>
         </S.HeaderContainer>
       ) : (
-        <S.HeaderContainer paddingleft="0" paddingright="12px">
+        <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ padding: "12px" }}>
               <Image

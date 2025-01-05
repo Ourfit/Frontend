@@ -3,15 +3,15 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header<{
-  paddingleft: string;
-  paddingright: string;
+  $paddingLeft: string;
+  $paddingRight: string;
 }>`
   width: 100%;
   height: 48px;
   display: flex;
   align-items: center;
-  padding-right: ${(props) => props.paddingright};
-  padding-left: ${(props) => props.paddingleft};
+  padding-right: ${(props) => props.$paddingRight};
+  padding-left: ${(props) => props.$paddingLeft};
   position: absolute;
   justify-content: space-between;
   top: 0;
