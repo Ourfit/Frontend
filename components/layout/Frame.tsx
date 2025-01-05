@@ -10,7 +10,7 @@ interface FrameProps {
 export default function Frame({ children }: Readonly<FrameProps>) {
   return (
     <S.FrameContainer>
-      <Tooltip text="supporting text" position="right" />
+      <Tooltip text="supporting text" position="top-left" />
       <Header />
       <S.Content>{children}</S.Content>
     </S.FrameContainer>

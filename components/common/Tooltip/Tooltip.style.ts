@@ -14,9 +14,9 @@ export const TooltipContainer = styled.div<{
 
   background-color: #004dff;
   color: #ffffff;
-  padding: 8px 16px;
+  padding: 8px 12px;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 10px;
   white-space: nowrap;
 
   width: 108px;
