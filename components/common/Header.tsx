@@ -2,12 +2,12 @@
 
 import * as S from "./Header.style";
 import { Typography } from "@/components/atoms/Typography";
-import { theme } from "@/styles/theme";
 import { usePathname } from "next/navigation";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import Location from "@/assets/images/location.svg";
 import ChevronLeft from "@/assets/images/chevron-left.svg";
 import Image from "next/image";
+import { COLORS } from "@/constants/Theme";
 
 export default function Header() {
   const pathname = usePathname();
@@ -31,7 +31,7 @@ export default function Header() {
         </S.HeaderContainer>
       ) : pathname.split("/").length - 1 === 1 ? (
         <S.HeaderContainer $paddingLeft="20px" $paddingRight="12px">
-          <Typography.H1Sb color={theme.colors.grayscale[900]}>
+          <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
             {pageNames[pathname]}
           </Typography.H1Sb>
         </S.HeaderContainer>
@@ -45,9 +45,7 @@ export default function Header() {
                 style={{ display: "block" }}
               />
             </div>
-            <Typography.H2Sb color={theme.colors.grayscale[900]}>
-              Text
-            </Typography.H2Sb>
+            <Typography.H2Sb color={COLORS.GRAYSCALE_900}>Text</Typography.H2Sb>
           </div>
         </S.HeaderContainer>
       )}
