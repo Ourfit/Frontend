@@ -1,9 +1,6 @@
 import * as S from "./Toast.style";
 
-interface ToastProps {
-  message: string;
-  status: "success" | "error";
-}
+import { ToastProps } from "@/types/toast";
 
 import CircelCheckIcon from "@/assets/images/circle-check.svg";
 import ErrorIcon from "@/assets/images/error.svg";
