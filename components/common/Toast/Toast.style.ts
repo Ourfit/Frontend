@@ -4,15 +4,16 @@ import { Typography } from "@/components/atoms/Typography";
 
 import styled from "styled-components";
 
-export const ToastContainer = styled.div<{ status: "success" | "error" }>`
+export const ToastContainer = styled.div`
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
   gap: 8px;
   padding: 12px 24px 12px 20px;
   border-radius: 40px;
   box-sizing: border-box;
+  white-space: nowrap;
 
-  width: ${({ status }) => (status === "success" ? "190px" : "323px")};
   height: 45px;
   color: white;
   background-color: rgba(0, 0, 0, 0.7);
