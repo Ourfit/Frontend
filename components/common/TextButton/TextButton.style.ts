@@ -4,15 +4,15 @@ import { COLORS } from "@/constants/Theme";
 
 interface TextButtonStyleProps {
   $isActive?: boolean;
+  $hasIcon?: boolean;
 }
 
-const getTextButtonStyle = ({ $isActive }: TextButtonStyleProps) => {
+const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
   const COMMON_CSS = css`
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 20px;
+    gap: 4px;
+    padding: ${$hasIcon ? "12px 20px 12px 16px" : "12px 20px"};
     border-radius: 12px;
 
     border: 1px solid ${$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
@@ -33,5 +33,6 @@ const getTextButtonStyle = ({ $isActive }: TextButtonStyleProps) => {
 };
 
 export const TextButton = styled.button<TextButtonStyleProps>`
-  ${({ $isActive }) => getTextButtonStyle({ $isActive: $isActive })}
+  ${({ $isActive, $hasIcon }) =>
+    getTextButtonStyle({ $isActive: $isActive, $hasIcon: $hasIcon })}
 `;
