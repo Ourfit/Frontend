@@ -1,19 +1,21 @@
 "use client";
 
-import Header from "@/components/common/Header/Header";
 import Toast from "@/components/common/Toast/Toast";
-import Tooltip from "@/components/common/Tooltip/Tooltip";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
-import { TOOLTIP_POSITIONS } from "@/constants/TooltipPositions";
 import React, { useEffect, useState } from "react";
 import * as S from "./Frame.style";
-import Gnb from "@/components/common/Gnb";
 
 interface FrameProps {
   children: React.ReactNode;
+  style?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
 }
 
-export default function Frame({ children }: Readonly<FrameProps>) {
+export default function Frame({
+  children,
+  style,
+  contentStyle,
+}: Readonly<FrameProps>) {
   const [isToastVisible, setToastVisible] = useState(true);
 
   useEffect(() => {
@@ -27,14 +29,11 @@ export default function Frame({ children }: Readonly<FrameProps>) {
   }, []);
 
   return (
-    <S.FrameContainer>
-      <Tooltip text="supporting text" position={TOOLTIP_POSITIONS.TOP_LEFT} />
-      <Header />
+    <S.FrameContainer style={style}>
       {isToastVisible && (
         <Toast message={TOAST_MESSAGES.ERROR} status={TOAST_STATUSES.ERROR} />
       )}
-      <S.Content>{children}</S.Content>
-      <Gnb />
+      <S.Content style={contentStyle}>{children}</S.Content>
     </S.FrameContainer>
   );
 }
