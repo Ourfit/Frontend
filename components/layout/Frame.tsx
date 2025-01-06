@@ -7,6 +7,7 @@ import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import { TOOLTIP_POSITIONS } from "@/constants/TooltipPositions";
 import React, { useEffect, useState } from "react";
 import * as S from "./Frame.style";
+import Gnb from "@/components/common/Gnb";
 
 interface FrameProps {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ export default function Frame({ children }: Readonly<FrameProps>) {
         <Toast message={TOAST_MESSAGES.ERROR} status={TOAST_STATUSES.ERROR} />
       )}
       <S.Content>{children}</S.Content>
+      <Gnb />
     </S.FrameContainer>
   );
 }
