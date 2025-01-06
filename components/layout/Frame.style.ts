@@ -20,4 +20,5 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100svh - 117px);
 `;
