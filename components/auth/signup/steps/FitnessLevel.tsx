@@ -6,7 +6,7 @@ import TextButton from "@/components/common/TextButton";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import styled from "styled-components";
-import { FITNESS_LEVELS } from "@/constants/Signup";
+import { FITNESS_LEVELS, STEPS_LABEL } from "@/constants/Signup";
 
 const GenderAgeContainer = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (level) {
-      nextStep("level", level);
+      nextStep(STEPS_LABEL.FITNESS_LEVEL, level);
     }
   };
 
@@ -68,7 +68,8 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
       <SignupIntroContainer>
         <SignupIntroTitleWrapper>
           <Typography.H1Sb>
-            나의&nbsp;<span style={{ color: COLORS.BLUE_500 }}>운동 실력</span>
+            나의&nbsp;
+            <span style={{ color: COLORS.BLUE_500 }}>운동 실력</span>
             &nbsp;은?
           </Typography.H1Sb>
         </SignupIntroTitleWrapper>

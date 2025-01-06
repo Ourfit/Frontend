@@ -2,11 +2,11 @@ import { StepProps } from "@/types/step";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import TextButton from "@/components/common/TextButton";
-import { GENDER } from "@/constants/Signup";
+import { GENDER, STEPS_LABEL } from "@/constants/Signup";
 
 const GenderAgeContainer = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const GenderAge = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (gender && age) {
-      nextStep("genderAge", { gender, age });
+      nextStep(STEPS_LABEL.GENDER_AGE, { gender, age });
     }
   };
 

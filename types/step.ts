@@ -1,3 +1,5 @@
+import { StepLabel } from "@/constants/Signup";
+
 export interface StepProps {
-  nextStep: (field: string, value: string | Record<string, any>) => void;
+  nextStep: (field: StepLabel, value: string | string[] | object) => void;
 }

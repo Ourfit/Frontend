@@ -4,7 +4,8 @@ import styled from "styled-components";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { StepProps } from "@/types/step";
-import { useState } from "react";
+import React, { useState } from "react";
+import { STEPS_LABEL } from "@/constants/Signup";
 
 const RegionContainer = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ const Region = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (region.trim()) {
-      nextStep("region", region);
+      nextStep(STEPS_LABEL.REGION, region);
     }
   };
 

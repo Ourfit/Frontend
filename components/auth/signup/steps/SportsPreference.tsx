@@ -6,7 +6,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useState } from "react";
 import TextButton from "@/components/common/TextButton";
 import styled from "styled-components";
-import { SPORTS_LABEL } from "@/constants/Signup";
+import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
 
 const SportsPreferenceContainer = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (selectedSports.length >= 1) {
-      nextStep("sportsPreference", selectedSports);
+      nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
     }
   };
 
@@ -103,6 +103,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
       <ButtonContainer>
         <ButtonWrapper>
           <Button
+            disabled={selectedSports.length === 0}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}

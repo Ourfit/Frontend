@@ -1,3 +1,24 @@
+import Nickname from "@/components/auth/signup/steps/Nickname";
+import Region from "@/components/auth/signup/steps/Region";
+import GenderAge from "@/components/auth/signup/steps/GenderAge";
+import FitnessLevel from "@/components/auth/signup/steps/FitnessLevel";
+import TimePreference from "@/components/auth/signup/steps/TimePreference";
+import SportsPreference from "@/components/auth/signup/steps/SportsPreference";
+import Welcome from "@/components/auth/signup/steps/Welcome";
+import { StepProps } from "@/types/step";
+
+export const STEPS_LABEL = {
+  NICKNAME: "nickname",
+  REGION: "region",
+  GENDER_AGE: "genderAge",
+  FITNESS_LEVEL: "fitnessLevel",
+  TIME_PREFERENCES: "timePreferences",
+  SPORTS_PREFERENCES: "sportsPreferences",
+  WELCOME: "Welcome",
+} as const;
+
+export type StepLabel = (typeof STEPS_LABEL)[keyof typeof STEPS_LABEL];
+
 export const SPORTS_LABEL = {
   GYM: "헬스",
   PILATES: "필라테스",
@@ -58,3 +79,45 @@ export const FITNESS_LEVELS = {
     description: "운동이 이제 완전 내 몸 같은 단계! 고난도 동작도 척척",
   },
 } as const;
+
+export const SIGNUP_STEPS: {
+  id: number;
+  name: StepLabel;
+  component: React.FC<StepProps>;
+}[] = [
+  {
+    id: 1,
+    name: STEPS_LABEL.NICKNAME,
+    component: Nickname,
+  },
+  {
+    id: 2,
+    name: STEPS_LABEL.REGION,
+    component: Region,
+  },
+  {
+    id: 3,
+    name: STEPS_LABEL.GENDER_AGE,
+    component: GenderAge,
+  },
+  {
+    id: 4,
+    name: STEPS_LABEL.FITNESS_LEVEL,
+    component: FitnessLevel,
+  },
+  {
+    id: 5,
+    name: STEPS_LABEL.TIME_PREFERENCES,
+    component: TimePreference,
+  },
+  {
+    id: 6,
+    name: STEPS_LABEL.SPORTS_PREFERENCES,
+    component: SportsPreference,
+  },
+  {
+    id: 7,
+    name: STEPS_LABEL.WELCOME,
+    component: Welcome,
+  },
+];

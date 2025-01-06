@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { StepProps } from "@/types/step";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { useState } from "react";
+import React, { useState } from "react";
+import { STEPS_LABEL } from "@/constants/Signup";
 
 const NicknameContainer = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ const Nickname = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (nickname.trim()) {
-      nextStep("nickname", nickname);
+      nextStep(STEPS_LABEL.NICKNAME, nickname);
     }
   };
 

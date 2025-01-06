@@ -9,7 +9,7 @@ import MorningIcon from "@/assets/images/morning.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
 import Button from "@/components/common/Button";
-import { TIME_PREFERENCES } from "@/constants/Signup";
+import { STEPS_LABEL, TIME_PREFERENCES } from "@/constants/Signup";
 
 const ICONS = {
   MorningIcon: <MorningIcon />,
@@ -74,7 +74,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (selectedTimes.length > 0) {
-      nextStep("timePreference", selectedTimes);
+      nextStep(STEPS_LABEL.TIME_PREFERENCES, selectedTimes);
     }
   };
 
@@ -125,6 +125,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
       <ButtonContainer>
         <ButtonWrapper>
           <Button
+            disabled={selectedTimes.length === 0}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}

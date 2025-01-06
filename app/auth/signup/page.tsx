@@ -1,12 +1,12 @@
 import Frame from "@/components/layout/Frame";
-import SignupForm from "@/components/auth/signup/SignupForm";
+import SignupForm from "@/components/auth/signup";
 
 const SignupPage = () => {
-    return (
-        <Frame contentStyle={{justifyContent: "space-between"}}>
-            <SignupForm />
-        </Frame>
-    );
+  return (
+    <Frame contentStyle={{ justifyContent: "space-between" }}>
+      <SignupForm />
+    </Frame>
+  );
 };
 
 export default SignupPage;
