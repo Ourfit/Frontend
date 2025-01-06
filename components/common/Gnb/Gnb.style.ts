@@ -16,7 +16,7 @@ export const GnbContainer = styled.div`
   background: ${COLORS.BASE_WHITE};
 `;
 
-export const GnbTabWrapper = styled.div<{ isActive: boolean }>`
+export const GnbTabWrapper = styled.div<{ $isActive: boolean }>`
   ${TypographyCss.H7Sb};
 
   width: 64px;
@@ -24,7 +24,7 @@ export const GnbTabWrapper = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  color: ${({ isActive }) => (isActive ? "#163BFF" : "#d8dbe4")};
+  color: ${({ $isActive }) => ($isActive ? "#163BFF" : "#d8dbe4")};
   cursor: pointer;
 
   & > svg {

@@ -36,7 +36,7 @@ const Gnb = () => {
       {GNB_TABS.map((tab) => (
         <S.GnbTabWrapper
           key={tab.id}
-          isActive={tab.id === activeTabId}
+          $isActive={tab.id === activeTabId}
           onClick={() => setActiveTabId(tab.id)}
         >
           {tab.icon}
