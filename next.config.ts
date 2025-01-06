@@ -3,7 +3,22 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: true, // styled-components 지원 활성화
+    styledComponents: true,
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            icon: true,
+          },
+        },
+      ],
+    });
+
+    return config;
   },
   webpack: (config) => {
     config.module.rules.push({
