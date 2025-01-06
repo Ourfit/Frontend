@@ -1,4 +1,5 @@
 import Header from "@/components/common/Header";
+import Input from "@/components/common/Input/Input";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
 import { TOOLTIP_POSITIONS } from "@/constants/TooltipPositions";
 import React from "react";
@@ -13,6 +14,7 @@ export default function Frame({ children }: Readonly<FrameProps>) {
     <S.FrameContainer>
       <Tooltip text="supporting text" position={TOOLTIP_POSITIONS.TOP_LEFT} />
       <Header />
+      <Input />
       <S.Content>{children}</S.Content>
     </S.FrameContainer>
   );
