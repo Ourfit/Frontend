@@ -1,4 +1,4 @@
-import Tab from "@/components/common/tab/Tab";
+import Tab from "@/components/common/Tab/Tab";
 import Frame from "@/components/layout/Frame";
 import Button from "@/components/common/Button";
 import EveningIcon from "@/assets/images/evening.svg";
