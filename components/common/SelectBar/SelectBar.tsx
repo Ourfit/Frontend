@@ -21,7 +21,7 @@ export default function SelectBar({ selectType }: { selectType: string }) {
 
   return (
     <S.SelectWrapper>
-      <S.SelectBox onClick={() => setIsOpen(!isOpen)}>
+      <S.SelectBox $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
         <Typography.H4Md>
           {selectedOption}
           {selectType === "month" ? "개월" : "세"}

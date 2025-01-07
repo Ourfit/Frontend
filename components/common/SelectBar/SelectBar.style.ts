@@ -6,11 +6,14 @@ export const SelectWrapper = styled.div`
   width: 100%;
 `;
 
-export const SelectBox = styled.div`
+export const SelectBox = styled.div<{ $isOpen: boolean }>`
   height: 52px;
   width: 100%;
   padding: 0 20px;
-  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border: ${({ $isOpen }) =>
+    $isOpen
+      ? `1.4px solid ${COLORS.BLUE_500}`
+      : `1px solid ${COLORS.GRAYSCALE_200}`};
   border-radius: 16px;
   display: flex;
   align-items: center;
