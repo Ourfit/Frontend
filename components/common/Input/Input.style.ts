@@ -65,7 +65,11 @@ export const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 
   right: 20px;
+
+  & > svg {
+    pointer-events: auto;
+    cursor: pointer;
+  }
 `;

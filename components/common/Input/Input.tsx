@@ -26,20 +26,22 @@ export default function Input() {
 
     if (inputValue.trim().length === 0) {
       setStatus(INPUT_STATUS.DEFAULT);
-    } else {
-      setIsTyping(true);
-      setStatus(INPUT_STATUS.TYPING);
-
-      typingTimeoutRef.current = setTimeout(() => {
-        setIsTyping(false);
-        if (inputValue === "error") {
-          setStatus(INPUT_STATUS.ERROR);
-        } else {
-          setStatus(INPUT_STATUS.COMPLETE);
-        }
-        typingTimeoutRef.current = null;
-      }, 1000);
+      setIsTyping(false);
+      return;
     }
+
+    setIsTyping(true);
+    setStatus(INPUT_STATUS.TYPING);
+
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+      if (inputValue === "error") {
+        setStatus(INPUT_STATUS.ERROR);
+      } else {
+        setStatus(INPUT_STATUS.COMPLETE);
+      }
+      typingTimeoutRef.current = null;
+    }, 1000);
   };
 
   const handleBlur = () => {
@@ -52,6 +54,7 @@ export default function Input() {
   };
 
   const handleClear = () => {
+    console.log("handleClear called");
     setValue("");
     setStatus(INPUT_STATUS.DEFAULT);
     setIsTyping(false);
@@ -80,13 +83,14 @@ export default function Input() {
         onChange={handleChange}
         onBlur={handleBlur}
         $status={status}
+        onClick={handleClear}
       />
 
       {status !== INPUT_STATUS.DEFAULT && (
         <S.IconsContainer
           $hasStatusIcon={status !== ("default" as InputStatus)}
         >
-          <S.Icon onClick={handleClear}>
+          <S.Icon>
             {INPUT_STATUS_ICONS.typing && (
               <INPUT_STATUS_ICONS.typing width="20" height="20" />
             )}
