@@ -9,14 +9,19 @@ export default function Placeholder() {
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 24) {
+      setInputValue(e.target.value);
+    }
+  };
+
   return (
     <S.Wrapper $isInputFocus={isInputFocus}>
       <Search stroke={COLORS.GRAYSCALE_700} />
       <S.InputBox
         type="text"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        maxLength={24}
+        onChange={handleInputChange}
         placeholder="text"
         onFocus={() => setIsInputFocus(true)}
         onBlur={() => setIsInputFocus(false)}
