@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
+import { Typography } from "@/components/atoms/Typography";
 
 export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
   position: relative;
@@ -16,21 +17,19 @@ export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
 `;
 
 export const InputBox = styled.input`
+  ${Typography.H4Md}
   box-sizing: border-box;
   color: ${COLORS.GRAYSCALE_600};
-  font-size: 14px;
   border: none;
   width: 200px;
   outline: none;
   background-color: transparent;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.28px;
+
+  &::placeholder {
+    color: ${COLORS.GRAYSCALE_600};
+  }
 `;
 
 export const InputLength = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.28px;
+  ${Typography.H4Md}
 `;
