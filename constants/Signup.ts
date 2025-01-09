@@ -1,10 +1,10 @@
-import Nickname from "@/components/auth/signup/steps/Nickname";
-import Region from "@/components/auth/signup/steps/Region";
-import GenderAge from "@/components/auth/signup/steps/GenderAge";
-import FitnessLevel from "@/components/auth/signup/steps/FitnessLevel";
-import TimePreference from "@/components/auth/signup/steps/TimePreference";
-import SportsPreference from "@/components/auth/signup/steps/SportsPreference";
-import Welcome from "@/components/auth/signup/steps/Welcome";
+import Nickname from "@/components/auth/signup/steps/Nickname/Nickname";
+import Region from "@/components/auth/signup/steps/Region/Region";
+import GenderAge from "@/components/auth/signup/steps/GenderAge/GenderAge";
+import FitnessLevel from "@/components/auth/signup/steps/FitnessLevel/FitnessLevel";
+import TimePreference from "@/components/auth/signup/steps/TimePreference/TimePreference";
+import SportsPreference from "@/components/auth/signup/steps/SportsPreference/SportsPreference";
+import Welcome from "@/components/auth/signup/steps/Welcome/Welcome";
 import { StepProps } from "@/types/step";
 
 export const STEPS_LABEL = {
