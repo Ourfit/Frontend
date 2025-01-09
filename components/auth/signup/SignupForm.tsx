@@ -1,26 +1,12 @@
 "use client";
 
-import styled from "styled-components";
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useRouter } from "next/navigation";
 import { SIGNUP_STEPS, StepLabel } from "@/constants/Signup";
 import StepIndicator from "@/components/common/StepIndicator";
-
-const SignUpFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  margin-top: 16px;
-  height: 100%;
-`;
-
-const StepContainer = styled.div`
-  display: flex;
-  gap: 4px;
-`;
+import * as S from "./SignupForm.style";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -48,21 +34,21 @@ const SignupForm = () => {
 
   return (
     <>
-      <SignUpFormContainer>
-        <StepContainer>
+      <S.SignUpFormContainer>
+        <S.StepContainer>
           {step < SIGNUP_STEPS.length && (
             <StepIndicator
               totalSteps={SIGNUP_STEPS.length}
               currentStep={step}
             />
           )}
-        </StepContainer>
+        </S.StepContainer>
         {CurrentStepComponent && (
           <CurrentStepComponent
             nextStep={(field, value) => handleFormDataChange(field, value)}
           />
         )}
-      </SignUpFormContainer>
+      </S.SignUpFormContainer>
       {step === SIGNUP_STEPS.length && (
         <Button
           size={BUTTON_SIZES.LARGE}

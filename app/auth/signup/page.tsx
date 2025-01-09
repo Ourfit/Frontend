@@ -1,5 +1,5 @@
 import Frame from "@/components/layout/Frame";
-import SignupForm from "@/components/auth/signup";
+import SignupForm from "@/components/auth/signup/SignupForm";
 
 const SignupPage = () => {
   return (
