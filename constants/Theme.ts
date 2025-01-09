@@ -1,6 +1,6 @@
 export const COLORS = {
   GRAYSCALE_50: "#f9f9fa",
-  GRAYSCALE_100: "#f6f6f6",
+  GRAYSCALE_100: "#f6f6f8",
   GRAYSCALE_200: "#e6e7ee",
   GRAYSCALE_300: "#dce0ea",
   GRAYSCALE_400: "#babfcc",
