@@ -7,17 +7,14 @@ import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import TextButton from "@/components/common/TextButton";
 import { GENDER, STEPS_LABEL } from "@/constants/Signup";
+import SelectBar from "@/components/common/SelectBar/SelectBar";
 
 const GenderAge = ({ nextStep }: StepProps) => {
   const [gender, setGender] = useState<string | null>(null);
-  const [age, setAge] = useState<string>("");
+  const [age, setAge] = useState<number>(0);
 
   const handleGenderClick = (selectedGender: string) => {
     setGender(selectedGender);
-  };
-
-  const handleAgeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAge(e.target.value);
   };
 
   const buttonClickHandler = () => {
@@ -56,14 +53,7 @@ const GenderAge = ({ nextStep }: StepProps) => {
       </S.InfoContainer>
       <S.InfoContainer>
         <Typography.H4Sb>나이</Typography.H4Sb>
-        <select value={age} onChange={handleAgeChange}>
-          <option value="">나이를 선택하세요</option>
-          {Array.from({ length: 69 - 15 + 1 }, (_, index) => (
-            <option key={index} value={index + 15}>
-              {index + 15}세
-            </option>
-          ))}
-        </select>
+        <SelectBar selectType="age" optionValue={age} setOption={setAge} />
       </S.InfoContainer>
       <S.ButtonContainer>
         <S.ButtonWrapper>
