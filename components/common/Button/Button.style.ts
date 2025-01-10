@@ -4,17 +4,17 @@ import { COLORS } from "@/constants/Theme";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 
 interface ButtonStyleProps {
-  size?: (typeof BUTTON_SIZES)[keyof typeof BUTTON_SIZES];
-  variant?: (typeof BUTTON_VARIANTS)[keyof typeof BUTTON_VARIANTS];
-  disabled?: boolean;
+  $size?: (typeof BUTTON_SIZES)[keyof typeof BUTTON_SIZES];
+  $variant?: (typeof BUTTON_VARIANTS)[keyof typeof BUTTON_VARIANTS];
+  $disabled?: boolean;
 }
 
-const getButtonStyle = ({ size, variant, disabled }: ButtonStyleProps) => {
+const getButtonStyle = ({ $size, $variant, $disabled }: ButtonStyleProps) => {
   const COMMON_CSS = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: ${disabled ? "default" : "pointer"};
+    cursor: ${$disabled ? "default" : "pointer"};
     border: none;
   `;
 
@@ -45,12 +45,12 @@ const getButtonStyle = ({ size, variant, disabled }: ButtonStyleProps) => {
 
   const variantCss = {
     [BUTTON_VARIANTS.PRIMARY]: css`
-      background-color: ${disabled ? COLORS.GRAYSCALE_300 : COLORS.BLUE_500};
+      background-color: ${$disabled ? COLORS.GRAYSCALE_300 : COLORS.BLUE_500};
       color: ${COLORS.BASE_WHITE};
       border: none;
 
       &:hover {
-        background-color: ${disabled ? COLORS.GRAYSCALE_300 : COLORS.BLUE_700};
+        background-color: ${$disabled ? COLORS.GRAYSCALE_300 : COLORS.BLUE_700};
       }
     `,
     [BUTTON_VARIANTS.SECONDARY]: css`
@@ -61,7 +61,7 @@ const getButtonStyle = ({ size, variant, disabled }: ButtonStyleProps) => {
       &:hover {
         border-color: ${COLORS.BLUE_500};
         color: ${COLORS.BLUE_500};
-        background-color: ${disabled
+        background-color: ${$disabled
           ? COLORS.GRAYSCALE_300
           : COLORS.BASE_WHITE};
       }
@@ -76,14 +76,14 @@ const getButtonStyle = ({ size, variant, disabled }: ButtonStyleProps) => {
 
   return css`
     ${COMMON_CSS};
-    ${size && sizeCss[size]};
-    ${variant && variantCss[variant]};
+    ${$size && sizeCss[$size]};
+    ${$variant && variantCss[$variant]};
   `;
 };
 
 export const Button = styled.button<ButtonStyleProps>`
-  ${({ size, variant, disabled }) =>
-    getButtonStyle({ size, variant, disabled })}
+  ${({ $size, $variant, $disabled }) =>
+    getButtonStyle({ $size, $variant, $disabled })}
 `;
 
 export const IconWrapper = styled.span`

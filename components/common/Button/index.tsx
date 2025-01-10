@@ -23,9 +23,9 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <S.Button
-      size={size}
-      variant={variant}
-      disabled={disabled}
+      $size={size}
+      $variant={variant}
+      $disabled={disabled}
       onClick={onClick}
     >
       {icon && <S.IconWrapper>{icon}</S.IconWrapper>}
