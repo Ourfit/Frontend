@@ -15,6 +15,8 @@ export const HeaderContainer = styled.header<{
   position: absolute;
   justify-content: space-between;
   top: 0;
+  z-index: 99;
+  background-color: white;
 `;
 
 export const LocationContainer = styled.div`

@@ -8,6 +8,9 @@ export const TabContainer = styled.div`
   flex-direction: column;
   justify-content: end;
   border-bottom: 1px solid ${COLORS.GRAYSCALE_100};
+  z-index: 99;
+  background-color: white;
+  margin-top: 48px;
 `;
 
 export const Tablist = styled.ul`
