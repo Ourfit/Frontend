@@ -7,7 +7,6 @@ export const FrameContainer = styled.div`
   max-width: 390px;
   height: 100%;
   min-height: 100svh;
-  padding-top: 48px;
   box-sizing: border-box;
   position: relative;
   background-color: #f6f6f6;
