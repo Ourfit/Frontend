@@ -1,7 +1,6 @@
 "use client";
 
 import Gnb from "@/components/common/Gnb";
-import Input from "@/components/common/Input/Input";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import React, { useEffect, useState } from "react";
@@ -36,7 +35,6 @@ export default function Frame({
         <Toast message={TOAST_MESSAGES.ERROR} status={TOAST_STATUSES.ERROR} />
       )}
       <S.Content style={contentStyle}>{children}</S.Content>
-      <Input />
       <Gnb />
     </S.FrameContainer>
   );
