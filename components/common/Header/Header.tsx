@@ -8,15 +8,8 @@ import Location from "@/assets/images/location.svg";
 import ChevronLeft from "@/assets/images/chevron-left.svg";
 import { COLORS } from "@/constants/Theme";
 
-export default function Header() {
+export default function Header({ pageName }: { pageName: string }) {
   const pathname = usePathname();
-
-  const pageNames: Record<string, string> = {
-    "/challenge": "챌린지",
-    "/mate": "메이트",
-    "/alarm": "알림",
-    "/settings": "설정",
-  };
 
   return (
     <>
@@ -31,7 +24,7 @@ export default function Header() {
       ) : pathname.split("/").length - 1 === 1 ? (
         <S.HeaderContainer $paddingLeft="20px" $paddingRight="12px">
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname]}
+            {pageName}
           </Typography.H1Sb>
         </S.HeaderContainer>
       ) : (
@@ -42,7 +35,9 @@ export default function Header() {
                 style={{ display: "block", width: "20px", height: "20px" }}
               />
             </div>
-            <Typography.H2Sb color={COLORS.GRAYSCALE_900}>Text</Typography.H2Sb>
+            <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
+              {pageName}
+            </Typography.H2Sb>
           </div>
         </S.HeaderContainer>
       )}
