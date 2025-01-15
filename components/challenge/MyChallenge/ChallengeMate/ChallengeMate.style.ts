@@ -3,6 +3,7 @@ import { COLORS } from "@/constants/Theme";
 
 export const ChallengeMateContainer = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 16px;
   border-radius: 20px;
@@ -27,7 +28,7 @@ export const MateProfileImage = styled.img`
   background-color: lightgray;
   height: 40px;
   width: 40px;
-  border-radius: 100%;
+  border-radius: 50%;
 `;
 
 export const ProfileTextWrapper = styled.div`
@@ -41,6 +42,28 @@ export const MateNickname = styled.p`
 
 export const MateInfo = styled.p`
   color: ${COLORS.GRAYSCALE_600};
+`;
+
+export const MoreIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+`;
+
+export const DotsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const Dot = styled.div`
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: ${COLORS.GRAYSCALE_500};
 `;
 
 export const MateLevelBadge = styled.div`
