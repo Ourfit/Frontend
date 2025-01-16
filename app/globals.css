@@ -39,3 +39,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.font-pretendard {
+  font-family: var(--font-pretendard), sans-serif;
+}

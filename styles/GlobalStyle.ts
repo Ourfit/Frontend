@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
   html {
+      font-family: var(--font-pretendard), sans-serif;
   }
 
   #root {
