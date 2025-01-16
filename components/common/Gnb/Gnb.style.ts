@@ -1,8 +1,8 @@
 "use client";
 
-import styled from "styled-components";
-import { COLORS } from "@/constants/Theme";
 import { TypographyCss } from "@/components/atoms/Typography";
+import { COLORS } from "@/constants/Theme";
+import styled from "styled-components";
 
 export const GnbContainer = styled.div`
   position: sticky;
@@ -23,6 +23,7 @@ export const GnbTabWrapper = styled.div<{ $isActive: boolean }>`
   height: 44px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 4px;
   color: ${({ $isActive }) => ($isActive ? "#163BFF" : "#d8dbe4")};
   cursor: pointer;
