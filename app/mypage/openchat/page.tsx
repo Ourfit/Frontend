@@ -4,6 +4,7 @@ import Button from "@/components/common/Button/index";
 import Input from "@/components/common/Input/Input";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
+import Image from "next/image";
 import React, { useDeferredValue, useState } from "react";
 import * as S from "./style";
 
@@ -63,7 +64,16 @@ export default function OpenChatPage() {
           오픈 채팅방을 개설해 링크를 등록해주세요.
         </S.SubDescription>
         <S.InputWrapper>
-          <div>임의</div>
+          <S.IconWrapper>
+            <S.RoundedImage>
+              <Image
+                src="/icons/Kakao_logo.png"
+                alt="카카오톡"
+                width={40}
+                height={40}
+              />
+            </S.RoundedImage>
+          </S.IconWrapper>
           <Input
             value={value}
             deferredValue={deferredValue}

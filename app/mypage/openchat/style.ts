@@ -66,15 +66,17 @@ export const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
   background-color: #fae300;
-  border-radius: 10px;
+  border-radius: 9.23px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 8px;
 `;
 
-export const Icon = styled.img`
-  width: 30px;
-  height: 30px;
-  object-fit: cover;
+export const RoundedImage = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 9.23px;
+  overflow: hidden;
 `;
