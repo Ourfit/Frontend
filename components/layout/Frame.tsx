@@ -2,6 +2,7 @@
 
 import Gnb from "@/components/common/Gnb";
 import Header from "@/components/common/Header/Header";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import * as S from "./Frame.style";
 
@@ -11,6 +12,7 @@ interface FrameProps {
 
 export default function Frame({ children }: Readonly<FrameProps>) {
   const [isToastVisible, setToastVisible] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,11 +24,13 @@ export default function Frame({ children }: Readonly<FrameProps>) {
     };
   }, []);
 
+  const shouldHideGnb = pathname === "/mypage/openchat";
+
   return (
     <S.FrameContainer>
       <Header />
       <S.Content>{children}</S.Content>
-      <Gnb />
+      {!shouldHideGnb && <Gnb />}
     </S.FrameContainer>
   );
 }
