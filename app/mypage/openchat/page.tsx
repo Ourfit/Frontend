@@ -7,24 +7,26 @@ import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
 
 import Toast from "@/components/common/Toast/Toast";
-import React, { useDeferredValue, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
 
 export default function OpenChatPage() {
-  const [value, setValue] = useState("");
+  const pathname = usePathname();
+  const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const deferredValue = useDeferredValue(value);
+  const deferredValue = useDeferredValue(linkValue);
 
-  const hasUnsubmittedData = !isSubmitted && value.trim().length > 0;
-  console.log(hasUnsubmittedData);
+  const hasUnsubmittedData = !isSubmitted && linkValue.trim().length > 0;
+  const prevPathnameRef = useRef(pathname);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    setValue(inputValue);
+    setLinkValue(inputValue);
 
     if (inputValue.trim() === "") {
       setStatus(INPUT_STATUS.DEFAULT);
@@ -36,7 +38,7 @@ export default function OpenChatPage() {
   };
 
   const handleInputBlur = () => {
-    if (value.trim() !== "") {
+    if (linkValue.trim() !== "") {
       setStatus(INPUT_STATUS.COMPLETE);
     } else {
       setStatus(INPUT_STATUS.DEFAULT);
@@ -45,7 +47,7 @@ export default function OpenChatPage() {
   };
 
   const handleInputClear = () => {
-    setValue("");
+    setLinkValue("");
     setIsTyping(false);
     setStatus(INPUT_STATUS.DEFAULT);
   };
@@ -58,33 +60,19 @@ export default function OpenChatPage() {
 
   const handleSubmit = async () => {
     try {
-      await navigator.clipboard.writeText(value);
+      await navigator.clipboard.writeText(linkValue);
       setIsSubmitted(true);
       console.log("등록 완료 버튼 클릭 및 링크 복사 완료");
     } catch (error) {
+      setIsSubmitted(false);
       console.error("클립보드 복사 실패", error);
     }
   };
 
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
-      if (hasUnsubmittedData) {
-        setShowToast(true);
-
-        setTimeout(() => {
-          setShowToast(false);
-        }, 4000);
-
-        window.history.pushState(null, "", window.location.href);
-      }
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [hasUnsubmittedData]);
+    console.log("Current pathname:", pathname);
+    console.log("Prev pathname:", prevPathnameRef.current);
+  }, [pathname]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -99,7 +87,7 @@ export default function OpenChatPage() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [hasUnsubmittedData]);
+  }, [hasUnsubmittedData, isSubmitted]);
 
   return (
     <S.Container>
@@ -123,7 +111,7 @@ export default function OpenChatPage() {
             </S.RoundedImage>
           </S.IconWrapper>
           <Input
-            value={value}
+            value={linkValue}
             deferredValue={deferredValue}
             placeholder="오픈 채팅방 링크 붙여놓기"
             status={status}

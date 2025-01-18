@@ -53,7 +53,7 @@ export const IconsContainer = styled.div<{ $hasStatusIcon: boolean }>`
   display: flex;
   align-items: center;
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   gap: ${({ $hasStatusIcon }) => ($hasStatusIcon ? "12px" : "0")};
