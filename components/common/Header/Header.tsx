@@ -5,11 +5,12 @@ import Location from "@/assets/images/location.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as S from "./Header.style";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const pageNames: Record<string, string> = {
     "/challenge": "챌린지",
@@ -39,7 +40,7 @@ export default function Header() {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => window.history.back()}
+              onClick={() => router.back()}
             />
           </div>
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>

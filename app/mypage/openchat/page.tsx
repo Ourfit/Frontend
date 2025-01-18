@@ -5,15 +5,22 @@ import Input from "@/components/common/Input/Input";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
-import React, { useDeferredValue, useState } from "react";
+
+import Toast from "@/components/common/Toast/Toast";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import * as S from "./style";
 
 export default function OpenChatPage() {
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const deferredValue = useDeferredValue(value);
+
+  const hasUnsubmittedData = !isSubmitted && value.trim().length > 0;
+  console.log(hasUnsubmittedData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -49,9 +56,50 @@ export default function OpenChatPage() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log("등록 완료 버튼 클릭");
+  const handleSubmit = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setIsSubmitted(true);
+      console.log("등록 완료 버튼 클릭 및 링크 복사 완료");
+    } catch (error) {
+      console.error("클립보드 복사 실패", error);
+    }
   };
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (hasUnsubmittedData) {
+        setShowToast(true);
+
+        setTimeout(() => {
+          setShowToast(false);
+        }, 4000);
+
+        window.history.pushState(null, "", window.location.href);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [hasUnsubmittedData]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsubmittedData) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [hasUnsubmittedData]);
 
   return (
     <S.Container>
@@ -97,6 +145,13 @@ export default function OpenChatPage() {
           등록 완료
         </Button>
       </S.SubmitButtonWrapper>
+
+      {showToast && (
+        <Toast
+          message="등록 완료 버튼을 눌러 등록 내용을 저장해주세요"
+          status="error"
+        />
+      )}
     </S.Container>
   );
 }

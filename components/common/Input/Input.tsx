@@ -56,6 +56,11 @@ export default function Input({
           )}
           {!isTyping && deferredValue.trim() !== "" && (
             <>
+              <S.Icon onClick={onClear}>
+                {INPUT_STATUS_ICONS.typing && (
+                  <INPUT_STATUS_ICONS.typing width="20" height="20" />
+                )}
+              </S.Icon>
               {StatusIconComponent && (
                 <S.Icon>
                   <StatusIconComponent width="20" height="20" />
