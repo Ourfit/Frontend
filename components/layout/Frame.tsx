@@ -8,9 +8,15 @@ import * as S from "./Frame.style";
 
 interface FrameProps {
   children: React.ReactNode;
+  style?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
 }
 
-export default function Frame({ children }: Readonly<FrameProps>) {
+export default function Frame({
+  children,
+  style,
+  contentStyle,
+}: Readonly<FrameProps>) {
   const [isToastVisible, setToastVisible] = useState(true);
   const pathname = usePathname();
 
