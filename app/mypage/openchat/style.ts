@@ -9,9 +9,11 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  min-height: 752px;
+  min-height: 870px;
   width: 100%;
   background-color: #ffffff;
+
+  position: relative;
 `;
 
 export const Content = styled.div`
@@ -55,6 +57,9 @@ export const SubmitButtonWrapper = styled.div`
   margin-bottom: 20px;
   width: 350px;
   height: 53px;
+
+  position: sticky;
+  bottom: 104px;
 `;
 
 export const InputText = styled.p`
