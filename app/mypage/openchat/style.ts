@@ -22,6 +22,8 @@ export const Content = styled.div`
   align-items: start;
   padding: 48px 20px 0px 20px;
   width: 100%;
+  min-width: 353px;
+  box-sizing: border-box;
 `;
 
 export const Description = styled.div`
