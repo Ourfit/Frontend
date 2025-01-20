@@ -41,7 +41,7 @@ const H2Bd = css`
 `;
 
 const H2Sb = css`
-  ${DefaultTypographyCss};
+  ${DefaultTypographyCss}
 
   font-size: 18px;
   font-weight: 600;

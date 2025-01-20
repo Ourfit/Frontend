@@ -36,13 +36,12 @@ export default function Header() {
       ) : isSubPage ? (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div
-            style={{ padding: "12px", display: "flex", alignItems: "center" }}
-          >
-            <ChevronLeft
-              style={{ display: "block" }}
-              onClick={() => router.back()}
-            />
-          </div>
+            style={{
+              paddingLeft: "20px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          ></div>
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
             {pageNames[pathname] || "페이지"}
           </Typography.H1Sb>
