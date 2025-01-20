@@ -24,7 +24,7 @@ export default function Mypage() {
   if (isEditingProfile) {
     return (
       <S.PageContainer>
-        <S.ProfileSection>
+        <S.ProfileSection $isEditingProfile={isEditingProfile}>
           <S.ProfileImage>
             <img src="/next.svg" />
           </S.ProfileImage>
@@ -39,7 +39,7 @@ export default function Mypage() {
 
   return (
     <S.PageContainer>
-      <S.ProfileSection>
+      <S.ProfileSection $isEditingProfile={isEditingProfile}>
         <S.ProfileImage>
           <img src="/next.svg" />
         </S.ProfileImage>

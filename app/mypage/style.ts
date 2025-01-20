@@ -13,7 +13,7 @@ export const PageContainer = styled.div`
   max-height: 748px;
 `;
 
-export const ProfileSection = styled.section`
+export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +24,8 @@ export const ProfileSection = styled.section`
   height: 300px;
   padding: 12px 0px 32px 0px;
   background-color: #ffffff;
-  border-bottom: 10px solid #f9f9fa;
+  border-bottom: ${(props) =>
+    props.$isEditingProfile ? "0px solid #F9F9FA" : "10px solid #F9F9FA"};
 `;
 
 export const ProfileImage = styled.div`
