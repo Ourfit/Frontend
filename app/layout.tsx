@@ -1,17 +1,16 @@
+import ThemeClient from "@/components/common/ThemeClient";
 import GlobalStyle from "@/styles/GlobalStyle";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ThemeClient from "@/components/common/ThemeClient";
-import localFont from "next/font/local"
+import localFont from "next/font/local";
 import React from "react";
+import "./globals.css";
 
 const pretendard = localFont({
-  src: '../assets/fonts/PretendardVariable.woff2',
-  display: 'swap',
-  weight: '45 920',
-  variable: '--font-pretendard',
-})
+  src: "../assets/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

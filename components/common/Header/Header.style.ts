@@ -13,7 +13,7 @@ export const HeaderContainer = styled.header<{
   padding-right: ${(props) => props.$paddingRight};
   padding-left: ${(props) => props.$paddingLeft};
   position: absolute;
-  justify-content: space-between;
+  justify-content: flex-start;
   top: 0;
 `;
 
