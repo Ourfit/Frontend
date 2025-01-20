@@ -11,6 +11,8 @@ export const FrameContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   background-color: #ffffff;
+
+  border: 1px solid gray;
 `;
 
 export const Content = styled.div`
