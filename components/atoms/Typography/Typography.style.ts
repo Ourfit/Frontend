@@ -5,8 +5,6 @@ interface TypographyProps {
 }
 
 export const DefaultTypographyCss = css<TypographyProps>`
-  display: inline-flex;
-  align-items: center;
   font-family: inherit;
   font-style: normal;
 

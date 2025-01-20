@@ -8,14 +8,10 @@ export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 
-  width: 350px;
+  width: 298px;
   height: 52px;
-
-  position: fixed;
-  bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
 `;
 
 export const StyledInput = styled.input<{ $status: InputStatus }>`
@@ -36,11 +32,15 @@ export const StyledInput = styled.input<{ $status: InputStatus }>`
   width: 100%;
   height: 100%;
 
-  padding: 0 20px;
+  padding: 0 0 0 20px;
   border-radius: 16px;
   box-sizing: border-box;
   background-color: #f9f9f9;
   color: #333;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${TypographyCss.H4Md};
 
@@ -53,7 +53,7 @@ export const IconsContainer = styled.div<{ $hasStatusIcon: boolean }>`
   display: flex;
   align-items: center;
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   gap: ${({ $hasStatusIcon }) => ($hasStatusIcon ? "12px" : "0")};

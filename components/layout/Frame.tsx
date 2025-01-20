@@ -1,9 +1,8 @@
 "use client";
 
 import Gnb from "@/components/common/Gnb";
-import Input from "@/components/common/Input/Input";
-import Toast from "@/components/common/Toast/Toast";
-import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
+import Header from "@/components/common/Header/Header";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import * as S from "./Frame.style";
 
@@ -19,6 +18,7 @@ export default function Frame({
   contentStyle,
 }: Readonly<FrameProps>) {
   const [isToastVisible, setToastVisible] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,14 +30,13 @@ export default function Frame({
     };
   }, []);
 
+  const shouldHideGnb = pathname === "/mypage/openchat";
+
   return (
-    <S.FrameContainer style={style}>
-      {isToastVisible && (
-        <Toast message={TOAST_MESSAGES.ERROR} status={TOAST_STATUSES.ERROR} />
-      )}
-      <S.Content style={contentStyle}>{children}</S.Content>
-      <Input />
-      <Gnb />
+    <S.FrameContainer>
+      <Header />
+      <S.Content>{children}</S.Content>
+      {!shouldHideGnb && <Gnb />}
     </S.FrameContainer>
   );
 }
