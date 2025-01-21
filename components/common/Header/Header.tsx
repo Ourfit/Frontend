@@ -8,7 +8,11 @@ import { COLORS } from "@/constants/Theme";
 import { usePathname, useRouter } from "next/navigation";
 import * as S from "./Header.style";
 
-export default function Header() {
+interface HeaderProps {
+  isEditingProfile?: boolean;
+}
+
+export default function Header({ isEditingProfile }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -33,17 +37,18 @@ export default function Header() {
             <p>송파구 신천동</p>
           </S.LocationContainer>
         </S.HeaderContainer>
-      ) : isSubPage ? (
+      ) : isSubPage && isEditingProfile === true ? (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div
-            style={{
-              paddingLeft: "20px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          ></div>
+            style={{ padding: "12px", display: "flex", alignItems: "center" }}
+          >
+            <ChevronLeft
+              style={{ display: "block" }}
+              onClick={() => window.history.back()}
+            />
+          </div>
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "페이지"}
+            {"프로필 편집"}
           </Typography.H1Sb>
         </S.HeaderContainer>
       ) : (
