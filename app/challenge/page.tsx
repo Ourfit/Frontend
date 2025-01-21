@@ -5,7 +5,7 @@ import Header from "@/components/common/Header/Header";
 import Tab from "@/components/common/Tab/Tab";
 import Frame from "@/components/layout/Frame";
 
-export default function page() {
+const ChallengePage = () => {
   return (
     <>
       <Frame>
@@ -17,4 +17,6 @@ export default function page() {
       </Frame>
     </>
   );
-}
+};
+
+export default ChallengePage;
