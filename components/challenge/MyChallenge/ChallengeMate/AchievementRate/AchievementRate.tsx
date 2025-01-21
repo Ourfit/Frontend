@@ -66,7 +66,7 @@ export default function AchievementRate({
               variant="primary"
               onClick={() => router.push("/challenge/register")}
             >
-              챌린지 등록
+              <Typography.H5Md>챌린지 등록</Typography.H5Md>
             </Button>
           </S.NoChallengeWrapper>
         </S.ChallengeSituation>

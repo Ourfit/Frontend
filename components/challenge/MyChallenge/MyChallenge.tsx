@@ -20,7 +20,7 @@ export default function MyChallenge() {
             <Typography.H4Md>아직 메이트가 없어요!</Typography.H4Md>
           </S.NoMateText>
           <Button size="xs" variant="primary">
-            메이트 찾기
+            <Typography.H5Md>메이트 찾기</Typography.H5Md>
           </Button>
         </S.NoMateWrapper>
       )}
