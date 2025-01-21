@@ -19,11 +19,10 @@ const managementLinks = [
 
 export default function Mypage() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [description, setDescription] = useState<string>(
-    localStorage.getItem("description") || "",
-  );
+  const [description, setDescription] = useState<string>("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [profileImage, setProfileImage] = useState<string>("/next.svg");
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -76,18 +75,21 @@ export default function Mypage() {
     }
   };
 
-  useEffect(() => {
-    const saveDescription = () => {
-      if (description) {
-        localStorage.setItem("description", description);
-      }
-    };
+  const saveDescription = () => {
+    if (description) localStorage.setItem("description", description);
+  };
 
+  useEffect(() => {
     window.addEventListener("beforeunload", saveDescription);
     return () => {
       window.removeEventListener("beforeunload", saveDescription);
     };
   }, [description]);
+
+  useEffect(() => {
+    const savedDescription = localStorage.getItem("description");
+    if (savedDescription) setDescription(savedDescription);
+  }, []);
 
   if (isEditingProfile) {
     return (
