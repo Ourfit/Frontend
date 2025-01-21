@@ -1,8 +1,10 @@
 "use client";
 
 import ChevronRight from "@/assets/images/chevron-right.svg";
+import Dumbbels from "@/assets/images/dumbbells.svg";
+import { Typography } from "@/components/atoms/Typography";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as S from "./style";
 
 const managementLinks = [
@@ -16,23 +18,169 @@ const managementLinks = [
 
 export default function Mypage() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [description, setDescription] = useState("");
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [profileImage, setProfileImage] = useState<string>("/next.svg");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const preferences = ["헬스", "필라테스"];
+  const places = [
+    {
+      name: "에이쁠짐 잠실점",
+      address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
+    },
+    {
+      name: "에이쁠짐 홍대점",
+      address: "서울 마포구 양화로12길 34 2층 201호",
+    },
+  ];
 
   const handleEditProfile = () => {
     setIsEditingProfile(true);
+  };
+
+  const handleEditDescription = () => {
+    setIsEditingDescription(true);
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setDescription(e.target.value);
+  };
+
+  const handleDescriptionBlur = () => {
+    setIsEditingDescription(false);
+  };
+
+  const handleProfileImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+    }
   };
 
   if (isEditingProfile) {
     return (
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={isEditingProfile}>
-          <S.ProfileImage>
-            <img src="/next.svg" />
-          </S.ProfileImage>
-          <S.ProfileName>홍수다람쥐</S.ProfileName>
-          <S.ProfileInfo>여성 · 27세</S.ProfileInfo>
-          <S.PrimaryButton>운동초보</S.PrimaryButton>
+          <S.ProfileOverviewWrapper>
+            <S.ProfileImageWrapper
+              $isEditingProfile={isEditingProfile}
+              onClick={handleProfileImageClick}
+            >
+              <S.BackgroundImage
+                className="background-img"
+                src={profileImage}
+                alt="Profile"
+              />
+              <S.OverlayImage
+                className="overlay"
+                src="/image-2.svg"
+                alt="Gallery"
+              />
+            </S.ProfileImageWrapper>
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+
+            <S.ProfileName>홍수다람쥐</S.ProfileName>
+            <S.ProfileInfo>여성 · 27세</S.ProfileInfo>
+            <S.PrimaryButton>운동초보</S.PrimaryButton>
+            <S.ProfileDescription>
+              <S.DescriptionHeader>
+                <S.DescriptionTitle>간단 소개</S.DescriptionTitle>
+                <S.DescriptionEdit onClick={handleEditDescription}>
+                  편집
+                </S.DescriptionEdit>
+              </S.DescriptionHeader>
+              <S.DescriptionContent
+                disabled={!isEditingDescription}
+                value={description}
+                onChange={handleDescriptionChange}
+                onBlur={handleDescriptionBlur}
+              />
+            </S.ProfileDescription>
+          </S.ProfileOverviewWrapper>
+
+          <S.PreferenceContainer>
+            <S.PreferenceSectionWrapper>
+              <S.PreferenceHeader>
+                <S.PreferenceTitle>
+                  선호 운동{" "}
+                  <Typography.H3Bd
+                    style={{ marginLeft: "4px", color: "#004DFF" }}
+                  >
+                    {preferences.length}
+                  </Typography.H3Bd>
+                </S.PreferenceTitle>
+                <S.PreferenceEdit>편집</S.PreferenceEdit>
+              </S.PreferenceHeader>
+              <S.PreferenceContent>
+                {preferences.map((sport) => (
+                  <S.PreferenceBadge key={sport}>
+                    <Dumbbels />
+                    {sport}
+                  </S.PreferenceBadge>
+                ))}
+              </S.PreferenceContent>
+            </S.PreferenceSectionWrapper>
+
+            <S.PreferenceFacilityWrapper>
+              <S.PreferenceHeader>
+                <S.PreferenceTitle>
+                  선호 운동 시설{" "}
+                  <Typography.H3Bd
+                    style={{ marginLeft: "4px", color: "#004DFF" }}
+                  >
+                    {2}
+                  </Typography.H3Bd>
+                </S.PreferenceTitle>
+                <S.PreferenceEdit>편집</S.PreferenceEdit>
+              </S.PreferenceHeader>
+              <S.PreferencePlaceWrapper>
+                {places.map((place, index) => (
+                  <S.PreferencePlaceInfo key={place.name}>
+                    <S.PreferencePlaceName>{place.name}</S.PreferencePlaceName>
+                    <S.PreferencePlaceAddress>
+                      {place.address}
+                    </S.PreferencePlaceAddress>
+                  </S.PreferencePlaceInfo>
+                ))}
+              </S.PreferencePlaceWrapper>
+            </S.PreferenceFacilityWrapper>
+
+            <S.PreferenceTimeWrapper>
+              <S.PreferenceHeader>
+                <S.PreferenceTitle>
+                  선호 운동 시간{" "}
+                  <Typography.H3Bd
+                    style={{ marginLeft: "4px", color: "#004DFF" }}
+                  ></Typography.H3Bd>
+                </S.PreferenceTitle>
+                <S.PreferenceEdit>편집</S.PreferenceEdit>
+              </S.PreferenceHeader>
+              <S.PreferenceTime>
+                <S.PreferenceTimeTitle>주말 아침</S.PreferenceTimeTitle>
+                <S.PreferenceTimeRange>
+                  오전 9시 ~ 오전 11시
+                </S.PreferenceTimeRange>
+              </S.PreferenceTime>
+            </S.PreferenceTimeWrapper>
+          </S.PreferenceContainer>
         </S.ProfileSection>
-        <div>작업 예정</div>
       </S.PageContainer>
     );
   }
@@ -40,9 +188,13 @@ export default function Mypage() {
   return (
     <S.PageContainer>
       <S.ProfileSection $isEditingProfile={isEditingProfile}>
-        <S.ProfileImage>
-          <img src="/next.svg" />
-        </S.ProfileImage>
+        <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
+          <S.BackgroundImage
+            className="background-img"
+            src="/next.svg"
+            alt="Profile"
+          />
+        </S.ProfileImageWrapper>
         <S.ProfileName>홍수다람쥐</S.ProfileName>
         <S.ProfileInfo>여성 · 27세</S.ProfileInfo>
         <S.PrimaryButton>운동초보</S.PrimaryButton>
