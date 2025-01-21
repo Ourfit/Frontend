@@ -9,7 +9,6 @@ export const ChallengeMateContainer = styled.div`
   border-radius: 20px;
   background-color: ${COLORS.BASE_WHITE};
   width: 316px;
-  height: 390px;
   padding: 20px 24px;
   /* filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.06)); */
 `;
@@ -34,14 +33,6 @@ export const MateProfileImage = styled.img`
 export const ProfileTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const MateNickname = styled.p`
-  color: ${COLORS.GRAYSCALE_900};
-`;
-
-export const MateInfo = styled.p`
-  color: ${COLORS.GRAYSCALE_600};
 `;
 
 export const MoreIconWrapper = styled.div`
@@ -77,23 +68,4 @@ export const MateLevelBadge = styled.div`
 export const Divider = styled.div`
   width: 100%;
   border-bottom: 1px solid ${COLORS.GRAYSCALE_100};
-`;
-
-export const ChallengeSituation = styled.div`
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-`;
-
-export const NoChallengeWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 16px;
-`;
-
-export const NochallengeText = styled.p`
-  color: ${COLORS.GRAYSCALE_500};
 `;

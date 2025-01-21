@@ -1,11 +1,12 @@
 import { Typography } from "@/components/atoms/Typography";
 import * as S from "./ChallengeMate.style";
-import Button from "@/components/common/Button";
 import ChallengeModal from "../ChallengeModal/ChallengeModal";
 import { useState } from "react";
+import { COLORS } from "@/constants/Theme";
+import AchievementRate from "./AchievementRate/AchievementRate";
 
 export default function ChallengeMate() {
-  const isChallenging = true;
+  const isChallenging = false;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -14,12 +15,12 @@ export default function ChallengeMate() {
         <S.MateProfileWrapper>
           <S.MateProfileImage src="profile" alt="메이트 프로필" />
           <S.ProfileTextWrapper>
-            <S.MateNickname>
-              <Typography.H4Md>중수다람쥐</Typography.H4Md>
-            </S.MateNickname>
-            <S.MateInfo>
-              <Typography.H5Md>여, 27세</Typography.H5Md>
-            </S.MateInfo>
+            <Typography.H4Md color={COLORS.GRAYSCALE_900}>
+              중수다람쥐
+            </Typography.H4Md>
+            <Typography.H5Md color={COLORS.GRAYSCALE_600}>
+              여, 27세
+            </Typography.H5Md>
           </S.ProfileTextWrapper>
         </S.MateProfileWrapper>
         {isChallenging ? (
@@ -36,21 +37,9 @@ export default function ChallengeMate() {
           </S.MateLevelBadge>
         )}
       </S.MateInformationWrapper>
-
       {isModalOpen && <ChallengeModal setIsModalOpen={setIsModalOpen} />}
-
       <S.Divider />
-
-      <S.ChallengeSituation>
-        <S.NoChallengeWrapper>
-          <S.NochallengeText>
-            <Typography.H4Md>아직 등록한 챌린지가 없어요!</Typography.H4Md>
-          </S.NochallengeText>
-          <Button size="xs" variant="primary">
-            챌린지 등록
-          </Button>
-        </S.NoChallengeWrapper>
-      </S.ChallengeSituation>
+      <AchievementRate isChallenging={isChallenging} />
     </S.ChallengeMateContainer>
   );
 }
