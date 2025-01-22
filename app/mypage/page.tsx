@@ -67,11 +67,18 @@ export default function Mypage() {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageUrl = reader.result as string;
+        setProfileImage(imageUrl);
+        localStorage.setItem("profileImage", imageUrl);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -88,7 +95,10 @@ export default function Mypage() {
 
   useEffect(() => {
     const savedDescription = localStorage.getItem("description");
+    const savedProfileImage = localStorage.getItem("profileImage");
+
     if (savedDescription) setDescription(savedDescription);
+    if (savedProfileImage) setProfileImage(savedProfileImage);
   }, []);
 
   if (isEditingProfile) {
@@ -221,11 +231,19 @@ export default function Mypage() {
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={isEditingProfile}>
           <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-            <S.BackgroundImage
-              className="background-img"
-              src="/next.svg"
-              alt="Profile"
-            />
+            {localStorage.getItem("profileImage") ? (
+              <S.BackgroundImage
+                className="background-img"
+                src={profileImage}
+                alt="Profile"
+              />
+            ) : (
+              <S.BackgroundImage
+                className="background-img"
+                src="/next.svg"
+                alt="Profile"
+              />
+            )}
           </S.ProfileImageWrapper>
           <S.ProfileName>정준영</S.ProfileName>
           <S.ProfileInfo>남성 · 만 25세</S.ProfileInfo>
