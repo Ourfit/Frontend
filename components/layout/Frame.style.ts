@@ -11,8 +11,6 @@ export const FrameContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   background-color: #ffffff;
-
-  border: 1px solid gray;
 `;
 
 export const Content = styled.div`
@@ -20,5 +18,5 @@ export const Content = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  min-height: 100svh;
+  min-height: 100vh;
 `;
