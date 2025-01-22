@@ -20,5 +20,5 @@ export const Content = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - 117px);
+  min-height: 100svh;
 `;
