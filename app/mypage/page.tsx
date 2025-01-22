@@ -79,7 +79,7 @@ export default function Mypage() {
         const imageUrl = reader.result as string;
         setProfileImage(imageUrl);
         if (typeof window !== "undefined") {
-          localStorage.setItem("description", description);
+          localStorage.setItem("profileImage", imageUrl);
         }
       };
       reader.readAsDataURL(file);
@@ -241,19 +241,11 @@ export default function Mypage() {
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={isEditingProfile}>
           <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-            {localStorage.getItem("profileImage") ? (
-              <S.BackgroundImage
-                className="background-img"
-                src={profileImage}
-                alt="Profile"
-              />
-            ) : (
-              <S.BackgroundImage
-                className="background-img"
-                src="/next.svg"
-                alt="Profile"
-              />
-            )}
+            <S.BackgroundImage
+              className="background-img"
+              src={profileImage}
+              alt="Profile"
+            />
           </S.ProfileImageWrapper>
           <S.ProfileName>정준영</S.ProfileName>
           <S.ProfileInfo>남성 · 만 25세</S.ProfileInfo>
