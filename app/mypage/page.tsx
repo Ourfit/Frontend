@@ -87,14 +87,18 @@ export default function Mypage() {
   };
 
   const saveDescription = () => {
-    if (description) localStorage.setItem("description", description);
+    if (description && typeof window !== "undefined") {
+      localStorage.setItem("description", description);
+    }
   };
 
   useEffect(() => {
-    window.addEventListener("beforeunload", saveDescription);
-    return () => {
-      window.removeEventListener("beforeunload", saveDescription);
-    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", saveDescription);
+      return () => {
+        window.removeEventListener("beforeunload", saveDescription);
+      };
+    }
   }, [description]);
 
   useEffect(() => {
