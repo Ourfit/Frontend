@@ -58,7 +58,9 @@ export default function Mypage() {
   const handleDescriptionBlur = () => {
     setIsEditingDescription(false);
     fileInputRef.current?.blur();
-    localStorage.setItem("description", description);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("description", description);
+    }
   };
 
   const handleProfileImageClick = () => {
@@ -76,7 +78,9 @@ export default function Mypage() {
       reader.onload = () => {
         const imageUrl = reader.result as string;
         setProfileImage(imageUrl);
-        localStorage.setItem("profileImage", imageUrl);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("description", description);
+        }
       };
       reader.readAsDataURL(file);
     }
