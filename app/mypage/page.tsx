@@ -94,11 +94,13 @@ export default function Mypage() {
   }, [description]);
 
   useEffect(() => {
-    const savedDescription = localStorage.getItem("description");
-    const savedProfileImage = localStorage.getItem("profileImage");
+    if (typeof window !== "undefined") {
+      const savedDescription = localStorage.getItem("description");
+      const savedProfileImage = localStorage.getItem("profileImage");
 
-    if (savedDescription) setDescription(savedDescription);
-    if (savedProfileImage) setProfileImage(savedProfileImage);
+      if (savedDescription) setDescription(savedDescription);
+      if (savedProfileImage) setProfileImage(savedProfileImage);
+    }
   }, []);
 
   if (isEditingProfile) {
