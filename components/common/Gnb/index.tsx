@@ -7,7 +7,6 @@ import MateIcon from "@/assets/images/mate.svg";
 import SettingIcon from "@/assets/images/setting.svg";
 import { GNB_LABELS, GNB_TAB_IDS } from "@/constants/Gnb";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import * as S from "./Gnb.style";
 
 const GNB_TABS = [
@@ -44,8 +43,6 @@ const GNB_TABS = [
 ];
 
 const Gnb = () => {
-  const [activeTabId, setActiveTabId] = useState<number>(GNB_TAB_IDS.HOME);
-
   const router = useRouter();
 
   const pathname = usePathname();

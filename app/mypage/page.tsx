@@ -188,7 +188,7 @@ export default function Mypage() {
                   <S.PreferenceEdit>편집</S.PreferenceEdit>
                 </S.PreferenceHeader>
                 <S.PreferencePlaceWrapper>
-                  {places.map((place, index) => (
+                  {places.map((place) => (
                     <S.PreferencePlaceInfo key={place.name}>
                       <S.PreferencePlaceName>
                         {place.name}

@@ -5,7 +5,7 @@ import Location from "@/assets/images/location.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import * as S from "./Header.style";
 
 interface HeaderProps {
@@ -14,7 +14,6 @@ interface HeaderProps {
 
 export default function Header({ isEditingProfile }: HeaderProps) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const pageNames: Record<string, string> = {
     "/challenge": "챌린지",

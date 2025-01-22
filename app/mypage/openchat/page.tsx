@@ -6,7 +6,6 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
 
-import Toast from "@/components/common/Toast/Toast";
 import { usePathname } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
@@ -16,7 +15,6 @@ export default function OpenChatPage() {
   const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const deferredValue = useDeferredValue(linkValue);
@@ -133,13 +131,6 @@ export default function OpenChatPage() {
           등록 완료
         </Button>
       </S.SubmitButtonWrapper>
-
-      {showToast && (
-        <Toast
-          message="등록 완료 버튼을 눌러 등록 내용을 저장해주세요"
-          status="error"
-        />
-      )}
     </S.Container>
   );
 }
