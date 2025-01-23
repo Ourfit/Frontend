@@ -5,12 +5,15 @@ import Location from "@/assets/images/location.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import * as S from "./Header.style";
 
-export default function Header() {
+interface HeaderProps {
+  isEditingProfile?: boolean;
+}
+
+export default function Header({ isEditingProfile }: HeaderProps) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const pageNames: Record<string, string> = {
     "/challenge": "챌린지",
@@ -33,18 +36,18 @@ export default function Header() {
             <p>송파구 신천동</p>
           </S.LocationContainer>
         </S.HeaderContainer>
-      ) : isSubPage ? (
+      ) : isSubPage && isEditingProfile === true ? (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div
             style={{ padding: "12px", display: "flex", alignItems: "center" }}
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => router.back()}
+              onClick={() => window.history.back()}
             />
           </div>
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "페이지"}
+            {"프로필 편집"}
           </Typography.H1Sb>
         </S.HeaderContainer>
       ) : (

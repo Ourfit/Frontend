@@ -1,17 +1,15 @@
-import Tab from "@/components/common/Tab/Tab";
-import Frame from "@/components/layout/Frame";
-import Button from "@/components/common/Button";
 import EveningIcon from "@/assets/images/evening.svg";
 import PlusIcon from "@/assets/images/plus.svg";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import TextButton from "@/components/common/TextButton";
-import SelectBar from "@/components/common/SelectBar/SelectBar";
+import Button from "@/components/common/Button";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
+import Tab from "@/components/common/Tab/Tab";
+import TextButton from "@/components/common/TextButton";
+import Frame from "@/components/layout/Frame";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 
 export default function Home() {
   return (
     <Frame>
-      <SelectBar selectType="month" />
       <Placeholder />
       <Tab tabs={["text", "text2", "text3"]} />
       <div style={{ textAlign: "center", height: "100px" }}>test</div>
