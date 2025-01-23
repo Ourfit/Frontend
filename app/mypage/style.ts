@@ -11,8 +11,12 @@ export const PageContainer = styled.div`
 
   width: 100%;
   background-color: #ffffff;
-  height: 748px;
-  max-height: 748px;
+  height: 100%;
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ProfileOverviewWrapper = styled.div`
@@ -349,6 +353,11 @@ export const ManagementSection = styled.section`
   height: 432px;
   max-height: 432px;
 
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   padding: 0px 20px;
   box-sizing: border-box;
 `;
@@ -356,6 +365,8 @@ export const ManagementSection = styled.section`
 export const InfoSection = styled.section`
   display: flex;
   justify-content: flex-start;
+  position: sticky;
+  bottom: 0;
 
   margin-top: 10px;
   font-size: 12px;
@@ -402,6 +413,7 @@ export const ListItem = styled.li`
 export const LinksWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   gap: 13px;
   width: 100%;
 
