@@ -9,6 +9,7 @@ import Frame from "@/components/layout/Frame";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import Banner from "./_component/Banner/Banner";
 import QuickMenuBar from "./_component/QuickMenuBar/QuickMenuBar";
+import NotificationBanner from "./_component/NotificationBanner/NotificationBanner";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
         }}
       >
         <QuickMenuBar />
+        <NotificationBanner />
       </div>
       <Placeholder />
       <Tab tabs={["text", "text2", "text3"]} />
