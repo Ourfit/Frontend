@@ -7,11 +7,13 @@ import Tab from "@/components/common/Tab/Tab";
 import TextButton from "@/components/common/TextButton";
 import Frame from "@/components/layout/Frame";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import Banner from "./_component/Banner/Banner";
 
 export default function Home() {
   return (
     <Frame>
       <Header />
+      <Banner />
       <Placeholder />
       <Tab tabs={["text", "text2", "text3"]} />
       <div style={{ textAlign: "center", height: "100px" }}>test</div>
