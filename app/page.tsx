@@ -1,6 +1,7 @@
 import EveningIcon from "@/assets/images/evening.svg";
 import PlusIcon from "@/assets/images/plus.svg";
 import Button from "@/components/common/Button";
+import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import Tab from "@/components/common/Tab/Tab";
 import TextButton from "@/components/common/TextButton";
@@ -10,6 +11,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 export default function Home() {
   return (
     <Frame>
+      <Header />
       <Placeholder />
       <Tab tabs={["text", "text2", "text3"]} />
       <div style={{ textAlign: "center", height: "100px" }}>test</div>
