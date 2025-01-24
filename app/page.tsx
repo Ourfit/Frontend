@@ -8,12 +8,23 @@ import TextButton from "@/components/common/TextButton";
 import Frame from "@/components/layout/Frame";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import Banner from "./_component/Banner/Banner";
+import QuickMenuBar from "./_component/QuickMenuBar/QuickMenuBar";
 
 export default function Home() {
   return (
     <Frame>
       <Header />
       <Banner />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "28px",
+          paddingTop: "24px",
+        }}
+      >
+        <QuickMenuBar />
+      </div>
       <Placeholder />
       <Tab tabs={["text", "text2", "text3"]} />
       <div style={{ textAlign: "center", height: "100px" }}>test</div>
