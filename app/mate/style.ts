@@ -30,6 +30,8 @@ export const TabWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  gap: 16px;
 `;
 
 export const alertTitle = styled.div`
@@ -60,8 +62,8 @@ export const mateView = styled.div`
 
 export const SmallDot = styled.div`
   position: absolute;
-  top: 10%;
-  left: 28%;
+  top: 10px;
+  left: 27%;
   width: 4px;
   height: 4px;
   background-color: ${COLORS.BLUE_500};

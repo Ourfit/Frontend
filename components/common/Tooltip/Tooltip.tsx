@@ -12,7 +12,7 @@ interface TooltipProps {
 export default function Tooltip({ text, position }: TooltipProps) {
   return (
     <S.TooltipContainer position={position}>
-      <Typography.H6Sb>{text}</Typography.H6Sb>
+      <Typography.H7Sb>{text}</Typography.H7Sb>
     </S.TooltipContainer>
   );
 }
