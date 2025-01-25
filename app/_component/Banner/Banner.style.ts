@@ -35,6 +35,6 @@ export const Circle = styled.div`
   height: 312px;
   left: 195px;
   top: -63px;
-  border-radius: 100%;
+  border-radius: 50%;
   background-color: ${COLORS.BLUE_800};
 `;

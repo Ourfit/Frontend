@@ -38,6 +38,7 @@ export const IconWrapper = styled.div`
   & > svg {
     width: 24px;
     height: 24px;
+    color: ${COLORS.BLUE_500};
   }
 `;
 
