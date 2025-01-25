@@ -6,8 +6,8 @@ import styled, { css } from "styled-components";
 
 export const TooltipContainer = styled.div<{ position: TooltipPosition }>`
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 15%;
+  left: 45%;
   transform: translateX(-50%);
 
   display: flex;

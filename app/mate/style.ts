@@ -24,6 +24,14 @@ export const matePageContent = styled.div`
   min-height: 230px;
 `;
 
+export const TabWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 export const alertTitle = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -48,4 +56,14 @@ export const mateView = styled.div`
   border-radius: 12px;
 
   background-color: ${COLORS.GRAYSCALE_50};
+`;
+
+export const SmallDot = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 28%;
+  width: 4px;
+  height: 4px;
+  background-color: ${COLORS.BLUE_500};
+  border-radius: 50%;
 `;
