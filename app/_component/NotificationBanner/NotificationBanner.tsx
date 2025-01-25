@@ -1,5 +1,3 @@
-"use client";
-
 import ChevroRightIcon from "@/assets/images/chevron-right.svg";
 import DumbbellsIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";

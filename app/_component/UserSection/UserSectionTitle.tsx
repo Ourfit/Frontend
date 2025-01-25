@@ -1,6 +1,6 @@
 import ChevronRightIcon from "@/assets/images/chevron-right-small.svg";
 import { useRouter } from "next/navigation";
-import * as S from "./UserSection.style";
+import * as S from "./UserSectionTitle.style";
 import { Typography } from "@/components/atoms/Typography";
 
 interface UserSectionTitleProps {

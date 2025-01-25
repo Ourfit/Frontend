@@ -1,5 +1,3 @@
-"use client";
-
 import ArrowRightIcon from "@/assets/images/arrow_right.svg";
 import { Typography } from "@/components/atoms/Typography";
 import * as S from "./Banner.style";
