@@ -4,6 +4,7 @@ import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useState } from "react";
+import Modal from "./Modal";
 import * as S from "./style";
 
 interface MatchedMateProps {
@@ -13,10 +14,20 @@ interface MatchedMateProps {
 }
 
 export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
-  const [matchedMates, setMatchedMates] = useState([
+  const matchedMates = [
     { id: 1, name: "준영", age: 26, daysLeft: 24, profileImage: "/next.svg" },
     { id: 2, name: "수연", age: 27, daysLeft: 24, profileImage: "/globe.svg" },
-  ]);
+  ];
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <S.MatchedMateContainer>
@@ -52,6 +63,7 @@ export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
                 disabled={false}
                 size={BUTTON_SIZES.EXTRA_SMALL}
                 variant={BUTTON_VARIANTS.OUTLINE}
+                onClick={handleModalOpen}
               >
                 메이트 해제
               </Button>
@@ -105,6 +117,28 @@ export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
           </Button>
         </S.TimeInfo>
       </S.MateTimeWrapper>
+
+      <Modal show={showModal} onClose={handleModalClose}>
+        <S.ModalAlert>
+          <S.ModalAlertHeader>
+            <Typography.H2Sb color="#27282D">
+              메이트를 해제할까요?😢
+            </Typography.H2Sb>
+          </S.ModalAlertHeader>
+
+          <S.ModalAlertContent>
+            <Typography.H4Md color="#8A92A3">메이트 해제 시</Typography.H4Md>
+            <Typography.H4Md color="#FA6767">
+              *챌린지도 같이 초기화돼요.
+            </Typography.H4Md>
+          </S.ModalAlertContent>
+        </S.ModalAlert>
+
+        <S.ModalButtonWrapper>
+          <S.StyledButton>취소</S.StyledButton>
+          <S.StyledButton>해제</S.StyledButton>
+        </S.ModalButtonWrapper>
+      </Modal>
     </S.MatchedMateContainer>
   );
 }

@@ -6,6 +6,7 @@ import styled from "styled-components";
 export const MatchedMateContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   gap: 16px;
 `;
@@ -182,3 +183,69 @@ export const Line = styled.div`
 `;
 
 export const TimeInfo = styled(FacilityInfo)``;
+
+export const ModalButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 50px;
+
+  gap: 12px;
+`;
+
+export const StyledButton = styled.button`
+  width: 120px;
+  height: 50px;
+  border-radius: 16px;
+  border: 1px solid #dcdcdc;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #545862;
+
+  &:last-child {
+    background-color: #004dff;
+    color: #ffffff;
+  }
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.16px;
+`;
+
+export const ModalAlert = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 180px;
+  height: 81px;
+
+  gap: 12px;
+`;
+
+export const ModalAlertHeader = styled.div`
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+`;
+
+export const HighlightText = styled.span`
+  color: #fa6767;
+`;
+
+export const ModalAlertContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 42px;
+`;
