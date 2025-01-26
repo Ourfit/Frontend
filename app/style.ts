@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const PageContainer = styled.div`
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const MainContent = styled.div`

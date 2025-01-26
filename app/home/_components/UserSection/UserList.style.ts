@@ -17,6 +17,10 @@ export const UserListWrapper = styled.div`
   & > div:last-child {
     margin-right: 20px;
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const UserWrapper = styled.div`

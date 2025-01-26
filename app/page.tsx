@@ -2,10 +2,10 @@
 
 import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
-import Banner from "./_component/Banner/Banner";
-import QuickMenuBar from "./_component/QuickMenuBar/QuickMenuBar";
-import NotificationBanner from "./_component/NotificationBanner/NotificationBanner";
-import UserSection from "./_component/UserSection/UserSection";
+import Banner from "./home/_components/Banner/Banner";
+import QuickMenuBar from "./home/_components/QuickMenuBar/QuickMenuBar";
+import NotificationBanner from "./home/_components/NotificationBanner/NotificationBanner";
+import UserSection from "./home/_components/UserSection/UserSection";
 import * as S from "./style";
 
 export default function Home() {
