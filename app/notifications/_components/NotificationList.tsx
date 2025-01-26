@@ -8,6 +8,7 @@ interface NotificationListProps {
     id: number;
     type: string;
     name: string;
+    isRead: boolean;
   }[];
   isPrev?: boolean;
 }
@@ -20,7 +21,7 @@ export default function NotificationList({
     <S.ListContainer>
       <Typography.H4Md>{isPrev ? "이전" : "오늘"}</Typography.H4Md>
       {list.map((item) => (
-        <S.ItemContainer key={item.id}>
+        <S.ItemContainer key={item.id} $isRead={item.isRead}>
           <S.ItemWrapper>
             <S.IconWrapper>
               <BellIcon />

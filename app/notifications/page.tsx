@@ -12,11 +12,13 @@ export default function NotificationsPage() {
       id: 1,
       type: "request",
       name: "중수다람쥐",
+      isRead: false,
     },
     {
       id: 2,
       type: "accept",
       name: "중수다람쥐",
+      isRead: true,
     },
   ];
 
@@ -25,11 +27,13 @@ export default function NotificationsPage() {
       id: 3,
       type: "request",
       name: "중수다람쥐",
+      isRead: false,
     },
     {
       id: 4,
       type: "accept",
       name: "중수다람쥐",
+      isRead: false,
     },
   ];
 

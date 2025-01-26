@@ -11,7 +11,9 @@ export const ListContainer = styled.div`
   color: ${COLORS.GRAYSCALE_900};
 `;
 
-export const ItemContainer = styled.div`
+export const ItemContainer = styled.div<{
+  $isRead: boolean;
+}>`
   background-color: #ffffff;
   border: 1px solid ${COLORS.GRAYSCALE_200};
   padding: 16px 20px;
@@ -20,6 +22,7 @@ export const ItemContainer = styled.div`
   gap: 12px;
   align-items: center;
   cursor: pointer;
+  opacity: ${(props) => (props.$isRead ? 0.5 : 1)};
 
   & > svg {
     width: 20px;
