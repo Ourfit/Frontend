@@ -14,7 +14,9 @@ interface FrameProps {
 export default function Frame({ children }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
-  const shouldHideGnb = pathname === "/mypage/openchat";
+  const hiddenGnbPaths = ["/mypage/openchat", "/mate/facility", "/mate/time"];
+
+  const shouldHideGnb = hiddenGnbPaths.includes(pathname);
 
   return (
     <S.FrameContainer>

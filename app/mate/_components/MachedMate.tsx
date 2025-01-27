@@ -4,6 +4,7 @@ import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "./Modal/Modal";
 import * as S from "./style";
@@ -21,6 +22,7 @@ export default function MatchedMate({
   startDate,
   setIsMatched,
 }: MatchedMateProps) {
+  const router = useRouter();
   const daysElapsed = calculateDaysElapsed(startDate);
   const matchedMates = [
     {
@@ -49,6 +51,14 @@ export default function MatchedMate({
 
   const handleSetMateUnmatched = () => {
     setIsMatched(false);
+  };
+
+  const handleNavigate = () => {
+    router.push("/mate/facility");
+  };
+
+  const handleNavigateToTime = () => {
+    router.push("/mate/time");
   };
 
   return (
@@ -114,6 +124,7 @@ export default function MatchedMate({
             disabled={true}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.OUTLINE}
+            onClick={handleNavigate}
           >
             등록하기
           </Button>
@@ -134,6 +145,7 @@ export default function MatchedMate({
             disabled={true}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.OUTLINE}
+            onClick={handleNavigateToTime}
           >
             등록하기
           </Button>

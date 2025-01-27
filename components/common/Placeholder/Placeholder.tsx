@@ -5,7 +5,11 @@ import { COLORS } from "@/constants/Theme";
 import { useState } from "react";
 import * as S from "./Placeholder.style";
 
-export default function Placeholder() {
+interface PlaceholderProps {
+  text: string;
+}
+
+export default function Placeholder({ text }: PlaceholderProps) {
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
@@ -23,7 +27,7 @@ export default function Placeholder() {
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="text"
+        placeholder={text}
         onFocus={() => setIsInputFocus(true)}
         onBlur={() => setIsInputFocus(false)}
       />

@@ -11,13 +11,18 @@ export default function SelectBar({
   setOption,
   optionValue,
   width,
+  hasSuffix = false,
+  suffixText,
 }: {
   selectType: string;
-  setOption: React.Dispatch<React.SetStateAction<string | number>>;
+  setOption: React.Dispatch<React.SetStateAction<string>>;
   optionValue: string | number;
   width: string;
+  hasSuffix?: boolean;
+  suffixText?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
   const options =
     selectType === "month"
       ? Array.from({ length: 12 }, (_, i) => `${i + 1}개월`)
@@ -44,7 +49,12 @@ export default function SelectBar({
         onClick={() => setIsOpen(!isOpen)}
         width={width}
       >
-        <Typography.H4Md>{optionValue}</Typography.H4Md>
+        <div style={{ width: "73px" }}>
+          <Typography.H4Md>{optionValue}</Typography.H4Md>
+        </div>
+        {hasSuffix && suffixText && (
+          <Typography.H4Md color="#545862">{suffixText}</Typography.H4Md>
+        )}
         <ArrowDown stroke={COLORS.GRAYSCALE_500} />
       </S.SelectBox>
       <S.SelectOptions $isOpen={isOpen}>
