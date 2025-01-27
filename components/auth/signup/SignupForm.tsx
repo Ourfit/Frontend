@@ -33,8 +33,8 @@ const SignupForm = () => {
   const CurrentStepComponent = SIGNUP_STEPS[step - 1]?.component;
 
   return (
-    <>
-      <S.SignUpFormContainer>
+    <S.SignUpFormContainer>
+      <S.SignUpFormWrapper>
         <S.StepContainer>
           {step < SIGNUP_STEPS.length && (
             <StepIndicator
@@ -48,17 +48,18 @@ const SignupForm = () => {
             nextStep={(field, value) => handleFormDataChange(field, value)}
           />
         )}
-      </S.SignUpFormContainer>
+      </S.SignUpFormWrapper>
       {step === SIGNUP_STEPS.length && (
         <Button
           size={BUTTON_SIZES.LARGE}
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={handleStartClick}
+          disabled={false}
         >
           아워핏 시작하기
         </Button>
       )}
-    </>
+    </S.SignUpFormContainer>
   );
 };
 

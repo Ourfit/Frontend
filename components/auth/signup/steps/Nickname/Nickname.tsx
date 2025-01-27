@@ -56,16 +56,14 @@ const Nickname = ({ nextStep }: StepProps) => {
         />
       </S.NicknameWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <Button
-            disabled={!nickname.trim()}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={buttonClickHandler}
-          >
-            다음
-          </Button>
-        </S.ButtonWrapper>
+        <Button
+          disabled={!nickname.trim()}
+          size={BUTTON_SIZES.LARGE}
+          variant={BUTTON_VARIANTS.PRIMARY}
+          onClick={buttonClickHandler}
+        >
+          다음
+        </Button>
       </S.ButtonContainer>
     </S.NicknameContainer>
   );
