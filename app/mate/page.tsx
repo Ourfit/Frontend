@@ -37,7 +37,7 @@ export default function matePage() {
           <MatchedMate
             name="준영"
             age={26}
-            daysLeft={24}
+            startDate="2025-01-25"
             setIsMatched={setIsMatched}
           />
         ) : (

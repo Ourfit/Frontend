@@ -3,6 +3,7 @@
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { useState } from "react";
 import Modal from "./Modal/Modal";
 import * as S from "./style";
@@ -10,19 +11,30 @@ import * as S from "./style";
 interface MatchedMateProps {
   name: string;
   age: number;
-  daysLeft: number;
+  startDate: string;
   setIsMatched: (v: boolean) => void;
 }
 
 export default function MatchedMate({
   name,
   age,
-  daysLeft,
+  startDate,
   setIsMatched,
 }: MatchedMateProps) {
+  const daysElapsed = calculateDaysElapsed(startDate);
   const matchedMates = [
-    { id: 1, name: "준영", age: 26, daysLeft: 24, profileImage: "/next.svg" },
-    { id: 2, name: "수연", age: 27, daysLeft: 24, profileImage: "/globe.svg" },
+    {
+      id: 1,
+      name: "준영",
+      age: 26,
+      profileImage: "/next.svg",
+    },
+    {
+      id: 2,
+      name: "수연",
+      age: 27,
+      profileImage: "/globe.svg",
+    },
   ];
 
   const [showModal, setShowModal] = useState(false);
@@ -53,7 +65,7 @@ export default function MatchedMate({
                 />
               ))}
             </S.ProfileImageWrapper>
-            <S.daysLeft>D+24</S.daysLeft>
+            <S.daysLeft>D+{daysElapsed}</S.daysLeft>
           </S.MateCardHeader>
 
           <S.MateCardContent>
@@ -64,7 +76,7 @@ export default function MatchedMate({
               </S.MateDetailInfo>
 
               <Typography.H6Sb color="#6C727F">
-                종수다방님 남은 {daysLeft}일째 메이트예요!
+                프론트엔드 님은 {daysElapsed}일째 메이트예요!
               </Typography.H6Sb>
             </S.MateCardInfo>
 
