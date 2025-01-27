@@ -4,7 +4,7 @@ import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "./Modal/Modal";
 import * as S from "./style";
 
 interface MatchedMateProps {
