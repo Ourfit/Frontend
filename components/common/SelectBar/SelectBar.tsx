@@ -1,38 +1,50 @@
 "use client";
 
+import ArrowDown from "@/assets/images/arrow-down2.svg";
+import { Typography } from "@/components/atoms/Typography";
+import { COLORS } from "@/constants/Theme";
 import { useState } from "react";
 import * as S from "./SelectBar.style";
-import ArrowDown from "@/assets/images/arrow-down2.svg";
-import { COLORS } from "@/constants/Theme";
-import { Typography } from "@/components/atoms/Typography";
 
 export default function SelectBar({
   selectType,
   setOption,
   optionValue,
+  width,
 }: {
   selectType: string;
-  setOption: React.Dispatch<React.SetStateAction<number>>;
+  setOption: React.Dispatch<React.SetStateAction<string | number>>;
   optionValue: string | number;
+  width: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const options =
     selectType === "month"
-      ? Array.from({ length: 12 }, (_, i) => i + 1)
-      : Array.from({ length: 69 - 15 + 1 }, (_, i) => i + 15);
+      ? Array.from({ length: 12 }, (_, i) => `${i + 1}개월`)
+      : selectType === "age"
+        ? Array.from({ length: 55 }, (_, i) => `${15 + i}세`)
+        : selectType === "ampm"
+          ? ["오전", "오후"]
+          : selectType === "hour"
+            ? Array.from(
+                { length: 24 },
+                (_, i) => `${i.toString().padStart(2, "0")}시`,
+              )
+            : [];
 
-  const handleOptionClick = (option: number) => {
+  const handleOptionClick = (option: string) => {
     setOption(option);
     setIsOpen(false);
   };
 
   return (
     <S.SelectWrapper>
-      <S.SelectBox $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-        <Typography.H4Md>
-          {optionValue}
-          {selectType === "month" ? "개월" : "세"}
-        </Typography.H4Md>
+      <S.SelectBox
+        $isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        width={width}
+      >
+        <Typography.H4Md>{optionValue}</Typography.H4Md>
         <ArrowDown stroke={COLORS.GRAYSCALE_500} />
       </S.SelectBox>
       <S.SelectOptions $isOpen={isOpen}>
