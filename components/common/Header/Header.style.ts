@@ -1,5 +1,6 @@
 "use client";
 
+import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header<{
@@ -16,6 +17,7 @@ export const HeaderContainer = styled.header<{
   position: absolute;
   justify-content: ${({ $justifyContent = "flex-start" }) => $justifyContent};
   top: 0;
+  background: ${COLORS.BASE_WHITE};
 `;
 
 export const LocationContainer = styled.div`

@@ -1,15 +1,20 @@
 "use client";
 
+import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const FrameContainer = styled.div`
+export const FrameContainer = styled.div<{
+  $bgColorGray?: boolean;
+}>`
   width: 100%;
   max-width: 450px;
-  height: calc(100svh - 68px);
+  height: ${({ $bgColorGray = false }) =>
+    $bgColorGray ? "100svh" : "calc(100svh - 68px)"};
   padding-top: 48px;
   box-sizing: border-box;
   position: relative;
-  background-color: #ffffff;
+  background-color: ${({ $bgColorGray = false }) =>
+    $bgColorGray ? COLORS.GRAYSCALE_100 : COLORS.BASE_WHITE};
 `;
 
 export const Content = styled.div<{
@@ -17,7 +22,7 @@ export const Content = styled.div<{
 }>`
   box-sizing: border-box;
   background-color: ${({ $bgColorGray = false }) =>
-    $bgColorGray ? "#F6F6F8" : "#ffffff"};
+    $bgColorGray ? COLORS.GRAYSCALE_100 : COLORS.BASE_WHITE};
   display: flex;
   flex-direction: column;
   flex-grow: 1;
