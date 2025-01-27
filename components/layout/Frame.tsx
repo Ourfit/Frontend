@@ -15,10 +15,11 @@ export default function Frame({ children }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
   const shouldHideGnb = pathname === "/mypage/openchat";
+  const bgColorGray = pathname === "/";
 
   return (
     <S.FrameContainer>
-      <S.Content>{children}</S.Content>
+      <S.Content $bgColorGray={bgColorGray}>{children}</S.Content>
       {!shouldHideGnb && <Gnb />}
     </S.FrameContainer>
   );

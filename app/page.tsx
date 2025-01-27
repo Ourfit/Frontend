@@ -1,24 +1,25 @@
-import EveningIcon from "@/assets/images/evening.svg";
-import PlusIcon from "@/assets/images/plus.svg";
-import Button from "@/components/common/Button";
-import Placeholder from "@/components/common/Placeholder/Placeholder";
-import Tab from "@/components/common/Tab/Tab";
-import TextButton from "@/components/common/TextButton";
+"use client";
+
+import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import Banner from "./home/_components/Banner/Banner";
+import QuickMenuBar from "./home/_components/QuickMenuBar/QuickMenuBar";
+import NotificationBanner from "./home/_components/NotificationBanner/NotificationBanner";
+import UserSection from "./home/_components/UserSection/UserSection";
+import * as S from "./style";
 
 export default function Home() {
   return (
     <Frame>
-      <Placeholder />
-      <Tab tabs={["text", "text2", "text3"]} />
-      <div style={{ textAlign: "center", height: "100px" }}>test</div>
-      <div style={{ textAlign: "center", height: "100px" }}>test</div>
-      <Button size={BUTTON_SIZES.LARGE} variant={BUTTON_VARIANTS.PRIMARY}>
-        {"button L"}
-      </Button>
-      <TextButton icon={<EveningIcon />}>{"text"}</TextButton>
-      <TextButton icon={<PlusIcon />}></TextButton>
+      <Header />
+      <S.PageContainer>
+        <Banner />
+        <S.MainContent>
+          <QuickMenuBar />
+          <NotificationBanner />
+          <UserSection />
+        </S.MainContent>
+      </S.PageContainer>
     </Frame>
   );
 }

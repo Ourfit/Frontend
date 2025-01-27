@@ -29,11 +29,15 @@ export default function Header({ isEditingProfile }: HeaderProps) {
   return (
     <>
       {isHome ? (
-        <S.HeaderContainer $paddingLeft="20px" $paddingRight="20px">
+        <S.HeaderContainer
+          $paddingLeft="20px"
+          $paddingRight="20px"
+          $justifyContent="space-between"
+        >
           <OurfitLogo style={{ width: "60px", height: "28.966px" }} />
           <S.LocationContainer>
             <Location style={{ width: "24px", height: "24px" }} />
-            <p>송파구 신천동</p>
+            <Typography.H3Sb>송파구 신천동</Typography.H3Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
       ) : isSubPage && isEditingProfile === true ? (
