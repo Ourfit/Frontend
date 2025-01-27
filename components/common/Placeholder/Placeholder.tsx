@@ -1,9 +1,9 @@
 "use client";
 
-import * as S from "./Placeholder.style";
 import Search from "@/assets/images/search.svg";
 import { COLORS } from "@/constants/Theme";
 import { useState } from "react";
+import * as S from "./Placeholder.style";
 
 export default function Placeholder() {
   const [isInputFocus, setIsInputFocus] = useState(false);
@@ -17,7 +17,8 @@ export default function Placeholder() {
 
   return (
     <S.Wrapper $isInputFocus={isInputFocus}>
-      <Search stroke={COLORS.GRAYSCALE_700} />
+      <Search stroke={COLORS.GRAYSCALE_700} width="24" height="24" />
+
       <S.InputBox
         type="text"
         value={inputValue}
