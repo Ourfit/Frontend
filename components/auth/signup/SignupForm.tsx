@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useRouter } from "next/navigation";
@@ -8,9 +6,13 @@ import { SIGNUP_STEPS, StepLabel } from "@/constants/Signup";
 import StepIndicator from "@/components/common/StepIndicator";
 import * as S from "./SignupForm.style";
 
-const SignupForm = () => {
+interface SignupFormProps {
+  step: number;
+  setStep: Dispatch<SetStateAction<number>>;
+}
+
+const SignupForm = ({ step, setStep }: SignupFormProps) => {
   const router = useRouter();
-  const [step, setStep] = useState<number>(SIGNUP_STEPS[0].id);
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (
