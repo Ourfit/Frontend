@@ -11,9 +11,15 @@ interface MatchedMateProps {
   name: string;
   age: number;
   daysLeft: number;
+  setIsMatched: (v: boolean) => void;
 }
 
-export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
+export default function MatchedMate({
+  name,
+  age,
+  daysLeft,
+  setIsMatched,
+}: MatchedMateProps) {
   const matchedMates = [
     { id: 1, name: "준영", age: 26, daysLeft: 24, profileImage: "/next.svg" },
     { id: 2, name: "수연", age: 27, daysLeft: 24, profileImage: "/globe.svg" },
@@ -27,6 +33,10 @@ export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
 
   const handleModalClose = () => {
     setShowModal(false);
+  };
+
+  const handleSetMateUnmatched = () => {
+    setIsMatched(false);
   };
 
   return (
@@ -136,7 +146,7 @@ export default function MatchedMate({ name, age, daysLeft }: MatchedMateProps) {
 
         <S.ModalButtonWrapper>
           <S.StyledButton>취소</S.StyledButton>
-          <S.StyledButton>해제</S.StyledButton>
+          <S.StyledButton onClick={handleSetMateUnmatched}>해제</S.StyledButton>
         </S.ModalButtonWrapper>
       </Modal>
     </S.MatchedMateContainer>
