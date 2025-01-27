@@ -7,6 +7,8 @@ export const SignUpFormContainer = styled.div`
 
   margin-top: 16px;
   height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const StepContainer = styled.div`

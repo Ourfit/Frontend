@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const NicknameContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 36px;
+`;
+
+export const NicknameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 32px;
 `;
 
