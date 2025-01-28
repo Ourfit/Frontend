@@ -20,7 +20,7 @@ export default function SportFacility() {
   const [searchResults, setSearchResults] = useState<
     { id: number; name: string; address: string }[]
   >([]);
-  const [isLoading, setIsLoading] = useState(false);
+
   /* 카카오톡 API 연동 및 시설 검색 시 debounce 적용 고려*/
   // Debounce가 적용됬다 치고 임의로 구현현
   useEffect(() => {
@@ -29,14 +29,12 @@ export default function SportFacility() {
       return;
     }
 
-    setIsLoading(true);
     const timeout = setTimeout(() => {
       // 더미 데이터 필터링
       const filteredResults = dummyFacilities.filter((facility) =>
         facility.name.includes(facilityValue),
       );
       setSearchResults(filteredResults);
-      setIsLoading(false);
     }, 1000); // 1초 지연
 
     return () => clearTimeout(timeout);

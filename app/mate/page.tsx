@@ -9,7 +9,7 @@ import { useState } from "react";
 import MatchedMate from "./_components/MachedMate";
 import * as S from "./style";
 
-export default function matePage() {
+export default function MatePage() {
   const tabs: string[] = ["메이트", "탐색"];
   const [showTooltip, setShowTooltip] = useState(true);
   const [isMatched, setIsMatched] = useState(true);
