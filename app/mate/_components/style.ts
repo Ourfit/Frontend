@@ -7,6 +7,7 @@ export const MatchedMateContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: auto;
 
   gap: 16px;
 `;
@@ -28,7 +29,8 @@ export const MateFacilityInfoWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  height: 169px;
+  height: auto;
+  min-height: 169px;
   padding: 20px 20px 32px 20px;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -152,14 +154,13 @@ export const ActionButtonsWrapper = styled.div`
 export const FacilityInfo = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
 
   gap: 16px;
 
   width: 100%;
   height: auto;
-
-  max-height: 169px;
 `;
 
 export const FacilityInfoHeader = styled.div`
@@ -172,6 +173,39 @@ export const FacilityInfoHeader = styled.div`
   width: 100%;
   height: 48px;
 `;
+
+export const FacilityInfoHeaderTitle = styled.div<{ $hasData: boolean }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: ${({ $hasData }) =>
+    $hasData ? "space-between" : "flex-start"};
+  align-items: center;
+
+  width: 100%;
+  height: 24px;
+`;
+
+export const TimeInfoHeaderTitle = styled(FacilityInfoHeaderTitle)``;
+
+export const FacilityCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 2px;
+
+  width: 350px;
+  height: 73px;
+
+  padding: 16px 20px;
+  box-sizing: border-box;
+
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border-radius: 16px;
+  background-color: #ffffff;
+`;
+
+export const TimeCard = styled(FacilityCard)``;
 
 export const TimeInfoHeader = styled(FacilityInfoHeader)``;
 

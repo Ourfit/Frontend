@@ -6,6 +6,7 @@ import Header from "@/components/common/Header/Header";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as S from "./style";
 
@@ -14,6 +15,8 @@ export default function SportTime() {
   const [startHour, setStartHour] = useState<string>("00시");
   const [endAmPm, setEndAmPm] = useState<string>("오전/오후");
   const [endHour, setEndHour] = useState<string>("00시");
+
+  const router = useRouter();
 
   const DayOfTheWeeks = ["월", "화", "수", "목", "금", "토", "일"];
 
@@ -31,6 +34,17 @@ export default function SportTime() {
     startHour !== "00시" &&
     endAmPm !== "오전/오후" &&
     endHour !== "00시";
+
+  const handleSaveTimeInfo = () => {
+    const timeInfo = {
+      days: selectedDays,
+      startTime: `${startAmPm} ${startHour}`,
+      endTime: `${endAmPm} ${endHour}`,
+    };
+
+    localStorage.setItem("sportTimeInfo", JSON.stringify(timeInfo));
+    router.push("/mate");
+  };
 
   return (
     <>
@@ -129,6 +143,7 @@ export default function SportTime() {
             disabled={!isButtonEnabled}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
+            onClick={handleSaveTimeInfo}
           >
             변경 완료
           </Button>

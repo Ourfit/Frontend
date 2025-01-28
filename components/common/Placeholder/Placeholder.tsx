@@ -7,15 +7,22 @@ import * as S from "./Placeholder.style";
 
 interface PlaceholderProps {
   text: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
-export default function Placeholder({ text }: PlaceholderProps) {
+export default function Placeholder({
+  text,
+  onChange,
+  value,
+}: PlaceholderProps) {
   const [isInputFocus, setIsInputFocus] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(value);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 24) {
       setInputValue(e.target.value);
+      onChange?.(e);
     }
   };
 
@@ -31,10 +38,6 @@ export default function Placeholder({ text }: PlaceholderProps) {
         onFocus={() => setIsInputFocus(true)}
         onBlur={() => setIsInputFocus(false)}
       />
-      <S.InputLength>
-        <span style={{ color: COLORS.BLUE_500 }}>{inputValue.length}</span>
-        <span style={{ color: COLORS.GRAYSCALE_500 }}>/24</span>
-      </S.InputLength>
     </S.Wrapper>
   );
 }

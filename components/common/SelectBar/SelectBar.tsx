@@ -31,10 +31,7 @@ export default function SelectBar({
         : selectType === "ampm"
           ? ["오전", "오후"]
           : selectType === "hour"
-            ? Array.from(
-                { length: 24 },
-                (_, i) => `${i.toString().padStart(2, "0")}시`,
-              )
+            ? Array.from({ length: 12 }, (_, i) => `${(13 + i) % 24}시`)
             : [];
 
   const handleOptionClick = (option: string) => {

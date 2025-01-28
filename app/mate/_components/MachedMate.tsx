@@ -5,7 +5,7 @@ import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal/Modal";
 import * as S from "./style";
 
@@ -39,6 +39,18 @@ export default function MatchedMate({
     },
   ];
 
+  const [selectedFacility, setSelectedFacility] = useState<{
+    id: number;
+    name: string;
+    address: string;
+  } | null>(null);
+
+  const [timeInfo, setTimeInfo] = useState<{
+    days: string[];
+    startTime: string;
+    endTime: string;
+  } | null>(null);
+
   const [showModal, setShowModal] = useState(false);
 
   const handleModalOpen = () => {
@@ -50,6 +62,12 @@ export default function MatchedMate({
   };
 
   const handleSetMateUnmatched = () => {
+    localStorage.removeItem("sportTimeInfo");
+    localStorage.removeItem("selectedFacility");
+
+    setSelectedFacility(null);
+    setTimeInfo(null);
+
     setIsMatched(false);
   };
 
@@ -60,6 +78,18 @@ export default function MatchedMate({
   const handleNavigateToTime = () => {
     router.push("/mate/time");
   };
+
+  useEffect(() => {
+    const storedTimeInfo = localStorage.getItem("sportTimeInfo");
+    const savedFacility = localStorage.getItem("selectedFacility");
+
+    if (storedTimeInfo) {
+      setTimeInfo(JSON.parse(storedTimeInfo));
+    }
+    if (savedFacility) {
+      setSelectedFacility(JSON.parse(savedFacility));
+    }
+  }, []);
 
   return (
     <S.MatchedMateContainer>
@@ -114,20 +144,39 @@ export default function MatchedMate({
       <S.MateFacilityInfoWrapper>
         <S.FacilityInfo>
           <S.FacilityInfoHeader>
-            <Typography.H3Bd>🏃🏻 운동 시설</Typography.H3Bd>
+            {selectedFacility ? (
+              <S.FacilityInfoHeaderTitle $hasData={!!selectedFacility}>
+                <Typography.H3Bd>🏃🏻 운동 시설</Typography.H3Bd>
+                <Typography.H5Md color="#004DFF" onClick={handleNavigate}>
+                  편집
+                </Typography.H5Md>
+              </S.FacilityInfoHeaderTitle>
+            ) : (
+              <Typography.H3Bd>🏃🏻 운동 시설</Typography.H3Bd>
+            )}
+
             <Typography.H5Md color="#ADB3C2">
               메이트와 함께 운동하는 시설이에요.
             </Typography.H5Md>
           </S.FacilityInfoHeader>
 
-          <Button
-            disabled={true}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.OUTLINE}
-            onClick={handleNavigate}
-          >
-            등록하기
-          </Button>
+          {selectedFacility ? (
+            <S.FacilityCard>
+              <Typography.H4Sb>{selectedFacility.name}</Typography.H4Sb>
+              <Typography.H6Md color="#8A92A3">
+                {selectedFacility.address}
+              </Typography.H6Md>
+            </S.FacilityCard>
+          ) : (
+            <Button
+              disabled={false}
+              size={BUTTON_SIZES.LARGE}
+              variant={BUTTON_VARIANTS.OUTLINE}
+              onClick={handleNavigate}
+            >
+              등록하기
+            </Button>
+          )}
         </S.FacilityInfo>
       </S.MateFacilityInfoWrapper>
       <S.Line />
@@ -135,20 +184,39 @@ export default function MatchedMate({
       <S.MateTimeWrapper>
         <S.TimeInfo>
           <S.TimeInfoHeader>
-            <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
+            {timeInfo ? (
+              <S.TimeInfoHeaderTitle $hasData={!!selectedFacility}>
+                <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
+                <Typography.H5Md color="#004DFF" onClick={handleNavigateToTime}>
+                  편집
+                </Typography.H5Md>
+              </S.TimeInfoHeaderTitle>
+            ) : (
+              <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
+            )}
+
             <Typography.H5Md color="#ADB3C2">
               메이트와 함께 운동하는 시간이에요.
             </Typography.H5Md>
           </S.TimeInfoHeader>
 
-          <Button
-            disabled={true}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.OUTLINE}
-            onClick={handleNavigateToTime}
-          >
-            등록하기
-          </Button>
+          {timeInfo ? (
+            <S.TimeCard>
+              <Typography.H4Sb>{timeInfo.days.join(", ")}</Typography.H4Sb>
+              <Typography.H5Md color="#8A92A3">
+                {timeInfo.startTime} ~ {timeInfo.endTime}
+              </Typography.H5Md>
+            </S.TimeCard>
+          ) : (
+            <Button
+              disabled={false}
+              size={BUTTON_SIZES.LARGE}
+              variant={BUTTON_VARIANTS.OUTLINE}
+              onClick={handleNavigateToTime}
+            >
+              등록하기
+            </Button>
+          )}
         </S.TimeInfo>
       </S.MateTimeWrapper>
 

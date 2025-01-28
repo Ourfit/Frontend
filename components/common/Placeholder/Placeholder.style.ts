@@ -32,7 +32,3 @@ export const InputBox = styled.input`
     color: ${COLORS.GRAYSCALE_600};
   }
 `;
-
-export const InputLength = styled.p`
-  ${Typography.H4Md}
-`;
