@@ -10,9 +10,10 @@ import * as S from "./Header.style";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
+  isChallenge?: boolean;
 }
 
-export default function Header({ isEditingProfile }: HeaderProps) {
+export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
   const pathname = usePathname();
 
   const pageNames: Record<string, string> = {
@@ -28,7 +29,15 @@ export default function Header({ isEditingProfile }: HeaderProps) {
 
   return (
     <>
-      {isHome ? (
+      {isChallenge ? (
+        <S.HeaderContainer
+          $paddingLeft="20px"
+          $paddingRight="20px"
+          $justifyContent="space-between"
+        >
+          <Typography.H1Sb>챌린지</Typography.H1Sb>
+        </S.HeaderContainer>
+      ) : isHome ? (
         <S.HeaderContainer
           $paddingLeft="20px"
           $paddingRight="20px"

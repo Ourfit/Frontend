@@ -22,4 +22,4 @@ export default function Tab({ tabs }: { tabs: string[] }) {
       </S.Tablist>
     </S.TabContainer>
   );
-}
+};
