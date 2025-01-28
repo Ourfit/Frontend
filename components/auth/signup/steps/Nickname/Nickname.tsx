@@ -7,9 +7,17 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import React, { useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Input from "@/components/common/Input/Input";
+import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 
 const Nickname = ({ nextStep }: StepProps) => {
   const [nickname, setNickname] = useState("");
+  const [status, setStatus] = useState<InputStatus>("default");
+  const [isTyping, setIsTyping] = useState(false);
+
+  const inputStyle = {
+    backgroundColor: COLORS.BASE_WHITE,
+    color: COLORS.GRAYSCALE_900,
+  };
 
   const buttonClickHandler = () => {
     if (nickname.trim()) {
@@ -19,10 +27,23 @@ const Nickname = ({ nextStep }: StepProps) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
+
+    if (nickname.trim() === "") {
+      setStatus(INPUT_STATUS.DEFAULT);
+      setIsTyping(false);
+    } else {
+      setIsTyping(true);
+      setStatus(INPUT_STATUS.TYPING);
+    }
   };
 
   const handleInputBlur = () => {
-    console.log("");
+    if (nickname.trim() !== "") {
+      setStatus(INPUT_STATUS.COMPLETE);
+    } else {
+      setStatus(INPUT_STATUS.DEFAULT);
+    }
+    setIsTyping(false);
   };
 
   const handleClear = () => {
@@ -48,11 +69,12 @@ const Nickname = ({ nextStep }: StepProps) => {
           value={nickname}
           deferredValue={nickname}
           placeholder={"한글만 입력 가능, 최대 12자"}
-          status="default"
-          isTyping={true}
+          status={status}
+          isTyping={isTyping}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           onClear={handleClear}
+          inputStyle={{ ...inputStyle }}
         />
       </S.NicknameWrapper>
       <S.ButtonContainer>
