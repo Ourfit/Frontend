@@ -36,6 +36,7 @@ export default function SportTime() {
     endHour !== "00시";
 
   const handleSaveTimeInfo = () => {
+    if (!isButtonEnabled) return;
     const timeInfo = {
       days: selectedDays,
       startTime: `${startAmPm} ${startHour}`,
@@ -143,7 +144,9 @@ export default function SportTime() {
             disabled={!isButtonEnabled}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={handleSaveTimeInfo}
+            onClick={() => {
+              if (isButtonEnabled) handleSaveTimeInfo();
+            }}
           >
             변경 완료
           </Button>
