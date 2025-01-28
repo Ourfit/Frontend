@@ -140,16 +140,18 @@ export default function SportTime() {
           </S.DayOfTheWeekInfo>
         </S.Content>
         <S.ButtonWrapper>
-          <Button
-            disabled={!isButtonEnabled}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={() => {
-              if (isButtonEnabled) handleSaveTimeInfo();
-            }}
-          >
-            변경 완료
-          </Button>
+          <S.ButtonArea>
+            <Button
+              disabled={!isButtonEnabled}
+              size={BUTTON_SIZES.LARGE}
+              variant={BUTTON_VARIANTS.PRIMARY}
+              onClick={() => {
+                if (isButtonEnabled) handleSaveTimeInfo();
+              }}
+            >
+              변경 완료
+            </Button>
+          </S.ButtonArea>
         </S.ButtonWrapper>
       </S.TimeContainer>
     </>

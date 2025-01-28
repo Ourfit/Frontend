@@ -8,7 +8,7 @@ export const MatchedMateContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: auto;
+  height: 100%;
 
   gap: 16px;
 `;

@@ -6,8 +6,9 @@ import styled from "styled-components";
 export const TimeContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: space-between;
+
+  position: relative;
 
   width: 100%;
   height: 100%;
@@ -90,10 +91,23 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 
+  position: sticky;
+  bottom: 0px;
+
   width: 100%;
   height: 93px;
 
   padding: 12px 0px 28px 0px;
+  box-sizing: border-box;
+`;
+
+export const ButtonArea = styled.div`
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
 `;
 
 export const HighlightedText = styled.span`
