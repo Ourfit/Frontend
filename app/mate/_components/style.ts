@@ -6,6 +6,7 @@ import styled from "styled-components";
 export const MatchedMateContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
 
@@ -38,6 +39,7 @@ export const MateFacilityInfoWrapper = styled.div`
 
 export const MateTimeWrapper = styled(MateFacilityInfoWrapper)`
   height: 257px;
+  min-height: 257px;
 `;
 
 export const MateCard = styled.div`
