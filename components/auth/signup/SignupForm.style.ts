@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SignUpFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
+  margin-top: 24px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;

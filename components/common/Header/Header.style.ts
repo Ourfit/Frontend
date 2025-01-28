@@ -1,6 +1,5 @@
 "use client";
 
-import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header<{
@@ -17,7 +16,12 @@ export const HeaderContainer = styled.header<{
   position: absolute;
   justify-content: ${({ $justifyContent = "flex-start" }) => $justifyContent};
   top: 0;
-  background: ${COLORS.BASE_WHITE};
+
+  & svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
 `;
 
 export const LocationContainer = styled.div`
