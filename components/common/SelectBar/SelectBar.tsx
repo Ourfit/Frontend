@@ -6,21 +6,23 @@ import { COLORS } from "@/constants/Theme";
 import { useState } from "react";
 import * as S from "./SelectBar.style";
 
-export default function SelectBar({
+interface SelectBarProps<T> {
+  selectType: string;
+  setOption: React.Dispatch<React.SetStateAction<T>>;
+  optionValue: T;
+  width?: string;
+  hasSuffix?: boolean;
+  suffixText?: string;
+}
+
+export default function SelectBar<T extends string | number>({
   selectType,
   setOption,
   optionValue,
   width,
   hasSuffix = false,
   suffixText,
-}: {
-  selectType: string;
-  setOption: React.Dispatch<React.SetStateAction<string>>;
-  optionValue: string | number;
-  width: string;
-  hasSuffix?: boolean;
-  suffixText?: string;
-}) {
+}: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
   const options =
@@ -34,7 +36,7 @@ export default function SelectBar({
             ? Array.from({ length: 12 }, (_, i) => `${(13 + i) % 24}시`)
             : [];
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: T) => {
     setOption(option);
     setIsOpen(false);
   };
@@ -56,7 +58,10 @@ export default function SelectBar({
       </S.SelectBox>
       <S.SelectOptions $isOpen={isOpen}>
         {options.map((option, index) => (
-          <S.OptionItem key={index} onClick={() => handleOptionClick(option)}>
+          <S.OptionItem
+            key={index}
+            onClick={() => handleOptionClick(option as T)}
+          >
             <Typography.H4Md>{option}</Typography.H4Md>
           </S.OptionItem>
         ))}
