@@ -1,10 +1,11 @@
+import { TypographyCss } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const RegionContainer = styled.div`
+export const RegionContainer = styled.div<{ $gap: string }>`
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: ${({ $gap }) => $gap};
 `;
 
 export const RegionWrapper = styled.div`
@@ -31,4 +32,18 @@ export const ButtonContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+`;
+
+export const RegionList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Region = styled.div`
+  ${TypographyCss.H4Md}
+
+  padding-top: 16px;
+  padding-bottom: 16px;
+  color: ${COLORS.GRAYSCALE_900};
+  cursor: pointer;
 `;
