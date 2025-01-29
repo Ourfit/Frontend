@@ -19,6 +19,8 @@ export const STEPS_LABEL = {
 
 export type StepLabel = (typeof STEPS_LABEL)[keyof typeof STEPS_LABEL];
 
+export type StepValue = string | string[] | { age: number; gender: string };
+
 export const SPORTS_LABEL = {
   GYM: "헬스",
   PILATES: "필라테스",

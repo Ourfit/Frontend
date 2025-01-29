@@ -6,13 +6,20 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { StepProps } from "@/types/step";
 import React, { useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 
-const Region = ({ nextStep }: StepProps) => {
-  const [region, setRegion] = useState("");
+const Region = ({ nextStep, value }: StepProps) => {
+  const [region, setRegion] = useState(typeof value === "string" ? value : "");
+  const [showToast, setShowToast] = useState(false);
 
   const buttonClickHandler = () => {
-    if (region.trim() && nextStep) {
-      nextStep(STEPS_LABEL.REGION, region);
+    if (region.trim()) {
+      if (nextStep) nextStep(STEPS_LABEL.REGION, region);
+      else {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 1500);
+      }
     }
   };
 
@@ -37,7 +44,7 @@ const Region = ({ nextStep }: StepProps) => {
       <S.ButtonContainer>
         <S.ButtonWrapper>
           <Button
-            disabled={!region.trim()}
+            disabled={!region.trim() || region === value}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}
@@ -46,6 +53,12 @@ const Region = ({ nextStep }: StepProps) => {
           </Button>
         </S.ButtonWrapper>
       </S.ButtonContainer>
+      {showToast && (
+        <Toast
+          message={TOAST_MESSAGES.SUCCESS}
+          status={TOAST_STATUSES.SUCCESS}
+        />
+      )}
     </S.RegionContainer>
   );
 };

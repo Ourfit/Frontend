@@ -6,17 +6,26 @@ import * as S from "./FitnessLeve.style";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { FITNESS_LEVELS, STEPS_LABEL } from "@/constants/Signup";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 
-const FitnessLevel = ({ nextStep }: StepProps) => {
-  const [level, setLevel] = useState<string | null>(null);
+const FitnessLevel = ({ nextStep, value }: StepProps) => {
+  const [level, setLevel] = useState<string | null>(
+    typeof value === "string" ? value : null,
+  );
+  const [showToast, setShowToast] = useState(false);
 
   const handleLevelClick = (selectedGender: string) => {
     setLevel(selectedGender);
   };
 
   const buttonClickHandler = () => {
-    if (level && nextStep) {
-      nextStep(STEPS_LABEL.FITNESS_LEVEL, level);
+    if (level) {
+      if (nextStep) nextStep(STEPS_LABEL.FITNESS_LEVEL, level);
+      else {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 1500);
+      }
     }
   };
 
@@ -49,7 +58,7 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
       <S.ButtonContainer>
         <S.ButtonWrapper>
           <Button
-            disabled={!level}
+            disabled={!level || level === value}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}
@@ -58,6 +67,12 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
           </Button>
         </S.ButtonWrapper>
       </S.ButtonContainer>
+      {showToast && (
+        <Toast
+          message={TOAST_MESSAGES.SUCCESS}
+          status={TOAST_STATUSES.SUCCESS}
+        />
+      )}
     </S.GenderAgeContainer>
   );
 };

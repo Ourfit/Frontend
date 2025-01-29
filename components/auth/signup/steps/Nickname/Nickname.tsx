@@ -10,7 +10,9 @@ import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 
 const Nickname = ({ nextStep, value }: StepProps) => {
-  const [nickname, setNickname] = useState(value || "");
+  const [nickname, setNickname] = useState(
+    typeof value === "string" ? value : "",
+  );
   const [showToast, setShowToast] = useState(false);
 
   const buttonClickHandler = () => {

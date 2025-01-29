@@ -15,6 +15,13 @@ export default function EditBasicInfo({
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const router = useRouter();
 
+  const data = [
+    "중수다람쥐",
+    "송파구 신천동",
+    { age: 16, gender: "여성" },
+    "초보",
+  ];
+
   const INFO_LABEL = {
     NICKNAME: "닉네임 변경",
     GENDER_AGE: "나이 변경",
@@ -61,7 +68,7 @@ export default function EditBasicInfo({
           ))
         ) : (
           <S.ComponentWrapper>
-            <CurrentComponent value="중수다람쥐" />
+            <CurrentComponent value={data[currentPage]} />
           </S.ComponentWrapper>
         )}
       </S.ListContainer>
