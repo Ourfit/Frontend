@@ -4,6 +4,7 @@ import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { useEffect, useRef, useState } from "react";
 import EditProfile from "./_components/EditProfile";
 import ViewProfile from "./_components/ViewProfile";
+import EditBasicInfo from "./_components/EditBasicInfo";
 
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
@@ -16,6 +17,7 @@ const managementLinks = [
 
 export default function Mypage() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
   const [description, setDescription] = useState<string>("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [profileImage, setProfileImage] = useState<string>("/next.svg");
@@ -23,7 +25,8 @@ export default function Mypage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleEditProfile = () => setIsEditingProfile(true);
+  const handleEditProfile = () => setIsEditingProfile((prev) => !prev);
+  const handleEditBasicInfo = () => setIsEditingBasicInfo((prev) => !prev);
 
   const handleEditDescription = () => {
     setIsEditingDescription(true);
@@ -68,25 +71,33 @@ export default function Mypage() {
     }
   }, []);
 
-  return isEditingProfile ? (
-    <EditProfile
-      isEditingProfile={isEditingProfile}
-      isEditingDescription={isEditingDescription}
-      profileImage={profileImage}
-      handleProfileImageClick={() => fileInputRef.current?.click()}
-      handleEditDescription={handleEditDescription}
-      fileInputRef={fileInputRef}
-      handleFileChange={handleFileChange}
-      description={description}
-      handleDescriptionChange={handleDescriptionChange}
-      handleDescriptionBlur={handleDescriptionBlur}
-      descriptionInputRef={descriptionInputRef}
-    />
-  ) : (
+  if (isEditingProfile) {
+    return (
+      <EditProfile
+        handleEditProfile={handleEditProfile}
+        isEditingDescription={isEditingDescription}
+        profileImage={profileImage}
+        handleProfileImageClick={() => fileInputRef.current?.click()}
+        handleEditDescription={handleEditDescription}
+        fileInputRef={fileInputRef}
+        handleFileChange={handleFileChange}
+        description={description}
+        handleDescriptionChange={handleDescriptionChange}
+        handleDescriptionBlur={handleDescriptionBlur}
+        descriptionInputRef={descriptionInputRef}
+      />
+    );
+  }
+
+  if (isEditingBasicInfo) {
+    return <EditBasicInfo handleEditBasicInfo={handleEditBasicInfo} />;
+  }
+
+  return (
     <ViewProfile
-      isEditingProfile={isEditingProfile}
       profileImage={profileImage}
       handleEditProfile={handleEditProfile}
+      handleEditBasicInfo={handleEditBasicInfo}
       managementLinks={managementLinks}
     />
   );

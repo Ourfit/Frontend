@@ -6,21 +6,21 @@ import Link from "next/link";
 import * as S from "../style";
 
 interface ViewProfileProps {
-  isEditingProfile: boolean;
   profileImage: string;
   handleEditProfile: () => void;
+  handleEditBasicInfo: () => void;
   managementLinks: { href: string; label: string }[];
 }
 
 export default function ViewProfile({
-  isEditingProfile,
   profileImage,
   handleEditProfile,
+  handleEditBasicInfo,
   managementLinks,
 }: ViewProfileProps) {
   return (
     <>
-      <Header isEditingProfile={isEditingProfile} />
+      <Header />
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={false}>
           <S.ProfileImageWrapper $isEditingProfile={false}>
@@ -37,7 +37,9 @@ export default function ViewProfile({
             <S.SecondaryButton onClick={handleEditProfile}>
               프로필 편집
             </S.SecondaryButton>
-            <S.SecondaryButton>기본 정보 편집</S.SecondaryButton>
+            <S.SecondaryButton onClick={handleEditBasicInfo}>
+              기본 정보 편집
+            </S.SecondaryButton>
           </S.ButtonWrapper>
         </S.ProfileSection>
 

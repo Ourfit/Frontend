@@ -9,10 +9,11 @@ import { usePathname } from "next/navigation";
 import * as S from "./Header.style";
 
 interface HeaderProps {
-  isEditingProfile?: boolean;
+  title?: string;
+  onClick?: () => void;
 }
 
-export default function Header({ isEditingProfile }: HeaderProps) {
+export default function Header({ title, onClick }: HeaderProps) {
   const pathname = usePathname();
 
   const pageNames: Record<string, string> = {
@@ -24,7 +25,6 @@ export default function Header({ isEditingProfile }: HeaderProps) {
   };
 
   const isHome = pathname === "/";
-  const isSubPage = pathname.split("/").length - 1 === 1;
 
   return (
     <>
@@ -40,20 +40,6 @@ export default function Header({ isEditingProfile }: HeaderProps) {
             <Typography.H3Sb>송파구 신천동</Typography.H3Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
-      ) : isSubPage && isEditingProfile === true ? (
-        <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
-          <div
-            style={{ padding: "12px", display: "flex", alignItems: "center" }}
-          >
-            <ChevronLeft
-              style={{ display: "block" }}
-              onClick={() => window.history.back()}
-            />
-          </div>
-          <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {"프로필 편집"}
-          </Typography.H1Sb>
-        </S.HeaderContainer>
       ) : (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div
@@ -61,11 +47,11 @@ export default function Header({ isEditingProfile }: HeaderProps) {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => window.history.back()}
+              onClick={() => (onClick ? onClick() : window.history.back())}
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "Text"}
+            {title || pageNames[pathname]}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}
