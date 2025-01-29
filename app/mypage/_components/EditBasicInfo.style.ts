@@ -22,3 +22,7 @@ export const ListItem = styled.div`
     color: ${COLORS.GRAYSCALE_400};
   }
 `;
+
+export const ComponentWrapper = styled.div`
+  padding-top: 40px;
+`;

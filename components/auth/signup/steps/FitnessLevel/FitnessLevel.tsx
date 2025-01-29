@@ -15,7 +15,7 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
   };
 
   const buttonClickHandler = () => {
-    if (level) {
+    if (level && nextStep) {
       nextStep(STEPS_LABEL.FITNESS_LEVEL, level);
     }
   };

@@ -6,19 +6,27 @@ import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import React, { useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 
-const Nickname = ({ nextStep }: StepProps) => {
-  const [nickname, setNickname] = useState("");
+const Nickname = ({ nextStep, value }: StepProps) => {
+  const [nickname, setNickname] = useState(value || "");
+  const [showToast, setShowToast] = useState(false);
 
   const buttonClickHandler = () => {
     if (nickname.trim()) {
-      nextStep(STEPS_LABEL.NICKNAME, nickname);
+      if (nextStep) nextStep(STEPS_LABEL.NICKNAME, nickname);
+      else {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 1500);
+      }
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
+
   return (
     <S.NicknameContainer>
       <S.SignupIntroContainer>
@@ -40,15 +48,21 @@ const Nickname = ({ nextStep }: StepProps) => {
       <S.ButtonContainer>
         <S.ButtonWrapper>
           <Button
-            disabled={!nickname.trim()}
+            disabled={!nickname.trim() || nickname === value}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}
           >
-            다음
+            {nextStep ? "다음" : "변경완료"}
           </Button>
         </S.ButtonWrapper>
       </S.ButtonContainer>
+      {showToast && (
+        <Toast
+          message={TOAST_MESSAGES.SUCCESS}
+          status={TOAST_STATUSES.SUCCESS}
+        />
+      )}
     </S.NicknameContainer>
   );
 };

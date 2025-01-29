@@ -27,7 +27,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
   };
 
   const buttonClickHandler = () => {
-    if (selectedTimes.length > 0) {
+    if (selectedTimes.length > 0 && nextStep) {
       nextStep(STEPS_LABEL.TIME_PREFERENCES, selectedTimes);
     }
   };

@@ -24,7 +24,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
   };
 
   const buttonClickHandler = () => {
-    if (selectedSports.length >= 1) {
+    if (selectedSports.length >= 1 && nextStep) {
       nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
     }
   };

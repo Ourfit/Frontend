@@ -18,7 +18,7 @@ const GenderAge = ({ nextStep }: StepProps) => {
   };
 
   const buttonClickHandler = () => {
-    if (gender && age) {
+    if (gender && age && nextStep) {
       nextStep(STEPS_LABEL.GENDER_AGE, { gender, age });
     }
   };

@@ -11,7 +11,7 @@ const Region = ({ nextStep }: StepProps) => {
   const [region, setRegion] = useState("");
 
   const buttonClickHandler = () => {
-    if (region.trim()) {
+    if (region.trim() && nextStep) {
       nextStep(STEPS_LABEL.REGION, region);
     }
   };
