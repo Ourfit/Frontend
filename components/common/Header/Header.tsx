@@ -21,6 +21,7 @@ export default function Header({ isEditingProfile }: HeaderProps) {
     "/alarm": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
+    "/mypage/mate-history": "메이트 내역 관리",
   };
 
   const isHome = pathname === "/";

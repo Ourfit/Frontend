@@ -14,7 +14,13 @@ interface FrameProps {
 export default function Frame({ children }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
-  const shouldHideGnb = pathname === "/mypage/openchat";
+  const hiddenPaths = [
+    "/mypage/openchat",
+    "/auth/signup",
+    "/mypage/mate-history",
+  ];
+  const shouldHideGnb = hiddenPaths.includes(pathname);
+
   const bgColorGray = pathname === "/";
 
   return (
