@@ -14,9 +14,15 @@ interface ListItemProps {
     isRead?: boolean;
   };
   children: React.ReactNode;
+  hasArrowButton?: boolean;
 }
 
-export default function ListItem({ title, data, children }: ListItemProps) {
+export default function ListItem({
+  title,
+  data,
+  children,
+  hasArrowButton = true,
+}: ListItemProps) {
   return (
     <S.ItemContainer $isRead={data.isRead}>
       <S.ItemWrapper>
@@ -42,7 +48,7 @@ export default function ListItem({ title, data, children }: ListItemProps) {
           <Typography.H5Md>{children}</Typography.H5Md>
         </S.ContentWrpper>
       </S.ItemWrapper>
-      <ChevronRightIcon />
+      {hasArrowButton && <ChevronRightIcon />}
     </S.ItemContainer>
   );
 }
