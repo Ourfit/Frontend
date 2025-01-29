@@ -10,9 +10,13 @@ import * as S from "./Header.style";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
+  hasBackButton?: boolean;
 }
 
-export default function Header({ isEditingProfile }: HeaderProps) {
+export default function Header({
+  isEditingProfile,
+  hasBackButton = true,
+}: HeaderProps) {
   const pathname = usePathname();
 
   const pageNames: Record<string, string> = {
@@ -55,19 +59,31 @@ export default function Header({ isEditingProfile }: HeaderProps) {
             {"프로필 편집"}
           </Typography.H1Sb>
         </S.HeaderContainer>
+      ) : hasBackButton ? (
+        <S.HeaderContainer
+          $paddingLeft="0"
+          $paddingRight="12px"
+          style={{ borderBottom: `1px solid ${COLORS.GRAYSCALE_100}` }}
+        >
+          <S.IconWrapper>
+            <ChevronLeft
+              style={{ display: "block" }}
+              onClick={() => window.history.back()}
+            />
+          </S.IconWrapper>
+          <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
+            {pageNames[pathname]}
+          </Typography.H2Sb>
+        </S.HeaderContainer>
       ) : (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
           <div
             style={{ padding: "12px", display: "flex", alignItems: "center" }}
           >
-            <ChevronLeft
-              style={{ display: "block" }}
-              onClick={() => window.history.back()}
-            />
+            <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
+              {pageNames[pathname] || "Text"}
+            </Typography.H2Sb>
           </div>
-          <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "Text"}
-          </Typography.H2Sb>
         </S.HeaderContainer>
       )}
     </>
