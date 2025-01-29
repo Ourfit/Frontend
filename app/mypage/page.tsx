@@ -9,8 +9,16 @@ import EditBasicInfo from "./_components/EditBasicInfo";
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
   { href: "/mypage/mate-history", label: "메이트 내역" },
-  { href: "/mypage/contact", label: "문의하기" },
-  { href: "/mypage/suggestions", label: "건의하기" },
+  {
+    href: "https://forms.gle/aYyfMEQr3xBU5ZqV6",
+    label: "문의하기",
+    target: "_blank",
+  },
+  {
+    href: "https://forms.gle/Vqxz1beYrSXBoEKX7",
+    label: "건의하기",
+    target: "_blank",
+  },
   { href: "/mypage/account-info", label: "계정 정보" },
   { href: "", label: "앱 버전" },
 ];

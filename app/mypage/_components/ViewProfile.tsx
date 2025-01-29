@@ -9,7 +9,7 @@ interface ViewProfileProps {
   profileImage: string;
   handleEditProfile: () => void;
   handleEditBasicInfo: () => void;
-  managementLinks: { href: string; label: string }[];
+  managementLinks: { href: string; label: string; target?: string }[];
 }
 
 export default function ViewProfile({
@@ -47,7 +47,9 @@ export default function ViewProfile({
           <S.List>
             {managementLinks.map((link) => (
               <S.ListItem key={link.href}>
-                <Link href={link.href}>{link.label}</Link>
+                <Link href={link.href} target={link.target}>
+                  {link.label}
+                </Link>
                 <ChevronLeft />
               </S.ListItem>
             ))}
