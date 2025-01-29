@@ -16,27 +16,23 @@ export const PageContainer = styled.div<{
   }
 `;
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.div<{ $isMatePage?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  background-color: ${({ $isMatePage }) =>
+    $isMatePage ? COLORS.BASE_WHITE : "transparent"};  // /challenge/mate일 경우 BASE_WHITE 배경색 적용
 `;
 
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-
-  & > svg {
-    width: 20px;
-    height: 20px;
-    color: ${COLORS.GRAYSCALE_800};
-  }
+export const Search2Container = styled.div<{ $isMatePage?: boolean }>`
+  border-radius: 20px;
+  width: 85%; 
+  flex-shrink: 0; 
+  background-color: ${({ $isMatePage }) =>
+    $isMatePage ? COLORS.BASE_WHITE : "transparent"};  
+  scroll-snap-align: start; 
 `;
-
 export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,17 +42,14 @@ export const MainContent = styled.div`
 
 export const SubContent = styled.div`
   display: flex;
-  flex-direction: column;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  flex-grow: 1; 
-`;
-
-export const Content = styled.div`
-  color: ${COLORS.GRAYSCALE_500};
-`;
-
-export const Button = styled.button`
-  background-color: ${COLORS.BLUE_500};
-  color: ${COLORS.BASE_WHITE};
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 16px;
+  padding-left: 5%;
+  padding-bottom: 48px;
+  overflow-x: auto; // 수평 스크롤 자동 추가 
+  white-space: nowrap; 
+  &::-webkit-scrollbar {
+    display: none; 
+  }
 `;
