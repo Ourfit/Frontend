@@ -185,7 +185,7 @@ export default function MatchedMate({
         <S.TimeInfo>
           <S.TimeInfoHeader>
             {timeInfo ? (
-              <S.TimeInfoHeaderTitle $hasData={!!selectedFacility}>
+              <S.TimeInfoHeaderTitle $hasData={!!timeInfo}>
                 <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
                 <Typography.H5Md color="#004DFF" onClick={handleNavigateToTime}>
                   편집
