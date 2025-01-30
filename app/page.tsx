@@ -8,7 +8,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 
 export default function Home() {
   return (
-    <Frame>
+    <Frame style={{ height: "100svh" }}>
       <Tab tabs={["text", "text2", "text3"]} />
       <div style={{ textAlign: "center", height: "100px" }}>test</div>
       <div style={{ textAlign: "center", height: "100px" }}>test</div>

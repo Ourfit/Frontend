@@ -11,7 +11,7 @@ interface FrameProps {
   contentStyle?: React.CSSProperties;
 }
 
-export default function Frame({ children }: Readonly<FrameProps>) {
+export default function Frame({ children, style }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
   const hiddenGnbPaths = ["/mypage/openchat", "/mate/facility", "/mate/time"];
@@ -19,7 +19,7 @@ export default function Frame({ children }: Readonly<FrameProps>) {
   const shouldHideGnb = hiddenGnbPaths.includes(pathname);
 
   return (
-    <S.FrameContainer>
+    <S.FrameContainer style={{ ...style }}>
       <S.Content>{children}</S.Content>
       {!shouldHideGnb && <Gnb />}
     </S.FrameContainer>
