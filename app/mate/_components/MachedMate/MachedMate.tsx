@@ -6,7 +6,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Modal from "./Modal/Modal";
+import Modal from "../Modal/Modal";
 import * as S from "./style";
 
 interface MatchedMateProps {
