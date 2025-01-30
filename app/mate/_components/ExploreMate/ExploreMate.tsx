@@ -2,6 +2,7 @@
 import ChevronLeft from "@/assets/images/chevron-left.svg";
 import Evening from "@/assets/images/evening.svg";
 import { Typography } from "@/components/atoms/Typography";
+import Tooltip from "@/components/common/Tooltip/Tooltip";
 import * as S from "./style";
 
 const dummyMates = [
@@ -76,13 +77,17 @@ export default function ExploreMate() {
     <S.ExploreMateContainer>
       <S.FilterWrapper>
         <S.MateFilterTrigger>
-          <Typography.H5Sb color="#8A92A3">탐색</Typography.H5Sb>
+          <Typography.H5Sb color="#8A92A3">필터</Typography.H5Sb>
           <ChevronLeft
             style={{ transform: "rotate(270deg)" }}
             width="16px"
             height="16px"
           />
         </S.MateFilterTrigger>
+        <Tooltip
+          text="원하는 메이트 조건을 설정해보세요!"
+          position="left"
+        ></Tooltip>
       </S.FilterWrapper>
 
       <S.MateList>

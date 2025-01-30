@@ -14,6 +14,8 @@ export const ExploreMateContainer = styled.div`
 `;
 
 export const FilterWrapper = styled.div`
+  position: relative;
+
   width: 100%;
   height: 64px;
   padding: 16px 20px 12px 20px;
