@@ -9,6 +9,15 @@ export const ExploreMateContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
   width: 100%;
   height: 100%;
 `;
@@ -55,18 +64,10 @@ export const MateList = styled.div`
   gap: 16px;
 
   width: 350px;
-  max-height: 100%;
-  overflow-y: auto;
+  height: 100%;
 
   padding-top: 8px;
   padding-bottom: 20px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 `;
 
 export const MateListItem = styled.div`
