@@ -21,7 +21,7 @@ export const TooltipContainer = styled.div<{ position: TooltipPosition }>`
   border-radius: 10px;
   white-space: nowrap;
 
-  width: 108px;
+  width: auto;
   height: 34px;
 
   &::after {
