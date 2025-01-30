@@ -2,6 +2,7 @@ import XIcon from "@/assets/images/x.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES } from "@/constants/Button";
+import { useCallback, useState } from "react";
 import * as S from "./style";
 
 export const sportsList = [
@@ -29,8 +30,47 @@ export const sportsList = [
 ];
 
 export default function FilterPanel({ onClose }: { onClose: () => void }) {
+  const [startY, setStartY] = useState<number>(0);
+  const [currentY, setCurrentY] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLDivElement>) => {
+      setIsDragging(true);
+      setStartY(e.touches[0].clientY);
+    },
+    [],
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent<HTMLDivElement>) => {
+      if (!isDragging) return;
+      const diff = e.touches[0].clientY - startY;
+
+      setCurrentY(diff > 0 ? diff : 0);
+    },
+    [isDragging, startY],
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+
+    if (currentY > 600) {
+      onClose();
+    } else {
+      setCurrentY(0);
+    }
+  }, [currentY, onClose]);
+
   return (
-    <S.FilterPanelContainer>
+    <S.FilterPanelContainer
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{
+        transform: `translate(-50%, calc(0px + ${currentY}px))`,
+      }}
+    >
       <S.FilterPanelHeader>
         <S.FilterPanelTitle>
           <Typography.H2Sb>탐색 필터</Typography.H2Sb>
