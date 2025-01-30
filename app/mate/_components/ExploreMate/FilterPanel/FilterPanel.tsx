@@ -2,7 +2,7 @@ import XIcon from "@/assets/images/x.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES } from "@/constants/Button";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as S from "./style";
 
 export const sportsList = [
@@ -61,6 +61,14 @@ export default function FilterPanel({ onClose }: { onClose: () => void }) {
       setCurrentY(0);
     }
   }, [currentY, onClose]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   return (
     <S.FilterPanelContainer
