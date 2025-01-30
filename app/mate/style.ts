@@ -20,7 +20,7 @@ export const matePageContent = styled.div`
   gap: 7px;
 
   width: 100%;
-  height: auto;
+  height: 100%;
   min-height: 230px;
 `;
 

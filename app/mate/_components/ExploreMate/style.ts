@@ -43,6 +43,7 @@ export const MateFilterTrigger = styled.div`
   border: 1.2px solid ${COLORS.GRAYSCALE_200};
 
   background-color: #ffffff;
+  cursor: pointer;
 `;
 
 export const MateList = styled.div`

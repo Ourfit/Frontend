@@ -3,6 +3,8 @@ import ChevronLeft from "@/assets/images/chevron-left.svg";
 import Evening from "@/assets/images/evening.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
+import { useState } from "react";
+import FilterPanel from "./FilterPanel/FilterPanel";
 import * as S from "./style";
 
 const dummyMates = [
@@ -73,10 +75,17 @@ const dummyMates = [
 ];
 
 export default function ExploreMate() {
+  const [showTooltip, setShowTooltip] = useState(true);
+  const [showFilterPanel, setShowFilterPanel] = useState(false);
+
+  const handleFilterClick = () => {
+    setShowTooltip(false);
+    setShowFilterPanel(!showFilterPanel);
+  };
   return (
     <S.ExploreMateContainer>
       <S.FilterWrapper>
-        <S.MateFilterTrigger>
+        <S.MateFilterTrigger onClick={handleFilterClick}>
           <Typography.H5Sb color="#8A92A3">필터</Typography.H5Sb>
           <ChevronLeft
             style={{ transform: "rotate(270deg)" }}
@@ -84,11 +93,17 @@ export default function ExploreMate() {
             height="16px"
           />
         </S.MateFilterTrigger>
-        <Tooltip
-          text="원하는 메이트 조건을 설정해보세요!"
-          position="left"
-        ></Tooltip>
+        {showTooltip ? (
+          <Tooltip
+            text="원하는 메이트 조건을 설정해보세요!"
+            position="left"
+          ></Tooltip>
+        ) : null}
       </S.FilterWrapper>
+
+      {showFilterPanel && (
+        <FilterPanel onClose={() => setShowFilterPanel(false)} />
+      )}
 
       <S.MateList>
         {dummyMates.map((mate) => (
