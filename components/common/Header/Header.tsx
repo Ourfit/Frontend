@@ -18,6 +18,7 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
 
   const pageNames: Record<string, string> = {
     "/challenge": "챌린지",
+    "/challenge/registration": "챌린지 등록",
     "/mate": "메이트",
     "/alarm": "알림",
     "/mypage": "설정",
@@ -26,6 +27,7 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
+  const hasBottomBorder = pathname === "/challenge/registration";
 
   return (
     <>

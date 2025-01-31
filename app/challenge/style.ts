@@ -16,6 +16,7 @@ export const PageContainer = styled.div<{
   }
 `;
 
+// 검색
 export const SearchContainer = styled.div<{ $isMatePage?: boolean }>`
   display: flex;
   justify-content: center;
@@ -33,6 +34,17 @@ export const Search2Container = styled.div<{ $isMatePage?: boolean }>`
     $isMatePage ? COLORS.BASE_WHITE : "transparent"};  
   scroll-snap-align: start; 
 `;
+
+export const MateChallengeContainer = styled.div<{ $isMatePage?: boolean }>`
+  border-radius: 20px;
+  width: 85%; 
+  height: auto;
+  flex-shrink: 0; 
+  background-color: ${({ $isMatePage }) =>
+    $isMatePage ? COLORS.BASE_WHITE : "transparent"};  
+  scroll-snap-align: start; 
+`;
+
 export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -47,6 +59,19 @@ export const SubContent = styled.div`
   gap: 16px;
   padding-left: 5%;
   padding-bottom: 48px;
+  overflow-x: auto; // 수평 스크롤 자동 추가 
+  white-space: nowrap; 
+  &::-webkit-scrollbar {
+    display: none; 
+  }
+`;
+
+export const SubContent2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding-left: 5%;
+  padding-bottom: 5%;
   overflow-x: auto; // 수평 스크롤 자동 추가 
   white-space: nowrap; 
   &::-webkit-scrollbar {

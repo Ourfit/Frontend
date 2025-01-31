@@ -7,7 +7,6 @@ export const ProfileContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
 `;
 
 export const LeftContainer = styled.div`
@@ -15,6 +14,12 @@ export const LeftContainer = styled.div`
   width: 70%;
   padding: 20px 0px 16px 24px;
   gap: 16px;
+`;
+
+export const RigthContainer = styled.div`
+  display: flex;
+  padding: 0px 24px 16px 24px;
+  position: relative;
 `;
 
 export const MateCardContainer = styled.div`
@@ -53,6 +58,33 @@ export const ProfileInfo = styled.p`
   color: ${COLORS.GRAYSCALE_600};
 `;
 
+export const SelectBox = styled.div`
+  position: absolute;
+  right: 50px;
+  top: -5px;
+  padding: 10px;
+  background-color: ${COLORS.BASE_WHITE};
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border-radius: 15px;
+`;
+
+export const SelectOption = styled.div<{ color: string }>`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.14px;
+  color: ${(props) => props.color}; // color prop을 사용하여 동적으로 색상 지정
+  &:hover {
+    background-color: ${COLORS.GRAYSCALE_200};
+  }
+`;
+
 export const PrimaryButton = styled.button`
   display: flex;
   padding: 8px 10px;
@@ -67,13 +99,29 @@ export const PrimaryButton = styled.button`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.12px;
-
-  color: ${COLORS.BLUE_500};
-
-  background-color: ${COLORS.BLUE_50};
   border: none;
   border-radius: 10px;
   cursor: pointer;
+
+  color: ${COLORS.BLUE_500};
+  background-color: ${COLORS.BLUE_50};
+`;
+
+export const MoreButton = styled.button<{ $isMateChallengePage: boolean }>`
+  display: flex;
+  width: 24px;
+  height: 24px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  background-color: ${COLORS.BASE_WHITE};
 `;
 
 export const IconWrapper = styled.div`

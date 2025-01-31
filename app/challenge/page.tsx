@@ -7,7 +7,7 @@ import NotificationBanner from "../home/_components/NotificationBanner/Notificat
 import MateSearch from "./mate/MateSearch";
 import * as S from "./style";
 
-export default function Challenge() {
+export default function Page() {
   const tabItems = ["챌린지", "기록"];
 
   return (
