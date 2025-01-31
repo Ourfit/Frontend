@@ -9,6 +9,8 @@ interface Mate {
   profileImage: string;
   tags: string[];
   preferencesFacility: { name: string; address: string }[];
+  preferencesTime: { title: string; range: string };
+  openchatLink: string;
 }
 
 interface MateStore {
@@ -37,6 +39,8 @@ export const useMateInfoStore = create<MateStore>((set) => ({
           address: "서울 마포구 양화로12길 34 2층 201호",
         },
       ],
+      preferencesTime: { title: "주말 아침", range: "오전 9시 ~ 오전 11시" },
+      openchatLink: "https://open.kakao.com/o/gjvKMQah",
     },
     {
       id: 2,
@@ -56,6 +60,8 @@ export const useMateInfoStore = create<MateStore>((set) => ({
           address: "서울 마포구 양화로12길 34 2층 201호",
         },
       ],
+      preferencesTime: { title: "주말 저녁", range: "오후 7시 ~ 오후 9시" },
+      openchatLink: "https://open.kakao.com/o/gjvKMQah",
     },
   ],
   addMate: (mate) => set((state) => ({ mates: [...state.mates, mate] })),

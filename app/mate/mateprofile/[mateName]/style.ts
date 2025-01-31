@@ -9,8 +9,6 @@ export const PageContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  position: relative;
-
   width: 100%;
   background-color: #ffffff;
   height: auto;
@@ -389,6 +387,72 @@ export const ButtonWrapper = styled.div`
   gap: 20px;
 
   background-color: #ffffff;
+`;
 
-  z-index: 9999;
+export const ModalAlert = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 180px;
+  height: 81px;
+
+  gap: 12px;
+`;
+
+export const ModalAlertHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+
+  width: 100%;
+`;
+
+export const ModalAlertContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  flex-wrap: wrap;
+
+  width: 139px;
+  height: 42px;
+`;
+
+export const ModalButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 50px;
+
+  gap: 8px;
+`;
+
+export const StyledButton = styled.button`
+  width: 120px;
+  height: 50px;
+  border-radius: 16px;
+  border: none;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #545862;
+
+  &:last-child {
+    background-color: #004dff;
+    color: #ffffff;
+  }
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.16px;
 `;
