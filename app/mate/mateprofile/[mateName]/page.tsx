@@ -25,10 +25,6 @@ export default function MateProfile() {
   const [toastMessage, setToastMessage] = useState("");
   const [toastStatus, setToastStatus] = useState(TOAST_STATUSES.SUCCESS);
 
-  const handleModalOpen = () => {
-    setShowModal(true);
-  };
-
   const handleModalClose = () => {
     setShowModal(false);
   };
