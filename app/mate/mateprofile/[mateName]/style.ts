@@ -12,7 +12,7 @@ export const PageContainer = styled.div`
   width: 100%;
   background-color: #ffffff;
   height: auto;
-  min-height: 881px;
+  min-height: calc(100vh - 94px);
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -95,6 +95,9 @@ export const PreferenceSectionWrapper = styled.div`
 
   width: 100%;
   height: auto;
+
+  padding: 28px 20px;
+  box-sizing: border-box;
 `;
 
 export const PreferenceFacilityWrapper = styled.div`
@@ -104,6 +107,9 @@ export const PreferenceFacilityWrapper = styled.div`
 
   width: 100%;
   height: auto;
+
+  padding: 28px 20px;
+  box-sizing: border-box;
 `;
 
 export const PreferenceTimeWrapper = styled.div`
@@ -113,6 +119,9 @@ export const PreferenceTimeWrapper = styled.div`
 
   width: 100%;
   height: auto;
+
+  padding: 28px 20px;
+  box-sizing: border-box;
 `;
 
 export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
@@ -123,7 +132,7 @@ export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
   width: 100%;
   height: auto;
 
-  padding: 12px 0px 32px 0px;
+  padding: 12px 0px 120px 0px;
   box-sizing: border-box;
   background-color: #ffffff;
 `;
@@ -210,8 +219,6 @@ export const PreferenceContainer = styled.div`
   width: 100%;
   max-width: 390px;
   height: auto;
-
-  padding: 0px 20px;
 
   margin-top: 16px;
 `;
@@ -455,4 +462,11 @@ export const StyledButton = styled.button`
   font-weight: 500;
   line-height: 150%;
   letter-spacing: -0.16px;
+`;
+
+export const Line = styled.div`
+  width: 390px;
+  height: 10px;
+
+  background-color: ${COLORS.GRAYSCALE_50};
 `;

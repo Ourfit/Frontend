@@ -79,6 +79,7 @@ export default function MateProfile() {
               />
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>
+          <S.Line />
 
           <S.PreferenceContainer>
             <S.PreferenceSectionWrapper>
@@ -101,6 +102,7 @@ export default function MateProfile() {
                 ))}
               </S.PreferenceContent>
             </S.PreferenceSectionWrapper>
+            <S.Line />
 
             <S.PreferenceFacilityWrapper>
               <S.PreferenceHeader>
@@ -124,6 +126,8 @@ export default function MateProfile() {
                 ))}
               </S.PreferencePlaceWrapper>
             </S.PreferenceFacilityWrapper>
+            <S.Line />
+
             <S.PreferenceTimeWrapper>
               <S.PreferenceHeader>
                 <S.PreferenceTitle>선호 운동 시간 </S.PreferenceTitle>
