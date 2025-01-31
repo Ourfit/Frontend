@@ -23,10 +23,13 @@ export default function Header({ isEditingProfile }: HeaderProps) {
     "/mypage/openchat": "오픈 채팅 관리",
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
+    "/mate/mateprofile": "프로필",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
+
+  const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   return (
     <>
@@ -63,7 +66,7 @@ export default function Header({ isEditingProfile }: HeaderProps) {
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "Text"}
+            {pageNames[pathname] || (isProfilePage ? "프로필" : "text")}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}

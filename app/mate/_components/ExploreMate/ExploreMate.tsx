@@ -3,6 +3,7 @@ import ChevronLeft from "@/assets/images/chevron-left.svg";
 import Evening from "@/assets/images/evening.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FilterPanel from "./FilterPanel/FilterPanel";
 import * as S from "./style";
@@ -10,7 +11,7 @@ import * as S from "./style";
 const dummyMates = [
   {
     id: 1,
-    name: "초보 다람쥐",
+    name: "주녕이",
     gender: "남",
     age: 26,
     description:
@@ -77,6 +78,7 @@ const dummyMates = [
 export default function ExploreMate() {
   const [showTooltip, setShowTooltip] = useState(true);
   const [showFilterPanel, setShowFilterPanel] = useState(false);
+  const router = useRouter();
 
   const handleFilterClick = () => {
     setShowTooltip(false);
@@ -107,7 +109,12 @@ export default function ExploreMate() {
 
       <S.MateList>
         {dummyMates.map((mate) => (
-          <S.MateListItem key={mate.id}>
+          <S.MateListItem
+            key={mate.id}
+            onClick={() =>
+              router.push(`/mate/mateprofile/${encodeURIComponent(mate.name)}`)
+            }
+          >
             <S.MateProfileImageWrapper>
               <S.ProfileImage src={mate.profileImage} alt={mate.name} />
             </S.MateProfileImageWrapper>

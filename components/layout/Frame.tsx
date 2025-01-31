@@ -14,14 +14,18 @@ interface FrameProps {
 export default function Frame({ children, style }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
-  const hiddenGnbPaths = ["/mypage/openchat", "/mate/facility", "/mate/time"];
+  const hiddenGnbPaths = [
+    "/mypage/openchat",
+    "/mate/facility",
+    "/mate/time",
+    "/mate/mateprofile",
+  ];
 
-  const shouldHideGnb = hiddenGnbPaths.includes(pathname);
-
+  const isGnbHidden = hiddenGnbPaths.some((path) => pathname.startsWith(path));
   return (
     <S.FrameContainer style={{ ...style }}>
       <S.Content>{children}</S.Content>
-      {!shouldHideGnb && <Gnb />}
+      {!isGnbHidden && <Gnb />}
     </S.FrameContainer>
   );
 }
