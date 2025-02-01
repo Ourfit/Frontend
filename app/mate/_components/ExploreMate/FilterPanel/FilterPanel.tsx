@@ -29,10 +29,30 @@ export const sportsList = [
   "준영10",
 ];
 
-export default function FilterPanel({ onClose }: { onClose: () => void }) {
+interface FilterPanelProps {
+  onClose: () => void;
+  onApply: (filters: {
+    gender: string | null;
+    time: string | null;
+    sports: string[];
+  }) => void;
+}
+
+export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
   const [startY, setStartY] = useState<number>(0);
   const [currentY, setCurrentY] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [isApplyEnabled, setIsApplyEnabled] = useState(false);
+
+  useEffect(() => {
+    setIsApplyEnabled(
+      !!selectedGender && !!selectedTime && selectedSports.length > 0,
+    );
+  }, [selectedGender, selectedTime, selectedSports]);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
@@ -61,6 +81,22 @@ export default function FilterPanel({ onClose }: { onClose: () => void }) {
       setCurrentY(0);
     }
   }, [currentY, onClose]);
+
+  const handleGenderClick = (gender: string) => {
+    setSelectedGender(gender === selectedGender ? null : gender);
+  };
+
+  const handleTimeClick = (time: string) => {
+    setSelectedTime(time === selectedTime ? null : time);
+  };
+
+  const handleSportClick = (sport: string) => {
+    setSelectedSports((prev) => {
+      if (prev.includes(sport)) return prev.filter((s) => s !== sport);
+      if (prev.length < 4) return [...prev, sport];
+      return prev;
+    });
+  };
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -92,37 +128,43 @@ export default function FilterPanel({ onClose }: { onClose: () => void }) {
         <S.GenderWrapper>
           <Typography.H4Sb>성별</Typography.H4Sb>
           <S.GenderOptionBox>
-            <S.GenderOption>
-              <Typography.H4Md color="#8A92A3">여성</Typography.H4Md>
-            </S.GenderOption>
-            <S.GenderOption>
-              <Typography.H4Md color="#8A92A3">남성</Typography.H4Md>
-            </S.GenderOption>
+            {["여성", "남성"].map((gender) => (
+              <S.GenderOption
+                key={gender}
+                $selected={selectedGender === gender}
+                onClick={() => handleGenderClick(gender)}
+              >
+                <Typography.H4Md>{gender}</Typography.H4Md>
+              </S.GenderOption>
+            ))}
           </S.GenderOptionBox>
         </S.GenderWrapper>
         <S.TimeInfoWrapper>
           <Typography.H4Sb>시간대</Typography.H4Sb>
           <S.TimeOptionBox>
-            <S.TimeOption>
-              <Typography.H4Md color="#8A92A3">평일 낮</Typography.H4Md>
-            </S.TimeOption>
-            <S.TimeOption>
-              <Typography.H4Md color="#8A92A3">평일 저녁</Typography.H4Md>
-            </S.TimeOption>
-            <S.TimeOption>
-              <Typography.H4Md color="#8A92A3">평일 낮</Typography.H4Md>
-            </S.TimeOption>
-            <S.TimeOption>
-              <Typography.H4Md color="#8A92A3">평일 저녁</Typography.H4Md>
-            </S.TimeOption>
+            <S.TimeOptionBox>
+              {["평일 낮", "평일 저녁", "주말 낮", "주말 저녁"].map((time) => (
+                <S.TimeOption
+                  key={time}
+                  $selected={selectedTime === time}
+                  onClick={() => handleTimeClick(time)}
+                >
+                  <Typography.H4Md>{time}</Typography.H4Md>
+                </S.TimeOption>
+              ))}
+            </S.TimeOptionBox>
           </S.TimeOptionBox>
         </S.TimeInfoWrapper>
         <S.FilterWrapper>
           <Typography.H4Sb>운동 종류</Typography.H4Sb>
           <S.FilterFlex>
             {sportsList.map((sport) => (
-              <S.FilterChip key={sport}>
-                <Typography.H4Md color="#8A92A3">{sport}</Typography.H4Md>
+              <S.FilterChip
+                key={sport}
+                $selected={selectedSports.includes(sport)}
+                onClick={() => handleSportClick(sport)}
+              >
+                <Typography.H4Md>{sport}</Typography.H4Md>
               </S.FilterChip>
             ))}
           </S.FilterFlex>
@@ -130,7 +172,18 @@ export default function FilterPanel({ onClose }: { onClose: () => void }) {
       </S.FilterPanelSection>
 
       <S.ApplyButtonWrapper>
-        <Button size={BUTTON_SIZES.LARGE} variant="primary" disabled={true}>
+        <Button
+          size={BUTTON_SIZES.LARGE}
+          variant="primary"
+          disabled={!isApplyEnabled}
+          onClick={() =>
+            onApply({
+              gender: selectedGender,
+              time: selectedTime,
+              sports: selectedSports,
+            })
+          }
+        >
           적용하기
         </Button>
       </S.ApplyButtonWrapper>

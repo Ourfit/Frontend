@@ -12,7 +12,7 @@ const dummyMates = [
   {
     id: 1,
     name: "주녕이",
-    gender: "남",
+    gender: "남성",
     age: 26,
     description:
       "저랑 주말 저녁에 같이 헬스하실 분! 포기하지 말고 같이 도전해서 목표를 이뤄봅시다 👊🏻",
@@ -22,7 +22,7 @@ const dummyMates = [
   {
     id: 2,
     name: "운동 고수",
-    gender: "여",
+    gender: "여성",
     age: 28,
     description: "필라테스를 함께 하실 분을 찾고 있어요! 💪",
     profileImage: "/next.svg",
@@ -31,7 +31,7 @@ const dummyMates = [
   {
     id: 3,
     name: "테니스 마스터",
-    gender: "남",
+    gender: "남성",
     age: 30,
     description: "테니스 한 판 같이 치실 분 구해요! 🎾",
     profileImage: "/next.svg",
@@ -40,7 +40,7 @@ const dummyMates = [
   {
     id: 4,
     name: "수영 매니아",
-    gender: "여",
+    gender: "여성",
     age: 25,
     description: "수영 좋아하는 분들 같이 연습해요! 🏊‍♀️",
     profileImage: "/next.svg",
@@ -49,7 +49,7 @@ const dummyMates = [
   {
     id: 5,
     name: "요가러",
-    gender: "남",
+    gender: "남성",
     age: 27,
     description: "요가로 건강한 몸 만들어요! 🧘",
     profileImage: "/next.svg",
@@ -58,7 +58,7 @@ const dummyMates = [
   {
     id: 6,
     name: "요가러",
-    gender: "남",
+    gender: "남성",
     age: 27,
     description: "요가로 건강한 몸 만들어요! 🧘",
     profileImage: "/next.svg",
@@ -67,7 +67,7 @@ const dummyMates = [
   {
     id: 7,
     name: "요가러",
-    gender: "남",
+    gender: "남성",
     age: 27,
     description: "요가로 건강한 몸 만들어요! 🧘",
     profileImage: "/next.svg",
@@ -79,6 +79,38 @@ export default function ExploreMate() {
   const [showTooltip, setShowTooltip] = useState(true);
   const [showFilterPanel, setShowFilterPanel] = useState(false);
   const router = useRouter();
+
+  const [filters, setFilters] = useState<{
+    gender: string | null;
+    time: string | null;
+    sports: string[];
+  }>({ gender: null, time: null, sports: [] });
+
+  const filteredMates = dummyMates.filter((mate) => {
+    if (filters.gender && mate.gender !== filters.gender) return false;
+
+    if (filters.time && !mate.tags.includes(filters.time)) return false;
+
+    if (
+      filters.sports.length > 0 &&
+      !filters.sports.some((sport) => mate.tags.includes(sport))
+    )
+      return false;
+
+    return true;
+  });
+
+  const isFilterApplied =
+    filters.gender || filters.time || filters.sports.length > 0;
+
+  const handleFilterApply = (newFilters: {
+    gender: string | null;
+    time: string | null;
+    sports: string[];
+  }) => {
+    setFilters(newFilters);
+    setShowFilterPanel(false);
+  };
 
   const handleFilterClick = () => {
     setShowTooltip(false);
@@ -104,11 +136,14 @@ export default function ExploreMate() {
       </S.FilterWrapper>
 
       {showFilterPanel && (
-        <FilterPanel onClose={() => setShowFilterPanel(false)} />
+        <FilterPanel
+          onClose={() => setShowFilterPanel(false)}
+          onApply={handleFilterApply}
+        />
       )}
 
       <S.MateList>
-        {dummyMates.map((mate) => (
+        {(isFilterApplied ? filteredMates : dummyMates).map((mate) => (
           <S.MateListItem
             key={mate.id}
             onClick={() =>

@@ -90,12 +90,13 @@ export const FilterFlex = styled.div`
   justify-content: flex-start;
 `;
 
-export const FilterChip = styled.div`
+export const FilterChip = styled.div<{ $selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border: 1px solid #e0e0e0;
+  border: 1px solid
+    ${({ $selected }) => ($selected ? COLORS.BLUE_500 : "#e0e0e0")};
   border-radius: 12px;
   padding: 12px 20px;
 
@@ -104,6 +105,12 @@ export const FilterChip = styled.div`
   box-sizing: border-box;
 
   white-space: nowrap;
+
+  background-color: ${({ $selected }) =>
+    $selected ? COLORS.BLUE_50 : "transparent"};
+
+  color: ${({ $selected }) =>
+    $selected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
 `;
 
 export const CloseButton = styled.button`
@@ -131,7 +138,7 @@ export const GenderOptionBox = styled.div`
   height: 45px;
 `;
 
-export const GenderOption = styled.div`
+export const GenderOption = styled.div<{ $selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,8 +148,14 @@ export const GenderOption = styled.div`
   width: auto;
   height: 45px;
 
-  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border: 1px solid
+    ${({ $selected }) => ($selected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200)};
   border-radius: 12px;
+
+  background-color: ${({ $selected }) =>
+    $selected ? COLORS.BLUE_50 : "transparent"};
+  color: ${({ $selected }) =>
+    $selected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
 
   padding: 12px 20px;
   box-sizing: border-box;
