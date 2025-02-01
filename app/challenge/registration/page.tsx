@@ -11,6 +11,7 @@ import RegistrationStep3 from "./RegistrationStep/RegistrationStep3";
 import RegistrationStep4 from "./RegistrationStep/RegistrationStep4";
 import RegistrationFinish from "./RegistrationFinish";
 import * as S from "./style";
+import { FrameContainer } from "@/components/layout/Frame.style";
 
 export default function Page() {
   const [step, setStep] = useState(1);
@@ -49,7 +50,7 @@ export default function Page() {
     step === 6;
 
   return (
-    <Frame>
+    <FrameContainer $bgColorGray={true}>
       <Header />
       <Container>
         {step === 1 && <RegistrationStart onNext={handleNextStep} />}
@@ -74,7 +75,8 @@ export default function Page() {
         {step === 5 && (
           <RegistrationStep4
             onNext={handleNextStep}
-            onSelectionChange={setSelectedDate}  // 날짜를 부모에 전달
+            onSelectionChange={setSelectedDate}  
+            disabled={!isButtonActive}
           />
         )}
         {step === 6 && (
@@ -97,6 +99,6 @@ export default function Page() {
             : "다음"}
         </S.Button>
       </Container>
-    </Frame>
+    </FrameContainer>
   );
 }

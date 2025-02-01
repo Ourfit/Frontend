@@ -1,5 +1,5 @@
 import Button from "@/components/common/Button";
-import * as S from "./MateCard.style";
+import * as S from "../mate/Card/MateCard.style";
 
 const MateSearch = () => {
   return (

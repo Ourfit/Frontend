@@ -1,6 +1,11 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
+export const Container = styled.div<{
+  $bgColorGray?: boolean;
+}>`  background-color: ${({ $bgColorGray = false }) =>
+    $bgColorGray ? "#F6F6F8" : "#ffffff"};`;
+
 export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -142,6 +147,7 @@ export const SubTitle = styled.div`
   color: ${COLORS.GRAYSCALE_700};
 `;
 
+
 export const Button = styled.button`
   display: flex;
   padding: 16px 0px;
@@ -149,6 +155,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   gap: 23px;
+  margin-top: 10%;
   width: 100%;
   border: none;
   border-radius: 16px;

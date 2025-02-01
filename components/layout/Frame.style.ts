@@ -2,7 +2,12 @@
 
 import styled from "styled-components";
 
-export const FrameContainer = styled.div`
+export const FrameContainer = styled.div<{
+  $bgColorGray?: boolean;
+}>`
+  background-color: ${({ $bgColorGray = false }) =>
+    $bgColorGray ? "#F6F6F8" : "#ffffff"};
+  
   width: 100%;
   max-width: 450px;
   height: calc(100svh - 68px);

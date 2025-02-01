@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import AchievementRate50Icon from "@/assets/images/achievementRate50.svg";
 import LogoIcon from "@/assets/images/logo.svg";
 import * as S from "./MateChallengeCard.style";
-import { MateChallengeTodo } from "./MateChallengeTodo";
-import { MateChallengeDay } from "./MateChallengeDay";
+import { MateChallengeTodo } from "../Todo/MateChallengeTodo";
+import { MateChallengeDay } from "../Day/MateChallengeDay";
 
 export const MateChallengeCard2 = () => {
   const router = useRouter();

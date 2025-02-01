@@ -7,20 +7,17 @@ interface RegistrationStepContentProps {
 }
 
 const RegistrationStepContent = ({ onNext, onSelectionChange }: RegistrationStepContentProps) => {
-  const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
+  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
 
   useEffect(() => {
-    onSelectionChange(selectedNumbers.length > 0);
-  }, [selectedNumbers, onSelectionChange]); 
+    onSelectionChange(selectedNumber !== null);
+    console.log('선택된 문자: ', selectedNumber); 
+  }, [selectedNumber, onSelectionChange]);
 
   const handleNumberClick = (number: number) => {
-    setSelectedNumbers((prevSelectedNumbers) => {
-      const updatedNumbers = prevSelectedNumbers.includes(number)
-        ? prevSelectedNumbers.filter((num) => num !== number)
-        : [...prevSelectedNumbers, number];
-
-      return updatedNumbers;
-    });
+    setSelectedNumber((prevSelectedNumber) =>
+      prevSelectedNumber === number ? null : number
+    );
   };
 
   return (
@@ -29,7 +26,7 @@ const RegistrationStepContent = ({ onNext, onSelectionChange }: RegistrationStep
         {[1, 2, 3].map((number) => (
           <RS.NumberContent
             key={number}
-            $isSelected={selectedNumbers.includes(number)}  // $isSelected로 변경
+            $isSelected={selectedNumber === number} 
             onClick={() => handleNumberClick(number)}
           >
             {number}회
@@ -40,7 +37,7 @@ const RegistrationStepContent = ({ onNext, onSelectionChange }: RegistrationStep
         {[4, 5, 6, 7].map((number) => (
           <RS.NumberContent
             key={number}
-            $isSelected={selectedNumbers.includes(number)} 
+            $isSelected={selectedNumber === number} 
             onClick={() => handleNumberClick(number)}
           >
             {number}회

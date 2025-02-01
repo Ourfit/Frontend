@@ -13,7 +13,7 @@ export const TabContainer = styled.div`
 export const Tablist = styled.ul`
   display: flex;
   gap: 16px;
-  height: 40px;
+  height: 44px; /* 탭 리스트의 높이 고정 */
   padding-left: 20px;
 `;
 

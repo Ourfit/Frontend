@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Button from "@/components/common/Button";
-import * as S from "./MateCard.style";
+import * as S from "../Card/MateCard.style";
 
 const MateCard = () => {
   const router = useRouter();

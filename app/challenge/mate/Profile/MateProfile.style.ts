@@ -1,7 +1,6 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-// 메이트 프로필
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -79,7 +78,7 @@ export const SelectOption = styled.div<{ color: string }>`
   font-weight: 500;
   line-height: 150%;
   letter-spacing: -0.14px;
-  color: ${(props) => props.color}; // color prop을 사용하여 동적으로 색상 지정
+  color: ${(props) => props.color};
   &:hover {
     background-color: ${COLORS.GRAYSCALE_200};
   }
@@ -105,6 +104,27 @@ export const PrimaryButton = styled.button`
 
   color: ${COLORS.BLUE_500};
   background-color: ${COLORS.BLUE_50};
+`;
+
+export const CheckButton = styled.button`
+  display: flex;
+  padding: 10px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.13px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+
+  color: ${COLORS.BASE_WHITE};
+  background-color: ${COLORS.BLUE_500};
 `;
 
 export const MoreButton = styled.button<{ $isMateChallengePage: boolean }>`

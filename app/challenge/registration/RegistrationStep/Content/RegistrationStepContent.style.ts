@@ -28,14 +28,24 @@ export const MonthContentWrapper = styled.div`
   width: 100%;
 `;
 
+export const PeriodContentWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 30%;
+`;
+
 export const CalendarContentWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  margin-top: 5%;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 20px;
   color: ${COLORS.GRAYSCALE_700};
-  padding: 16px 8px 48px 8px;
+  background-color: ${COLORS.BASE_WHITE};
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+
+
 `;
 
 export const NumberContent = styled.div<{ $isSelected: boolean }>`
@@ -59,20 +69,6 @@ export const NumberContent = styled.div<{ $isSelected: boolean }>`
   color: ${(props) =>
     props.$isSelected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
   transition: background-color 0.3s ease;
-`;
-
-export const SelectWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-export const CalendarSelectWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 35%;
 `;
 
 export const Select = styled.select<{ $isSelected: boolean }>`
@@ -100,11 +96,13 @@ export const Select = styled.select<{ $isSelected: boolean }>`
   transition: background-color 0.3s ease;
 `;
 
-export const CaelendarSelect = styled.select<{ $isSelected: boolean }>`
+export const PeriodSelect = styled.select<{ $isSelected: boolean }>`
   display: flex;
   width: 100%;
+  height: 52px;
   padding: 0px 20px;
   align-items: center;
+  gap: 12px;
   border-radius: 12px;
   border: 1px solid
     ${(props) => (props.$isSelected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200)};

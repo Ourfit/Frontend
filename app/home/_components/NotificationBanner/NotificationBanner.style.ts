@@ -12,8 +12,7 @@ export const BannerContainer = styled.div<{ $isChallenge?: boolean }>`
   margin: 0 auto;
   cursor: pointer;
 
-  border: ${({ $isChallenge }) => 
-    $isChallenge ? `1px solid ${COLORS.BLUE_200}` : "none"}; /* 조건부 테두리 설정 */
+  border: 1px solid ${COLORS.BLUE_200};
 
   & > svg {
     width: 20px;

@@ -1,25 +1,19 @@
 import ProfileImageIcon from "@/assets/images/ProfileImage.svg";
 import MoreButtonIcon from "@/assets/images/moreButton.svg";
-import { useRouter } from "next/navigation";
 import * as S from "./MateProfile.style";
 import { useState, useEffect } from "react";
 
 const MateProfile = () => {
-  const [isMateChallengePage, setIsMateChallengePage] = useState(false); // Added this line to declare the state
+  const [isMateChallengePage, setIsMateChallengePage] = useState(false); 
   const [isSelectBoxVisible, setIsSelectBoxVisible] = useState(false);
-  const router = useRouter(); // Added router hook
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    setIsMateChallengePage(currentPath === "/challenge/ChallengeEdit");
+    setIsMateChallengePage(currentPath === "/challenge/mateChallenge");
   }, []);
 
   const handleMoreButtonClick = () => {
     setIsSelectBoxVisible(!isSelectBoxVisible);
-  };
-
-  const handleEditClick = () => {
-    router.push("/challenge/challengeEdit");
   };
 
   return (
@@ -43,7 +37,7 @@ const MateProfile = () => {
           </S.MoreButton>
           {isSelectBoxVisible && (
             <S.SelectBox>
-              <S.SelectOption color="#000" onClick={handleEditClick}>
+              <S.SelectOption color="#000" >
                 챌린지 수정하기
               </S.SelectOption>
               <S.SelectOption color="#FA6767">챌린지 삭제하기</S.SelectOption>

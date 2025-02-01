@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import AchievementRate100Icon from "@/assets/images/achievementRate100.svg";
+import AchievementRateIcon from "@/assets/images/achievementRate.svg";
 import * as S from "./MateChallengeCard.style";
-import { MateChallengeTodo } from "./MateChallengeTodo";
-import { MateChallengeDay } from "./MateChallengeDay";
+import { MateChallengeTodo } from "../Todo/MateChallengeTodo";
+import { MateChallengeDay } from "../Day/MateChallengeDay";
 
-export const MateChallengeCard3 = () => {
+export const MateChallengeCard = () => {
   const router = useRouter();
 
   return (
@@ -14,9 +14,9 @@ export const MateChallengeCard3 = () => {
       <S.ContentContainer>
         <MateChallengeDay />
         <S.IconWrapper>
-          <AchievementRate100Icon width={134} height={134} />
+          <AchievementRateIcon width={134} height={134} />
           <S.TextOverlay>
-            <div className="percentage">100%</div>
+            <div className="percentage">0%</div>
             <div className="label">목표 달성률</div>
           </S.TextOverlay>
         </S.IconWrapper>

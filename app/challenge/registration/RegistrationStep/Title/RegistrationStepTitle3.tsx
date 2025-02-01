@@ -4,7 +4,7 @@ import * as S from "./RegistrationStepTitle.style";
 const RegistrationStepTitle3 = ({ onNext }: { onNext: () => void }) => {
   return (
     <>
-        <ThirdStepBarIcon width={32} height={32} />
+        <ThirdStepBarIcon width={36} height={36} />
         <S.TitleContainer2>
           <S.TitleWrapper>
             <S.PointContent>얼마 동안</S.PointContent>

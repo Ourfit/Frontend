@@ -1,16 +1,15 @@
-import * as RS from "./Title/RegistrationStepTitle.style";
-import RegistrationStepTitle4 from "./Title/RegistrationStepTitle4";
-import RegistrationStepContent4 from "./Content/RegistrationStepContent4";
+import * as RS from "../registration/RegistrationStep/Title/RegistrationStepTitle.style";
+import RegistrationStepContent4 from "../registration/RegistrationStep/Content/RegistrationStepContent4";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import * as S from "./ChallengeCalendar.style";
 
-interface RegistrationStep4Props {
+interface ChallengeCalendarProps {
   onNext: () => void;
   onSelectionChange: (date: Date | null) => void;
-  disabled: boolean; 
 }
 
-const RegistrationStep4 = ({ onNext, onSelectionChange, disabled }: RegistrationStep4Props) => {
+export const ChallengeCalendar = ({ onNext, onSelectionChange }: ChallengeCalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
   const handleDateSelection = (date: Dayjs | null) => {
@@ -19,16 +18,16 @@ const RegistrationStep4 = ({ onNext, onSelectionChange, disabled }: Registration
       onSelectionChange(date ? date.toDate() : null);
     }
   };
+
+  const isButtonDisabled = selectedDate === null; 
+
   return (
-    <RS.MainContainer2>
-      <RegistrationStepTitle4 onNext={onNext} />
+    <S.RecordContainer>
       <RegistrationStepContent4
         onNext={onNext}
         onSelectionChange={handleDateSelection} 
-        disabled={disabled}
+        disabled={isButtonDisabled}  
       />
-    </RS.MainContainer2>
+    </S.RecordContainer>
   );
 };
-
-export default RegistrationStep4;
