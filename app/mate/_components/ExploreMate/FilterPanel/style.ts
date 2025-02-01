@@ -63,7 +63,7 @@ export const FilterPanelSection = styled.div`
   justify-content: flex-start;
 
   width: 100%;
-  //max-height: 484px;
+  max-height: calc(100vh - 169px);
 
   padding: 4px 20px 20px 20px;
   box-sizing: border-box;
