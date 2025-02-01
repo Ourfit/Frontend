@@ -100,8 +100,9 @@ export default function ExploreMate() {
     return true;
   });
 
-  const isFilterApplied =
-    filters.gender || filters.time || filters.sports.length > 0;
+  const isFilterApplied = Boolean(
+    filters.gender || filters.time || filters.sports.length > 0,
+  );
 
   const handleFilterApply = (newFilters: {
     gender: string | null;
@@ -116,13 +117,32 @@ export default function ExploreMate() {
     setShowTooltip(false);
     setShowFilterPanel(!showFilterPanel);
   };
+
+  const getFilterCount = () => {
+    let count = 0;
+    if (filters.gender) count += 1;
+    if (filters.time) count += 1;
+    count += filters.sports.length;
+    return count;
+  };
+
+  const filterCount = getFilterCount();
+
   return (
     <S.ExploreMateContainer>
       <S.FilterWrapper>
-        <S.MateFilterTrigger onClick={handleFilterClick}>
-          <Typography.H5Sb color="#8A92A3">필터</Typography.H5Sb>
+        <S.MateFilterTrigger
+          $isFilterApplied={isFilterApplied}
+          onClick={handleFilterClick}
+        >
+          <Typography.H5Sb color={isFilterApplied ? "#004DFF" : "#8A92A3"}>
+            필터 {filterCount > 0 && `+${filterCount}`}
+          </Typography.H5Sb>
           <ChevronLeft
-            style={{ transform: "rotate(270deg)" }}
+            style={{
+              transform: "rotate(270deg)",
+              color: isFilterApplied ? "#004DFF" : "#8A92A3",
+            }}
             width="16px"
             height="16px"
           />

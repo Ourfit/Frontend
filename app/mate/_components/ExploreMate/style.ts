@@ -36,7 +36,7 @@ export const FilterWrapper = styled.div`
   gap: 8px;
 `;
 
-export const MateFilterTrigger = styled.div`
+export const MateFilterTrigger = styled.div<{ $isFilterApplied: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +49,9 @@ export const MateFilterTrigger = styled.div`
   box-sizing: border-box;
 
   border-radius: 12px;
-  border: 1.2px solid ${COLORS.GRAYSCALE_200};
+  border: 1.2px solid
+    ${({ $isFilterApplied }) =>
+      $isFilterApplied ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
 
   background-color: #ffffff;
   cursor: pointer;
