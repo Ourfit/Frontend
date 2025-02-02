@@ -9,7 +9,10 @@ export const WelComeContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: 100%;
+  & > svg {
+    width: 152px;
+    height: 152px;
+  }
 `;
 
 export const WelcomeContentWrapper = styled.div`

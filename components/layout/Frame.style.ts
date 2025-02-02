@@ -1,5 +1,6 @@
 "use client";
 
+import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
 export const FrameContainer = styled.div`
@@ -9,15 +10,12 @@ export const FrameContainer = styled.div`
   padding-top: 48px;
   box-sizing: border-box;
   position: relative;
-  background-color: #ffffff;
+  background-color: ${COLORS.BASE_WHITE};
 `;
 
-export const Content = styled.div<{
-  $bgColorGray?: boolean;
-}>`
+export const Content = styled.div`
   box-sizing: border-box;
-  background-color: ${({ $bgColorGray = false }) =>
-    $bgColorGray ? "#F6F6F8" : "#ffffff"};
+  background-color: ${COLORS.BASE_WHITE};
   display: flex;
   flex-direction: column;
   flex-grow: 1;

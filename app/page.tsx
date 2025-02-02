@@ -7,10 +7,11 @@ import QuickMenuBar from "./home/_components/QuickMenuBar/QuickMenuBar";
 import NotificationBanner from "./home/_components/NotificationBanner/NotificationBanner";
 import UserSection from "./home/_components/UserSection/UserSection";
 import * as S from "./style";
+import { COLORS } from "@/constants/Theme";
 
 export default function Home() {
   return (
-    <Frame>
+    <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
       <Header />
       <S.PageContainer>
         <Banner />

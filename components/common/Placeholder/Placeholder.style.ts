@@ -14,12 +14,17 @@ export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
   gap: 8px;
   border: ${({ $isInputFocus }) =>
     $isInputFocus ? `1px solid ${COLORS.BLUE_500}` : "1px solid transparent"};
+
+  & > svg {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export const InputBox = styled.input`
   ${Typography.H4Md}
   box-sizing: border-box;
-  color: ${COLORS.GRAYSCALE_600};
+  color: ${COLORS.GRAYSCALE_900};
   border: none;
   width: 200px;
   outline: none;

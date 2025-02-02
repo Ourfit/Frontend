@@ -10,9 +10,10 @@ import * as S from "./Header.style";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
+  onClick?: () => void;
 }
 
-export default function Header({ isEditingProfile }: HeaderProps) {
+export default function Header({ isEditingProfile, onClick }: HeaderProps) {
   const pathname = usePathname();
 
   const pageNames: Record<string, string> = {
@@ -61,11 +62,11 @@ export default function Header({ isEditingProfile }: HeaderProps) {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => window.history.back()}
+              onClick={() => (onClick ? onClick() : window.history.back())}
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "Text"}
+            {pageNames[pathname]}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}
