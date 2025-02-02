@@ -72,11 +72,11 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => window.history.back()}
+              onClick={() => (onClick ? onClick() : window.history.back())}
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || "Text"}
+            {pageNames[pathname]}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}

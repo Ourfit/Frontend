@@ -10,7 +10,7 @@ export const InputContainer = styled.div`
   justify-content: space-between;
   position: relative;
 
-  width: 298px;
+  width: 100%;
   height: 52px;
 `;
 

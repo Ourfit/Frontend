@@ -34,59 +34,61 @@ const TimePreference = ({ nextStep }: StepProps) => {
 
   return (
     <S.TimePreferenceContainer>
-      <S.SignupIntroContainer>
-        <S.SignupIntroTitleWrapper>
-          <Typography.H1Sb>선호하는</Typography.H1Sb>
-          <Typography.H1Sb>
-            <span style={{ color: COLORS.BLUE_500 }}>운동 시간대</span>를
-            선택해주세요!
-          </Typography.H1Sb>
-        </S.SignupIntroTitleWrapper>
-        <Typography.H4Md color={COLORS.GRAYSCALE_600}>
-          메이트 매칭 시 나의 프로필에 보여지는 정보에요.
-        </Typography.H4Md>
-      </S.SignupIntroContainer>
-      <S.InfoContainer>
-        <Typography.H4Sb>평일</Typography.H4Sb>
-        <S.TextButtonWrapper>
-          {TIME_PREFERENCES.WEEKDAY.map(({ label, icon }) => (
-            <TextButton
-              key={label}
-              icon={ICONS[icon]}
-              isActive={selectedTimes.includes(label)}
-              onClick={() => handleTimeClick(label)}
-            >
-              {label}
-            </TextButton>
-          ))}
-        </S.TextButtonWrapper>
-      </S.InfoContainer>
-      <S.InfoContainer>
-        <Typography.H4Sb>주말</Typography.H4Sb>
-        <S.TextButtonWrapper>
-          {TIME_PREFERENCES.WEEKEND.map(({ label, icon }) => (
-            <TextButton
-              key={label}
-              icon={ICONS[icon]}
-              isActive={selectedTimes.includes(label)}
-              onClick={() => handleTimeClick(label)}
-            >
-              {label}
-            </TextButton>
-          ))}
-        </S.TextButtonWrapper>
-      </S.InfoContainer>
+      <S.TimePreferenceWrapper>
+        <S.SignupIntroContainer>
+          <S.SignupIntroTitleWrapper>
+            <Typography.H1Sb>선호하는</Typography.H1Sb>
+            <Typography.H1Sb>
+              <span style={{ color: COLORS.BLUE_500 }}>운동 시간대</span>를
+              선택해주세요!
+            </Typography.H1Sb>
+          </S.SignupIntroTitleWrapper>
+          <Typography.H4Md color={COLORS.GRAYSCALE_600}>
+            메이트 매칭 시 나의 프로필에 보여지는 정보에요.
+          </Typography.H4Md>
+        </S.SignupIntroContainer>
+        <S.InfoWrapper>
+          <S.InfoContainer>
+            <Typography.H4Sb>평일</Typography.H4Sb>
+            <S.TextButtonWrapper>
+              {TIME_PREFERENCES.WEEKDAY.map(({ label, icon }) => (
+                <TextButton
+                  key={label}
+                  icon={ICONS[icon]}
+                  isActive={selectedTimes.includes(label)}
+                  onClick={() => handleTimeClick(label)}
+                >
+                  {label}
+                </TextButton>
+              ))}
+            </S.TextButtonWrapper>
+          </S.InfoContainer>
+          <S.InfoContainer>
+            <Typography.H4Sb>주말</Typography.H4Sb>
+            <S.TextButtonWrapper>
+              {TIME_PREFERENCES.WEEKEND.map(({ label, icon }) => (
+                <TextButton
+                  key={label}
+                  icon={ICONS[icon]}
+                  isActive={selectedTimes.includes(label)}
+                  onClick={() => handleTimeClick(label)}
+                >
+                  {label}
+                </TextButton>
+              ))}
+            </S.TextButtonWrapper>
+          </S.InfoContainer>
+        </S.InfoWrapper>
+      </S.TimePreferenceWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <Button
-            disabled={selectedTimes.length === 0}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={buttonClickHandler}
-          >
-            다음
-          </Button>
-        </S.ButtonWrapper>
+        <Button
+          disabled={selectedTimes.length === 0}
+          size={BUTTON_SIZES.LARGE}
+          variant={BUTTON_VARIANTS.PRIMARY}
+          onClick={buttonClickHandler}
+        >
+          다음
+        </Button>
       </S.ButtonContainer>
     </S.TimePreferenceContainer>
   );
