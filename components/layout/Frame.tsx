@@ -20,11 +20,12 @@ export default function Frame({ children, style }: Readonly<FrameProps>) {
     "/mate/time",
     "/mate/mateprofile",
   ];
+  const bgColorGray = pathname === "/";
 
   const isGnbHidden = hiddenGnbPaths.some((path) => pathname.startsWith(path));
   return (
     <S.FrameContainer style={{ ...style }}>
-      <S.Content>{children}</S.Content>
+      <S.Content $bgColorGray={bgColorGray}>{children}</S.Content>
       {!isGnbHidden && <Gnb />}
     </S.FrameContainer>
   );

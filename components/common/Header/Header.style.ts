@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const HeaderContainer = styled.header<{
   $paddingLeft: string;
   $paddingRight: string;
+  $justifyContent?: string;
 }>`
   width: 100%;
   height: 48px;
@@ -13,11 +14,12 @@ export const HeaderContainer = styled.header<{
   padding-right: ${(props) => props.$paddingRight};
   padding-left: ${(props) => props.$paddingLeft};
   position: absolute;
-  justify-content: flex-start;
+  justify-content: ${({ $justifyContent = "flex-start" }) => $justifyContent};
   top: 0;
 `;
 
 export const LocationContainer = styled.div`
   display: flex;
   gap: 2px;
+  align-items: center;
 `;
