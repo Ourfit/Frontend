@@ -1,5 +1,3 @@
-"use client";
-
 import BellIcon from "@/assets/images/bell.svg";
 import ChallengeIcon from "@/assets/images/challenge.svg";
 import HomeIcon from "@/assets/images/home.svg";
@@ -44,7 +42,6 @@ const GNB_TABS = [
 
 const Gnb = () => {
   const router = useRouter();
-
   const pathname = usePathname();
 
   const handleTabClick = (path: string) => {
@@ -52,12 +49,15 @@ const Gnb = () => {
       router.push(path);
     }
   };
+
+  const isChallengeActive = pathname.startsWith("/challenge");
+
   return (
     <S.GnbContainer>
       {GNB_TABS.map((tab) => (
         <S.GnbTabWrapper
           key={tab.id}
-          $isActive={tab.path === pathname}
+          $isActive={tab.path === pathname || (tab.id === GNB_TAB_IDS.CHALLENGE && isChallengeActive)}
           onClick={() => handleTabClick(tab.path)}
         >
           {tab.icon}

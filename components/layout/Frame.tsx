@@ -11,19 +11,15 @@ interface FrameProps {
   contentStyle?: React.CSSProperties;
 }
 
-export default function Frame({
-  children,
-  style,
-  contentStyle,
-}: Readonly<FrameProps>) {
+export default function Frame({ children }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
-  const hiddenPaths = ["/mypage/openchat", "/auth/signup"];
-  const shouldHideGnb = hiddenPaths.includes(pathname);
+  const shouldHideGnb = pathname === "/mypage/openchat";
+  const bgColorGray = pathname === "/";
 
   return (
-    <S.FrameContainer style={{ ...style }}>
-      <S.Content style={{ ...contentStyle }}>{children}</S.Content>
+    <S.FrameContainer $bgColorGray={bgColorGray}>
+      <S.Content $bgColorGray={bgColorGray}>{children}</S.Content>
       {!shouldHideGnb && <Gnb />}
     </S.FrameContainer>
   );
