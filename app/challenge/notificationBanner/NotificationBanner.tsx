@@ -135,7 +135,7 @@ export default function NotificationBanner({
       {/* 운동 완료 알림창 */}
       {isNotificationVisible && (
         <M.Notification>
-          <Typography.H4Md>오늘 운동 완료!</Typography.H4Md>
+          <Typography.H4Md>💪🏻 오늘 운동 완료! 완전 멋져요! </Typography.H4Md>
         </M.Notification>
       )}
     </S.BannerContainer>

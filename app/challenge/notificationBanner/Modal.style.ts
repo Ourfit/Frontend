@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Notification = styled.div`
   position: fixed;
   top: 7%;
-  left: 35%;
+  left: 20%;
   padding: 10px 20px;
   border-radius: 10px;
   font-size: 16px;
