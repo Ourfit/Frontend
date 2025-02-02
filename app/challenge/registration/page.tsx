@@ -49,8 +49,10 @@ export default function Page() {
       (isAnyStringSelected && (step === 3 || step === 4 || step === 5))) ||
     step === 6;
 
+  const bgColorGray = step !== 1 && step !== 6;
+
   return (
-    <FrameContainer $bgColorGray={true}>
+    <FrameContainer $bgColorGray={bgColorGray}>
       <Header />
       <Container>
         {step === 1 && <RegistrationStart onNext={handleNextStep} />}
@@ -75,7 +77,7 @@ export default function Page() {
         {step === 5 && (
           <RegistrationStep4
             onNext={handleNextStep}
-            onSelectionChange={setSelectedDate}  
+            onSelectionChange={setSelectedDate}
             disabled={!isButtonActive}
           />
         )}

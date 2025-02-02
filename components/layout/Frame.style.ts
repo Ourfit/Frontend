@@ -14,7 +14,6 @@ export const FrameContainer = styled.div<{
   padding-top: 48px;
   box-sizing: border-box;
   position: relative;
-  background-color: #ffffff;
 `;
 
 export const Content = styled.div<{
