@@ -15,7 +15,7 @@ export default function NotificationBanner({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
-  const [isNotificationVisible, setIsNotificationVisible] = useState(false); 
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
 
   const handleCheckButtonClick = () => {
     setIsModalOpen(true);
@@ -33,7 +33,7 @@ export default function NotificationBanner({
     setIsNotificationVisible(true);
     setTimeout(() => {
       setIsNotificationVisible(false);
-    }, 2000); 
+    }, 2000);
   };
 
   return (
@@ -124,7 +124,7 @@ export default function NotificationBanner({
               size="l"
               variant="primary"
               disabled={false}
-              onClick={handleCompleteExerciseClick} 
+              onClick={handleCompleteExerciseClick}
             >
               오운완
             </Button>

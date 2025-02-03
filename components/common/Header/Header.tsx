@@ -23,11 +23,16 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
     "/alarm": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
+    "/mate/facility": "운동 시설",
+    "/mate/time": "운동 시간",
+    "/mate/mateprofile": "프로필",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
   const hasBottomBorder = pathname === "/challenge/registration";
+
+  const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   return (
     <>
@@ -72,11 +77,11 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => (onClick ? onClick() : window.history.back())}
+              onClick={() => window.history.back()}
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname]}
+            {pageNames[pathname] || (isProfilePage ? "프로필" : "text")}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}

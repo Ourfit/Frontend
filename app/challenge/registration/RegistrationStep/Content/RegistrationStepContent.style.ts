@@ -44,8 +44,6 @@ export const CalendarContentWrapper = styled.div`
   color: ${COLORS.GRAYSCALE_700};
   background-color: ${COLORS.BASE_WHITE};
   border: 1px solid ${COLORS.GRAYSCALE_200};
-
-
 `;
 
 export const NumberContent = styled.div<{ $isSelected: boolean }>`

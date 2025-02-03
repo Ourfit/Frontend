@@ -1,13 +1,13 @@
-import { StepProps } from "@/types/step";
 import { Typography } from "@/components/atoms/Typography";
-import { COLORS } from "@/constants/Theme";
-import * as S from "./GenderAge.style";
-import React, { useState } from "react";
 import Button from "@/components/common/Button";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import TextButton from "@/components/common/TextButton";
-import { GENDER, STEPS_LABEL } from "@/constants/Signup";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
+import TextButton from "@/components/common/TextButton";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { GENDER, STEPS_LABEL } from "@/constants/Signup";
+import { COLORS } from "@/constants/Theme";
+import { StepProps } from "@/types/step";
+import { useState } from "react";
+import * as S from "./GenderAge.style";
 
 const GenderAge = ({ nextStep }: StepProps) => {
   const [gender, setGender] = useState<string | null>(null);

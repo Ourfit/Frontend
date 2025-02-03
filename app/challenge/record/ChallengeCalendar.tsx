@@ -9,24 +9,27 @@ interface ChallengeCalendarProps {
   onSelectionChange: (date: Date | null) => void;
 }
 
-export const ChallengeCalendar = ({ onNext, onSelectionChange }: ChallengeCalendarProps) => {
+export const ChallengeCalendar = ({
+  onNext,
+  onSelectionChange,
+}: ChallengeCalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
   const handleDateSelection = (date: Dayjs | null) => {
-    if (!selectedDate || selectedDate !== date) {  
+    if (!selectedDate || selectedDate !== date) {
       setSelectedDate(date);
       onSelectionChange(date ? date.toDate() : null);
     }
   };
 
-  const isButtonDisabled = selectedDate === null; 
+  const isButtonDisabled = selectedDate === null;
 
   return (
     <S.RecordContainer>
       <RegistrationStepContent4
         onNext={onNext}
-        onSelectionChange={handleDateSelection} 
-        disabled={isButtonDisabled}  
+        onSelectionChange={handleDateSelection}
+        disabled={isButtonDisabled}
       />
     </S.RecordContainer>
   );

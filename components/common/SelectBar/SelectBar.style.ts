@@ -1,14 +1,14 @@
-import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
+import styled from "styled-components";
 
 export const SelectWrapper = styled.div`
   position: relative;
   width: 100%;
 `;
 
-export const SelectBox = styled.div<{ $isOpen: boolean }>`
+export const SelectBox = styled.div<{ $isOpen: boolean; width?: string }>`
   height: 52px;
-  width: 100%;
+  width: ${({ width }) => width || "100%"};
   padding: 0 20px;
   border: ${({ $isOpen }) =>
     $isOpen

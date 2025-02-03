@@ -13,8 +13,8 @@ const RegistrationStepContent3 = ({
   const [selectedMonth, setSelectedMonth] = useState<string>("");
 
   useEffect(() => {
-    onSelectionChange(selectedMonth !== ""); 
-    console.log('선택된 문자: ', selectedMonth); 
+    onSelectionChange(selectedMonth !== "");
+    console.log("선택된 문자: ", selectedMonth);
   }, [selectedMonth, onSelectionChange]);
 
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

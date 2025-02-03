@@ -11,16 +11,22 @@ interface FrameProps {
   contentStyle?: React.CSSProperties;
 }
 
-export default function Frame({ children }: Readonly<FrameProps>) {
+export default function Frame({ children, style }: Readonly<FrameProps>) {
   const pathname = usePathname();
 
-  const shouldHideGnb = pathname === "/mypage/openchat";
+  const hiddenGnbPaths = [
+    "/mypage/openchat",
+    "/mate/facility",
+    "/mate/time",
+    "/mate/mateprofile",
+  ];
   const bgColorGray = pathname === "/";
 
+  const isGnbHidden = hiddenGnbPaths.some((path) => pathname.startsWith(path));
   return (
-    <S.FrameContainer $bgColorGray={bgColorGray}>
+    <S.FrameContainer style={{ ...style }}>
       <S.Content $bgColorGray={bgColorGray}>{children}</S.Content>
-      {!shouldHideGnb && <Gnb />}
+      {!isGnbHidden && <Gnb />}
     </S.FrameContainer>
   );
 }

@@ -4,7 +4,7 @@ import * as S from "./MateProfile.style";
 import { useState, useEffect } from "react";
 
 const MateProfile = () => {
-  const [isMateChallengePage, setIsMateChallengePage] = useState(false); 
+  const [isMateChallengePage, setIsMateChallengePage] = useState(false);
   const [isSelectBoxVisible, setIsSelectBoxVisible] = useState(false);
 
   useEffect(() => {
@@ -37,9 +37,7 @@ const MateProfile = () => {
           </S.MoreButton>
           {isSelectBoxVisible && (
             <S.SelectBox>
-              <S.SelectOption color="#000" >
-                챌린지 수정하기
-              </S.SelectOption>
+              <S.SelectOption color="#000">챌린지 수정하기</S.SelectOption>
               <S.SelectOption color="#FA6767">챌린지 삭제하기</S.SelectOption>
             </S.SelectBox>
           )}

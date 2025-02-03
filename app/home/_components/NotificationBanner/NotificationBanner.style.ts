@@ -50,7 +50,8 @@ export const NotificationContent = styled.div<{ $isChallenge?: boolean }>`
 
   & > span {
     &:first-child {
-      color: ${({ $isChallenge }) => ($isChallenge ? COLORS.BLUE_300 : COLORS.GRAYSCALE_900)};
+      color: ${({ $isChallenge }) =>
+        $isChallenge ? COLORS.BLUE_300 : COLORS.GRAYSCALE_900};
     }
 
     &:last-child {

@@ -7,7 +7,7 @@ export const FrameContainer = styled.div<{
 }>`
   background-color: ${({ $bgColorGray = false }) =>
     $bgColorGray ? "#F6F6F8" : "#ffffff"};
-  
+
   width: 100%;
   max-width: 450px;
   height: calc(100svh - 68px);
