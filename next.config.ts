@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -17,6 +18,12 @@ const nextConfig: NextConfig = {
         },
       ],
     });
+
+    // 경로 별칭 추가
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname),
+    };
 
     return config;
   },

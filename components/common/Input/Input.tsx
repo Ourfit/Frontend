@@ -18,6 +18,7 @@ interface InputProps {
   onBlur: () => void;
   onClear: () => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  inputStyle?: React.CSSProperties;
 }
 
 export default function Input({
@@ -30,6 +31,7 @@ export default function Input({
   onBlur,
   onClear,
   onKeyPress,
+  inputStyle,
 }: InputProps) {
   const StatusIconComponent = INPUT_STATUS_ICONS[status];
 
@@ -42,6 +44,7 @@ export default function Input({
         onBlur={onBlur}
         onKeyDown={onKeyPress}
         $status={status}
+        style={{ ...inputStyle }}
       />
       {status !== INPUT_STATUS.DEFAULT && (
         <S.IconsContainer

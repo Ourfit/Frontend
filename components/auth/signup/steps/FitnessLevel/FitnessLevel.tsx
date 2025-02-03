@@ -21,44 +21,45 @@ const FitnessLevel = ({ nextStep }: StepProps) => {
   };
 
   return (
-    <S.GenderAgeContainer>
-      <S.SignupIntroContainer>
-        <S.SignupIntroTitleWrapper>
-          <Typography.H1Sb>
-            나의&nbsp;
-            <span style={{ color: COLORS.BLUE_500 }}>운동 실력</span>
-            &nbsp;은?
-          </Typography.H1Sb>
-        </S.SignupIntroTitleWrapper>
-        <Typography.H4Md color={COLORS.GRAYSCALE_600}>
-          메이트 매칭 시 나의 프로필에 보여지는 정보에요.
-        </Typography.H4Md>
-      </S.SignupIntroContainer>
-      <S.TextButtonWrapper>
-        {Object.values(FITNESS_LEVELS).map(({ label, description }) => (
-          <S.CustomTextButton
-            key={label}
-            isActive={level === label}
-            onClick={() => handleLevelClick(label)}
-          >
-            <Typography.H5Sb>{label}</Typography.H5Sb>
-            <Typography.H5Md>{description}</Typography.H5Md>
-          </S.CustomTextButton>
-        ))}
-      </S.TextButtonWrapper>
+    <S.FitnessLevelContainer>
+      <S.FitnessLevelWrapper>
+        <S.SignupIntroContainer>
+          <S.SignupIntroTitleWrapper>
+            <Typography.H1Sb>
+              나의&nbsp;
+              <span style={{ color: COLORS.BLUE_500 }}>운동 실력</span>
+              &nbsp;은?
+            </Typography.H1Sb>
+          </S.SignupIntroTitleWrapper>
+          <Typography.H4Md color={COLORS.GRAYSCALE_600}>
+            메이트 매칭 시 나의 프로필에 보여지는 정보에요.
+          </Typography.H4Md>
+        </S.SignupIntroContainer>
+        <S.TextButtonWrapper>
+          <Typography.H4Sb>나의 운동 수준은?</Typography.H4Sb>
+          {Object.values(FITNESS_LEVELS).map(({ label, description }) => (
+            <S.CustomTextButton
+              key={label}
+              isActive={level === label}
+              onClick={() => handleLevelClick(label)}
+            >
+              <Typography.H5Sb>{label}</Typography.H5Sb>
+              <Typography.H5Md>{description}</Typography.H5Md>
+            </S.CustomTextButton>
+          ))}
+        </S.TextButtonWrapper>
+      </S.FitnessLevelWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <Button
-            disabled={!level}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={buttonClickHandler}
-          >
-            다음
-          </Button>
-        </S.ButtonWrapper>
+        <Button
+          disabled={!level}
+          size={BUTTON_SIZES.LARGE}
+          variant={BUTTON_VARIANTS.PRIMARY}
+          onClick={buttonClickHandler}
+        >
+          다음
+        </Button>
       </S.ButtonContainer>
-    </S.GenderAgeContainer>
+    </S.FitnessLevelContainer>
   );
 };
 

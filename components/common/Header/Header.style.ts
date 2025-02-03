@@ -17,6 +17,12 @@ export const HeaderContainer = styled.header<{
   position: absolute;
   justify-content: ${({ $justifyContent = "flex-start" }) => $justifyContent};
   top: 0;
+
+  & svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
 `;
 
 export const LocationContainer = styled.div`

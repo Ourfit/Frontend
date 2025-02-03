@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
+import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
@@ -8,12 +8,14 @@ export const TabContainer = styled.div`
   flex-direction: column;
   justify-content: end;
   border-bottom: 1px solid ${COLORS.GRAYSCALE_100};
+
+  position: relative;
 `;
 
 export const Tablist = styled.ul`
   display: flex;
   gap: 16px;
-  height: 40px;
+  height: 44px; /* 탭 리스트의 높이 고정 */
   padding-left: 20px;
 `;
 
