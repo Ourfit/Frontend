@@ -193,7 +193,7 @@ export const ApplyButtonWrapper = styled.div`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
   height: 93px;
 
   background: #ffffff;
