@@ -1,5 +1,6 @@
 "use client";
 
+import EllipseIcon from "@/assets/images/ellipse.svg";
 import * as S from "./StepIndicator.style";
 import React from "react";
 
@@ -15,7 +16,9 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({
   return (
     <S.StepContainer>
       {Array.from({ length: totalSteps }).map((_, index) => (
-        <S.Ellipse key={index} $isActive={index + 1 === currentStep} />
+        <S.Ellipse key={index} $isActive={index + 1 === currentStep}>
+          <EllipseIcon />
+        </S.Ellipse>
       ))}
     </S.StepContainer>
   );

@@ -76,7 +76,8 @@ export const ProfileDescription = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
   height: 102px;
 
   margin-top: 29px;
@@ -148,11 +149,15 @@ export const DescriptionContent = styled.textarea`
 export const PreferenceContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
 
-  width: 350px;
-  max-width: 350px;
+  width: 100%;
+  max-width: 450px;
   height: auto;
+
+  padding: 0px 20px;
+  box-sizing: border-box;
 
   margin-top: 16px;
 `;
@@ -220,7 +225,7 @@ export const PreferenceBadge = styled.div`
 export const PreferencePlaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 100%;
   height: auto;
 
   gap: 16px;

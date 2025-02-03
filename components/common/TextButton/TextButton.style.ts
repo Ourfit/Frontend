@@ -14,6 +14,7 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     gap: 4px;
     padding: ${$hasIcon ? "12px 20px 12px 16px" : "12px 20px"};
     border-radius: 12px;
+    cursor: pointer;
 
     border: 1px solid ${$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
     color: ${$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};

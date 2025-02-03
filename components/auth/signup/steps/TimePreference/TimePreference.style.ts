@@ -4,7 +4,14 @@ import { COLORS } from "@/constants/Theme";
 export const TimePreferenceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 36px;
+`;
+
+export const TimePreferenceWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const SignupIntroContainer = styled.div`
@@ -19,6 +26,12 @@ export const SignupIntroTitleWrapper = styled.div`
   gap: 4px;
 `;
 
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,11 +44,6 @@ export const ButtonContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-`;
-
-export const ButtonWrapper = styled.div`
-  box-sizing: border-box;
-  width: 65px;
 `;
 
 export const TextButtonWrapper = styled.div`

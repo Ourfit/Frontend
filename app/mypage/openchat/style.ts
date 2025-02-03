@@ -50,6 +50,9 @@ export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  gap: 12px;
+
   width: 100%;
   border-radius: 16px;
   margin-top: 12px;

@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/assets/*": ["assets/*"]
+      "@/assets/*": ["assets/*"],
+      "@/components/*": ["components/*"]
     },
     "baseUrl": ".",
     "types": ["@types/styled-components"]

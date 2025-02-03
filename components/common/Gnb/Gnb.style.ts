@@ -7,7 +7,11 @@ import styled from "styled-components";
 export const GnbContainer = styled.div`
   position: sticky;
   bottom: 0;
+
   width: 100%;
+  height: 68px;
+  box-sizing: border-box;
+
   display: flex;
   justify-content: space-between;
   padding: 8px 12px 16px 12px;
