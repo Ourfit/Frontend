@@ -59,8 +59,10 @@ export const InputWrapper = styled.div`
 `;
 
 export const SubmitButtonWrapper = styled.div`
+  padding-left: 20px;
+  padding-right: 20px;
   margin-bottom: 20px;
-  width: 350px;
+  width: 100%;
   height: 53px;
 
   position: sticky;

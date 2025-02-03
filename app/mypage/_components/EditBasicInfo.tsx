@@ -13,6 +13,7 @@ export default function EditBasicInfo({
   handleEditBasicInfo,
 }: EditBasicInfoProps) {
   const [currentPage, setCurrentPage] = useState<number>(-1);
+  const [title, setTitle] = useState("");
   const router = useRouter();
 
   const data = [
@@ -35,6 +36,7 @@ export default function EditBasicInfo({
     if (selectCategory === "LOGOUT") router.replace("/");
 
     if (selectCategory in STEPS_LABEL) {
+      setTitle(INFO_LABEL[selectCategory]);
       const index = SIGNUP_STEPS.findIndex(
         (e) =>
           e.name === STEPS_LABEL[selectCategory as keyof typeof STEPS_LABEL],
@@ -45,14 +47,17 @@ export default function EditBasicInfo({
 
   const handleHeaderClick = () => {
     if (currentPage < 0) handleEditBasicInfo();
-    else setCurrentPage(-1);
+    else {
+      setCurrentPage(-1);
+      setTitle("");
+    }
   };
 
   const CurrentComponent = SIGNUP_STEPS[currentPage]?.component;
 
   return (
     <>
-      <Header title="기본 정보 편집" onClick={handleHeaderClick} />
+      <Header title={title || "기본 정보 편집"} onClick={handleHeaderClick} />
       <S.ListContainer>
         {currentPage < 0 ? (
           Object.entries(INFO_LABEL).map(([key, label]) => (

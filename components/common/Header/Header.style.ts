@@ -27,8 +27,9 @@ export const HeaderContainer = styled.header<{
 
 export const LocationContainer = styled.div`
   display: flex;
-  gap: 2px;
+  gap: 4px;
   align-items: center;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const IconWrapper = styled.div`

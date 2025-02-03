@@ -84,6 +84,7 @@ const Nickname = ({ nextStep, value }: StepProps) => {
           onBlur={handleInputBlur}
           onClear={handleClear}
           inputStyle={{ ...inputStyle }}
+          borderColor
         />
       </S.NicknameWrapper>
       <S.ButtonContainer>

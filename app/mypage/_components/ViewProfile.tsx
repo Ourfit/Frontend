@@ -1,6 +1,6 @@
 "use client";
 
-import ChevronLeft from "@/assets/images/chevron-left.svg";
+import ChevronRight from "@/assets/images/chevron-right.svg";
 import Header from "@/components/common/Header/Header";
 import Link from "next/link";
 import * as S from "../style";
@@ -50,7 +50,7 @@ export default function ViewProfile({
                 <Link href={link.href} target={link.target}>
                   {link.label}
                 </Link>
-                <ChevronLeft />
+                <ChevronRight />
               </S.ListItem>
             ))}
           </S.List>

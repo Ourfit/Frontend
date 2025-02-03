@@ -5,5 +5,5 @@ export default function MyPageLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <Frame style={{ height: "100svh" }}>{children}</Frame>;
+  return <Frame>{children}</Frame>;
 }

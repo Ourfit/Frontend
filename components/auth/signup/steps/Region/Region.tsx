@@ -71,8 +71,8 @@ const Region = ({ nextStep, value }: StepProps) => {
           setInputValue={setInputValue}
           onChange={handleInputChange}
           style={style}
-          placeholder="동명으로 검색 (ex.신천동)"
-          showLength={false}
+          text="동명으로 검색 (ex.신천동)"
+          borderColor
         />
       </S.RegionWrapper>
       {!show ? (

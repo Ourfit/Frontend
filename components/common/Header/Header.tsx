@@ -7,10 +7,10 @@ import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import { usePathname } from "next/navigation";
 import * as S from "./Header.style";
+import { GNB_LABELS } from "@/constants/Gnb";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
-  hasBackButton?: boolean;
   isChallenge?: boolean;
   title?: string;
   onClick?: () => void;
@@ -19,7 +19,6 @@ interface HeaderProps {
 export default function Header({
   isEditingProfile,
   isChallenge,
-  hasBackButton = true,
   title,
   onClick,
 }: HeaderProps) {
@@ -29,58 +28,41 @@ export default function Header({
     "/challenge": "챌린지",
     "/challenge/registration": "챌린지 등록",
     "/mate": "메이트",
-    "/alarm": "알림",
+    "/notifications": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
-    "/mypage/mate-history": "메이트 내역 관리",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
-  const hasBottomBorder = pathname === "/challenge/registration";
 
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
+  type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
+  const isGnbTab = Object.values(GNB_LABELS).includes(
+    pageNames[pathname] as GnbLabel,
+  );
+
   return (
     <>
-      {isChallenge ? (
+      {isHome ? (
         <S.HeaderContainer
           $paddingLeft="20px"
           $paddingRight="20px"
           $justifyContent="space-between"
         >
-          <Typography.H1Sb>챌린지</Typography.H1Sb>
-        </S.HeaderContainer>
-      ) : isHome ? (
-        <S.HeaderContainer
-          $paddingLeft="20px"
-          $paddingRight="20px"
-          $justifyContent="space-between"
-        >
-          <OurfitLogo style={{ width: "60px", height: "28.966px" }} />
+          <OurfitLogo
+            style={{ width: "60px", height: "28.966px", fill: COLORS.BLUE_500 }}
+          />
           <S.LocationContainer>
             <Location style={{ width: "24px", height: "24px" }} />
-            <Typography.H3Sb>송파구 신천동</Typography.H3Sb>
+            <Typography.H4Sb>송파구 신천동</Typography.H4Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
-      ) : isSubPage && isEditingProfile === true ? (
-        <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
-          <div
-            style={{ padding: "12px", display: "flex", alignItems: "center" }}
-          >
-            <ChevronLeft
-              style={{ display: "block" }}
-              onClick={() => window.history.back()}
-            />
-          </div>
-          <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {"프로필 편집"}
-          </Typography.H1Sb>
-        </S.HeaderContainer>
-      ) : hasBackButton ? (
+      ) : title ? (
         <S.HeaderContainer
           $paddingLeft="0"
           $paddingRight="12px"
@@ -89,25 +71,37 @@ export default function Header({
           <S.IconWrapper>
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => window.history.back()}
+              onClick={() => (onClick ? onClick() : window.history.back())}
             />
           </S.IconWrapper>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname]}
+            {title}
           </Typography.H2Sb>
         </S.HeaderContainer>
+      ) : isGnbTab || isChallenge ? (
+        <S.HeaderContainer $paddingLeft="20px" $paddingRight="0">
+          <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
+            {isChallenge ? "챌린지" : pageNames[pathname]}
+          </Typography.H1Sb>
+        </S.HeaderContainer>
       ) : (
-        <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">
-          <div
-            style={{ padding: "12px", display: "flex", alignItems: "center" }}
-          >
+        <S.HeaderContainer
+          $paddingLeft="0"
+          $paddingRight="12px"
+          style={{ borderBottom: `1px solid ${COLORS.GRAYSCALE_100}` }}
+        >
+          <S.IconWrapper>
             <ChevronLeft
               style={{ display: "block" }}
               onClick={() => (onClick ? onClick() : window.history.back())}
             />
-          </div>
+          </S.IconWrapper>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
-            {pageNames[pathname] || (isProfilePage ? "프로필" : "text")}
+            {isSubPage && isEditingProfile
+              ? "프로필 편집"
+              : isProfilePage
+                ? "프로필"
+                : pageNames[pathname]}
           </Typography.H2Sb>
         </S.HeaderContainer>
       )}

@@ -10,9 +10,8 @@ interface PlaceholderProps {
   inputValue: string;
   setInputValue?: React.Dispatch<React.SetStateAction<string>>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
   style?: React.CSSProperties;
-  showLength?: boolean;
+  borderColor?: boolean;
 }
 
 export default function Placeholder({
@@ -20,9 +19,8 @@ export default function Placeholder({
   inputValue,
   setInputValue,
   onChange,
-  placeholder,
   style,
-  showLength = true,
+  borderColor,
 }: PlaceholderProps) {
   const [isInputFocus, setIsInputFocus] = useState(false);
 
@@ -34,13 +32,17 @@ export default function Placeholder({
   };
 
   return (
-    <S.Wrapper $isInputFocus={isInputFocus} style={{ ...style }}>
+    <S.Wrapper
+      $isInputFocus={isInputFocus}
+      style={{ ...style }}
+      $borderColor={borderColor}
+    >
       <Search stroke={COLORS.GRAYSCALE_700} />
       <S.InputBox
         type="text"
         value={inputValue}
         onChange={onChange ? onChange : handleInputChange}
-        placeholder={placeholder}
+        placeholder={text}
         onFocus={() => setIsInputFocus(true)}
         onBlur={() => setIsInputFocus(false)}
       />

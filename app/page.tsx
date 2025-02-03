@@ -11,10 +11,7 @@ import * as S from "./style";
 
 export default function Home() {
   return (
-    <Frame
-      style={{ height: "100svh" }}
-      contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}
-    >
+    <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
       <Header />
       <S.PageContainer>
         <Banner />

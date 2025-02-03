@@ -2,6 +2,7 @@
 
 import { TypographyCss } from "@/components/atoms/Typography";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
+import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
 export const InputContainer = styled.div`
@@ -14,17 +15,20 @@ export const InputContainer = styled.div`
   height: 52px;
 `;
 
-export const StyledInput = styled.input<{ $status: InputStatus }>`
+export const StyledInput = styled.input<{
+  $status: InputStatus;
+  $borderColor?: boolean;
+}>`
   flex: 1;
   border: 1.4px solid
-    ${({ $status }) => {
+    ${({ $status, $borderColor = false }) => {
       switch ($status) {
         case INPUT_STATUS.COMPLETE:
           return "#004dff";
         case INPUT_STATUS.ERROR:
           return "#F46767";
         default:
-          return "transparent";
+          return $borderColor ? COLORS.GRAYSCALE_300 : "transparent";
       }
     }};
   outline: none;
@@ -45,7 +49,7 @@ export const StyledInput = styled.input<{ $status: InputStatus }>`
   ${TypographyCss.H4Md};
 
   &::placeholder {
-    color: #aaa;
+    color: ${COLORS.GRAYSCALE_600};
   }
 `;
 
