@@ -7,8 +7,10 @@ export const matePageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  align-items: center;
 
   width: 100%;
+  max-width: 450px;
   height: 100%;
 `;
 
@@ -60,10 +62,10 @@ export const mateView = styled.div`
   background-color: ${COLORS.GRAYSCALE_50};
 `;
 
-export const SmallDot = styled.div`
+export const SmallDot = styled.div<{ $top: number; $left: number }>`
   position: absolute;
-  top: 10px;
-  left: 27%;
+  top: ${({ $top }) => ($top !== undefined ? `${$top}px` : "10px")};
+  left: ${({ $left }) => ($left !== undefined ? `${$left}px` : "27%")};
   width: 4px;
   height: 4px;
   background-color: ${COLORS.BLUE_500};

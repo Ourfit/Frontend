@@ -8,7 +8,7 @@ export const ModalOverlay = styled.div`
   left: 50%;
 
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
   height: 100vh;
 
   background: rgba(0, 0, 0, 0.5);

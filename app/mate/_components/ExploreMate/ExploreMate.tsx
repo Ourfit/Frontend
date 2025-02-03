@@ -151,6 +151,7 @@ export default function ExploreMate() {
           <Tooltip
             text="원하는 메이트 조건을 설정해보세요!"
             position="left"
+            left={99}
           ></Tooltip>
         ) : null}
       </S.FilterWrapper>

@@ -30,8 +30,8 @@ export default function MatePage() {
         <Tab tabs={tabs} onClick={handleTabClick} />
         {showTooltip && (
           <>
-            <S.SmallDot />
-            <Tooltip text="메이트를 찾아보세요!" position="left" />
+            <S.SmallDot $top={8} $left={105} />
+            <Tooltip text="메이트를 찾아보세요!" position="left" left={119} />
           </>
         )}
       </S.TabWrapper>

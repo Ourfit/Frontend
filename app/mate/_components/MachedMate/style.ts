@@ -7,7 +7,10 @@ export const MatchedMateContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
+
   width: 100%;
+  max-width: 450px;
   height: 100%;
 
   overflow-y: auto;
@@ -27,7 +30,8 @@ export const MateCardWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   height: 255px;
   max-height: 255px;
 

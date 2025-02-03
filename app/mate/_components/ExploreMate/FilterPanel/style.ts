@@ -14,7 +14,7 @@ export const FilterPanelContainer = styled.div`
   transform: translate(-50%, 0);
 
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
   height: 100%;
 
   background: #ffffff;

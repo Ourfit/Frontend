@@ -4,11 +4,13 @@ import {
 } from "@/constants/TooltipPositions";
 import styled, { css } from "styled-components";
 
-export const TooltipContainer = styled.div<{ position: TooltipPosition }>`
+export const TooltipContainer = styled.div<{
+  position: TooltipPosition;
+  $left?: number;
+}>`
   position: absolute;
   top: 15%;
-  left: 45%;
-  transform: translateX(-50%);
+  left: ${({ $left }) => `${$left}px`};
 
   display: flex;
   align-items: center;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const FrameContainer = styled.div`
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
   height: calc(100svh - 68px);
   padding-top: 48px;
   box-sizing: border-box;

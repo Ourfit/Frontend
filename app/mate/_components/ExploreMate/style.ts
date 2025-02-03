@@ -61,15 +61,23 @@ export const MateList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
+
   flex-grow: 1;
 
   gap: 16px;
 
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
   height: 100%;
 
   padding-top: 8px;
   padding-bottom: 20px;
+
+  padding-left: 20px;
+  padding-right: 20px;
+
+  box-sizing: border-box;
 `;
 
 export const MateListItem = styled.div`
@@ -78,7 +86,7 @@ export const MateListItem = styled.div`
 
   gap: 12px;
 
-  width: 350px;
+  width: 100%;
   height: 124px;
 
   padding: 20px;

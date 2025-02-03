@@ -217,7 +217,7 @@ export const PreferenceContainer = styled.div`
   gap: 16px;
 
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
   height: auto;
 
   margin-top: 16px;
@@ -383,8 +383,8 @@ export const ButtonWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
 
-  width: 390px;
-  max-width: 390px;
+  width: 100%;
+  max-width: 450px;
   height: 94px;
 
   padding: 12px 0px 28px 0px;
@@ -465,7 +465,8 @@ export const StyledButton = styled.button`
 `;
 
 export const Line = styled.div`
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   height: 10px;
 
   background-color: ${COLORS.GRAYSCALE_50};
