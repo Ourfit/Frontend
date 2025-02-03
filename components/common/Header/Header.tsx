@@ -10,10 +10,15 @@ import * as S from "./Header.style";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
+  hasBackButton?: boolean;
   isChallenge?: boolean;
 }
 
-export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
+export default function Header({
+  isEditingProfile,
+  isChallenge,
+  hasBackButton = true,
+}: HeaderProps) {
   const pathname = usePathname();
 
   const pageNames: Record<string, string> = {
@@ -26,6 +31,7 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
+    "/mypage/mate-history": "메이트 내역 관리",
   };
 
   const isHome = pathname === "/";
@@ -69,6 +75,22 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
             {"프로필 편집"}
           </Typography.H1Sb>
+        </S.HeaderContainer>
+      ) : hasBackButton ? (
+        <S.HeaderContainer
+          $paddingLeft="0"
+          $paddingRight="12px"
+          style={{ borderBottom: `1px solid ${COLORS.GRAYSCALE_100}` }}
+        >
+          <S.IconWrapper>
+            <ChevronLeft
+              style={{ display: "block" }}
+              onClick={() => window.history.back()}
+            />
+          </S.IconWrapper>
+          <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
+            {pageNames[pathname]}
+          </Typography.H2Sb>
         </S.HeaderContainer>
       ) : (
         <S.HeaderContainer $paddingLeft="0" $paddingRight="12px">

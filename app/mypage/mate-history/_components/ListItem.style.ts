@@ -28,6 +28,19 @@ export const ItemWrapper = styled.div`
   flex-grow: 1;
 `;
 
+export const ProfileImageWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 export const IconWrapper = styled.div`
   background-color: ${COLORS.GRAYSCALE_300};
   border-radius: 50%;
