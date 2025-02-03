@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/common/Header/Header";
-import ListItem from "@/components/common/ListItem/ListItem";
+import ListItem from "@/app/mypage/mate-history/_components/ListItem";
 import * as S from "./style";
 import { useState } from "react";
 

@@ -1,6 +1,6 @@
 import { Typography } from "@/components/atoms/Typography";
 import * as S from "./NotificationList.style";
-import ListItem from "@/components/common/ListItem/ListItem";
+import ListItem from "@/app/mypage/mate-history/_components/ListItem";
 
 interface NotificationListProps {
   list: {
