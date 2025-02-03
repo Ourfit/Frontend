@@ -43,6 +43,8 @@ export const MateFacilityInfoWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
+  width: 100%;
+  max-width: 450px;
   height: auto;
   min-height: 169px;
   padding: 20px 20px 32px 20px;
@@ -209,7 +211,7 @@ export const FacilityCard = styled.div`
 
   gap: 2px;
 
-  width: 350px;
+  width: 100%;
   height: 73px;
 
   padding: 16px 20px;
