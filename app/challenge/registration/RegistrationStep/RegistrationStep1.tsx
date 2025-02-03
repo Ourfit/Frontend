@@ -7,11 +7,17 @@ interface RegistrationStep1Props {
   onSelectionChange: (isSelected: boolean) => void;
 }
 
-const RegistrationStep1 = ({ onNext, onSelectionChange }: RegistrationStep1Props) => {
+const RegistrationStep1 = ({
+  onNext,
+  onSelectionChange,
+}: RegistrationStep1Props) => {
   return (
     <RS.MainContainer2>
       <RegistrationStepTitle onNext={onNext} />
-      <RegistrationStepContent onNext={onNext} onSelectionChange={onSelectionChange} />
+      <RegistrationStepContent
+        onNext={onNext}
+        onSelectionChange={onSelectionChange}
+      />
     </RS.MainContainer2>
   );
 };

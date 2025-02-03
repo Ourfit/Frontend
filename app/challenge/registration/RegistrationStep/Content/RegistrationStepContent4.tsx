@@ -7,20 +7,24 @@ import * as RS from "../Content/RegistrationStepContent.style";
 interface RegistrationStepContent4Props {
   onNext: () => void;
   onSelectionChange: (date: Dayjs | null) => void;
-  disabled: boolean;  
+  disabled: boolean;
 }
 
-const RegistrationStepContent4 = ({ onNext, onSelectionChange, disabled }: RegistrationStepContent4Props) => {
+const RegistrationStepContent4 = ({
+  onNext,
+  onSelectionChange,
+  disabled,
+}: RegistrationStepContent4Props) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
-    onSelectionChange(selectedDate);  
-    setIsButtonDisabled(selectedDate === null);  
+    onSelectionChange(selectedDate);
+    setIsButtonDisabled(selectedDate === null);
   }, [selectedDate, onSelectionChange]);
 
   const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date); 
+    setSelectedDate(date);
     console.log("새로운 날짜 선택: ", date?.format("YYYY-MM-DD"));
   };
 
@@ -32,7 +36,7 @@ const RegistrationStepContent4 = ({ onNext, onSelectionChange, disabled }: Regis
           onChange={(e) => {
             const selectedMonth = parseInt(e.target.value);
             const newDate = dayjs().month(selectedMonth - 1);
-            setSelectedDate(newDate);  
+            setSelectedDate(newDate);
             console.log("선택된 월: ", newDate.format("YYYY-MM"));
           }}
         >
@@ -50,7 +54,7 @@ const RegistrationStepContent4 = ({ onNext, onSelectionChange, disabled }: Regis
           <DateCalendar value={selectedDate} onChange={handleDateChange} />
         </LocalizationProvider>
       </RS.CalendarContentWrapper>
-      </>
+    </>
   );
 };
 

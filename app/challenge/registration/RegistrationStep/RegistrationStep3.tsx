@@ -7,11 +7,17 @@ interface RegistrationStep3Props {
   onSelectionChange: (isSelected: boolean) => void;
 }
 
-const RegistrationStep3 = ({ onNext, onSelectionChange }: RegistrationStep3Props) => {
+const RegistrationStep3 = ({
+  onNext,
+  onSelectionChange,
+}: RegistrationStep3Props) => {
   return (
     <RS.MainContainer2>
       <RegistrationStepTitle3 onNext={onNext} />
-      <RegistrationStepContent3 onNext={onNext} onSelectionChange={onSelectionChange} />
+      <RegistrationStepContent3
+        onNext={onNext}
+        onSelectionChange={onSelectionChange}
+      />
     </RS.MainContainer2>
   );
 };

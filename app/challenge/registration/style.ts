@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 export const Container = styled.div<{
   $bgColorGray?: boolean;
-}>`  background-color: ${({ $bgColorGray = false }) =>
-    $bgColorGray ? "#F6F6F8" : "#ffffff"};`;
+}>`
+  background-color: ${({ $bgColorGray = false }) =>
+    $bgColorGray ? "#F6F6F8" : "#ffffff"};
+`;
 
 export const PageContainer = styled.div`
   display: flex;
@@ -146,7 +148,6 @@ export const SubTitle = styled.div`
   text-align: center;
   color: ${COLORS.GRAYSCALE_700};
 `;
-
 
 export const Button = styled.button`
   display: flex;

@@ -44,9 +44,9 @@ export default function Page() {
     step === 1 || step === 6 ? S.PageContainer : S.RegistrationPageContainer;
 
   const isButtonActive =
-    (step === 1 ||
-      (isAnyNumberSelected && step === 2) ||
-      (isAnyStringSelected && (step === 3 || step === 4 || step === 5))) ||
+    step === 1 ||
+    (isAnyNumberSelected && step === 2) ||
+    (isAnyStringSelected && (step === 3 || step === 4 || step === 5)) ||
     step === 6;
 
   const bgColorGray = step !== 1 && step !== 6;
@@ -97,8 +97,8 @@ export default function Page() {
           {step === 6
             ? "챌린지 페이지로 이동"
             : step === 1
-            ? "시작하기"
-            : "다음"}
+              ? "시작하기"
+              : "다음"}
         </S.Button>
       </Container>
     </FrameContainer>

@@ -52,4 +52,3 @@ export const Button = styled.button`
   background-color: ${COLORS.BLUE_500};
   color: ${COLORS.BASE_WHITE};
 `;
-
