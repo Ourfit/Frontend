@@ -20,7 +20,8 @@ export const facilityContent = styled.div`
 
   gap: 8px;
 
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   height: auto;
 
   padding: 48px 20px 0px 20px;
@@ -41,28 +42,34 @@ export const HighlightedText = styled.span`
 
 export const PlaceHolderWrapper = styled.div`
   display: flex;
-  justify-content: center;
 
   width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+
   height: auto;
 `;
 
 export const ResultList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 
   gap: 16px;
-  padding: 0px 20px;
+
   box-sizing: border-box;
 
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
+
+  padding: 0px 20px;
+  box-sizing: border-box;
   height: auto;
 `;
 
 export const ResultItem = styled.div`
   display: flex;
-  justify-content: center;
+
   gap: 12px;
 
   width: 100%;

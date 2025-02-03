@@ -67,7 +67,7 @@ export default function SportFacility() {
           <Placeholder
             text="시설 명을 검색해주세요."
             onChange={(e) => setFacilityValue(e.target.value)}
-            value={facilityValue}
+            inputValue={facilityValue}
           />
         </S.PlaceHolderWrapper>
         <S.ResultList>

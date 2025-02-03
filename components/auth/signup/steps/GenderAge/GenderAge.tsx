@@ -25,47 +25,47 @@ const GenderAge = ({ nextStep }: StepProps) => {
 
   return (
     <S.GenderAgeContainer>
-      <S.SignupIntroContainer>
-        <S.SignupIntroTitleWrapper>
-          <Typography.H1Sb>
-            <span style={{ color: COLORS.BLUE_500 }}>성별</span>과&nbsp;
-            <span style={{ color: COLORS.BLUE_500 }}>나이</span>를
-          </Typography.H1Sb>
-          <Typography.H1Sb>선택해주세요</Typography.H1Sb>
-        </S.SignupIntroTitleWrapper>
-        <Typography.H4Md color={COLORS.GRAYSCALE_600}>
-          메이트 매칭 시 나의 프로필에 보여지는 정보에요.
-        </Typography.H4Md>
-      </S.SignupIntroContainer>
-      <S.InfoContainer>
-        <Typography.H4Sb>시간대</Typography.H4Sb>
-        <S.TextButtonWrapper>
-          {Object.values(GENDER).map((option) => (
-            <TextButton
-              key={option}
-              isActive={gender === option}
-              onClick={() => handleGenderClick(option)}
-            >
-              {option}
-            </TextButton>
-          ))}
-        </S.TextButtonWrapper>
-      </S.InfoContainer>
-      <S.InfoContainer>
-        <Typography.H4Sb>나이</Typography.H4Sb>
-        <SelectBar selectType="age" optionValue={age} setOption={setAge} />
-      </S.InfoContainer>
+      <S.GenderAgeWrapper>
+        <S.SignupIntroContainer>
+          <S.SignupIntroTitleWrapper>
+            <Typography.H1Sb>
+              <span style={{ color: COLORS.BLUE_500 }}>성별</span>과&nbsp;
+              <span style={{ color: COLORS.BLUE_500 }}>나이</span>를
+            </Typography.H1Sb>
+            <Typography.H1Sb>선택해주세요</Typography.H1Sb>
+          </S.SignupIntroTitleWrapper>
+          <Typography.H4Md color={COLORS.GRAYSCALE_600}>
+            메이트 매칭 시 나의 프로필에 보여지는 정보에요.
+          </Typography.H4Md>
+        </S.SignupIntroContainer>
+        <S.InfoContainer>
+          <Typography.H4Sb>성별</Typography.H4Sb>
+          <S.TextButtonWrapper>
+            {Object.values(GENDER).map((option) => (
+              <TextButton
+                key={option}
+                isActive={gender === option}
+                onClick={() => handleGenderClick(option)}
+              >
+                {option}
+              </TextButton>
+            ))}
+          </S.TextButtonWrapper>
+        </S.InfoContainer>
+        <S.InfoContainer>
+          <Typography.H4Sb>나이</Typography.H4Sb>
+          <SelectBar selectType="age" optionValue={age} setOption={setAge} />
+        </S.InfoContainer>
+      </S.GenderAgeWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <Button
-            disabled={!gender || !age}
-            size={BUTTON_SIZES.LARGE}
-            variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={buttonClickHandler}
-          >
-            다음
-          </Button>
-        </S.ButtonWrapper>
+        <Button
+          disabled={!gender || !age}
+          size={BUTTON_SIZES.LARGE}
+          variant={BUTTON_VARIANTS.PRIMARY}
+          onClick={buttonClickHandler}
+        >
+          다음
+        </Button>
       </S.ButtonContainer>
     </S.GenderAgeContainer>
   );
