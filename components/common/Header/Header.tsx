@@ -23,11 +23,18 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
     "/alarm": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
+    "/mypage/sports": "선호 운동 편집",
+    "/mypage/facility": "선호 시설 편집",
+    "/mypage/time": "선호 시간 편집",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
-  const hasBottomBorder = pathname === "/challenge/registration";
+  const hasBottomBorder = 
+  pathname === "/challenge/registration" || 
+  pathname === "/mypage/sports" || 
+  pathname === "/mypage/facility" || 
+  pathname === "/mypage/time";
 
   return (
     <>
@@ -72,7 +79,13 @@ export default function Header({ isEditingProfile, isChallenge }: HeaderProps) {
           >
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => (onClick ? onClick() : window.history.back())}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/";
+                }
+              }}
             />
           </div>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>
