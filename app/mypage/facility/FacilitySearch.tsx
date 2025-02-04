@@ -166,11 +166,9 @@ export default function FacilitySearch() {
         </S.ResultList>
 
         <Container>
-          <RS.ChangeButtonContainer>
-            <Link href="/mypage" passHref>
-              <RS.Button>변경 완료</RS.Button>
-            </Link>
-          </RS.ChangeButtonContainer>
+          <Link href="/mypage" passHref>
+            <RS.Button>변경 완료</RS.Button>
+          </Link>
         </Container>
       </S.facilityContainer2>
     </>
