@@ -1,11 +1,11 @@
 "use client";
 
 import Header from "@/components/common/Header/Header";
-import React from "react";
-import * as S from "../style";
 import Sports from "../sports/_components/Sports";
 import Facility from "../facility/Facility";
 import Time from "../time/Time";
+import React, { useState } from "react";
+import * as S from "../style";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
@@ -37,14 +37,30 @@ export default function EditProfile({
   const preferences = ["헬스", "필라테스"];
   const places = [
     {
-      name: "에이쁠짐 잠실점",
+      id: 1,
+      name: "에이블짐 잠실점",
       address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
     },
     {
-      name: "에이쁠짐 홍대점",
+      id: 2,
+      name: "에이블짐 홍대점",
       address: "서울 마포구 양화로12길 34 2층 201호",
     },
   ];
+
+  const [selectedPreferenceFacility, setSelectedPreferenceFacility] = useState<{
+    id: number;
+    name: string;
+    address: string;
+  } | null>(null);
+
+  const handleNavigate = (facility: {
+    id: number;
+    name: string;
+    address: string;
+  }) => {
+    setSelectedPreferenceFacility(facility);
+  };
 
   return (
     <>
@@ -96,16 +112,12 @@ export default function EditProfile({
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>
           <S.PreferenceContainer>
-            <Sports
-              preferences={preferences}
-            />
+            <Sports preferences={preferences} />
             <Facility
-              places={places}
+              selectedPreferenceFacility={selectedPreferenceFacility}
+              handleNavigate={() => handleNavigate(places[0])}
             />
-            <Time
-              preferences={preferences}
-            />
-          
+            <Time preferences={preferences} />
           </S.PreferenceContainer>
         </S.ProfileSection>
       </S.PageContainer>

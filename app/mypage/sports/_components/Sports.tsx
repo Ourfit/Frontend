@@ -1,7 +1,6 @@
-"use client";
-
 import Dumbbells from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
+import { usePathname } from "next/navigation";
 import React from "react";
 import * as S from "../../style";
 import Link from "next/link";
@@ -11,6 +10,9 @@ interface SportsProps {
 }
 
 export default function Sports({ preferences }: SportsProps) {
+  const pathname = usePathname();
+  const isMypageSports = pathname === "/mypage/sports";
+
   return (
     <S.PreferenceSectionWrapper>
       <S.PreferenceHeader>
@@ -29,7 +31,7 @@ export default function Sports({ preferences }: SportsProps) {
         {preferences.map((sport) => (
           <S.PreferenceBadge key={sport}>
             <Dumbbells />
-            {sport}
+            <span>{sport}</span> {/* 배지 옆에 운동 이름 표시 */}
           </S.PreferenceBadge>
         ))}
       </S.PreferenceContent>

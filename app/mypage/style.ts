@@ -19,6 +19,13 @@ export const PageContainer = styled.div`
   }
 `;
 
+export const PreferencePlaceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 8px;
+`;
+
 export const ProfileOverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -224,6 +231,15 @@ export const PreferenceBadge = styled.div`
 
 export const PreferencePlaceWrapper = styled.div`
   display: flex;
+  padding: 0px 20px;
+  align-items: flex-start;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+`;
+
+export const PreferencePlaceWrapper2 = styled.div`
+  display: flex;
   flex-direction: column;
   width: 100%;
   height: auto;
@@ -246,11 +262,41 @@ export const PreferencePlaceInfo = styled.div`
   border: 1px solid ${COLORS.GRAYSCALE_200};
 `;
 
+export const PreferencePlaceInfo2 = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  align-items: center;
+  gap: 4px;
+
+  border-radius: 12px;
+  background: ${COLORS.BLUE_50};
+`;
+
+export const PreferenceButton = styled.button`
+  width: 16px;
+  height: 16px;
+  border: none;
+  color: #8aadff;
+  background: ${COLORS.BLUE_50};
+`;
+
 export const PreferencePlaceName = styled.strong`
   font-size: 14px;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.14px;
+`;
+
+export const PreferencePlaceName2 = styled.strong`
+  color: ${COLORS.BLUE_500};
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.13px;
 `;
 
 export const PreferencePlaceAddress = styled.span`
@@ -481,4 +527,26 @@ export const SecondaryButton = styled.button`
   &:hover {
     background-color: #f6f6f6;
   }
+`;
+
+
+export const Button = styled.button`
+  bottom: 0;
+  display: flex;
+  padding: 16px 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  border-radius: 16px;
+  background: ${COLORS.BLUE_500};
+  color: ${COLORS.BASE_WHITE};
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.14px;
 `;

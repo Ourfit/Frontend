@@ -18,7 +18,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
 
   const handleFormDataChange = (
     field: StepLabel,
-    value: string | string[] | object,
+    value: string | string[] | object
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -34,7 +34,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
 
   const CurrentStepComponent = SIGNUP_STEPS[step - 1]?.component;
 
-  const isSportsPage = pathname === "/mypage/sports" || "/mypage/time";
+  const isSportsPage = pathname === "/mypage/sports" ||  "/mypage/time" ;
 
   return (
     <S.SignUpFormContainer>
