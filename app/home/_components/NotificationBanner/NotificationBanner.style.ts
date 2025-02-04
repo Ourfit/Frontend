@@ -1,18 +1,24 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
+export const BannerWrapper = styled.div`
+  width: 100%;
+  padding: 0 20px;
+`;
+
 export const BannerContainer = styled.div<{ $isChallenge?: boolean }>`
-  width: 90%; // 반응형으로 수정
+  width: 100%; // 반응형으로 수정
   background-color: ${COLORS.BLUE_50};
-  padding: 15px 16px;
-  border-radius: 12px;
+  padding: ${({ $isChallenge }) => ($isChallenge ? "12px 16px" : "15px 16px;")};
+  border-radius: ${({ $isChallenge }) => ($isChallenge ? "16px" : "12px")};
   display: flex;
   align-items: center;
   gap: 14px;
   margin: 0 auto;
   cursor: pointer;
 
-  border: 1px solid ${COLORS.BLUE_200};
+  border: ${({ $isChallenge }) =>
+    $isChallenge ? `1px solid ${COLORS.BLUE_200}` : "auto"};
 
   & > svg {
     width: 20px;
@@ -50,7 +56,8 @@ export const NotificationContent = styled.div<{ $isChallenge?: boolean }>`
 
   & > span {
     &:first-child {
-      color: ${({ $isChallenge }) => ($isChallenge ? COLORS.BLUE_300 : COLORS.GRAYSCALE_900)};
+      color: ${({ $isChallenge }) =>
+        $isChallenge ? COLORS.BLUE_300 : COLORS.GRAYSCALE_900};
     }
 
     &:last-child {

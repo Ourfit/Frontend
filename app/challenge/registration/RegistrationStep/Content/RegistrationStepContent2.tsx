@@ -6,21 +6,24 @@ interface RegistrationStepContent2Props {
   onSelectionChange: (isSelected: boolean) => void;
 }
 
-const RegistrationStepContent2 = ({ onNext, onSelectionChange }: RegistrationStepContent2Props) => {
+const RegistrationStepContent2 = ({
+  onNext,
+  onSelectionChange,
+}: RegistrationStepContent2Props) => {
   const [selectedStrings, setSelectedStrings] = useState<string[]>([]);
 
   useEffect(() => {
     const isAnySelected = selectedStrings.length > 0;
-    console.log('선택된 문자: ', selectedStrings); 
-    onSelectionChange(isAnySelected);  
+    console.log("선택된 문자: ", selectedStrings);
+    onSelectionChange(isAnySelected);
   }, [selectedStrings, onSelectionChange]);
 
   const handleStringClick = (string: string) => {
     setSelectedStrings((prevSelectedStrings) => {
       const updatedStrings = prevSelectedStrings.includes(string)
         ? prevSelectedStrings.filter((str) => str !== string)
-        : [...prevSelectedStrings, string]; 
-      
+        : [...prevSelectedStrings, string];
+
       return updatedStrings;
     });
   };
@@ -31,7 +34,7 @@ const RegistrationStepContent2 = ({ onNext, onSelectionChange }: RegistrationSte
         {["월", "화", "수"].map((string) => (
           <RS.NumberContent
             key={string}
-            $isSelected={selectedStrings.includes(string)}  
+            $isSelected={selectedStrings.includes(string)}
             onClick={() => handleStringClick(string)}
           >
             {string}
@@ -42,7 +45,7 @@ const RegistrationStepContent2 = ({ onNext, onSelectionChange }: RegistrationSte
         {["목", "금", "토", "일"].map((string) => (
           <RS.NumberContent
             key={string}
-            $isSelected={selectedStrings.includes(string)}  
+            $isSelected={selectedStrings.includes(string)}
             onClick={() => handleStringClick(string)}
           >
             {string}

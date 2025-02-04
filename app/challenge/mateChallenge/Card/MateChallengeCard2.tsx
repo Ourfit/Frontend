@@ -15,8 +15,8 @@ export const MateChallengeCard2 = () => {
       <S.ContentContainer>
         <MateChallengeDay />
         <S.HalfIconWrapper>
-            <S.PercentIconWrapper>
-          <AchievementRate50Icon width={70} height={134} />
+          <S.PercentIconWrapper>
+            <AchievementRate50Icon width={70} height={134} />
           </S.PercentIconWrapper>
           <S.TextOverlay>
             <div className="percentage">50%</div>

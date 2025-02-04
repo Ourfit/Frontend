@@ -13,16 +13,14 @@ const SignupPage = () => {
     backgroundColor:
       step === SIGNUP_STEPS.length ? COLORS.BASE_WHITE : COLORS.GRAYSCALE_100,
   };
+
   const onClick = () => {
     if (step === 1) window.history.back();
     else setStep((prev) => prev - 1);
   };
 
   return (
-    <Frame
-      style={{ ...bgColor, height: "100svh" }}
-      contentStyle={{ ...bgColor }}
-    >
+    <Frame style={{ ...bgColor }} contentStyle={{ ...bgColor, height: "100%" }}>
       <Header onClick={onClick} />
       <SignupForm step={step} setStep={setStep} />
     </Frame>

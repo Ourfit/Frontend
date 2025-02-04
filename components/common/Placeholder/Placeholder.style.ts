@@ -1,19 +1,29 @@
-import styled from "styled-components";
-import { COLORS } from "@/constants/Theme";
 import { Typography } from "@/components/atoms/Typography";
+import { COLORS } from "@/constants/Theme";
+import styled from "styled-components";
 
-export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
+export const Wrapper = styled.div<{
+  $isInputFocus: boolean;
+  $borderColor?: boolean;
+}>`
   position: relative;
   padding: 0 20px;
+  box-sizing: border-box;
+
   height: 52px;
   border-radius: 16px;
   background-color: ${COLORS.GRAYSCALE_100};
+
   display: flex;
   align-items: center;
+
   width: 100%;
+  max-width: 450px;
   gap: 8px;
-  border: ${({ $isInputFocus }) =>
-    $isInputFocus ? `1px solid ${COLORS.BLUE_500}` : "1px solid transparent"};
+  border: ${({ $isInputFocus, $borderColor = false }) =>
+    $isInputFocus
+      ? `1px solid ${COLORS.BLUE_500}`
+      : `1px solid ${$borderColor ? COLORS.GRAYSCALE_300 : "transparent"}`};
 
   & > svg {
     width: 24px;
@@ -33,8 +43,4 @@ export const InputBox = styled.input`
   &::placeholder {
     color: ${COLORS.GRAYSCALE_600};
   }
-`;
-
-export const InputLength = styled.p`
-  ${Typography.H4Md}
 `;

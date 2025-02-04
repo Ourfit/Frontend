@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
+import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
@@ -8,6 +8,8 @@ export const TabContainer = styled.div`
   flex-direction: column;
   justify-content: end;
   border-bottom: 1px solid ${COLORS.GRAYSCALE_100};
+
+  position: relative;
 `;
 
 export const Tablist = styled.ul`

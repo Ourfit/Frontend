@@ -36,7 +36,9 @@ export default function Page() {
       <S.PageContainer $bgColorGray={true}>
         <S.MainContent>
           {selectedTab === "기록" && <NotificationBanner isChallenge={false} />}
-          {selectedTab === "챌린지" && <NotificationBanner isChallenge={true} />}
+          {selectedTab === "챌린지" && (
+            <NotificationBanner isChallenge={true} />
+          )}
         </S.MainContent>
 
         {selectedTab === "챌린지" && (

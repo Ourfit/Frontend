@@ -19,6 +19,7 @@ interface InputProps {
   onClear: () => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   inputStyle?: React.CSSProperties;
+  borderColor?: boolean;
 }
 
 export default function Input({
@@ -32,6 +33,7 @@ export default function Input({
   onClear,
   onKeyPress,
   inputStyle,
+  borderColor,
 }: InputProps) {
   const StatusIconComponent = INPUT_STATUS_ICONS[status];
 
@@ -45,6 +47,7 @@ export default function Input({
         onKeyDown={onKeyPress}
         $status={status}
         style={{ ...inputStyle }}
+        $borderColor={borderColor}
       />
       {status !== INPUT_STATUS.DEFAULT && (
         <S.IconsContainer

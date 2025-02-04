@@ -9,6 +9,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
+import Header from "@/components/common/Header/Header";
 
 export default function OpenChatPage() {
   const pathname = usePathname();
@@ -88,49 +89,52 @@ export default function OpenChatPage() {
   }, [hasUnsubmittedData, isSubmitted]);
 
   return (
-    <S.Container>
-      <S.Content>
-        <S.Description>
-          소통을 위해 <br />
-          <S.HighlightText>오픈 채팅 링크</S.HighlightText>를 등록해주세요!
-        </S.Description>
-        <S.SubDescription>
-          오픈 채팅방을 개설해 링크를 등록해주세요.
-        </S.SubDescription>
-        <S.InputWrapper>
-          <S.IconWrapper>
-            <S.RoundedImage>
-              <Image
-                src="/icons/Kakao_logo.png"
-                alt="카카오톡"
-                width={40}
-                height={40}
-              />
-            </S.RoundedImage>
-          </S.IconWrapper>
-          <Input
-            value={linkValue}
-            deferredValue={deferredValue}
-            placeholder="오픈 채팅방 링크 붙여놓기"
-            status={status}
-            isTyping={isTyping}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onClear={handleInputClear}
-            onKeyPress={handleInputKeyPress}
-          />
-        </S.InputWrapper>
-      </S.Content>
-      <S.SubmitButtonWrapper>
-        <Button
-          size={BUTTON_SIZES.LARGE}
-          variant={BUTTON_VARIANTS.PRIMARY}
-          onClick={handleSubmit}
-          disabled={deferredValue.trim() === ""}
-        >
-          등록 완료
-        </Button>
-      </S.SubmitButtonWrapper>
-    </S.Container>
+    <>
+      <Header />
+      <S.Container>
+        <S.Content>
+          <S.Description>
+            소통을 위해 <br />
+            <S.HighlightText>오픈 채팅 링크</S.HighlightText>를 등록해주세요!
+          </S.Description>
+          <S.SubDescription>
+            오픈 채팅방을 개설해 링크를 등록해주세요.
+          </S.SubDescription>
+          <S.InputWrapper>
+            <S.IconWrapper>
+              <S.RoundedImage>
+                <Image
+                  src="/icons/Kakao_logo.png"
+                  alt="카카오톡"
+                  width={40}
+                  height={40}
+                />
+              </S.RoundedImage>
+            </S.IconWrapper>
+            <Input
+              value={linkValue}
+              deferredValue={deferredValue}
+              placeholder="오픈 채팅방 링크 붙여놓기"
+              status={status}
+              isTyping={isTyping}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onClear={handleInputClear}
+              onKeyPress={handleInputKeyPress}
+            />
+          </S.InputWrapper>
+        </S.Content>
+        <S.SubmitButtonWrapper>
+          <Button
+            size={BUTTON_SIZES.LARGE}
+            variant={BUTTON_VARIANTS.PRIMARY}
+            onClick={handleSubmit}
+            disabled={deferredValue.trim() === ""}
+          >
+            등록 완료
+          </Button>
+        </S.SubmitButtonWrapper>
+      </S.Container>
+    </>
   );
 }

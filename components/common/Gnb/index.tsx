@@ -57,7 +57,10 @@ const Gnb = () => {
       {GNB_TABS.map((tab) => (
         <S.GnbTabWrapper
           key={tab.id}
-          $isActive={tab.path === pathname || (tab.id === GNB_TAB_IDS.CHALLENGE && isChallengeActive)}
+          $isActive={
+            tab.path === pathname ||
+            (tab.id === GNB_TAB_IDS.CHALLENGE && isChallengeActive)
+          }
           onClick={() => handleTabClick(tab.path)}
         >
           {tab.icon}

@@ -6,7 +6,7 @@ import Tab from "@/components/common/Tab/Tab";
 import NotificationBanner from "../notificationBanner/NotificationBanner";
 import * as S from "../style";
 import MateCard from "./Card/MateCard";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import MateProfile from "./Profile/MateProfile";
 
 export default function Page() {
@@ -23,7 +23,7 @@ export default function Page() {
   useEffect(() => {
     const currentPath = window.location.pathname;
     setIsMatePage(currentPath === "/challenge/mate");
-  }, []); 
+  }, []);
 
   return (
     <Frame>
@@ -38,20 +38,20 @@ export default function Page() {
           {selectedTab === "기록" && <NotificationBanner isChallenge={true} />}
         </S.MainContent>
         {selectedTab === "챌린지" && (
-        <S.SubContent>
-          <S.Search2Container $isMatePage={isMatePage}>
-            {isMatePage && <MateProfile />}
-            {isMatePage && <MateCard />}
-          </S.Search2Container>
-          <S.Search2Container $isMatePage={isMatePage}>
-            {isMatePage && <MateProfile />}
-            {isMatePage && <MateCard />}
-          </S.Search2Container>
-          <S.Search2Container $isMatePage={isMatePage}>
-            {isMatePage && <MateProfile />}
-            {isMatePage && <MateCard />}
-          </S.Search2Container>
-        </S.SubContent>
+          <S.SubContent>
+            <S.Search2Container $isMatePage={isMatePage}>
+              {isMatePage && <MateProfile />}
+              {isMatePage && <MateCard />}
+            </S.Search2Container>
+            <S.Search2Container $isMatePage={isMatePage}>
+              {isMatePage && <MateProfile />}
+              {isMatePage && <MateCard />}
+            </S.Search2Container>
+            <S.Search2Container $isMatePage={isMatePage}>
+              {isMatePage && <MateProfile />}
+              {isMatePage && <MateCard />}
+            </S.Search2Container>
+          </S.SubContent>
         )}
       </S.PageContainer>
     </Frame>

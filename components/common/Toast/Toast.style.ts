@@ -29,4 +29,6 @@ export const Message = styled(Typography.H6Md)`
   padding: 1.5px 3px;
   box-sizing: border-box;
   flex-shrink: 0;
+
+  color: #ffffff;
 `;

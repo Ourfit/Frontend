@@ -58,7 +58,8 @@ export const SubContent = styled.div`
   flex-direction: row;
   flex-grow: 1;
   gap: 16px;
-  padding-left: 5%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 48px;
   overflow-x: auto;
   white-space: nowrap;

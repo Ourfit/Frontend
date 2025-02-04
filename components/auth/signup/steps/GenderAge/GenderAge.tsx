@@ -1,24 +1,33 @@
-import { StepProps } from "@/types/step";
 import { Typography } from "@/components/atoms/Typography";
-import { COLORS } from "@/constants/Theme";
-import * as S from "./GenderAge.style";
-import React, { useState } from "react";
 import Button from "@/components/common/Button";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import TextButton from "@/components/common/TextButton";
-import { GENDER, STEPS_LABEL } from "@/constants/Signup";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
+import TextButton from "@/components/common/TextButton";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { GENDER, STEPS_LABEL, StepValue } from "@/constants/Signup";
+import { COLORS } from "@/constants/Theme";
+import { StepProps } from "@/types/step";
+import { useState } from "react";
+import * as S from "./GenderAge.style";
 
-const GenderAge = ({ nextStep }: StepProps) => {
-  const [gender, setGender] = useState<string | null>(null);
-  const [age, setAge] = useState<number>(0);
+const GenderAge = ({ nextStep, value }: StepProps) => {
+  const getValue = (value: StepValue | undefined) => {
+    if (typeof value === "object" && "gender" in value && "age" in value) {
+      return value;
+    }
+  };
+
+  const [gender, setGender] = useState<string | null>(
+    getValue(value)?.gender || null,
+  );
+
+  const [age, setAge] = useState<number>(getValue(value)?.age || 0);
 
   const handleGenderClick = (selectedGender: string) => {
     setGender(selectedGender);
   };
 
   const buttonClickHandler = () => {
-    if (gender && age) {
+    if (gender && age && nextStep) {
       nextStep(STEPS_LABEL.GENDER_AGE, { gender, age });
     }
   };
@@ -59,7 +68,11 @@ const GenderAge = ({ nextStep }: StepProps) => {
       </S.GenderAgeWrapper>
       <S.ButtonContainer>
         <Button
-          disabled={!gender || !age}
+          disabled={
+            !gender ||
+            !age ||
+            (getValue(value)?.age === age && getValue(value)?.gender === gender)
+          }
           size={BUTTON_SIZES.LARGE}
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}

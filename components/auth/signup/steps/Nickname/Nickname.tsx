@@ -6,11 +6,16 @@ import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import React, { useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import Input from "@/components/common/Input/Input";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 
-const Nickname = ({ nextStep }: StepProps) => {
-  const [nickname, setNickname] = useState("");
+const Nickname = ({ nextStep, value }: StepProps) => {
+  const [nickname, setNickname] = useState(
+    typeof value === "string" ? value : "",
+  );
+  const [showToast, setShowToast] = useState(false);
   const [status, setStatus] = useState<InputStatus>("default");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -21,7 +26,11 @@ const Nickname = ({ nextStep }: StepProps) => {
 
   const buttonClickHandler = () => {
     if (nickname.trim()) {
-      nextStep(STEPS_LABEL.NICKNAME, nickname);
+      if (nextStep) nextStep(STEPS_LABEL.NICKNAME, nickname);
+      else {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 1500);
+      }
     }
   };
 
@@ -75,18 +84,25 @@ const Nickname = ({ nextStep }: StepProps) => {
           onBlur={handleInputBlur}
           onClear={handleClear}
           inputStyle={{ ...inputStyle }}
+          borderColor
         />
       </S.NicknameWrapper>
       <S.ButtonContainer>
         <Button
-          disabled={!nickname.trim()}
+          disabled={!nickname.trim() || nickname === value}
           size={BUTTON_SIZES.LARGE}
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}
         >
-          다음
+          {nextStep ? "다음" : "변경완료"}
         </Button>
       </S.ButtonContainer>
+      {showToast && (
+        <Toast
+          message={TOAST_MESSAGES.SUCCESS}
+          status={TOAST_STATUSES.SUCCESS}
+        />
+      )}
     </S.NicknameContainer>
   );
 };

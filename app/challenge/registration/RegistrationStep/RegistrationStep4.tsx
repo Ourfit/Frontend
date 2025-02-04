@@ -7,14 +7,18 @@ import dayjs, { Dayjs } from "dayjs";
 interface RegistrationStep4Props {
   onNext: () => void;
   onSelectionChange: (date: Date | null) => void;
-  disabled: boolean; 
+  disabled: boolean;
 }
 
-const RegistrationStep4 = ({ onNext, onSelectionChange, disabled }: RegistrationStep4Props) => {
+const RegistrationStep4 = ({
+  onNext,
+  onSelectionChange,
+  disabled,
+}: RegistrationStep4Props) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
   const handleDateSelection = (date: Dayjs | null) => {
-    if (!selectedDate || selectedDate !== date) {  
+    if (!selectedDate || selectedDate !== date) {
       setSelectedDate(date);
       onSelectionChange(date ? date.toDate() : null);
     }
@@ -24,7 +28,7 @@ const RegistrationStep4 = ({ onNext, onSelectionChange, disabled }: Registration
       <RegistrationStepTitle4 onNext={onNext} />
       <RegistrationStepContent4
         onNext={onNext}
-        onSelectionChange={handleDateSelection} 
+        onSelectionChange={handleDateSelection}
         disabled={disabled}
       />
     </RS.MainContainer2>

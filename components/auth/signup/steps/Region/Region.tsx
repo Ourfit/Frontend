@@ -6,16 +6,23 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { StepProps } from "@/types/step";
 import React, { useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 
-const Region = ({ nextStep }: StepProps) => {
+const Region = ({ nextStep, value }: StepProps) => {
   const [inputValue, setInputValue] = useState("");
-  const [region, setRegion] = useState("");
+  const [region, setRegion] = useState(typeof value === "string" ? value : "");
+  const [showToast, setShowToast] = useState(false);
   const [show, setShow] = useState(false);
 
   const buttonClickHandler = () => {
     if (region) {
-      nextStep(STEPS_LABEL.REGION, region);
+      if (nextStep) nextStep(STEPS_LABEL.REGION, region);
+      else {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 1500);
+      }
     }
   };
 
@@ -64,14 +71,14 @@ const Region = ({ nextStep }: StepProps) => {
           setInputValue={setInputValue}
           onChange={handleInputChange}
           style={style}
-          placeholder="동명으로 검색 (ex.신천동)"
-          showLength={false}
+          text="동명으로 검색 (ex.신천동)"
+          borderColor
         />
       </S.RegionWrapper>
       {!show ? (
         <S.ButtonContainer>
           <Button
-            disabled={!region}
+            disabled={!region || region === value}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}
@@ -87,6 +94,12 @@ const Region = ({ nextStep }: StepProps) => {
             </S.Region>
           ))}
         </S.RegionList>
+      )}
+      {showToast && (
+        <Toast
+          message={TOAST_MESSAGES.SUCCESS}
+          status={TOAST_STATUSES.SUCCESS}
+        />
       )}
     </S.RegionContainer>
   );
