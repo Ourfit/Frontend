@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/common/Header/Header";
-import Frame from "@/components/layout/Frame";
 import RegistrationStart from "./RegistrationStart";
 import RegistrationStep1 from "./RegistrationStep/RegistrationStep1";
 import RegistrationStep2 from "./RegistrationStep/RegistrationStep2";

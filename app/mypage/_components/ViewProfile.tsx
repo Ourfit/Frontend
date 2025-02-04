@@ -1,26 +1,26 @@
 "use client";
 
-import ChevronLeft from "@/assets/images/chevron-left.svg";
+import ChevronRight from "@/assets/images/chevron-right.svg";
 import Header from "@/components/common/Header/Header";
 import Link from "next/link";
 import * as S from "../style";
 
 interface ViewProfileProps {
-  isEditingProfile: boolean;
   profileImage: string;
   handleEditProfile: () => void;
-  managementLinks: { href: string; label: string }[];
+  handleEditBasicInfo: () => void;
+  managementLinks: { href: string; label: string; target?: string }[];
 }
 
 export default function ViewProfile({
-  isEditingProfile,
   profileImage,
   handleEditProfile,
+  handleEditBasicInfo,
   managementLinks,
 }: ViewProfileProps) {
   return (
     <>
-      <Header isEditingProfile={isEditingProfile} />
+      <Header />
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={false}>
           <S.ProfileImageWrapper $isEditingProfile={false}>
@@ -37,7 +37,9 @@ export default function ViewProfile({
             <S.SecondaryButton onClick={handleEditProfile}>
               프로필 편집
             </S.SecondaryButton>
-            <S.SecondaryButton>기본 정보 편집</S.SecondaryButton>
+            <S.SecondaryButton onClick={handleEditBasicInfo}>
+              기본 정보 편집
+            </S.SecondaryButton>
           </S.ButtonWrapper>
         </S.ProfileSection>
 
@@ -45,8 +47,10 @@ export default function ViewProfile({
           <S.List>
             {managementLinks.map((link) => (
               <S.ListItem key={link.href}>
-                <Link href={link.href}>{link.label}</Link>
-                <ChevronLeft />
+                <Link href={link.href} target={link.target}>
+                  {link.label}
+                </Link>
+                <ChevronRight />
               </S.ListItem>
             ))}
           </S.List>

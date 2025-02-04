@@ -7,8 +7,8 @@ import React from "react";
 import * as S from "../style";
 
 interface EditProfileProps {
+  handleEditProfile: () => void;
   isEditingDescription: boolean;
-  isEditingProfile: boolean;
   profileImage: string;
   handleProfileImageClick: () => void;
   handleEditDescription: () => void;
@@ -21,8 +21,8 @@ interface EditProfileProps {
 }
 
 export default function EditProfile({
+  handleEditProfile,
   isEditingDescription,
-  isEditingProfile,
   profileImage,
   handleProfileImageClick,
   handleEditDescription,
@@ -47,7 +47,7 @@ export default function EditProfile({
 
   return (
     <>
-      <Header isEditingProfile={isEditingProfile} />
+      <Header title="프로필 편집" onClick={handleEditProfile} />
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={true}>
           <S.ProfileOverviewWrapper>

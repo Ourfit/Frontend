@@ -10,7 +10,7 @@ export const FrameContainer = styled.div<{
 
   width: 100%;
   max-width: 450px;
-  height: calc(100svh - 68px);
+  height: 100svh;
   padding-top: 48px;
   box-sizing: border-box;
   position: relative;
@@ -26,5 +26,5 @@ export const Content = styled.div<{
   flex-direction: column;
   flex-grow: 1;
 
-  height: 100%;
+  height: calc(100% - 68px);
 `;

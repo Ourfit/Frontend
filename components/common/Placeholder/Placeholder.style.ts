@@ -2,7 +2,10 @@ import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
+export const Wrapper = styled.div<{
+  $isInputFocus: boolean;
+  $borderColor?: boolean;
+}>`
   position: relative;
   padding: 0 20px;
   box-sizing: border-box;
@@ -17,8 +20,10 @@ export const Wrapper = styled.div<{ $isInputFocus: boolean }>`
   width: 100%;
   max-width: 450px;
   gap: 8px;
-  border: ${({ $isInputFocus }) =>
-    $isInputFocus ? `1px solid ${COLORS.BLUE_500}` : "1px solid transparent"};
+  border: ${({ $isInputFocus, $borderColor = false }) =>
+    $isInputFocus
+      ? `1px solid ${COLORS.BLUE_500}`
+      : `1px solid ${$borderColor ? COLORS.GRAYSCALE_300 : "transparent"}`};
 
   & > svg {
     width: 24px;

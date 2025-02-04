@@ -73,7 +73,7 @@ export default function MateHistoryPage() {
 
   return (
     <>
-      <Header />
+      <Header title="메이트 내역 관리" />
       <S.PageContainer>
         <S.ButtonWrapper>
           {Object.values(CATEGORY).map((option) => (
