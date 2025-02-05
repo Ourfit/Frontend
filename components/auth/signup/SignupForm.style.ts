@@ -9,6 +9,7 @@ export const SignUpFormContainer = styled.div`
   padding-bottom: 20px;
 
   height: 100%;
+  overflow-y: auto;
 `;
 
 export const SignUpFormWrapper = styled.div`

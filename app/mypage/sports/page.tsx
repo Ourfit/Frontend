@@ -12,9 +12,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <Container>
-        <SignupForm step={step} setStep={setStep} />
-      </Container>
+      <SignupForm step={step} setStep={setStep} />
     </>
   );
 }
