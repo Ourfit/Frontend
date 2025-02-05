@@ -114,8 +114,8 @@ export default function FacilitySearch() {
         )}
         <MS.PreferencePlaceWrapper>
           {selectedPreferenceFacilities.map((facility) => (
-            <MS.PreferencePlaceContainer>
-              <MS.PreferencePlaceInfo2 key={facility.id}>
+            <MS.PreferencePlaceContainer key={facility.id}>
+              <MS.PreferencePlaceInfo2>
                 <MS.PreferenceInfoWrapper>
                   <LogoumbbellsIcon
                     alt="LogoumbbellsIcon"
