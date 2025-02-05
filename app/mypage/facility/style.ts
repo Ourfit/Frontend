@@ -58,33 +58,35 @@ export const PreferencePlaceWrapper2 = styled.div`
 
 export const PreferencePlaceContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 40%;
+  flex-direction: row;
+  width: auto;
   gap: 8px;
+  align-items: center;
 `;
 
 export const PreferencePlaceInfo = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  width: 100%;
-  height: 73px;
-
-  padding: 16px 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: 40px;
+  padding: 8px 10px;
   box-sizing: border-box;
-
-  border-radius: 16px;
-  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border-radius: 12px;
+  background: ${COLORS.BLUE_50};
 `;
 
 export const PreferencePlaceName = styled.strong`
-  font-size: 14px;
+  color: ${COLORS.BLUE_500};
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
   font-weight: 600;
   line-height: 150%;
-  letter-spacing: -0.14px;
+  letter-spacing: -0.13px;
+  flex-grow: 1;
 `;
-
 export const PreferencePlaceAddress = styled.span`
   font-size: 12px;
   font-weight: 500;
@@ -103,6 +105,13 @@ export const PreferencePlaceInfo2 = styled.div`
 
   border-radius: 12px;
   background: ${COLORS.BLUE_50};
+`;
+
+export const PreferenceInfoWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
 `;
 
 export const PreferencePlaceName2 = styled.strong`

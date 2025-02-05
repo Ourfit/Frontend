@@ -116,20 +116,23 @@ export default function FacilitySearch() {
           {selectedPreferenceFacilities.map((facility) => (
             <MS.PreferencePlaceContainer>
               <MS.PreferencePlaceInfo2 key={facility.id}>
-                <LogoumbbellsIcon
-                  alt="LogoumbbellsIcon"
-                  width={20}
-                  height={20}
-                />
+                <MS.PreferenceInfoWrapper>
+                  <LogoumbbellsIcon
+                    alt="LogoumbbellsIcon"
+                    width={20}
+                    height={20}
+                  />
 
-                <MS.PreferencePlaceName2>
-                  {facility.name}
-                  <MS.PreferenceButton
-                    onClick={() => handleRemoveFacility(facility.id)}
-                  >
-                    X
-                  </MS.PreferenceButton>
-                </MS.PreferencePlaceName2>
+                  <MS.PreferencePlaceName2>
+                    {facility.name}
+                  </MS.PreferencePlaceName2>
+                </MS.PreferenceInfoWrapper>
+
+                <MS.PreferenceButton
+                  onClick={() => handleRemoveFacility(facility.id)}
+                >
+                  X
+                </MS.PreferenceButton>
               </MS.PreferencePlaceInfo2>
             </MS.PreferencePlaceContainer>
           ))}
