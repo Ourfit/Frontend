@@ -66,18 +66,24 @@ export const PreferencePlaceContainer = styled.div`
 
 export const PreferencePlaceInfo = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  width: auto;
-  height: 40px;
-  padding: 8px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 73px;
+  padding: 16px 20px;
+  border-radius: 16px;
   box-sizing: border-box;
-  border-radius: 12px;
-  background: ${COLORS.BLUE_50};
+  border: 1px solid ${COLORS.GRAYSCALE_200};
 `;
 
 export const PreferencePlaceName = styled.strong`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.14px;
+`;
+
+export const PreferencePlaceName2 = styled.strong`
   color: ${COLORS.BLUE_500};
   font-family: Pretendard;
   font-size: 13px;
@@ -85,8 +91,8 @@ export const PreferencePlaceName = styled.strong`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.13px;
-  flex-grow: 1;
 `;
+
 export const PreferencePlaceAddress = styled.span`
   font-size: 12px;
   font-weight: 500;
@@ -112,16 +118,6 @@ export const PreferenceInfoWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-`;
-
-export const PreferencePlaceName2 = styled.strong`
-  color: ${COLORS.BLUE_500};
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-  letter-spacing: -0.13px;
 `;
 
 export const PreferenceButton = styled.button`

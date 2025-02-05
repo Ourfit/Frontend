@@ -36,7 +36,6 @@ export default function Facility() {
           <S.PreferenceEdit>편집</S.PreferenceEdit>
         </Link>
       </S.PreferenceHeader>
-
       <S.PreferencePlaceWrapper2>
         {selectedPreferenceFacilities.length > 0 ? (
           selectedPreferenceFacilities.map((facility) => (
