@@ -39,9 +39,10 @@ export const PreferenceEdit = styled.div`
 
 export const PreferencePlaceWrapper = styled.div`
   display: flex;
-  padding: 0px 20px;
+  flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: row;
+  padding: 0px 20px;
   width: 100%;
   gap: 8px;
 `;
