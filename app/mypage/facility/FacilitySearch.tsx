@@ -99,12 +99,12 @@ export default function FacilitySearch() {
       <S.facilityContainer2>
         <S.facilityContent>
           <S.facilityTitle>
-            <Typography.H1Sb>
-              <span>선호하는</span>
+            <Typography.H1Sb>선호하는</Typography.H1Sb>
+            <Typography.H1Sb color="#004DFF">
               <br />
-              <span style={{ color: COLORS.BLUE_500 }}>운동 시설</span>
-              <span>을 알려주세요!</span>
+              운동 시설
             </Typography.H1Sb>
+            <Typography.H1Sb>을 선택해주세요!</Typography.H1Sb>
           </S.facilityTitle>
           <Typography.H4Md color="#8A92A3">
             최소 1개, 최대 3개까지 선택해주세요.
