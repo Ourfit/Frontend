@@ -24,6 +24,7 @@ export default function Frame({
     "/mate/time",
     "/mate/mateprofile",
     "/auth/signup",
+    "/auth/login",
   ];
 
   const isGnbHidden = hiddenGnbPaths.some((path) => pathname.startsWith(path));
