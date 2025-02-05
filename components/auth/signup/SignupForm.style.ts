@@ -7,7 +7,6 @@ export const SignUpFormContainer = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
-
   height: 100%;
   overflow-y: auto;
 `;
