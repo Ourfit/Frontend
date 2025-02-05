@@ -96,7 +96,6 @@ export const PreferencePlaceAddress = styled.span`
 export const PreferencePlaceInfo2 = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
   padding: 8px 10px;
   align-items: center;
   gap: 4px;
