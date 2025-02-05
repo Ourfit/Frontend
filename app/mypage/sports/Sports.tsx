@@ -2,7 +2,7 @@ import Dumbbells from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { usePathname } from "next/navigation";
 import React from "react";
-import * as S from "../../style";
+import * as S from "./style";
 import Link from "next/link";
 
 interface SportsProps {
@@ -31,7 +31,7 @@ export default function Sports({ preferences }: SportsProps) {
         {preferences.map((sport) => (
           <S.PreferenceBadge key={sport}>
             <Dumbbells />
-            <span>{sport}</span> {/* 배지 옆에 운동 이름 표시 */}
+            <span>{sport}</span> 
           </S.PreferenceBadge>
         ))}
       </S.PreferenceContent>

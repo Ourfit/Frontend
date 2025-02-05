@@ -3,10 +3,9 @@
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import * as MS from "../style";
-import * as S from "../style";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import * as S from "./style";
+import Link from "next/link";
 
 interface FacilityData {
   id: number;
@@ -26,32 +25,32 @@ export default function Facility() {
 
   return (
     <>
-      <MS.PreferenceHeader>
-        <MS.PreferenceTitle>
+      <S.PreferenceHeader>
+        <S.PreferenceTitle>
           선호 운동 시설
           <Typography.H3Bd style={{ marginLeft: "4px", color: "#004DFF" }}>
             {selectedPreferenceFacilities.length}
           </Typography.H3Bd>
-        </MS.PreferenceTitle>
+        </S.PreferenceTitle>
         <Link href="/mypage/facility">
           <S.PreferenceEdit>편집</S.PreferenceEdit>
         </Link>
-      </MS.PreferenceHeader>
+      </S.PreferenceHeader>
 
-      <MS.PreferencePlaceWrapper2>
+      <S.PreferencePlaceWrapper2>
         {selectedPreferenceFacilities.length > 0 ? (
           selectedPreferenceFacilities.map((facility) => (
-            <MS.PreferencePlaceInfo key={facility.id}>
-              <MS.PreferencePlaceName>{facility.name}</MS.PreferencePlaceName>
-              <MS.PreferencePlaceAddress>{facility.address}</MS.PreferencePlaceAddress>
-            </MS.PreferencePlaceInfo>
+            <S.PreferencePlaceInfo key={facility.id}>
+              <S.PreferencePlaceName>{facility.name}</S.PreferencePlaceName>
+              <S.PreferencePlaceAddress>{facility.address}</S.PreferencePlaceAddress>
+            </S.PreferencePlaceInfo>
           ))
         ) : (
           <Typography.H4Md color="#8A92A3">
             아직 선택한 시설이 없습니다.
           </Typography.H4Md>
         )}
-      </MS.PreferencePlaceWrapper2>
+      </S.PreferencePlaceWrapper2>
     </>
   );
 }

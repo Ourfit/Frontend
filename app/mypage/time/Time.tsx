@@ -2,7 +2,7 @@
 
 import { Typography } from "@/components/atoms/Typography";
 import React from "react";
-import * as S from "../style";
+import * as S from "./style";
 import Link from "next/link";
 
 interface TimeProps {

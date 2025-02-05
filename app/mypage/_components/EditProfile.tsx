@@ -1,11 +1,11 @@
 "use client";
 
 import Header from "@/components/common/Header/Header";
-import Sports from "../sports/_components/Sports";
 import Facility from "../facility/Facility";
 import Time from "../time/Time";
 import React, { useState } from "react";
 import * as S from "../style";
+import Sports from "../sports/Sports";
 
 interface EditProfileProps {
   handleEditProfile: () => void;

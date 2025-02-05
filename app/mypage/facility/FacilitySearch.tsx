@@ -10,7 +10,7 @@ import { Container } from "@mui/material";
 import { COLORS } from "@/constants/Theme";
 import * as RS from "@/app/challenge/registration/style";
 import * as S from "@/app/mate/facility/style";
-import * as MS from "../style";
+import * as MS from "./style";
 import Link from "next/link";
 
 const dummy2Facilities = [

@@ -1,5 +1,3 @@
-"use client";
-
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
@@ -19,13 +17,6 @@ export const PageContainer = styled.div`
   }
 `;
 
-export const PreferencePlaceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  gap: 8px;
-`;
-
 export const ProfileOverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,25 +28,7 @@ export const ProfileOverviewWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-export const PreferenceSectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  width: 100%;
-  height: auto;
-`;
-
 export const PreferenceFacilityWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  width: 100%;
-  height: auto;
-`;
-
-export const PreferenceTimeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -167,198 +140,6 @@ export const PreferenceContainer = styled.div`
   box-sizing: border-box;
 
   margin-top: 16px;
-`;
-
-export const PreferenceHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  height: 24px;
-`;
-
-export const PreferenceTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: auto;
-  height: 24px;
-
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 150%;
-  letter-spacing: -0.16px;
-`;
-
-export const PreferenceEdit = styled.div`
-  width: 39px;
-  height: 20px;
-
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: -0.13px;
-
-  color: ${COLORS.BLUE_500};
-  cursor: pointer;
-`;
-
-export const PreferenceContent = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8px;
-
-  width: 100%;
-  height: 41px;
-`;
-
-export const PreferenceBadge = styled.div`
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  width: auto;
-  height: 41px;
-
-  padding: 10px 16px 10px 10px;
-
-  border-radius: 12px;
-  border: 1px solid ${COLORS.GRAYSCALE_200};
-`;
-
-export const PreferencePlaceWrapper = styled.div`
-  display: flex;
-  padding: 0px 20px;
-  align-items: flex-start;
-  flex-direction: row;
-  width: 100%;
-  gap: 8px;
-`;
-
-export const PreferencePlaceWrapper2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-
-  gap: 16px;
-`;
-
-export const PreferencePlaceInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  width: 100%;
-  height: 73px;
-
-  padding: 16px 20px;
-  box-sizing: border-box;
-
-  border-radius: 16px;
-  border: 1px solid ${COLORS.GRAYSCALE_200};
-`;
-
-export const PreferencePlaceInfo2 = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 8px 10px;
-  align-items: center;
-  gap: 4px;
-
-  border-radius: 12px;
-  background: ${COLORS.BLUE_50};
-`;
-
-export const PreferenceButton = styled.button`
-  width: 16px;
-  height: 16px;
-  border: none;
-  color: #8aadff;
-  background: ${COLORS.BLUE_50};
-`;
-
-export const PreferencePlaceName = styled.strong`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 150%;
-  letter-spacing: -0.14px;
-`;
-
-export const PreferencePlaceName2 = styled.strong`
-  color: ${COLORS.BLUE_500};
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-  letter-spacing: -0.13px;
-`;
-
-export const PreferencePlaceAddress = styled.span`
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: -0.12px;
-
-  color: ${COLORS.GRAYSCALE_600};
-`;
-
-export const PreferenceTime = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  width: 100%;
-  height: 73px;
-
-  padding: 16px 20px;
-  box-sizing: border-box;
-
-  border-radius: 16px;
-  border: 1px solid ${COLORS.GRAYSCALE_200};
-`;
-
-export const PreferenceTimeTitle = styled.strong`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 150%;
-  letter-spacing: -0.14px;
-`;
-
-export const PreferenceTimeRange = styled.span`
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: -0.12px;
-
-  color: ${COLORS.GRAYSCALE_600};
-`;
-
-export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
-  position: relative;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-
-  overflow: hidden;
-
-  ${({ $isEditingProfile }) =>
-    $isEditingProfile &&
-    `
-    &:hover .background-img {
-      filter: blur(4px); 
-      opacity: 0.5;
-    }
-
-    &:hover .overlay {
-      opacity: 1; 
-    }
-  `}
 `;
 
 export const BackgroundImage = styled.img`
@@ -549,4 +330,26 @@ export const Button = styled.button`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.14px;
+`;
+  
+export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  ${({ $isEditingProfile }) =>
+    $isEditingProfile &&
+    `
+    &:hover .background-img {
+      filter: blur(4px); 
+      opacity: 0.5;
+    }
+
+    &:hover .overlay {
+      opacity: 1; 
+    }
+  `}
 `;
