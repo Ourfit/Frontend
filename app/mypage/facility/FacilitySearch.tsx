@@ -2,13 +2,11 @@
 
 import LogoumbbellsIcon from "@/assets/images/LogoDumbbells.svg";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { Typography } from "@/components/atoms/Typography";
+import Button from "@/components/common/Button";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { COLORS } from "@/constants/Theme";
-import * as RS from "@/app/challenge/registration/style";
 import * as S from "@/app/mate/facility/style";
 import * as MS from "./style";
 import Link from "next/link";
@@ -166,7 +164,9 @@ export default function FacilitySearch() {
 
         <Container>
           <Link href="/mypage" passHref>
-            <RS.Button>변경 완료</RS.Button>
+            <Button size="l" variant="primary" disabled={false}>
+              변경 완료
+            </Button>
           </Link>
         </Container>
       </S.facilityContainer2>
