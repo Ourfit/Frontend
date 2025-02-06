@@ -98,9 +98,15 @@ export const FinishContentWrapper = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: flex-start;
   gap: 8px;
   width: 100%;
+`;
+
+export const ChangeButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto; 
 `;
 
 export const TitleContainer = styled.div`

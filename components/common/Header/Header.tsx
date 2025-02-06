@@ -31,6 +31,9 @@ export default function Header({
     "/notifications": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
+    "/mypage/sports": "선호 운동 편집",
+    "/mypage/facility": "선호 시설 편집",
+    "/mypage/time": "선호 시간 편집",
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
@@ -39,6 +42,11 @@ export default function Header({
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
 
+  const hasBottomBorder = 
+  pathname === "/challenge/registration" || 
+  pathname === "/mypage/sports" || 
+  pathname === "/mypage/facility" || 
+  pathname === "/mypage/time";
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
@@ -71,7 +79,13 @@ export default function Header({
           <S.IconWrapper>
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => (onClick ? onClick() : window.history.back())}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/";
+                }
+              }}
             />
           </S.IconWrapper>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>

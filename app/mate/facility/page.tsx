@@ -1,10 +1,16 @@
 "use client";
 
+import Placeholder from "@/components/common/Placeholder/Placeholder";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { Typography } from "@/components/atoms/Typography";
 import Header from "@/components/common/Header/Header";
-import Placeholder from "@/components/common/Placeholder/Placeholder";
+import Button from "@/components/common/Button";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { COLORS } from "@/constants/Theme";
+import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
 import * as S from "./style";
+import Link from "next/link";
 
 const dummyFacilities = [
   {
@@ -13,6 +19,16 @@ const dummyFacilities = [
     address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
   },
   { id: 2, name: "아워핏짐 강남", address: "서울 강남구 강남대로 123" },
+  {
+    id: 3,
+    name: "에이블짐 잠실",
+    address: "서울 송파구 올림픽로35가길 12 5층 001호",
+  },
+  {
+    id: 4,
+    name: "에이블필라테스 잠실",
+    address: "서울 송파구 올림픽로35가길 13 10층 001호",
+  },
 ];
 
 export default function SportFacility() {
@@ -20,9 +36,12 @@ export default function SportFacility() {
   const [searchResults, setSearchResults] = useState<
     { id: number; name: string; address: string }[]
   >([]);
+  const [selectedFacility, setSelectedFacility] = useState<null | {
+    id: number;
+    name: string;
+    address: string;
+  }>(null); 
 
-  /* 카카오톡 API 연동 및 시설 검색 시 debounce 적용 고려*/
-  // Debounce가 적용됬다 치고 임의로 구현현
   useEffect(() => {
     if (facilityValue.trim() === "") {
       setSearchResults([]);
@@ -30,12 +49,11 @@ export default function SportFacility() {
     }
 
     const timeout = setTimeout(() => {
-      // 더미 데이터 필터링
       const filteredResults = dummyFacilities.filter((facility) =>
         facility.name.includes(facilityValue),
       );
       setSearchResults(filteredResults);
-    }, 1000); // 1초 지연
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, [facilityValue]);
@@ -45,31 +63,54 @@ export default function SportFacility() {
     name: string;
     address: string;
   }) => {
-    localStorage.setItem("selectedFacility", JSON.stringify(facility)); // 장소 저장
+    setSelectedFacility(facility); 
+    localStorage.setItem("selectedFacility", JSON.stringify(facility)); 
   };
+
+  const pathname = usePathname();
+  const isMypageFacility = pathname === "/mypage/facility";
 
   return (
     <>
-      <Header />
+      {isMypageFacility ? "" : <Header />}
       <S.facilityContainer>
         <S.facilityContent>
           <S.facilityTitle>
             <Typography.H1Sb>
-              <S.HighlightedText>함께 운동하는</S.HighlightedText> <br /> 시설이
-              어디인가요?
+              {isMypageFacility ? (
+                <>
+                  <span>선호하는</span>
+                </>
+              ) : (
+                <span style={{ color: COLORS.BLUE_500 }}>함께 운동하는</span>
+              )}
+              <br />
+              {isMypageFacility ? (
+                <>
+                  <span style={{ color: COLORS.BLUE_500 }}>운동 시설</span>
+                  <span>을 선택해주세요!</span>
+                </>
+              ) : (
+                "시설이 어디인가요?"
+              )}
             </Typography.H1Sb>
           </S.facilityTitle>
           <Typography.H4Md color="#8A92A3">
-            같은 동네 메이트를 매치해드려요.
+            {isMypageFacility
+              ? "최소 1개, 최대 3개까지 선택해주세요."
+              : "같은 동네 메이트를 매치해드려요."}
           </Typography.H4Md>
         </S.facilityContent>
         <S.PlaceHolderWrapper>
           <Placeholder
-            text="시설 명을 검색해주세요."
+            text={
+              isMypageFacility ? "ex.아워핏짐 잠실" : "시설 명을 검색해주세요"
+            }
             onChange={(e) => setFacilityValue(e.target.value)}
             inputValue={facilityValue}
           />
         </S.PlaceHolderWrapper>
+
         <S.ResultList>
           {searchResults.map((result) => (
             <S.ResultItem
@@ -86,6 +127,20 @@ export default function SportFacility() {
             </S.ResultItem>
           ))}
         </S.ResultList>
+
+        {isMypageFacility && (
+          <TS.ButtonContainer>
+            <Link href="/mypage">
+              <Button
+                disabled={!selectedFacility}
+                size={BUTTON_SIZES.LARGE}
+                variant={BUTTON_VARIANTS.PRIMARY}
+              >
+                변경 완료
+              </Button>
+            </Link>
+          </TS.ButtonContainer>
+        )}
       </S.facilityContainer>
     </>
   );

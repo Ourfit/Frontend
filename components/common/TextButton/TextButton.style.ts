@@ -12,7 +12,6 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: ${$hasIcon ? "12px 20px 12px 16px" : "12px 20px"};
     border-radius: 12px;
     cursor: pointer;
 
@@ -25,6 +24,26 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
       color: ${COLORS.BLUE_500};
       border: 1px solid ${COLORS.BLUE_500};
       background: ${COLORS.BLUE_200};
+    }
+
+    @media (max-width: 360px) {
+      padding: ${$hasIcon ? "12px 14px" : "12px 16px"};
+    }
+
+    @media (max-width: 375px) and (min-width: 361px) {
+      padding: ${$hasIcon ? "12px 12px 12px 16px" : "12px 20px"};
+    }
+
+    @media (max-width: 390px) and (min-width: 375px) {
+      padding: ${$hasIcon ? "12px 17px 12px 16px" : "12px 20px"};
+    }
+
+    @media (max-width: 412px) and (min-width: 390px) {
+      padding: ${$hasIcon ? "12px 20px 12px 16px" : "12px 20px"};
+    }
+
+    @media (max-width: 426px) and (min-width: 412px) {
+      padding: ${$hasIcon ? "12px 24px 12px 16px" : "12px 20px"};
     }
   `;
 

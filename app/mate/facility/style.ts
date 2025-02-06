@@ -14,6 +14,17 @@ export const facilityContainer = styled.div`
   gap: 36px;
 `;
 
+export const facilityContainer2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  height: 100%;
+
+  gap: 36px;
+  overflow-y: auto;
+`;
+
 export const facilityContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,4 +95,21 @@ export const FacilityInfo = styled.div`
 
   width: 298px;
   height: 100%;
+`;
+
+export const AddText = styled.div`
+  display: flex;
+  padding: 0px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+  color: var(--Blue-500, #004eff);
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.14px;
 `;
