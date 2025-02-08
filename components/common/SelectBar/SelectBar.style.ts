@@ -23,11 +23,11 @@ export const SelectBox = styled.div<{ $isOpen: boolean; width?: string }>`
   cursor: pointer;
 `;
 
-export const SelectOptions = styled.ul<{ $isOpen: boolean }>`
+export const SelectOptions = styled.ul<{ $isOpen: boolean; $width?: string }>`
   position: absolute;
   top: calc(100% + 11px);
   left: 0;
-  width: 250px;
+  width: ${({ $width = "250px" }) => $width};
   box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   background-color: #fff;

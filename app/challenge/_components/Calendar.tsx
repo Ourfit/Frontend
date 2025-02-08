@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as S from "./Calendar.style";
+import { monthList } from "@/utils/monthList";
 
 interface CalendarProps {
   selectedDate: string;
@@ -12,39 +13,6 @@ export default function Calendar({
 }: CalendarProps) {
   const nowDate = new Date(selectedDate);
   const [clickedDate, setClickedDate] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setClickedDate(null);
-  }, [selectedDate]);
-
-  const monthList = (nowDate: Date) => {
-    const nowYear = nowDate.getFullYear();
-    const nowMonth = nowDate.getMonth();
-
-    const dayOneWeek = new Date(nowYear, nowMonth, 1).getDay();
-    const dayLastWeek = new Date(nowYear, nowMonth + 1, 0).getDay();
-
-    const result: Date[] = [];
-    const prevMonthEnd = new Date(nowYear, nowMonth, 0).getDate();
-    const nowMonthEnd = new Date(nowYear, nowMonth + 1, 0).getDate();
-
-    const adjustedDayOneWeek = dayOneWeek === 0 ? 6 : dayOneWeek - 1;
-    const adjustedDayLastWeek = dayLastWeek === 0 ? 6 : dayLastWeek - 1;
-
-    for (let i = adjustedDayOneWeek - 1; i >= 0; i--) {
-      result.push(new Date(nowYear, nowMonth - 1, prevMonthEnd - i));
-    }
-
-    for (let i = 1; i <= nowMonthEnd; i++) {
-      result.push(new Date(nowYear, nowMonth, i));
-    }
-
-    for (let i = 1; i < 7 - adjustedDayLastWeek; i++) {
-      result.push(new Date(nowYear, nowMonth + 1, i));
-    }
-
-    return result;
-  };
 
   const allDay: Date[] = monthList(nowDate);
 
@@ -71,16 +39,17 @@ export default function Calendar({
             <S.DateWrapper
               key={day.getTime()}
               $afterToday={afterToday}
-              onClick={() => handleClickDate(day)}
+              onClick={() => afterToday && handleClickDate(day)}
             >
               {nowDate.getMonth() === day.getMonth() && (
                 <S.Date $sameDay={sameDay} $clickedDate={!!clickedDate}>
                   {sameDay && !clickedDate && (
                     <S.Highlight>{day.getDate()}</S.Highlight>
                   )}
-                  {clickedDate?.getDate() === day.getDate() && (
-                    <S.Highlight>{day.getDate()}</S.Highlight>
-                  )}
+                  {clickedDate?.getMonth() === day.getMonth() &&
+                    clickedDate?.getDate() === day.getDate() && (
+                      <S.Highlight>{day.getDate()}</S.Highlight>
+                    )}
                   {day.getDate()}
                 </S.Date>
               )}

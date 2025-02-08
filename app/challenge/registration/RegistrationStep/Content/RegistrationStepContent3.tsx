@@ -13,8 +13,7 @@ const RegistrationStepContent3 = ({
   const [selectedMonth, setSelectedMonth] = useState<string>("00개월");
 
   useEffect(() => {
-    onSelectionChange(selectedMonth !== "");
-    console.log("선택된 문자: ", selectedMonth);
+    onSelectionChange(selectedMonth !== "00개월");
   }, [selectedMonth, onSelectionChange]);
 
   return (

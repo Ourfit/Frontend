@@ -14,7 +14,7 @@ const RegistrationStepContent2 = ({
 
   useEffect(() => {
     const isAnySelected = selectedStrings.length > 0;
-    console.log("선택된 문자: ", selectedStrings);
+    // console.log("선택된 문자: ", selectedStrings);
     onSelectionChange(isAnySelected);
   }, [selectedStrings, onSelectionChange]);
 

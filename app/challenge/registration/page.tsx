@@ -46,7 +46,8 @@ export default function Page() {
   const isButtonActive =
     step === 1 ||
     (isAnyNumberSelected && step === 2) ||
-    (isAnyStringSelected && (step === 3 || step === 4 || step === 5)) ||
+    (isAnyStringSelected && (step === 3 || step === 4)) ||
+    (selectedDate && step === 5) ||
     step === 6;
 
   const bgColor = {
@@ -54,9 +55,14 @@ export default function Page() {
       step !== 1 && step !== 6 ? COLORS.GRAYSCALE_100 : COLORS.BASE_WHITE,
   };
 
+  const onClick = () => {
+    if (step === 1) window.history.back();
+    else setStep((prev) => prev - 1);
+  };
+
   return (
     <Frame style={{ ...bgColor }} contentStyle={{ ...bgColor, height: "100%" }}>
-      <Header />
+      <Header onClick={onClick} />
       <Container>
         {step === 1 && <RegistrationStart onNext={handleNextStep} />}
         {step === 2 && (

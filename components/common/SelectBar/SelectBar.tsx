@@ -14,6 +14,7 @@ interface SelectBarProps<T> {
   hasSuffix?: boolean;
   suffixText?: string;
   boxStyle?: React.CSSProperties;
+  isCalendar?: boolean;
 }
 
 export default function SelectBar<T extends string | number>({
@@ -24,6 +25,7 @@ export default function SelectBar<T extends string | number>({
   hasSuffix = false,
   suffixText,
   boxStyle,
+  isCalendar,
 }: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -68,10 +70,10 @@ export default function SelectBar<T extends string | number>({
           <Typography.H4Md color="#545862">{suffixText}</Typography.H4Md>
         )}
         <ArrowDown
-          stroke={boxStyle ? COLORS.GRAYSCALE_700 : COLORS.GRAYSCALE_500}
+          stroke={isCalendar ? COLORS.GRAYSCALE_700 : COLORS.GRAYSCALE_500}
         />
       </S.SelectBox>
-      <S.SelectOptions $isOpen={isOpen}>
+      <S.SelectOptions $isOpen={isOpen} $width={isCalendar ? "150px" : "250px"}>
         {options.map((option, index) => (
           <S.OptionItem
             key={index}

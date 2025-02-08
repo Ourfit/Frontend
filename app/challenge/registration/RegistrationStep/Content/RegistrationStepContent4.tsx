@@ -20,12 +20,6 @@ const RegistrationStepContent4 = ({
   const [selectedDate, setSelectedDate] = useState<string>(
     `${year}. ${month.toString().padStart(2, "0")}`,
   );
-  // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
-  // useEffect(() => {
-  //   onSelectionChange(selectedDate);
-  //   setIsButtonDisabled(selectedDate === null);
-  // }, [selectedDate, onSelectionChange]);
 
   return (
     <RS.PeriodContentContainer>
@@ -41,6 +35,7 @@ const RegistrationStepContent4 = ({
             color: COLORS.GRAYSCALE_900,
             height: "45px",
           }}
+          isCalendar
         />
       </RS.PeriodContentWrapper>
       <RS.CalendarContentWrapper>
