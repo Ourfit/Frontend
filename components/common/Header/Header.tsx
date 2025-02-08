@@ -1,7 +1,7 @@
 "use client";
 
 import ChevronLeft from "@/assets/images/chevron-left.svg";
-import Location from "@/assets/images/location.svg";
+import Compass from "@/assets/images/compass.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
@@ -66,7 +66,7 @@ export default function Header({
             style={{ width: "60px", height: "28.966px", fill: COLORS.BLUE_500 }}
           />
           <S.LocationContainer>
-            <Location style={{ width: "24px", height: "24px" }} />
+            <Compass style={{ width: "18px", height: "18px" }} />
             <Typography.H4Sb>송파구 신천동</Typography.H4Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
