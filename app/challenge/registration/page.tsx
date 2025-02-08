@@ -10,7 +10,8 @@ import RegistrationStep3 from "./RegistrationStep/RegistrationStep3";
 import RegistrationStep4 from "./RegistrationStep/RegistrationStep4";
 import RegistrationFinish from "./RegistrationFinish";
 import * as S from "./style";
-import { FrameContainer } from "@/components/layout/Frame.style";
+import Frame from "@/components/layout/Frame";
+import { COLORS } from "@/constants/Theme";
 
 export default function Page() {
   const [step, setStep] = useState(1);
@@ -48,10 +49,13 @@ export default function Page() {
     (isAnyStringSelected && (step === 3 || step === 4 || step === 5)) ||
     step === 6;
 
-  const bgColorGray = step !== 1 && step !== 6;
+  const bgColor = {
+    backgroundColor:
+      step !== 1 && step !== 6 ? COLORS.GRAYSCALE_100 : COLORS.BASE_WHITE,
+  };
 
   return (
-    <FrameContainer $bgColorGray={bgColorGray}>
+    <Frame style={{ ...bgColor }} contentStyle={{ ...bgColor, height: "100%" }}>
       <Header />
       <Container>
         {step === 1 && <RegistrationStart onNext={handleNextStep} />}
@@ -100,6 +104,6 @@ export default function Page() {
               : "다음"}
         </S.Button>
       </Container>
-    </FrameContainer>
+    </Frame>
   );
 }

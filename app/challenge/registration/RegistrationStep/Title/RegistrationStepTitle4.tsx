@@ -1,9 +1,9 @@
 import FourStepBarIcon from "@/assets/images/fourthStepBar.svg";
 import * as S from "./RegistrationStepTitle.style";
 
-const RegistrationStepTitle4 = ({ onNext }: { onNext: () => void }) => {
+const RegistrationStepTitle4 = () => {
   return (
-    <>
+    <S.TitleContainer>
       <FourStepBarIcon width={36} height={36} />
       <S.TitleContainer2>
         <S.TitleWrapper>
@@ -14,7 +14,7 @@ const RegistrationStepTitle4 = ({ onNext }: { onNext: () => void }) => {
           챌린지의 시작 기간은 나중에 수정할 수 없어요.
         </S.TitleDescriptionContent>
       </S.TitleContainer2>
-    </>
+    </S.TitleContainer>
   );
 };
 

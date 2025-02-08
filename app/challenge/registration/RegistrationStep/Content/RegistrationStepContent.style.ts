@@ -28,6 +28,13 @@ export const MonthContentWrapper = styled.div`
   width: 100%;
 `;
 
+export const PeriodContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+`;
+
 export const PeriodContentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
@@ -36,10 +43,8 @@ export const PeriodContentWrapper = styled.div`
 
 export const CalendarContentWrapper = styled.div`
   display: flex;
-  margin-top: 5%;
   flex-direction: column;
   align-items: flex-start;
-  align-self: stretch;
   border-radius: 20px;
   color: ${COLORS.GRAYSCALE_700};
   background-color: ${COLORS.BASE_WHITE};

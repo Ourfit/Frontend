@@ -1,60 +1,44 @@
-import { useState, useEffect } from "react";
-import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import { useState } from "react";
 import * as RS from "../Content/RegistrationStepContent.style";
+import SelectBar from "@/components/common/SelectBar/SelectBar";
+import Calendar from "@/app/challenge/_components/Calendar";
 
 interface RegistrationStepContent4Props {
   onNext: () => void;
-  onSelectionChange: (date: Dayjs | null) => void;
+  onSelectionChange: (date: Date | null) => void;
   disabled: boolean;
 }
 
 const RegistrationStepContent4 = ({
-  onNext,
   onSelectionChange,
-  disabled,
 }: RegistrationStepContent4Props) => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
 
-  useEffect(() => {
-    onSelectionChange(selectedDate);
-    setIsButtonDisabled(selectedDate === null);
-  }, [selectedDate, onSelectionChange]);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    `${year}. ${month.toString().padStart(2, "0")}`,
+  );
+  // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date);
-    console.log("새로운 날짜 선택: ", date?.format("YYYY-MM-DD"));
-  };
+  // useEffect(() => {
+  //   onSelectionChange(selectedDate);
+  //   setIsButtonDisabled(selectedDate === null);
+  // }, [selectedDate, onSelectionChange]);
 
   return (
-    <>
+    <RS.PeriodContentContainer>
       <RS.PeriodContentWrapper>
-        <RS.PeriodSelect
-          $isSelected={selectedDate !== null}
-          onChange={(e) => {
-            const selectedMonth = parseInt(e.target.value);
-            const newDate = dayjs().month(selectedMonth - 1);
-            setSelectedDate(newDate);
-            console.log("선택된 월: ", newDate.format("YYYY-MM"));
-          }}
-        >
-          <option value="">월</option>
-          {[...Array(12)].map((_, index) => (
-            <option key={index} value={index + 1}>
-              {index + 1}월
-            </option>
-          ))}
-        </RS.PeriodSelect>
+        <SelectBar
+          selectType="date"
+          optionValue={selectedDate}
+          setOption={setSelectedDate}
+        />
       </RS.PeriodContentWrapper>
-
       <RS.CalendarContentWrapper>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateCalendar value={selectedDate} onChange={handleDateChange} />
-        </LocalizationProvider>
+        <Calendar selectedDate={selectedDate} />
       </RS.CalendarContentWrapper>
-    </>
+    </RS.PeriodContentContainer>
   );
 };
 
