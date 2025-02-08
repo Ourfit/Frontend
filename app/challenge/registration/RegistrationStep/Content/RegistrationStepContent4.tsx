@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as RS from "../Content/RegistrationStepContent.style";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
 import Calendar from "@/app/challenge/_components/Calendar";
+import { COLORS } from "@/constants/Theme";
 
 interface RegistrationStepContent4Props {
   onNext: () => void;
@@ -33,6 +34,13 @@ const RegistrationStepContent4 = ({
           selectType="date"
           optionValue={selectedDate}
           setOption={setSelectedDate}
+          width="101px"
+          boxStyle={{
+            padding: "12px",
+            borderRadius: "12px",
+            color: COLORS.GRAYSCALE_900,
+            height: "45px",
+          }}
         />
       </RS.PeriodContentWrapper>
       <RS.CalendarContentWrapper>

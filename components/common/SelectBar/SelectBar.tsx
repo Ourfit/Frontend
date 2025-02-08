@@ -13,7 +13,7 @@ interface SelectBarProps<T> {
   width?: string;
   hasSuffix?: boolean;
   suffixText?: string;
-  style?: React.CSSProperties;
+  boxStyle?: React.CSSProperties;
 }
 
 export default function SelectBar<T extends string | number>({
@@ -23,7 +23,7 @@ export default function SelectBar<T extends string | number>({
   width,
   hasSuffix = false,
   suffixText,
-  style,
+  boxStyle,
 }: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,11 +54,12 @@ export default function SelectBar<T extends string | number>({
   };
 
   return (
-    <S.SelectWrapper style={{ ...style }}>
+    <S.SelectWrapper>
       <S.SelectBox
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         width={width}
+        style={{ ...boxStyle }}
       >
         <div style={{ width: "73px" }}>
           <Typography.H4Md>{optionValue}</Typography.H4Md>
@@ -66,7 +67,9 @@ export default function SelectBar<T extends string | number>({
         {hasSuffix && suffixText && (
           <Typography.H4Md color="#545862">{suffixText}</Typography.H4Md>
         )}
-        <ArrowDown stroke={COLORS.GRAYSCALE_500} />
+        <ArrowDown
+          stroke={boxStyle ? COLORS.GRAYSCALE_700 : COLORS.GRAYSCALE_500}
+        />
       </S.SelectBox>
       <S.SelectOptions $isOpen={isOpen}>
         {options.map((option, index) => (
