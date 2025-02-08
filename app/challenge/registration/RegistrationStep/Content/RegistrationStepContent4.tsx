@@ -36,7 +36,10 @@ const RegistrationStepContent4 = ({
         />
       </RS.PeriodContentWrapper>
       <RS.CalendarContentWrapper>
-        <Calendar selectedDate={selectedDate} />
+        <Calendar
+          selectedDate={selectedDate}
+          onSelectionChange={onSelectionChange}
+        />
       </RS.CalendarContentWrapper>
     </RS.PeriodContentContainer>
   );

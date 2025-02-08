@@ -42,13 +42,10 @@ export const PeriodContentWrapper = styled.div`
 `;
 
 export const CalendarContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   border-radius: 20px;
-  color: ${COLORS.GRAYSCALE_700};
   background-color: ${COLORS.BASE_WHITE};
   border: 1px solid ${COLORS.GRAYSCALE_200};
+  padding: 20px 8px 8px 8px;
 `;
 
 export const NumberContent = styled.div<{ $isSelected: boolean }>`

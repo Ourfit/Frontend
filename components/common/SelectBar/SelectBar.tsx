@@ -3,7 +3,7 @@
 import ArrowDown from "@/assets/images/arrow-down2.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as S from "./SelectBar.style";
 
 interface SelectBarProps<T> {
@@ -13,6 +13,7 @@ interface SelectBarProps<T> {
   width?: string;
   hasSuffix?: boolean;
   suffixText?: string;
+  style?: React.CSSProperties;
 }
 
 export default function SelectBar<T extends string | number>({
@@ -22,6 +23,7 @@ export default function SelectBar<T extends string | number>({
   width,
   hasSuffix = false,
   suffixText,
+  style,
 }: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -52,7 +54,7 @@ export default function SelectBar<T extends string | number>({
   };
 
   return (
-    <S.SelectWrapper>
+    <S.SelectWrapper style={{ ...style }}>
       <S.SelectBox
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
