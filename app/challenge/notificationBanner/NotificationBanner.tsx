@@ -7,6 +7,7 @@ import { CheckButton } from "../mate/Profile/MateProfile.style";
 import XButtonIcon from "@/assets/images/x.svg";
 import * as M from "./Modal.style";
 import Button from "@/components/common/Button";
+import Toast from "@/components/common/Toast/Toast";
 
 export default function NotificationBanner({
   isChallenge,
@@ -147,9 +148,7 @@ export default function NotificationBanner({
 
         {/* 운동 완료 알림창 */}
         {isNotificationVisible && (
-          <M.Notification>
-            <Typography.H4Md>💪🏻 오늘 운동 완료! 완전 멋져요! </Typography.H4Md>
-          </M.Notification>
+          <Toast message="💪🏻 오늘 운동 완료! 완전 멋져요!" />
         )}
       </S.BannerContainer>
     </S.BannerWrapper>

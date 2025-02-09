@@ -2,18 +2,6 @@ import { TypographyCss } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const Notification = styled.div`
-  position: fixed;
-  top: 7%;
-  left: 20%;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  z-index: 10;
-  background-color: ${COLORS.TRANSPARENT_BLACK70};
-  color: ${COLORS.BASE_WHITE};
-`;
-
 export const ModalContainer = styled.div`
   position: fixed;
   bottom: 0%;
