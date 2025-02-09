@@ -1,6 +1,6 @@
-import { Typography } from "@/components/atoms/Typography";
 import * as S from "./DateContainer.style";
-import { CalendarBadge } from "@/constants/Calendar";
+import { CALENDAR_BADGE, CalendarBadge } from "@/constants/Calendar";
+import XIcon from "@/assets/images/xfail.svg";
 
 interface DateContainerProps {
   day: Date;
@@ -17,6 +17,7 @@ export default function DateContainer({
   clickedDate,
   handleClickDate,
   nowDate,
+  data,
 }: DateContainerProps) {
   const sameDay = new Date().toDateString() === day.toDateString();
   const afterToday =
@@ -25,26 +26,36 @@ export default function DateContainer({
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();
 
+  const dateFormat = (date: Date) => {
+    const formatMonth = `${date.getMonth() + 1}`.padStart(2, "0");
+    const formatDate = `${date.getDate()}`.padStart(2, "0");
+
+    return `${day.getFullYear()}-${formatMonth}-${formatDate}`;
+  };
+
+  const TYPE = data && data[dateFormat(day)];
+
   return (
     <S.DateWrapper
       $afterToday={afterToday}
       onClick={() => afterToday && handleClickDate(day)}
     >
       {nowDate.getMonth() === day.getMonth() && (
-        <S.Date
-          $sameDay={sameDay}
-          $clickedDate={!!clickedDate}
-          $isRegistration={isRegistration}
-        >
+        <S.Date $sameDay={sameDay} $isRegistration={isRegistration}>
           {sameDay && !clickedDate && isRegistration && (
             <S.Highlight>{day.getDate()}</S.Highlight>
           )}
           {clicked && <S.Highlight>{day.getDate()}</S.Highlight>}
-          {!isRegistration && sameDay ? (
-            <Typography.H4Sb>{day.getDate()}</Typography.H4Sb>
-          ) : (
-            <Typography.H4Md>{day.getDate()}</Typography.H4Md>
+          {TYPE === CALENDAR_BADGE.COMPLETE && <S.Complete>💪🏻</S.Complete>}
+          {TYPE === CALENDAR_BADGE.FAIL && (
+            <S.Fail>
+              <XIcon />
+            </S.Fail>
           )}
+          {TYPE === CALENDAR_BADGE.EXPECTED && (
+            <S.Expected $sameDay={sameDay}>{day.getDate()}</S.Expected>
+          )}
+          {day.getDate()}
         </S.Date>
       )}
     </S.DateWrapper>

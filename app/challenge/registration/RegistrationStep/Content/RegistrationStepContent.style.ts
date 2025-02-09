@@ -33,6 +33,7 @@ export const PeriodContentContainer = styled.div`
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  padding-bottom: 48px;
 `;
 
 export const PeriodContentWrapper = styled.div`

@@ -15,6 +15,7 @@ export const ChallengeCalendar = ({ onNext }: ChallengeCalendarProps) => {
     "2025-02-03": BADGE.COMPLETE,
     "2025-02-05": BADGE.COMPLETE,
     "2025-02-07": BADGE.FAIL,
+    "2025-02-09": BADGE.EXPECTED,
     "2025-02-10": BADGE.FAIL,
     "2025-02-12": BADGE.COMPLETE,
     "2025-02-14": BADGE.COMPLETE,
@@ -24,6 +25,8 @@ export const ChallengeCalendar = ({ onNext }: ChallengeCalendarProps) => {
     "2025-02-24": BADGE.EXPECTED,
     "2025-02-26": BADGE.EXPECTED,
     "2025-02-28": BADGE.EXPECTED,
+    "2025-03-02": BADGE.EXPECTED,
+    "2025-03-08": BADGE.EXPECTED,
   };
 
   // const handleDateSelection = (date: Date | null) => {
