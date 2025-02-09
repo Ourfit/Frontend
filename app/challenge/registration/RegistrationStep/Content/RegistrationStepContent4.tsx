@@ -3,15 +3,20 @@ import * as RS from "../Content/RegistrationStepContent.style";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
 import Calendar from "@/app/challenge/_components/Calendar";
 import { COLORS } from "@/constants/Theme";
+import { CalendarBadge } from "@/constants/Calendar";
 
 interface RegistrationStepContent4Props {
   onNext: () => void;
   onSelectionChange: (date: Date | null) => void;
   disabled: boolean;
+  isRegistration?: boolean;
+  data?: { [key: string]: CalendarBadge };
 }
 
 const RegistrationStepContent4 = ({
   onSelectionChange,
+  isRegistration,
+  data,
 }: RegistrationStepContent4Props) => {
   const date = new Date();
   const year = date.getFullYear();
@@ -35,13 +40,17 @@ const RegistrationStepContent4 = ({
             color: COLORS.GRAYSCALE_900,
             height: "45px",
           }}
-          isCalendar
+          isCalendar={{
+            startDate: !isRegistration ? new Date("2024.11.23") : undefined,
+          }}
         />
       </RS.PeriodContentWrapper>
       <RS.CalendarContentWrapper>
         <Calendar
           selectedDate={selectedDate}
           onSelectionChange={onSelectionChange}
+          isRegistration={isRegistration}
+          data={data}
         />
       </RS.CalendarContentWrapper>
     </RS.PeriodContentContainer>

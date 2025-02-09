@@ -6,12 +6,12 @@ import * as S from "./NotificationBanner.style";
 export default function NotificationBanner() {
   return (
     <S.BannerWrapper>
-      <S.BannerContainer>
+      <S.BannerContainer $isHome={true}>
         <S.ContentWrapper>
           <S.IconWrapper>
             <DumbbellsIcon />
           </S.IconWrapper>
-          <S.NotificationContent>
+          <S.NotificationContent $isHome={true}>
             <Typography.H6Md>12월 13일</Typography.H6Md>
             <Typography.H4Sb>운동 메이트 신청이 있어요!</Typography.H4Sb>
           </S.NotificationContent>

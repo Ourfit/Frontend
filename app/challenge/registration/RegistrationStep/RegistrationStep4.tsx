@@ -20,6 +20,7 @@ const RegistrationStep4 = ({
         onNext={onNext}
         onSelectionChange={onSelectionChange}
         disabled={disabled}
+        isRegistration
       />
     </RS.MainContainer2>
   );

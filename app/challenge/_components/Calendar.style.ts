@@ -29,8 +29,6 @@ export const WeekWrapper = styled.div`
 `;
 
 export const DateContainer = styled.div`
-  ${TypographyCss.H4Md}
-
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   row-gap: 8px;
@@ -40,34 +38,27 @@ export const DateContainer = styled.div`
 
 export const DateWrapper = styled.div<{
   $afterToday?: boolean;
-  $clickDay?: boolean;
 }>`
   text-align: center;
   padding-bottom: 4px;
   width: 32px;
   height: 40px;
   color: ${COLORS.GRAYSCALE_500};
+  box-sizing: content-box;
 
-  cursor: ${({ $afterToday }) => ($afterToday ? "pointer" : "")};
-
-  p {
-    ${({ $clickDay }) =>
-      $clickDay &&
-      ` background-color: #3378fc;
-          color: white;
-          border-radius: 100%;
-          padding: 0.3em;
-          width: 1.3em;
-        `}
-  }
+  cursor: ${({ $afterToday = false }) => ($afterToday ? "pointer" : "")};
 `;
 
 export const Date = styled.div<{
   $sameDay: boolean;
-  $clickedDate: boolean;
+  $clickedDate?: boolean;
+  $isRegistration?: boolean;
 }>`
   position: ${({ $sameDay, $clickedDate }) =>
     ($sameDay || $clickedDate) && "relative"};
+
+  color: ${({ $sameDay, $isRegistration }) =>
+    $sameDay && !$isRegistration && COLORS.BLUE_500};
 `;
 
 export const Highlight = styled.div`

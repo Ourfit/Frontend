@@ -38,12 +38,12 @@ export default function NotificationBanner({
 
   return (
     <S.BannerWrapper>
-      <S.BannerContainer $isChallenge={isChallenge}>
+      <S.BannerContainer>
         <S.ContentWrapper>
           <S.IconWrapper>
             <DumbbellsIcon />
           </S.IconWrapper>
-          <CS.NotificationContent $isChallenge={isChallenge}>
+          <CS.NotificationContent>
             {isChallenge ? (
               <>
                 <Typography.H6Md>챌린지 도전</Typography.H6Md>

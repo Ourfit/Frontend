@@ -21,7 +21,6 @@ export default function Page() {
   };
 
   const [isMatePage, setIsMatePage] = useState(false);
-  const handleSelectionChange = (date: Date | null) => {};
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -60,10 +59,7 @@ export default function Page() {
 
         {selectedTab === "기록" && (
           <>
-            <ChallengeCalendar
-              onNext={() => console.log("다음")}
-              onSelectionChange={handleSelectionChange}
-            />
+            <ChallengeCalendar onNext={() => console.log("다음")} />
           </>
         )}
       </S.PageContainer>

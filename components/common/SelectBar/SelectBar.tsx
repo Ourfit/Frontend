@@ -5,6 +5,7 @@ import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import React, { useState } from "react";
 import * as S from "./SelectBar.style";
+import { selectCalendarList } from "@/utils/monthList";
 
 interface SelectBarProps<T> {
   selectType: string;
@@ -14,7 +15,7 @@ interface SelectBarProps<T> {
   hasSuffix?: boolean;
   suffixText?: string;
   boxStyle?: React.CSSProperties;
-  isCalendar?: boolean;
+  isCalendar?: { startDate?: Date };
 }
 
 export default function SelectBar<T extends string | number>({
@@ -29,10 +30,6 @@ export default function SelectBar<T extends string | number>({
 }: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const date = new Date();
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1;
-
   const options =
     selectType === "month"
       ? Array.from({ length: 12 }, (_, i) => `${i + 1}개월`)
@@ -43,11 +40,9 @@ export default function SelectBar<T extends string | number>({
           : selectType === "hour"
             ? Array.from({ length: 12 }, (_, i) => `${(13 + i) % 24}시`)
             : selectType === "date"
-              ? Array.from(
-                  { length: 12 },
-                  (_, i) =>
-                    `${m + i > 12 ? y + 1 : y}. ${((m + i) % 12 || 12).toString().padStart(2, "0")}`,
-                )
+              ? isCalendar?.startDate
+                ? selectCalendarList(isCalendar?.startDate)
+                : selectCalendarList()
               : [];
 
   const handleOptionClick = (option: T) => {

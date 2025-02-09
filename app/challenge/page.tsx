@@ -28,7 +28,7 @@ export default function Page() {
           {selectedTab === "챌린지" && (
             <NotificationBanner isChallenge={true} />
           )}
-          {selectedTab === "기록" && <NotificationBanner isChallenge={true} />}
+          {selectedTab === "기록" && <NotificationBanner isChallenge={false} />}
         </S.MainContent>
 
         {selectedTab === "챌린지" && (
