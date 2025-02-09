@@ -10,7 +10,7 @@ interface RegistrationStepContent4Props {
   onSelectionChange: (date: Date | null) => void;
   disabled: boolean;
   isRegistration?: boolean;
-  data?: { [key: string]: CalendarBadge };
+  data?: { [key: string]: CalendarBadge } | null;
 }
 
 const RegistrationStepContent4 = ({

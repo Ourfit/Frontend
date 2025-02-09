@@ -10,11 +10,16 @@ import { MateChallengeCard2 } from "./Card/MateChallengeCard2";
 import { MateChallengeCard3 } from "./Card/MateChallengeCard3";
 import { ChallengeCalendar } from "../record/ChallengeCalendar";
 import React, { useState, useEffect } from "react";
+import { CALENDAR_BADGE as BADGE, CalendarBadge } from "@/constants/Calendar";
 import * as S from "../style";
 
 export default function Page() {
   const tabItems = ["챌린지", "기록"];
   const [selectedTab, setSelectedTab] = useState(tabItems[0]);
+  const [calendarData, setCalendarData] = useState<{
+    [key: string]: CalendarBadge;
+  } | null>(null);
+
   const handleTabChange = (tab: string) => {
     console.log(`Tab: ${tab}`);
     setSelectedTab(tab);
@@ -27,6 +32,30 @@ export default function Page() {
     setIsMatePage(currentPath === "/challenge/mateChallenge");
   }, []);
 
+  useEffect(() => {
+    if (selectedTab === "기록") {
+      const dateList: { [key: string]: CalendarBadge } = {
+        "2025-02-03": BADGE.COMPLETE,
+        "2025-02-05": BADGE.COMPLETE,
+        "2025-02-07": BADGE.FAIL,
+        "2025-02-09": BADGE.EXPECTED,
+        "2025-02-10": BADGE.FAIL,
+        "2025-02-12": BADGE.COMPLETE,
+        "2025-02-14": BADGE.COMPLETE,
+        "2025-02-17": BADGE.FAIL,
+        "2025-02-19": BADGE.COMPLETE,
+        "2025-02-21": BADGE.COMPLETE,
+        "2025-02-24": BADGE.EXPECTED,
+        "2025-02-26": BADGE.EXPECTED,
+        "2025-02-28": BADGE.EXPECTED,
+        "2025-03-02": BADGE.EXPECTED,
+        "2025-03-08": BADGE.EXPECTED,
+      };
+
+      setCalendarData(dateList);
+    }
+  }, [selectedTab]);
+
   return (
     <Frame>
       <Header isChallenge={true} />
@@ -34,7 +63,12 @@ export default function Page() {
 
       <S.PageContainer $bgColorGray={true}>
         <S.MainContent>
-          {selectedTab === "기록" && <NotificationBanner isChallenge={false} />}
+          {selectedTab === "기록" && (
+            <NotificationBanner
+              isChallenge={false}
+              setCalendarData={setCalendarData}
+            />
+          )}
           {selectedTab === "챌린지" && (
             <NotificationBanner isChallenge={true} />
           )}
@@ -59,7 +93,10 @@ export default function Page() {
 
         {selectedTab === "기록" && (
           <>
-            <ChallengeCalendar onNext={() => console.log("다음")} />
+            <ChallengeCalendar
+              onNext={() => console.log("다음")}
+              data={calendarData}
+            />
           </>
         )}
       </S.PageContainer>

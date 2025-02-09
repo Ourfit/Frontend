@@ -60,3 +60,10 @@ export const selectCalendarList = (date?: Date) => {
     );
   }
 };
+
+export const dateFormat = (date: Date) => {
+  const formatMonth = `${date.getMonth() + 1}`.padStart(2, "0");
+  const formatDate = `${date.getDate()}`.padStart(2, "0");
+
+  return `${date.getFullYear()}-${formatMonth}-${formatDate}`;
+};

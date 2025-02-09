@@ -8,11 +8,19 @@ import XButtonIcon from "@/assets/images/x.svg";
 import * as M from "./Modal.style";
 import Button from "@/components/common/Button";
 import Toast from "@/components/common/Toast/Toast";
+import { CALENDAR_BADGE, CalendarBadge } from "@/constants/Calendar";
+import { dateFormat } from "@/utils/monthList";
 
 export default function NotificationBanner({
   isChallenge,
+  setCalendarData,
 }: {
   isChallenge?: boolean;
+  setCalendarData?: React.Dispatch<
+    React.SetStateAction<{
+      [key: string]: CalendarBadge;
+    } | null>
+  >;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWithMate, setIsWithMate] = useState<string | null>(null);
@@ -42,8 +50,15 @@ export default function NotificationBanner({
       setIsNotificationVisible(false);
     }, 2000);
 
-    setIsWithMate(null);
-    setSelectedIntensity(null);
+    handleCloseModal();
+
+    if (setCalendarData) {
+      const date = dateFormat(new Date());
+      const newData = {
+        [date]: CALENDAR_BADGE.COMPLETE,
+      };
+      setCalendarData((prev) => ({ ...prev, ...newData }));
+    }
   };
 
   return (

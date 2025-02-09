@@ -1,6 +1,7 @@
 import * as S from "./DateContainer.style";
 import { CALENDAR_BADGE, CalendarBadge } from "@/constants/Calendar";
 import XIcon from "@/assets/images/xfail.svg";
+import { dateFormat } from "@/utils/monthList";
 
 interface DateContainerProps {
   day: Date;
@@ -8,7 +9,7 @@ interface DateContainerProps {
   clickedDate: Date | null;
   handleClickDate: (day: Date) => void;
   nowDate: Date;
-  data?: { [key: string]: CalendarBadge };
+  data?: { [key: string]: CalendarBadge } | null;
 }
 
 export default function DateContainer({
@@ -25,13 +26,6 @@ export default function DateContainer({
   const clicked =
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();
-
-  const dateFormat = (date: Date) => {
-    const formatMonth = `${date.getMonth() + 1}`.padStart(2, "0");
-    const formatDate = `${date.getDate()}`.padStart(2, "0");
-
-    return `${day.getFullYear()}-${formatMonth}-${formatDate}`;
-  };
 
   const TYPE = data && data[dateFormat(day)];
 

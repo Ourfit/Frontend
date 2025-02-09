@@ -8,7 +8,7 @@ interface CalendarProps {
   selectedDate: string;
   onSelectionChange: (date: Date | null) => void;
   isRegistration?: boolean;
-  data?: { [key: string]: CalendarBadge };
+  data?: { [key: string]: CalendarBadge } | null;
 }
 
 export default function Calendar({
