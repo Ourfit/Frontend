@@ -109,6 +109,7 @@ export const AnswerButton = styled.button<{ $isSelected: boolean }>`
       $isSelected ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
   border-radius: 12px;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.div`

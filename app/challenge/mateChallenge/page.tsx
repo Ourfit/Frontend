@@ -40,6 +40,7 @@ export default function Page() {
         "2025-02-03": BADGE.COMPLETE,
         "2025-02-05": BADGE.COMPLETE,
         "2025-02-07": BADGE.FAIL,
+        "2025-02-09": BADGE.EXPECTED,
         "2025-02-10": BADGE.FAIL,
         "2025-02-12": BADGE.COMPLETE,
         "2025-02-14": BADGE.COMPLETE,

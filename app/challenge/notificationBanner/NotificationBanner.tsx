@@ -34,9 +34,10 @@ export default function NotificationBanner({
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
 
   const isExerciseDay = todayStatus === CALENDAR_BADGE.EXPECTED;
+  const isComplete = todayStatus === CALENDAR_BADGE.COMPLETE;
 
   const handleCheckButtonClick = () => {
-    setIsModalOpen(true);
+    if (!isComplete) setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -80,7 +81,7 @@ export default function NotificationBanner({
                 <Typography.H6Md>챌린지 도전</Typography.H6Md>
                 <Typography.H4Sb>챌린지 시작 +24일!</Typography.H4Sb>
               </>
-            ) : isExerciseDay ? (
+            ) : isExerciseDay || isComplete ? (
               <>
                 <Typography.H6Md>1월 26일</Typography.H6Md>
                 <Typography.H4Sb>오늘은 운동하는 날이에요!</Typography.H4Sb>
@@ -93,8 +94,13 @@ export default function NotificationBanner({
             )}
           </CS.NotificationContent>
         </S.ContentWrapper>
-        {!isChallenge && isExerciseDay && (
-          <CheckButton onClick={handleCheckButtonClick}>운동 완료</CheckButton>
+        {!isChallenge && (isExerciseDay || isComplete) && (
+          <CheckButton
+            onClick={handleCheckButtonClick}
+            $isComplete={isComplete}
+          >
+            운동 완료
+          </CheckButton>
         )}
 
         {/* 모달 */}

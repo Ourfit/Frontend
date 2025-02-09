@@ -15,7 +15,7 @@ export const BannerContainer = styled.div<{ $isHome?: boolean }>`
   align-items: center;
   gap: 14px;
   margin: 0 auto;
-  cursor: pointer;
+  cursor: ${({ $isHome }) => ($isHome ? "cursor" : "auto")};
 
   border: ${({ $isHome }) =>
     $isHome ? "auto" : `1px solid ${COLORS.BLUE_200}`};
