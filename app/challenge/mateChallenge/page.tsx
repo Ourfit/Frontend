@@ -12,20 +12,22 @@ import { ChallengeCalendar } from "../record/ChallengeCalendar";
 import React, { useState, useEffect } from "react";
 import { CALENDAR_BADGE as BADGE, CalendarBadge } from "@/constants/Calendar";
 import * as S from "../style";
+import { dateFormat } from "@/utils/monthList";
 
 export default function Page() {
   const tabItems = ["챌린지", "기록"];
   const [selectedTab, setSelectedTab] = useState(tabItems[0]);
+  const [isMatePage, setIsMatePage] = useState(false);
   const [calendarData, setCalendarData] = useState<{
     [key: string]: CalendarBadge;
   } | null>(null);
+
+  const todayStatus = calendarData && calendarData[dateFormat(new Date())];
 
   const handleTabChange = (tab: string) => {
     console.log(`Tab: ${tab}`);
     setSelectedTab(tab);
   };
-
-  const [isMatePage, setIsMatePage] = useState(false);
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -38,7 +40,6 @@ export default function Page() {
         "2025-02-03": BADGE.COMPLETE,
         "2025-02-05": BADGE.COMPLETE,
         "2025-02-07": BADGE.FAIL,
-        "2025-02-09": BADGE.EXPECTED,
         "2025-02-10": BADGE.FAIL,
         "2025-02-12": BADGE.COMPLETE,
         "2025-02-14": BADGE.COMPLETE,
@@ -66,6 +67,7 @@ export default function Page() {
           {selectedTab === "기록" && (
             <NotificationBanner
               isChallenge={false}
+              todayStatus={todayStatus}
               setCalendarData={setCalendarData}
             />
           )}

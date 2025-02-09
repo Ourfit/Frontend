@@ -11,23 +11,29 @@ import Toast from "@/components/common/Toast/Toast";
 import { CALENDAR_BADGE, CalendarBadge } from "@/constants/Calendar";
 import { dateFormat } from "@/utils/monthList";
 
-export default function NotificationBanner({
-  isChallenge,
-  setCalendarData,
-}: {
+interface NotificationBannerProps {
   isChallenge?: boolean;
   setCalendarData?: React.Dispatch<
     React.SetStateAction<{
       [key: string]: CalendarBadge;
     } | null>
   >;
-}) {
+  todayStatus?: CalendarBadge | null;
+}
+
+export default function NotificationBanner({
+  isChallenge,
+  setCalendarData,
+  todayStatus,
+}: NotificationBannerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWithMate, setIsWithMate] = useState<string | null>(null);
   const [selectedIntensity, setSelectedIntensity] = useState<string | null>(
     null,
   );
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+
+  const isExerciseDay = todayStatus === CALENDAR_BADGE.EXPECTED;
 
   const handleCheckButtonClick = () => {
     setIsModalOpen(true);
@@ -74,15 +80,20 @@ export default function NotificationBanner({
                 <Typography.H6Md>챌린지 도전</Typography.H6Md>
                 <Typography.H4Sb>챌린지 시작 +24일!</Typography.H4Sb>
               </>
-            ) : (
+            ) : isExerciseDay ? (
               <>
                 <Typography.H6Md>1월 26일</Typography.H6Md>
                 <Typography.H4Sb>오늘은 운동하는 날이에요!</Typography.H4Sb>
               </>
+            ) : (
+              <>
+                <Typography.H6Md>1월 26일</Typography.H6Md>
+                <Typography.H4Sb>오늘은 예정된 운동이 없어요</Typography.H4Sb>
+              </>
             )}
           </CS.NotificationContent>
         </S.ContentWrapper>
-        {!isChallenge && (
+        {!isChallenge && isExerciseDay && (
           <CheckButton onClick={handleCheckButtonClick}>운동 완료</CheckButton>
         )}
 
