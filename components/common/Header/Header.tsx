@@ -41,6 +41,10 @@ export default function Header({
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
 
+  const isSearchPage = pathname === "/mate/search";
+  const isChellengePage = pathname === "/challenge";
+  const isSettingsPage = pathname.startsWith("/mypage");
+
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
@@ -82,20 +86,26 @@ export default function Header({
             {title}
           </Typography.H2Sb>
         </S.HeaderContainer>
-      ) : isGnbTab || isChallenge ? (
+      ) : isGnbTab || isChallenge || isSearchPage ? (
         <S.HeaderContainer
           $paddingLeft="20px"
           $paddingRight="20px"
           $justifyContent="space-between"
         >
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {isChallenge ? "챌린지" : pageNames[pathname]}
+            {isChallenge
+              ? "챌린지"
+              : isSearchPage
+                ? "검색"
+                : pageNames[pathname]}
           </Typography.H1Sb>
-          <SearchIcon
-            style={{ width: "24px", height: "24px" }}
-            fill="current"
-            onClick={() => router.push("/mate/search")}
-          />
+          {!isSettingsPage && !isSearchPage && !isChellengePage && (
+            <SearchIcon
+              style={{ width: "24px", height: "24px", cursor: "pointer" }}
+              fill="current"
+              onClick={() => router.push("/mate/search")}
+            />
+          )}
         </S.HeaderContainer>
       ) : (
         <S.HeaderContainer
