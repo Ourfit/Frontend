@@ -102,7 +102,7 @@ export default function Header({
           {!isSettingsPage && !isSearchPage && !isChellengePage && (
             <SearchIcon
               style={{ width: "24px", height: "24px", cursor: "pointer" }}
-              fill="current"
+              stroke={"#0A0A0A"}
               onClick={() => router.push("/mate/search")}
             />
           )}
