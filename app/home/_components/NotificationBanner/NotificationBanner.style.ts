@@ -6,19 +6,19 @@ export const BannerWrapper = styled.div`
   padding: 0 20px;
 `;
 
-export const BannerContainer = styled.div<{ $isChallenge?: boolean }>`
+export const BannerContainer = styled.div<{ $isHome?: boolean }>`
   width: 100%; // 반응형으로 수정
   background-color: ${COLORS.BLUE_50};
-  padding: ${({ $isChallenge }) => ($isChallenge ? "12px 16px" : "15px 16px;")};
-  border-radius: ${({ $isChallenge }) => ($isChallenge ? "16px" : "12px")};
+  padding: ${({ $isHome }) => ($isHome ? "15px 16px;" : "12px 16px")};
+  border-radius: ${({ $isHome }) => ($isHome ? "12px" : "16px")};
   display: flex;
   align-items: center;
   gap: 14px;
   margin: 0 auto;
-  cursor: pointer;
+  cursor: ${({ $isHome }) => ($isHome ? "pointer" : "auto")};
 
-  border: ${({ $isChallenge }) =>
-    $isChallenge ? `1px solid ${COLORS.BLUE_200}` : "auto"};
+  border: ${({ $isHome }) =>
+    $isHome ? "auto" : `1px solid ${COLORS.BLUE_200}`};
 
   & > svg {
     width: 20px;
@@ -50,14 +50,14 @@ export const IconWrapper = styled.div`
   }
 `;
 
-export const NotificationContent = styled.div<{ $isChallenge?: boolean }>`
+export const NotificationContent = styled.div<{ $isHome?: boolean }>`
   display: flex;
   flex-direction: column;
 
   & > span {
     &:first-child {
-      color: ${({ $isChallenge }) =>
-        $isChallenge ? COLORS.BLUE_300 : COLORS.GRAYSCALE_900};
+      color: ${({ $isHome }) =>
+        $isHome ? COLORS.BLUE_900 : COLORS.GRAYSCALE_300};
     }
 
     &:last-child {

@@ -125,6 +125,11 @@ export const CheckButton = styled.button`
 
   color: ${COLORS.BASE_WHITE};
   background-color: ${COLORS.BLUE_500};
+
+  &:disabled {
+    cursor: auto;
+    opacity: 0.8;
+  }
 `;
 
 export const MoreButton = styled.button<{ $isMateChallengePage: boolean }>`

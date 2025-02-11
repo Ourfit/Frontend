@@ -14,7 +14,7 @@ const RegistrationStepContent = ({
 
   useEffect(() => {
     onSelectionChange(selectedNumber !== null);
-    console.log("선택된 문자: ", selectedNumber);
+    // console.log("선택된 문자: ", selectedNumber);
   }, [selectedNumber, onSelectionChange]);
 
   const handleNumberClick = (number: number) => {

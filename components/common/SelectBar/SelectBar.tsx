@@ -3,8 +3,9 @@
 import ArrowDown from "@/assets/images/arrow-down2.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as S from "./SelectBar.style";
+import { selectCalendarList } from "@/utils/monthList";
 
 interface SelectBarProps<T> {
   selectType: string;
@@ -13,6 +14,8 @@ interface SelectBarProps<T> {
   width?: string;
   hasSuffix?: boolean;
   suffixText?: string;
+  boxStyle?: React.CSSProperties;
+  isCalendar?: { startDate?: Date };
 }
 
 export default function SelectBar<T extends string | number>({
@@ -22,6 +25,8 @@ export default function SelectBar<T extends string | number>({
   width,
   hasSuffix = false,
   suffixText,
+  boxStyle,
+  isCalendar,
 }: SelectBarProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,7 +39,11 @@ export default function SelectBar<T extends string | number>({
           ? ["오전", "오후"]
           : selectType === "hour"
             ? Array.from({ length: 12 }, (_, i) => `${(13 + i) % 24}시`)
-            : [];
+            : selectType === "date"
+              ? isCalendar?.startDate
+                ? selectCalendarList(isCalendar?.startDate)
+                : selectCalendarList()
+              : [];
 
   const handleOptionClick = (option: T) => {
     setOption(option);
@@ -47,6 +56,7 @@ export default function SelectBar<T extends string | number>({
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         width={width}
+        style={{ ...boxStyle }}
       >
         <div style={{ width: "73px" }}>
           <Typography.H4Md>{optionValue}</Typography.H4Md>
@@ -54,9 +64,11 @@ export default function SelectBar<T extends string | number>({
         {hasSuffix && suffixText && (
           <Typography.H4Md color="#545862">{suffixText}</Typography.H4Md>
         )}
-        <ArrowDown stroke={COLORS.GRAYSCALE_500} />
+        <ArrowDown
+          stroke={isCalendar ? COLORS.GRAYSCALE_700 : COLORS.GRAYSCALE_500}
+        />
       </S.SelectBox>
-      <S.SelectOptions $isOpen={isOpen}>
+      <S.SelectOptions $isOpen={isOpen} $width={isCalendar ? "150px" : "250px"}>
         {options.map((option, index) => (
           <S.OptionItem
             key={index}

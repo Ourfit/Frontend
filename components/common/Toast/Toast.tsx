@@ -9,7 +9,12 @@ import { TOAST_STATUSES } from "@/constants/Toast";
 export default function Toast({ message, status }: Readonly<ToastProps>) {
   return (
     <S.ToastContainer>
-      {status === TOAST_STATUSES.SUCCESS ? <CircleCheckIcon /> : <ErrorIcon />}
+      {status &&
+        (status === TOAST_STATUSES.SUCCESS ? (
+          <CircleCheckIcon />
+        ) : (
+          <ErrorIcon />
+        ))}
       <S.Message>{message}</S.Message>
     </S.ToastContainer>
   );

@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 export const MainContainer2 = styled.div`
   display: flex;
-  padding-top: 40px;
+  padding-top: 25px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: 16px;
   align-self: stretch;
 `;
 
@@ -92,4 +92,10 @@ export const TitleContainer2 = styled.div`
   flex-direction: column;
   text-align: left;
   gap: 8px;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 `;
