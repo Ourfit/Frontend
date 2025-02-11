@@ -95,10 +95,7 @@ export default function NotificationBanner({
           </CS.NotificationContent>
         </S.ContentWrapper>
         {!isChallenge && (isExerciseDay || isComplete) && (
-          <CheckButton
-            onClick={handleCheckButtonClick}
-            $isComplete={isComplete}
-          >
+          <CheckButton onClick={handleCheckButtonClick} disabled={isComplete}>
             운동 완료
           </CheckButton>
         )}

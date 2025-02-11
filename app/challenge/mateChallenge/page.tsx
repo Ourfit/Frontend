@@ -40,9 +40,8 @@ export default function Page() {
         "2025-02-03": BADGE.COMPLETE,
         "2025-02-05": BADGE.COMPLETE,
         "2025-02-07": BADGE.FAIL,
-        "2025-02-09": BADGE.EXPECTED,
         "2025-02-10": BADGE.FAIL,
-        "2025-02-12": BADGE.COMPLETE,
+        "2025-02-12": BADGE.EXPECTED,
         "2025-02-14": BADGE.COMPLETE,
         "2025-02-17": BADGE.FAIL,
         "2025-02-19": BADGE.COMPLETE,
@@ -64,7 +63,7 @@ export default function Page() {
       <Tab tabs={tabItems} onClick={handleTabChange} />
 
       <S.PageContainer $bgColorGray={true}>
-        <S.MainContent>
+        <S.MainContent $paddingBottom={selectedTab === "챌린지" ? "0" : "24px"}>
           {selectedTab === "기록" && (
             <NotificationBanner
               isChallenge={false}

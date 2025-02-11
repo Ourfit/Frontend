@@ -39,18 +39,22 @@ export const Search2Container = styled.div<{ $isMatePage?: boolean }>`
 
 export const MateChallengeContainer = styled.div<{ $isMatePage?: boolean }>`
   border-radius: 20px;
-  width: 85%;
+  width: 316px;
   flex-shrink: 0;
   background-color: ${({ $isMatePage }) =>
     $isMatePage ? COLORS.BASE_WHITE : "transparent"};
   scroll-snap-align: start;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.06);
 `;
 
-export const MainContent = styled.div`
+export const MainContent = styled.div<{
+  $paddingBottom?: string;
+}>`
   display: flex;
   flex-direction: column;
   padding-top: 24px;
-  padding-bottom: 24px;
+  padding-bottom: ${({ $paddingBottom }) =>
+    $paddingBottom ? $paddingBottom : "24px"};
 `;
 
 export const SubContent = styled.div`
@@ -72,8 +76,7 @@ export const SubContent2 = styled.div`
   display: flex;
   flex-direction: row;
   gap: 16px;
-  padding-left: 5%;
-  padding-bottom: 5%;
+  padding: 24px;
   overflow-x: auto;
   white-space: nowrap;
   &::-webkit-scrollbar {

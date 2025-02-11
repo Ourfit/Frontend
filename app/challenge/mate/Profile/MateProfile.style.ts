@@ -106,7 +106,7 @@ export const PrimaryButton = styled.button`
   background-color: ${COLORS.BLUE_50};
 `;
 
-export const CheckButton = styled.button<{ $isComplete?: boolean }>`
+export const CheckButton = styled.button`
   display: flex;
   padding: 10px 14px;
   justify-content: center;
@@ -120,13 +120,16 @@ export const CheckButton = styled.button<{ $isComplete?: boolean }>`
   line-height: 150%;
   letter-spacing: -0.13px;
   border: none;
-  cursor: ${({ $isComplete }) => ($isComplete ? "auto" : "pointer")};
+  cursor: pointer;
   border-radius: 12px;
 
   color: ${COLORS.BASE_WHITE};
   background-color: ${COLORS.BLUE_500};
 
-  opacity: ${({ $isComplete }) => $isComplete && 0.8};
+  &:disabled {
+    cursor: auto;
+    opacity: 0.8;
+  }
 `;
 
 export const MoreButton = styled.button<{ $isMateChallengePage: boolean }>`
