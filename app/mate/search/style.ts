@@ -22,41 +22,6 @@ export const SearchContainer = styled.div`
   height: 100%;
 `;
 
-export const FilterWrapper = styled.div`
-  position: relative;
-
-  width: 100%;
-  height: 64px;
-  padding: 16px 20px 12px 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: flex-start;
-
-  gap: 8px;
-`;
-
-export const MateFilterTrigger = styled.div<{ $isFilterApplied: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 4px;
-
-  width: auto;
-  height: 36px;
-  padding: 8px 10px;
-  box-sizing: border-box;
-
-  border-radius: 12px;
-  border: 1.2px solid
-    ${({ $isFilterApplied }) =>
-      $isFilterApplied ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
-
-  background-color: #ffffff;
-  cursor: pointer;
-`;
-
 export const MateList = styled.div`
   display: flex;
   flex-direction: column;
