@@ -54,9 +54,6 @@ export async function signup(formData: FormDataType) {
 
     return response.json();
   } catch (err) {
-    return {
-      status: false,
-      error: `리뷰 저장에 실패했습니다 : ${err}`,
-    };
+    console.log(err);
   }
 }
