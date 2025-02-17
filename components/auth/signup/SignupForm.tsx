@@ -5,16 +5,29 @@ import { usePathname, useRouter } from "next/navigation";
 import { SIGNUP_STEPS, StepLabel } from "@/constants/Signup";
 import StepIndicator from "@/components/common/StepIndicator";
 import * as S from "./SignupForm.style";
+import { signup } from "@/app/auth/signup/_lib/signup";
 
 interface SignupFormProps {
   step: number;
   setStep: Dispatch<SetStateAction<number>>;
 }
 
+export type FormDataType = {
+  nickname?: string;
+  region?: string;
+  genderAge?: {
+    gender: string;
+    age: string;
+  };
+  fitnessLevel?: string;
+  timePreferences?: string[];
+  sportsPreferences?: string[];
+};
+
 const SignupForm = ({ step, setStep }: SignupFormProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<FormDataType | null>(null);
 
   const handleFormDataChange = (
     field: StepLabel,
@@ -27,9 +40,9 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
     setStep((prev) => prev + 1);
   };
 
-  const handleStartClick = () => {
-    console.log("폼 데이터:", formData);
-    router.push("/");
+  const handleStartClick = async () => {
+    const res = await signup(formData as FormDataType);
+    if (res.status == 201) router.replace("/");
   };
 
   const CurrentStepComponent = SIGNUP_STEPS[step - 1]?.component;

@@ -6,7 +6,7 @@ import * as S from "./SportsPreference.style";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
 import TextButton from "@/components/common/TextButton";
-import { usePathname, useRouter } from "next/navigation"; 
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SportsPreference = ({ nextStep }: StepProps) => {
@@ -34,7 +34,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
     const isMypageSports = pathname === "/mypage/sports";
 
     if (isMypageSports) {
-      router.back();  
+      router.back();
     }
   };
 
