@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import * as RS from "../Content/RegistrationStepContent.style";
+import SelectBar from "@/components/common/SelectBar/SelectBar";
 
 interface RegistrationStepContent3Props {
   onNext: () => void;
@@ -7,36 +8,22 @@ interface RegistrationStepContent3Props {
 }
 
 const RegistrationStepContent3 = ({
-  onNext,
   onSelectionChange,
 }: RegistrationStepContent3Props) => {
-  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedMonth, setSelectedMonth] = useState<string>("00개월");
 
   useEffect(() => {
-    onSelectionChange(selectedMonth !== "");
-    console.log("선택된 문자: ", selectedMonth);
+    onSelectionChange(selectedMonth !== "00개월");
   }, [selectedMonth, onSelectionChange]);
-
-  const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMonth(event.target.value);
-  };
 
   return (
     <RS.MonthWrapper>
       <RS.MonthContentWrapper>
-        <RS.Select
-          id="month-select"
-          value={selectedMonth}
-          onChange={handleMonthChange}
-          $isSelected={selectedMonth !== ""}
-        >
-          <option value="">00개월</option>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
-            <option key={month} value={month.toString()}>
-              {month}개월
-            </option>
-          ))}
-        </RS.Select>
+        <SelectBar
+          selectType="month"
+          optionValue={selectedMonth}
+          setOption={setSelectedMonth}
+        />
       </RS.MonthContentWrapper>
     </RS.MonthWrapper>
   );

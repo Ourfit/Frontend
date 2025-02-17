@@ -4,12 +4,15 @@ import { COLORS } from "@/constants/Theme";
 import Button from "@/components/common/Button";
 import * as S from "./SportsPreference.style";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { useState } from "react";
-import TextButton from "@/components/common/TextButton";
 import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
+import TextButton from "@/components/common/TextButton";
+import { usePathname, useRouter } from "next/navigation"; 
+import { useState } from "react";
 
 const SportsPreference = ({ nextStep }: StepProps) => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleSportClick = (sport: string) => {
     setSelectedSports((prev) => {
@@ -27,7 +30,15 @@ const SportsPreference = ({ nextStep }: StepProps) => {
     if (selectedSports.length >= 1 && nextStep) {
       nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
     }
+
+    const isMypageSports = pathname === "/mypage/sports";
+
+    if (isMypageSports) {
+      router.back();  
+    }
   };
+
+  const isMypageSports = pathname === "/mypage/sports";
 
   return (
     <S.SportsPreferenceContainer>
@@ -64,7 +75,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}
         >
-          다음
+          {isMypageSports ? "변경 완료" : "다음"}
         </Button>
       </S.ButtonContainer>
     </S.SportsPreferenceContainer>

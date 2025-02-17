@@ -1,7 +1,7 @@
 "use client";
 
 import ChevronLeft from "@/assets/images/chevron-left.svg";
-import Location from "@/assets/images/location.svg";
+import Compass from "@/assets/images/compass.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import SearchIcon from "@/assets/images/search.svg";
 import { Typography } from "@/components/atoms/Typography";
@@ -32,6 +32,9 @@ export default function Header({
     "/notifications": "알림",
     "/mypage": "설정",
     "/mypage/openchat": "오픈 채팅 관리",
+    "/mypage/sports": "선호 운동 편집",
+    "/mypage/facility": "선호 시설 편집",
+    "/mypage/time": "선호 시간 편집",
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
@@ -40,6 +43,12 @@ export default function Header({
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
+
+  const hasBottomBorder =
+    pathname === "/challenge/registration" ||
+    pathname === "/mypage/sports" ||
+    pathname === "/mypage/facility" ||
+    pathname === "/mypage/time";
 
   const isSearchPage = pathname === "/mate/search";
   const isChellengePage = pathname === "/challenge";
@@ -66,7 +75,7 @@ export default function Header({
             style={{ width: "60px", height: "28.966px", fill: COLORS.BLUE_500 }}
           />
           <S.LocationContainer>
-            <Location style={{ width: "24px", height: "24px" }} />
+            <Compass style={{ width: "18px", height: "18px" }} />
             <Typography.H4Sb>송파구 신천동</Typography.H4Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
@@ -79,7 +88,13 @@ export default function Header({
           <S.IconWrapper>
             <ChevronLeft
               style={{ display: "block" }}
-              onClick={() => (onClick ? onClick() : window.history.back())}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/";
+                }
+              }}
             />
           </S.IconWrapper>
           <Typography.H2Sb color={COLORS.GRAYSCALE_900}>

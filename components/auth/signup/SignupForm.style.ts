@@ -7,15 +7,17 @@ export const SignUpFormContainer = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
-
   height: 100%;
+  overflow-y: auto;
 `;
 
-export const SignUpFormWrapper = styled.div`
+export const SignUpFormWrapper = styled.div<{
+  $flexGrow?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  flex-grow: 1;
+  flex-grow: ${({ $flexGrow }) => ($flexGrow ? 1 : "auto")};
 `;
 
 export const StepContainer = styled.div`

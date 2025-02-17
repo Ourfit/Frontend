@@ -4,6 +4,9 @@ import * as S from "./EditBasicInfo.style";
 import { useState } from "react";
 import { SIGNUP_STEPS, STEPS_LABEL } from "@/constants/Signup";
 import { useRouter } from "next/navigation";
+import Modal from "@/components/common/Modal/Modal";
+import { Typography } from "@/components/atoms/Typography";
+import { COLORS } from "@/constants/Theme";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -12,9 +15,19 @@ interface EditBasicInfoProps {
 export default function EditBasicInfo({
   handleEditBasicInfo,
 }: EditBasicInfoProps) {
+  const router = useRouter();
+
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const [title, setTitle] = useState("");
-  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleLeave = () => {
+    window.location.replace("/auth/login");
+  };
 
   const data = [
     "중수다람쥐",
@@ -34,6 +47,8 @@ export default function EditBasicInfo({
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
     if (selectCategory === "LOGOUT") router.replace("/");
+
+    if (selectCategory === "LEAVE") setShowModal(true);
 
     if (selectCategory in STEPS_LABEL) {
       setTitle(INFO_LABEL[selectCategory]);
@@ -77,6 +92,20 @@ export default function EditBasicInfo({
           </S.ComponentWrapper>
         )}
       </S.ListContainer>
+      <Modal
+        show={showModal}
+        onClose={handleModalClose}
+        title="정말 탈퇴하시겠어요? 😢"
+        confirmText="탈퇴"
+        onConfirm={handleLeave}
+        contentStyle={{ color: COLORS.GRAYSCALE_600 }}
+      >
+        <Typography.H4Md>
+          탈퇴 시 서비스의 모든 정보가
+          <br />
+          삭제 처리 되며 이는 복구할 수 없어요.
+        </Typography.H4Md>
+      </Modal>
     </>
   );
 }

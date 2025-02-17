@@ -1,26 +1,16 @@
-import * as RS from "../registration/RegistrationStep/Title/RegistrationStepTitle.style";
 import RegistrationStepContent4 from "../registration/RegistrationStep/Content/RegistrationStepContent4";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
 import * as S from "./ChallengeCalendar.style";
+import { CalendarBadge } from "@/constants/Calendar";
 
 interface ChallengeCalendarProps {
   onNext: () => void;
-  onSelectionChange: (date: Date | null) => void;
+  onSelectionChange?: (date: Date | null) => void;
+  data?: { [key: string]: CalendarBadge } | null;
 }
 
-export const ChallengeCalendar = ({
-  onNext,
-  onSelectionChange,
-}: ChallengeCalendarProps) => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
-  const handleDateSelection = (date: Dayjs | null) => {
-    if (!selectedDate || selectedDate !== date) {
-      setSelectedDate(date);
-      onSelectionChange(date ? date.toDate() : null);
-    }
-  };
+export const ChallengeCalendar = ({ onNext, data }: ChallengeCalendarProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const isButtonDisabled = selectedDate === null;
 
@@ -28,8 +18,9 @@ export const ChallengeCalendar = ({
     <S.RecordContainer>
       <RegistrationStepContent4
         onNext={onNext}
-        onSelectionChange={handleDateSelection}
+        onSelectionChange={setSelectedDate}
         disabled={isButtonDisabled}
+        data={data}
       />
     </S.RecordContainer>
   );

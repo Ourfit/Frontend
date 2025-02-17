@@ -3,6 +3,7 @@ import ChevronRightIcon from "@/assets/images/chevron-right.svg";
 import * as S from "./ListItem.style";
 import { Typography } from "@/components/atoms/Typography";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ListItemProps {
   title: string;
@@ -12,6 +13,7 @@ interface ListItemProps {
     name: string;
     image?: string;
     isRead?: boolean;
+    type: string;
   };
   children: React.ReactNode;
   hasArrowButton?: boolean;
@@ -23,8 +25,16 @@ export default function ListItem({
   children,
   hasArrowButton = true,
 }: ListItemProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    // router.push(`/mate/mateprofile/${encodeURIComponent(data.name)}`);
+    if (data.type === "request")
+      router.push(`/mate/mateprofile/${encodeURIComponent("주녕이")}`);
+  };
+
   return (
-    <S.ItemContainer $isRead={data.isRead}>
+    <S.ItemContainer $isRead={data.isRead} onClick={handleClick}>
       <S.ItemWrapper>
         {data.image ? (
           <S.ProfileImageWrapper>

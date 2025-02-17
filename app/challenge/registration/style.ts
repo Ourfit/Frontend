@@ -13,13 +13,8 @@ export const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: calc(100vh - 60px);
+  height: 100%;
   padding: 80px 20px 10% 20px; // 반응형으로 수정
-
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const RegistrationPageContainer = styled.div`
@@ -27,14 +22,8 @@ export const RegistrationPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: calc(100vh - 60px);
+  height: 100%;
   padding: 0px 20px 28px 20px;
-
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const MainContainer = styled.div`
@@ -98,9 +87,15 @@ export const FinishContentWrapper = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: flex-start;
   gap: 8px;
   width: 100%;
+`;
+
+export const ChangeButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
 `;
 
 export const TitleContainer = styled.div`
@@ -156,7 +151,6 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   gap: 23px;
-  margin-top: 10%;
   width: 100%;
   border: none;
   border-radius: 16px;
@@ -169,4 +163,9 @@ export const Button = styled.button`
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.14px;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: auto;
+  }
 `;

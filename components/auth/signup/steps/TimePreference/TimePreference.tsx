@@ -10,6 +10,7 @@ import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
 import Button from "@/components/common/Button";
 import { STEPS_LABEL, TIME_PREFERENCES } from "@/constants/Signup";
+import { usePathname, useRouter } from "next/navigation"; 
 
 const ICONS = {
   MorningIcon: <MorningIcon />,
@@ -19,6 +20,9 @@ const ICONS = {
 
 const TimePreference = ({ nextStep }: StepProps) => {
   const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleTimeClick = (time: string) => {
     setSelectedTimes((prev) =>
@@ -30,7 +34,14 @@ const TimePreference = ({ nextStep }: StepProps) => {
     if (selectedTimes.length > 0 && nextStep) {
       nextStep(STEPS_LABEL.TIME_PREFERENCES, selectedTimes);
     }
+
+    const isMypageTime = pathname === "/mypage/time";
+
+    if (isMypageTime) {
+      router.back();
+    }
   };
+  const isMypageTime = pathname === "/mypage/time";
 
   return (
     <S.TimePreferenceContainer>
@@ -44,7 +55,9 @@ const TimePreference = ({ nextStep }: StepProps) => {
             </Typography.H1Sb>
           </S.SignupIntroTitleWrapper>
           <Typography.H4Md color={COLORS.GRAYSCALE_600}>
-            메이트 매칭 시 나의 프로필에 보여지는 정보에요.
+            {isMypageTime
+              ? "메이트 매칭 시 필요한 정보에요."
+              : "메이트 매칭 시 나의 프로필에 보여지는 정보에요."}
           </Typography.H4Md>
         </S.SignupIntroContainer>
         <S.InfoWrapper>
@@ -87,7 +100,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}
         >
-          다음
+          {isMypageTime ? "변경 완료" : "다음"}
         </Button>
       </S.ButtonContainer>
     </S.TimePreferenceContainer>
