@@ -3,7 +3,7 @@
 import { COLORS } from "@/constants/Theme";
 import { styled } from "styled-components";
 
-export const ExploreMateContainer = styled.div`
+export const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,41 +20,6 @@ export const ExploreMateContainer = styled.div`
 
   width: 100%;
   height: 100%;
-`;
-
-export const FilterWrapper = styled.div`
-  position: relative;
-
-  width: 100%;
-  height: 64px;
-  padding: 16px 20px 12px 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: flex-start;
-
-  gap: 8px;
-`;
-
-export const MateFilterTrigger = styled.div<{ $isFilterApplied: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 4px;
-
-  width: auto;
-  height: 36px;
-  padding: 8px 10px;
-  box-sizing: border-box;
-
-  border-radius: 12px;
-  border: 1.2px solid
-    ${({ $isFilterApplied }) =>
-      $isFilterApplied ? COLORS.BLUE_500 : COLORS.GRAYSCALE_200};
-
-  background-color: #ffffff;
-  cursor: pointer;
 `;
 
 export const MateList = styled.div`
@@ -94,6 +59,16 @@ export const MateListItem = styled.div`
 
   border: 1.2px solid ${COLORS.GRAYSCALE_200};
   border-radius: 20px;
+`;
+
+export const PlaceHolderWrapper = styled.div`
+  width: 100%;
+  height: 52px;
+
+  padding: 0px 20px;
+  box-sizing: border-box;
+
+  margin-top: 19px;
 `;
 
 export const MateProfileImageWrapper = styled.div`

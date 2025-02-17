@@ -3,11 +3,12 @@
 import ChevronLeft from "@/assets/images/chevron-left.svg";
 import Compass from "@/assets/images/compass.svg";
 import OurfitLogo from "@/assets/images/ourfit-logo.svg";
+import SearchIcon from "@/assets/images/search.svg";
 import { Typography } from "@/components/atoms/Typography";
-import { COLORS } from "@/constants/Theme";
-import { usePathname } from "next/navigation";
-import * as S from "./Header.style";
 import { GNB_LABELS } from "@/constants/Gnb";
+import { COLORS } from "@/constants/Theme";
+import { usePathname, useRouter } from "next/navigation";
+import * as S from "./Header.style";
 
 interface HeaderProps {
   isEditingProfile?: boolean;
@@ -37,22 +38,30 @@ export default function Header({
     "/mate/facility": "운동 시설",
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
+    "/mate/search": "검색",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
 
-  const hasBottomBorder = 
-  pathname === "/challenge/registration" || 
-  pathname === "/mypage/sports" || 
-  pathname === "/mypage/facility" || 
-  pathname === "/mypage/time";
+  const hasBottomBorder =
+    pathname === "/challenge/registration" ||
+    pathname === "/mypage/sports" ||
+    pathname === "/mypage/facility" ||
+    pathname === "/mypage/time";
+
+  const isSearchPage = pathname === "/mate/search";
+  const isChellengePage = pathname === "/challenge";
+  const isSettingsPage = pathname.startsWith("/mypage");
+
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
   const isGnbTab = Object.values(GNB_LABELS).includes(
     pageNames[pathname] as GnbLabel,
   );
+
+  const router = useRouter();
 
   return (
     <>
@@ -92,11 +101,26 @@ export default function Header({
             {title}
           </Typography.H2Sb>
         </S.HeaderContainer>
-      ) : isGnbTab || isChallenge ? (
-        <S.HeaderContainer $paddingLeft="20px" $paddingRight="0">
+      ) : isGnbTab || isChallenge || isSearchPage ? (
+        <S.HeaderContainer
+          $paddingLeft="20px"
+          $paddingRight="20px"
+          $justifyContent="space-between"
+        >
           <Typography.H1Sb color={COLORS.GRAYSCALE_900}>
-            {isChallenge ? "챌린지" : pageNames[pathname]}
+            {isChallenge
+              ? "챌린지"
+              : isSearchPage
+                ? "검색"
+                : pageNames[pathname]}
           </Typography.H1Sb>
+          {!isSettingsPage && !isSearchPage && !isChellengePage && (
+            <SearchIcon
+              style={{ width: "24px", height: "24px", cursor: "pointer" }}
+              stroke={"#0A0A0A"}
+              onClick={() => router.push("/mate/search")}
+            />
+          )}
         </S.HeaderContainer>
       ) : (
         <S.HeaderContainer
