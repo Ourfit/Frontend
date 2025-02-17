@@ -82,7 +82,7 @@ export const MateList = styled.div`
 
 export const MateListItem = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 
   gap: 12px;
 
@@ -112,7 +112,7 @@ export const MateInfoWrapper = styled.div`
 
   gap: 12px;
 
-  width: 250px;
+  width: 100%;
   height: 84px;
 `;
 
