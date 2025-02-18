@@ -5,34 +5,47 @@ import DumbbellsIcon from "@/assets/images/dumbbells.svg";
 import * as S from "./UserList.style";
 import Image from "next/image";
 import { Typography } from "@/components/atoms/Typography";
+import { MateInfo } from "@/types/mates";
+import { PreferredWorkoutTime } from "@/types/user";
 
 const ICONS = {
-  아침: <MorningIcon />,
-  낮: <AfternoonIcon />,
-  저녁: <EveningIcon />,
+  MORNING: <MorningIcon />,
+  AFTERNOON: <AfternoonIcon />,
+  EVENING: <EveningIcon />,
+};
+
+const WorkoutTimeLabels: Record<PreferredWorkoutTime, string> = {
+  WEEKDAY_MORNING: "평일 아침",
+  WEEKDAY_AFTERNOON: "평일 오후",
+  WEEKDAY_EVENING: "평일 저녁",
+  WEEKEND_MORNING: "주말 아침",
+  WEEKEND_AFTERNOON: "주말 오후",
+  WEEKEND_EVENING: "주말 저녁",
 };
 
 interface UserListProps {
-  idx: number;
-  userList: {
-    userId: number;
-    name: string;
-    age: number;
-    sports: string[];
-    time: string;
-  }[];
+  isWorkout: boolean;
+  isTime: boolean;
+  userList: MateInfo[];
 }
 
-export default function UserList({ idx, userList }: UserListProps) {
+export default function UserList({
+  isWorkout,
+  isTime,
+  userList,
+}: UserListProps) {
   return (
     <S.UserListContainer>
       {userList.length ? (
         <S.UserListWrapper>
-          {userList.map(({ userId, name, age, time, sports }) => {
-            const word = time.split(" ").at(-1) as "아침" | "낮" | "저녁";
+          {userList.map((user, idx) => {
+            const word = user.preferredWorkoutTime[0].split("_").at(-1) as
+              | "MORNING"
+              | "AFTERNOON"
+              | "EVENING";
 
             return (
-              <S.UserWrapper key={userId}>
+              <S.UserWrapper key={idx}>
                 <S.ProfileBadge>
                   <S.ProfileImageWrapper>
                     <Image
@@ -48,18 +61,18 @@ export default function UserList({ idx, userList }: UserListProps) {
                 </S.ProfileBadge>
                 <S.UserInfoWrapper>
                   <S.UserInfo>
-                    <Typography.H4Sb>{name}</Typography.H4Sb>
-                    <Typography.H6Md>{age}세</Typography.H6Md>
+                    <Typography.H4Sb>{user.nickname}</Typography.H4Sb>
+                    <Typography.H6Md>25세</Typography.H6Md>
                   </S.UserInfo>
                   <S.ExercisePreferences>
-                    <S.PreferenceBadge $isHighlighted={idx === 1}>
-                      {sports.length > 1
-                        ? `${sports[0]} + ${sports.length - 1}`
-                        : sports[0]}
+                    <S.PreferenceBadge $isHighlighted={isWorkout}>
+                      {user.favoriteWorkouts.length > 1
+                        ? `${user.favoriteWorkouts[0].name} + ${user.favoriteWorkouts.length - 1}`
+                        : user.favoriteWorkouts[0].name}
                     </S.PreferenceBadge>
-                    <S.PreferenceBadge $isHighlighted={idx === 2}>
+                    <S.PreferenceBadge $isHighlighted={isTime}>
                       {ICONS[word]}
-                      {time}
+                      {WorkoutTimeLabels[user.preferredWorkoutTime[0]]}
                     </S.PreferenceBadge>
                   </S.ExercisePreferences>
                 </S.UserInfoWrapper>

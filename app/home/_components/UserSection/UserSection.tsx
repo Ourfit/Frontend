@@ -40,7 +40,11 @@ export default function UserSection({ data }: UserSectionType) {
             title={group.title}
             description={group.description}
           />
-          <UserList idx={idx} userList={group.userList} />
+          <UserList
+            isWorkout={idx === 1}
+            isTime={idx === 2}
+            userList={group.userList}
+          />
         </S.UserSectionWrapper>
       ))}
     </S.UserSectionContainer>

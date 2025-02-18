@@ -10,6 +10,7 @@ import UserSection from "../UserSection/UserSection";
 import Header from "@/components/common/Header/Header";
 import { User } from "@/types/user";
 import { MateInfo } from "@/types/mates";
+import { getMates } from "../../_lib/getMates";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
@@ -28,34 +29,32 @@ const MainContent = styled.div`
 `;
 
 export default function HomeComponent() {
-  const { data: workout } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => getUserMe(),
-  });
+  // const { data: user } = useQuery({
+  //   queryKey: ["me"],
+  //   queryFn: () => getUserMe(),
+  // });
 
-  const user: User = {
-    id: 1,
-    profileUrl: "https://example.com/profile.jpg",
-    nickname: "닉네임입니다",
-    gender: "F",
-    skillLevel: "BEGINNER",
-    introduction: "안녕하세요. 자기소개입니다.",
-    preferredWorkoutTime: ["WEEKDAY_MORNING"],
-    favoriteWorkouts: [
-      {
-        code: "GYM",
-        name: "헬스",
-      },
-    ],
-    favoritePlaces: [
-      {
-        placeName: "에이블짐 잠실점",
-        address: "서울특별시 송파구 올림픽로35가길 11 지하1층 001호",
-      },
-    ],
-    createdAt: "2025-02-01T15:33:30",
-    nicknameUpdatedAt: "2025-02-05T12:21:30",
-  };
+  // const { data: regionMates } = useQuery({
+  //   queryKey: ["mates"],
+  //   queryFn: () => getMates({ peferredTimes: [], workoutTypes: [] }),
+  // });
+
+  // const { data: workoutMates } = useQuery({
+  //   queryKey: ["mates"],
+  //   queryFn: () =>
+  //     getMates({
+  //       peferredTimes: [],
+  //       workoutTypes: user.favoriteWorkouts.map(
+  //         (workout: { code: string; name: string }) => workout.code,
+  //       ),
+  //     }),
+  // });
+
+  // const { data: timeMates } = useQuery({
+  //   queryKey: ["mates"],
+  //   queryFn: () =>
+  //     getMates({ peferredTimes: user.preferredWorkoutTime, workoutTypes: [] }),
+  // });
 
   const workoutMates: MateInfo[] = [
     {
