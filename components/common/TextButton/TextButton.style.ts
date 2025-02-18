@@ -27,7 +27,7 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     }
 
     @media (max-width: 360px) {
-      padding: ${$hasIcon ? "12px 14px" : "12px 16px"};
+      padding: ${$hasIcon ? "12px 10px" : "12px 16px"};
     }
 
     @media (max-width: 375px) and (min-width: 361px) {
@@ -35,11 +35,11 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     }
 
     @media (max-width: 390px) and (min-width: 375px) {
-      padding: ${$hasIcon ? "12px 17px 12px 16px" : "12px 20px"};
+      padding: ${$hasIcon ? "12px 10px 12px 16px" : "12px 20px"};
     }
 
     @media (max-width: 412px) and (min-width: 390px) {
-      padding: ${$hasIcon ? "12px 20px 12px 16px" : "12px 20px"};
+      padding: ${$hasIcon ? "12px 16px 12px 16px" : "12px 20px"};
     }
 
     @media (max-width: 426px) and (min-width: 412px) {
@@ -58,7 +58,6 @@ export const TextButton = styled.button<TextButtonStyleProps>`
 
   display: flex;
   padding: 12px 20px;
-  flex-direction: column;
   align-items: flex-start;
   gap: 8px;
   border-radius: 12px;

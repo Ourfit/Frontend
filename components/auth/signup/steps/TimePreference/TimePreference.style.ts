@@ -52,7 +52,6 @@ export const ButtonContainer = styled.div`
 export const TextButtonWrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 100%;
   gap: 10px;
   color: ${COLORS.GRAYSCALE_600};
   white-space: nowrap;
