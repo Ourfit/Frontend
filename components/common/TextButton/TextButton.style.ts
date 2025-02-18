@@ -55,4 +55,24 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
 export const TextButton = styled.button<TextButtonStyleProps>`
   ${({ $isActive, $hasIcon }) =>
     getTextButtonStyle({ $isActive: $isActive, $hasIcon: $hasIcon })}
+
+  display: flex;
+  padding: 12px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+
+  &:hover {
+    background-color: ${COLORS.BLUE_50};
+    border: 1px solid ${COLORS.BLUE_500};
+  }
+
+  ${({ $isActive }) =>
+    $isActive &&
+    `
+    border: 1px solid ${COLORS.BLUE_500};
+    background-color: ${COLORS.BLUE_50};
+  `}
 `;
