@@ -49,7 +49,7 @@ export default function UserList({
                 <S.ProfileBadge>
                   <S.ProfileImageWrapper>
                     <Image
-                      src="/icons/Kakao_logo.png"
+                      src={user.profileUrl}
                       alt="profile-image"
                       width={48}
                       height={48}

@@ -6,17 +6,21 @@ import Link from "next/link";
 interface UserSectionTitleProps {
   title: string;
   description: string;
+  nickname: string;
 }
 
 export default function UserSectionTitle({
   title,
   description,
+  nickname,
 }: UserSectionTitleProps) {
   return (
     <S.TitleContainer>
       <S.TitleWrapper>
         <Typography.H2Bd>{title}</Typography.H2Bd>
-        <Typography.H5Md>ㅇㅇㅇ님과 {description}</Typography.H5Md>
+        <Typography.H5Md>
+          {nickname}님과 {description}
+        </Typography.H5Md>
       </S.TitleWrapper>
       <S.SeeMoreButton>
         <Link href={"/mate"}>
