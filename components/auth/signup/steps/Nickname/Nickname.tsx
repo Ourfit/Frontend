@@ -4,20 +4,29 @@ import { StepProps } from "@/types/step";
 import * as S from "./Nickname.style";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import React, { useState } from "react";
+import React, { useDeferredValue, useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
-import Input from "@/components/common/Input/Input";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
+import Input from "@/components/common/Input/Input";
+import { useQuery } from "@tanstack/react-query";
+import { nicknameDuplication } from "@/app/auth/_lib/nicknameDuplication";
 
 const Nickname = ({ nextStep, value }: StepProps) => {
   const [nickname, setNickname] = useState(
     typeof value === "string" ? value : "",
   );
+  const deferredValue = useDeferredValue(nickname);
   const [showToast, setShowToast] = useState(false);
   const [status, setStatus] = useState<InputStatus>("default");
   const [isTyping, setIsTyping] = useState(false);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["nickname", nickname],
+    queryFn: () => nicknameDuplication(nickname),
+    staleTime: 1000 * 60 * 5,
+  });
 
   const inputStyle = {
     backgroundColor: COLORS.BASE_WHITE,
@@ -76,10 +85,11 @@ const Nickname = ({ nextStep, value }: StepProps) => {
         </S.SignupIntroContainer>
         <Input
           value={nickname}
-          deferredValue={nickname}
+          deferredValue={deferredValue}
           placeholder={"한글만 입력 가능, 최대 12자"}
           status={status}
           isTyping={isTyping}
+          isLoading={isLoading}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           onClear={handleClear}

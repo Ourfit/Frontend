@@ -18,13 +18,17 @@ export const InputContainer = styled.div`
 export const StyledInput = styled.input<{
   $status: InputStatus;
   $borderColor?: boolean;
+  $isInputFocus: boolean;
 }>`
   flex: 1;
   border: 1.4px solid
-    ${({ $status, $borderColor = false }) => {
+    ${({ $status, $borderColor = false, $isInputFocus }) => {
+      if ($isInputFocus) {
+        return $status === INPUT_STATUS.ERROR ? "#F46767" : COLORS.BLUE_500;
+      }
       switch ($status) {
         case INPUT_STATUS.COMPLETE:
-          return "#004dff";
+          return COLORS.BLUE_500;
         case INPUT_STATUS.ERROR:
           return "#F46767";
         default:
@@ -65,7 +69,9 @@ export const IconsContainer = styled.div<{ $hasStatusIcon: boolean }>`
   width: ${({ $hasStatusIcon }) => ($hasStatusIcon ? "auto" : "20px")};
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.div<{
+  $cursor?: string;
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,6 +80,6 @@ export const Icon = styled.div`
 
   & > svg {
     pointer-events: auto;
-    cursor: pointer;
+    cursor: ${({ $cursor = "auto" }) => $cursor};
   }
 `;
