@@ -30,7 +30,7 @@ export const StyledInput = styled.input<{
         case INPUT_STATUS.COMPLETE:
           return COLORS.BLUE_500;
         case INPUT_STATUS.ERROR:
-          return "#F46767";
+          return COLORS.POINT_ERROR;
         default:
           return $borderColor ? COLORS.GRAYSCALE_300 : "transparent";
       }

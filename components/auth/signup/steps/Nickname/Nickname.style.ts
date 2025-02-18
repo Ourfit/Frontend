@@ -1,3 +1,4 @@
+import { TypographyCss } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
@@ -24,6 +25,18 @@ export const SignupIntroTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+export const Message = styled.span`
+  ${TypographyCss.H6Md}
+
+  color: ${COLORS.POINT_ERROR};
 `;
 
 export const ButtonContainer = styled.div`

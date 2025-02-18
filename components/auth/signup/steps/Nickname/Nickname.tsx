@@ -4,7 +4,7 @@ import { StepProps } from "@/types/step";
 import * as S from "./Nickname.style";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import React, { useDeferredValue, useState } from "react";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
@@ -12,21 +12,32 @@ import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Input from "@/components/common/Input/Input";
 import { useQuery } from "@tanstack/react-query";
 import { nicknameDuplication } from "@/app/auth/_lib/nicknameDuplication";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const Nickname = ({ nextStep, value }: StepProps) => {
   const [nickname, setNickname] = useState(
     typeof value === "string" ? value : "",
   );
   const deferredValue = useDeferredValue(nickname);
+  const debouncedNickname = useDebounce(nickname, 500);
+
   const [showToast, setShowToast] = useState(false);
   const [status, setStatus] = useState<InputStatus>("default");
   const [isTyping, setIsTyping] = useState(false);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["nickname", nickname],
-    queryFn: () => nicknameDuplication(nickname),
+  const { data, isLoading } = useQuery({
+    queryKey: ["nickname", debouncedNickname],
+    queryFn: () => nicknameDuplication(debouncedNickname),
     staleTime: 1000 * 60 * 5,
+    enabled: !!debouncedNickname,
   });
+
+  useEffect(() => {
+    if (nickname.trim() !== "") {
+      if (data?.available) setStatus(INPUT_STATUS.COMPLETE);
+      else setStatus(INPUT_STATUS.ERROR);
+    }
+  }, [data]);
 
   const inputStyle = {
     backgroundColor: COLORS.BASE_WHITE,
@@ -57,7 +68,8 @@ const Nickname = ({ nextStep, value }: StepProps) => {
 
   const handleInputBlur = () => {
     if (nickname.trim() !== "") {
-      setStatus(INPUT_STATUS.COMPLETE);
+      if (data?.available) setStatus(INPUT_STATUS.COMPLETE);
+      else setStatus(INPUT_STATUS.ERROR);
     } else {
       setStatus(INPUT_STATUS.DEFAULT);
     }
@@ -66,6 +78,7 @@ const Nickname = ({ nextStep, value }: StepProps) => {
 
   const handleClear = () => {
     setNickname("");
+    setStatus(INPUT_STATUS.DEFAULT);
   };
 
   return (
@@ -83,19 +96,24 @@ const Nickname = ({ nextStep, value }: StepProps) => {
             닉네임은 30일마다 변경할 수 있어요.
           </Typography.H4Md>
         </S.SignupIntroContainer>
-        <Input
-          value={nickname}
-          deferredValue={deferredValue}
-          placeholder={"한글만 입력 가능, 최대 12자"}
-          status={status}
-          isTyping={isTyping}
-          isLoading={isLoading}
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          onClear={handleClear}
-          inputStyle={{ ...inputStyle }}
-          borderColor
-        />
+        <S.InputContainer>
+          <Input
+            value={nickname}
+            deferredValue={deferredValue}
+            placeholder={"한글만 입력 가능, 최대 12자"}
+            status={status}
+            isTyping={isTyping}
+            isLoading={isLoading}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            onClear={handleClear}
+            inputStyle={{ ...inputStyle }}
+            borderColor
+          />
+          {nickname !== "" && data && !data.available && (
+            <S.Message>{data.message}</S.Message>
+          )}
+        </S.InputContainer>
       </S.NicknameWrapper>
       <S.ButtonContainer>
         <Button

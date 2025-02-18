@@ -38,6 +38,8 @@ export default function Input({
 }: InputProps) {
   const StatusIconComponent = INPUT_STATUS_ICONS[status];
   const [isInputFocus, setIsInputFocus] = useState(false);
+  const [isIconClicked, setIsIconClicked] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClear = () => {
@@ -45,6 +47,16 @@ export default function Input({
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (isIconClicked) {
+      setIsIconClicked(false);
+      e.preventDefault();
+      return;
+    }
+    setIsInputFocus(false);
+    onBlur();
   };
 
   const getStatusIcon = () => {
@@ -58,20 +70,10 @@ export default function Input({
       );
     }
 
-    if (deferredValue.trim() !== "") {
-      return (
-        <S.Icon onClick={handleClear} $cursor="pointer">
-          {INPUT_STATUS_ICONS.typing && (
-            <INPUT_STATUS_ICONS.typing width="20" height="20" />
-          )}
-        </S.Icon>
-      );
-    }
-
-    if (!isInputFocus && deferredValue.trim() !== "") {
+    if (status === INPUT_STATUS.COMPLETE || status === INPUT_STATUS.ERROR) {
       return (
         <>
-          <S.Icon onClick={onClear} $cursor="pointer">
+          <S.Icon onClick={handleClear} $cursor="pointer">
             {INPUT_STATUS_ICONS.typing && (
               <INPUT_STATUS_ICONS.typing width="20" height="20" />
             )}
@@ -84,6 +86,18 @@ export default function Input({
         </>
       );
     }
+
+    return (
+      <S.Icon
+        onMouseDown={() => setIsIconClicked(true)}
+        onClick={handleClear}
+        $cursor="pointer"
+      >
+        {INPUT_STATUS_ICONS.typing && (
+          <INPUT_STATUS_ICONS.typing width="20" height="20" />
+        )}
+      </S.Icon>
+    );
   };
 
   return (
@@ -93,10 +107,7 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        onBlur={() => {
-          setIsInputFocus(false);
-          onBlur();
-        }}
+        onBlur={handleBlur}
         onKeyDown={onKeyPress}
         onFocus={() => setIsInputFocus(true)}
         $status={status}
@@ -104,7 +115,7 @@ export default function Input({
         $borderColor={borderColor}
         $isInputFocus={isInputFocus}
       />
-      {status !== INPUT_STATUS.DEFAULT && (
+      {status !== INPUT_STATUS.DEFAULT && deferredValue.trim() !== "" && (
         <S.IconsContainer
           $hasStatusIcon={status !== ("default" as InputStatus)}
         >
