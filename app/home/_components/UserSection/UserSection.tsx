@@ -1,3 +1,5 @@
+"use client";
+
 import UserSectionTitle from "./UserSectionTitle";
 import * as S from "./UserSection.style";
 import UserList from "./UserList";
