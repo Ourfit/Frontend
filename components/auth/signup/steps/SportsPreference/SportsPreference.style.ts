@@ -9,11 +9,6 @@ export const SportsPreferenceWrapper = styled.div`
   flex-grow: 1;
 `;
 
-export const SportsPreferenceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;
 
 export const SignupIntroContainer = styled.div`
   display: flex;
@@ -28,8 +23,7 @@ export const SignupIntroTitleWrapper = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: flex;s
   justify-content: flex-start;
   gap: 12px;
 `;
@@ -39,6 +33,7 @@ export const ButtonContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  bottom: 0;
 `;
 
 export const ButtonWrapper = styled.div`

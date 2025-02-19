@@ -41,7 +41,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
   const isMypageSports = pathname === "/mypage/sports";
 
   return (
-    <S.SportsPreferenceContainer>
+    <>
       <S.SportsPreferenceWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
@@ -78,7 +78,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
           {isMypageSports ? "변경 완료" : "다음"}
         </Button>
       </S.ButtonContainer>
-    </S.SportsPreferenceContainer>
+    </>
   );
 };
 
