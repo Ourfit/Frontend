@@ -15,8 +15,8 @@ export async function getTokens(oAuthId: string) {
 }
 
 export async function getRefreshToken() {
-  const accessToken = JSON.stringify(sessionStorage.getItem("accessToken"));
-  const refreshToken = JSON.stringify(sessionStorage.getItem("refreshToken"));
+  const accessToken = sessionStorage.getItem("accessToken");
+  const refreshToken = sessionStorage.getItem("refreshToken");
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens`,
