@@ -17,7 +17,7 @@ export const SignUpFormWrapper = styled.div<{
   display: flex;
   flex-direction: column;
   gap: 24px;
-  flex-grow: ${({ $flexGrow }) => ($flexGrow ? 1 : "auto")};
+  flex-grow: 1;
 `;
 
 export const StepContainer = styled.div`
