@@ -7,7 +7,7 @@ interface TextButtonStyleProps {
   $hasIcon?: boolean;
 }
 
-const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
+export const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
   const COMMON_CSS = css`
     display: flex;
     align-items: center;
@@ -27,7 +27,7 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     }
 
     @media (max-width: 360px) {
-      padding: ${$hasIcon ? "12px 10px" : "12px 16px"};
+      padding: ${$hasIcon ? "12px 12px" : "12px 16px"};
     }
 
     @media (max-width: 375px) and (min-width: 361px) {
@@ -35,15 +35,15 @@ const getTextButtonStyle = ({ $isActive, $hasIcon }: TextButtonStyleProps) => {
     }
 
     @media (max-width: 390px) and (min-width: 375px) {
-      padding: ${$hasIcon ? "12px 10px 12px 16px" : "12px 20px"};
+      padding: ${$hasIcon ? "12px 12px 12px 16px" : "12px 20px"};
     }
 
     @media (max-width: 412px) and (min-width: 390px) {
       padding: ${$hasIcon ? "12px 16px 12px 16px" : "12px 20px"};
     }
 
-    @media (max-width: 426px) and (min-width: 412px) {
-      padding: ${$hasIcon ? "12px 24px 12px 16px" : "12px 20px"};
+    @media (min-width: 412px) {
+      padding: ${$hasIcon ? "12px 24px 12px 18px" : "12px 20px"};
     }
   `;
 
