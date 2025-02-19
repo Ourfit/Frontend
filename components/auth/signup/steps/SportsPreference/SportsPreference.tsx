@@ -3,9 +3,9 @@ import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
 import Button from "@/components/common/Button";
 import * as S from "./SportsPreference.style";
+import * as CS from "@/components/common/TextButton/TextButton.style";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
-import TextButton from "@/components/common/TextButton";
 import { usePathname, useRouter } from "next/navigation"; 
 import { useState } from "react";
 
@@ -57,13 +57,13 @@ const SportsPreference = ({ nextStep }: StepProps) => {
         <S.InfoContainer>
           <S.TextButtonWrapper>
             {Object.values(SPORTS_LABEL).map((sport) => (
-              <TextButton
+              <CS.TextButton
                 key={sport}
-                isActive={selectedSports.includes(sport)}
+                $isActive={selectedSports.includes(sport)}
                 onClick={() => handleSportClick(sport)}
               >
                 {sport}
-              </TextButton>
+              </CS.TextButton>
             ))}
           </S.TextButtonWrapper>
         </S.InfoContainer>
