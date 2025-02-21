@@ -5,14 +5,16 @@ import Button from "@/components/common/Button";
 import * as S from "./SportsPreference.style";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
-import TextButton from "@/components/common/TextButton";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import TextButton from "@/components/common/TextButton";
 
 const SportsPreference = ({ nextStep }: StepProps) => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
+  const isMypageSports = pathname === "/mypage/sports";
+  const isSignup = pathname === "/auth/signup";
 
   const handleSportClick = (sport: string) => {
     setSelectedSports((prev) => {
@@ -31,18 +33,14 @@ const SportsPreference = ({ nextStep }: StepProps) => {
       nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
     }
 
-    const isMypageSports = pathname === "/mypage/sports";
-
     if (isMypageSports) {
       router.back();
     }
   };
 
-  const isMypageSports = pathname === "/mypage/sports";
-
   return (
-    <S.SportsPreferenceContainer>
-      <S.SportsPreferenceWrapper>
+    <>
+      <S.SportsPreferenceWrapper $isHeightFull={!isSignup}>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
             <Typography.H1Sb>
@@ -78,7 +76,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
           {isMypageSports ? "변경 완료" : "다음"}
         </Button>
       </S.ButtonContainer>
-    </S.SportsPreferenceContainer>
+    </>
   );
 };
 

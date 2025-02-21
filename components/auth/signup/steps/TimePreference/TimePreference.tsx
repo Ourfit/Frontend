@@ -10,7 +10,7 @@ import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
 import Button from "@/components/common/Button";
 import { STEPS_LABEL, TIME_PREFERENCES } from "@/constants/Signup";
-import { usePathname, useRouter } from "next/navigation"; 
+import { usePathname, useRouter } from "next/navigation";
 
 const ICONS = {
   MorningIcon: <MorningIcon />,
@@ -23,6 +23,8 @@ const TimePreference = ({ nextStep }: StepProps) => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const isMypageTime = pathname === "/mypage/time";
+  const isSignup = pathname === "/auth/signup";
 
   const handleTimeClick = (time: string) => {
     setSelectedTimes((prev) =>
@@ -35,16 +37,13 @@ const TimePreference = ({ nextStep }: StepProps) => {
       nextStep(STEPS_LABEL.TIME_PREFERENCES, selectedTimes);
     }
 
-    const isMypageTime = pathname === "/mypage/time";
-
     if (isMypageTime) {
       router.back();
     }
   };
-  const isMypageTime = pathname === "/mypage/time";
 
   return (
-    <S.TimePreferenceContainer>
+    <S.TimePreferenceContainer $isHeightFull={!isSignup}>
       <S.TimePreferenceWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>

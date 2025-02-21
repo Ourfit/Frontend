@@ -5,13 +5,12 @@ import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import KakaoLogo from "@/assets/images/Kakao_logo.svg";
 import * as S from "./style";
 import { Typography } from "@/components/atoms/Typography";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.replace("/auth/signup");
+  const kakaoLoginHandler = () => {
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+    });
   };
 
   return (
@@ -26,7 +25,7 @@ export default function LoginPage() {
         </S.Title>
         <S.Bottom>
           <S.Tooltip>SNS로 간편하게 시작하기</S.Tooltip>
-          <S.LoginButton onClick={handleClick}>
+          <S.LoginButton onClick={kakaoLoginHandler}>
             <KakaoLogo />
             <Typography.H4Sb>카카오로 계속하기</Typography.H4Sb>
           </S.LoginButton>

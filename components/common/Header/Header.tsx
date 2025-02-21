@@ -84,7 +84,8 @@ export default function Header({
             <ChevronLeft
               style={{ display: "block" }}
               onClick={() => {
-                if (window.history.length > 1) {
+                if (onClick) onClick();
+                else if (window.history.length > 1) {
                   window.history.back();
                 } else {
                   window.location.href = "/";

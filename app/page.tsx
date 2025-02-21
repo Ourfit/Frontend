@@ -1,26 +1,20 @@
-"use client";
+import HomeComponent from "./home/_components/HomeComponent/HomeComponent";
+import { redirect } from "next/navigation";
+import TokenHandler from "./(beforeLogin)/auth/_components/TokenHandler";
 
-import Header from "@/components/common/Header/Header";
-import Frame from "@/components/layout/Frame";
-import { COLORS } from "@/constants/Theme";
-import Banner from "./home/_components/Banner/Banner";
-import NotificationBanner from "./home/_components/NotificationBanner/NotificationBanner";
-import QuickMenuBar from "./home/_components/QuickMenuBar/QuickMenuBar";
-import UserSection from "./home/_components/UserSection/UserSection";
-import * as S from "./style";
+type Props = {
+  searchParams: Promise<{ oAuthId?: string; status?: string }>;
+};
 
-export default function Home() {
-  return (
-    <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
-      <Header />
-      <S.PageContainer>
-        <Banner />
-        <S.MainContent>
-          <QuickMenuBar />
-          <NotificationBanner />
-          <UserSection />
-        </S.MainContent>
-      </S.PageContainer>
-    </Frame>
-  );
+export default async function Home({ searchParams }: Props) {
+  const query = await searchParams;
+  if (query.status === "new") {
+    redirect("/auth/signup");
+  }
+
+  if (query.status === "registered" && query.oAuthId) {
+    return <TokenHandler oAuthId={query.oAuthId} />;
+  }
+
+  return <HomeComponent />;
 }
