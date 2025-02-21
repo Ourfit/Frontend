@@ -24,7 +24,7 @@ export type FormDataType = {
     age: string;
   };
   fitnessLevel?: string;
-  timePreferences?: string[];
+  timePreferences?: string;
   sportsPreferences?: string[];
 };
 
@@ -63,7 +63,10 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
 
         setTimeout(() => setToast(""), 3000);
       }
-    } else setToast("카카오 로그인을 진행해주세요");
+    } else {
+      setToast("카카오 로그인을 진행해주세요");
+      setTimeout(() => setToast(""), 3000);
+    }
   };
 
   const CurrentStepComponent = SIGNUP_STEPS[step - 1]?.component;

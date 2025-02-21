@@ -19,7 +19,7 @@ const ICONS = {
 };
 
 const TimePreference = ({ nextStep }: StepProps) => {
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string>("");
 
   const router = useRouter();
   const pathname = usePathname();
@@ -27,9 +27,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
   const isSignup = pathname === "/auth/signup";
 
   const handleTimeClick = (time: string) => {
-    setSelectedTimes((prev) =>
-      prev.includes(time) ? prev.filter((t) => t !== time) : [...prev, time],
-    );
+    setSelectedTimes(time);
   };
 
   const buttonClickHandler = () => {
@@ -67,7 +65,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
                 <TextButton
                   key={label}
                   icon={ICONS[icon]}
-                  isActive={selectedTimes.includes(label)}
+                  isActive={selectedTimes === label}
                   onClick={() => handleTimeClick(label)}
                 >
                   {label}
@@ -82,7 +80,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
                 <TextButton
                   key={label}
                   icon={ICONS[icon]}
-                  isActive={selectedTimes.includes(label)}
+                  isActive={selectedTimes === label}
                   onClick={() => handleTimeClick(label)}
                 >
                   {label}
@@ -94,7 +92,7 @@ const TimePreference = ({ nextStep }: StepProps) => {
       </S.TimePreferenceWrapper>
       <S.ButtonContainer>
         <Button
-          disabled={selectedTimes.length === 0}
+          disabled={!selectedTimes}
           size={BUTTON_SIZES.LARGE}
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}

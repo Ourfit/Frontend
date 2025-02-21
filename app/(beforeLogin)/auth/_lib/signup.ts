@@ -16,11 +16,9 @@ export async function signup(oAuthId: string, formData: FormDataType) {
   const skillLevel = Object.entries(FITNESS_LEVELS).filter(
     ([, { label }]) => label === formData.fitnessLevel,
   )[0][0];
-  const preferredWorkoutTime = formData.timePreferences?.map((time) => {
-    return Object.values(TIME_PREFERENCES)
-      .flat()
-      .filter((v) => v.label === time)[0].key;
-  });
+  const preferredWorkoutTime = Object.values(TIME_PREFERENCES)
+    .flat()
+    .filter((v) => v.label === formData.timePreferences)[0].key;
   const favoriteWorkouts = formData.sportsPreferences?.map((sport) => {
     return Object.entries(SPORTS_LABEL).filter(
       ([, value]) => value === sport,
@@ -42,7 +40,7 @@ export async function signup(oAuthId: string, formData: FormDataType) {
       gender,
       age,
       skillLevel,
-      preferredWorkoutTime: preferredWorkoutTime![0],
+      preferredWorkoutTime,
       favoriteWorkouts,
     }),
   });
