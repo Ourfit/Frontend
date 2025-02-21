@@ -5,7 +5,7 @@ import {
   TIME_PREFERENCES,
 } from "@/constants/Signup";
 
-export async function signup(formData: FormDataType) {
+export async function signup(oAuthId: string, formData: FormDataType) {
   const nickname = formData.nickname;
   const region = formData.region?.split(" ");
   const region1 = region![0];
@@ -27,33 +27,31 @@ export async function signup(formData: FormDataType) {
     )[0][0];
   });
 
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/vi/users`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          oAuthId: "57291628",
-          provider: "KAKAO",
-          nickname,
-          region1,
-          region2,
-          region3,
-          gender,
-          age,
-          skillLevel,
-          preferredWorkoutTime,
-          favoriteWorkouts,
-        }),
-      },
-    );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      oAuthId,
+      provider: "KAKAO",
+      nickname,
+      region1,
+      region2,
+      region3,
+      gender,
+      age,
+      skillLevel,
+      preferredWorkoutTime,
+      favoriteWorkouts,
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    return response.json();
-  } catch (err) {
-    console.log(err);
+  if (!response.ok) {
+    return {
+      code: response.status,
+    };
   }
+
+  return response.json();
 }

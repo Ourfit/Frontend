@@ -8,7 +8,7 @@ type Props = {
 export default async function Home({ searchParams }: Props) {
   const query = await searchParams;
 
-  if (query) return <AuthRouter query={query} />;
+  if (Object.keys(query).length) return <AuthRouter query={query} />;
 
   return <HomeComponent />;
 }

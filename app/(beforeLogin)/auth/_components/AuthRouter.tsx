@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getTokens } from "@/services/getTokens";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
@@ -15,29 +15,30 @@ interface Props {
 
 export default function AuthRouter({ query }: Props) {
   const router = useRouter();
-  const { addToken } = useTokenStore();
-  const { addOAuthId } = useOAuthIdStore();
-
-  if (query.oAuthId) addOAuthId(query.oAuthId);
+  const { addToken } = useTokenStore.getState();
+  const { addOAuthId } = useOAuthIdStore.getState();
 
   useEffect(() => {
     const handleTokens = async () => {
-      const data = await getTokens(query.oAuthId!);
+      const res = await getTokens(query.oAuthId!);
 
-      addToken(data.data.accessToken);
-      sessionStorage.setItem("refreshToken", data.data.refreshToken);
+      if (res.message === "OK") {
+        addToken(res.data.accessToken);
+        sessionStorage.setItem("refreshToken", res.data.refreshToken);
 
-      router.replace("/");
+        router.replace("/");
+      }
     };
 
     if (query.status === "registered" && query.oAuthId) {
       handleTokens();
     }
-  }, []);
 
-  if (query.status === "new") {
-    redirect("/auth/signup");
-  }
+    if (query.status === "new" && query.oAuthId) {
+      addOAuthId(query.oAuthId);
+      router.replace("/auth/signup");
+    }
+  }, []);
 
   return <></>;
 }
