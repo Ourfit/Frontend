@@ -17,7 +17,7 @@ export const useTokenStore = create(
       expiresAt: 0,
 
       addToken: (token, expiresIn) => {
-        const expiresAt = Date.now() + expiresIn * 1000;
+        const expiresAt = Date.now() + expiresIn;
         set(() => ({ token, expiresAt }));
       },
       clearToken: () => {
