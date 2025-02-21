@@ -13,7 +13,7 @@ export interface User {
   gender: "M" | "F";
   skillLevel: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
   introduction: string;
-  preferredWorkoutTime: PreferredWorkoutTime[];
+  preferredWorkoutTime: PreferredWorkoutTime;
   favoriteWorkouts: {
     code: string;
     name: string;

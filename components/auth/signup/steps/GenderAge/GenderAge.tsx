@@ -20,7 +20,7 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
     getValue(value)?.gender || null,
   );
 
-  const [age, setAge] = useState<number>(getValue(value)?.age || 0);
+  const [age, setAge] = useState<number | string>(getValue(value)?.age || 0);
 
   const handleGenderClick = (selectedGender: string) => {
     setGender(selectedGender);
@@ -63,7 +63,11 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
         </S.InfoContainer>
         <S.InfoContainer>
           <Typography.H4Sb>나이</Typography.H4Sb>
-          <SelectBar selectType="age" optionValue={age} setOption={setAge} />
+          <SelectBar
+            selectType="age"
+            optionValue={age || `${age}0세`}
+            setOption={setAge}
+          />
         </S.InfoContainer>
       </S.GenderAgeWrapper>
       <S.ButtonContainer>

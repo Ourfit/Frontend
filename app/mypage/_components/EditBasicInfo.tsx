@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
+import { useTokenStore } from "@/stores/tokenStore";
+import { deleteAccount } from "../_lib/deleteAccount";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -20,13 +22,20 @@ export default function EditBasicInfo({
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const { token, clearToken } = useTokenStore.getState();
 
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  const handleLeave = () => {
-    window.location.replace("/auth/login");
+  const handleLeave = async (isLeave?: boolean) => {
+    clearToken();
+    sessionStorage.removeItem("refreshToken");
+    router.replace("/auth/login");
+
+    if (isLeave && token) {
+      await deleteAccount(token);
+    }
   };
 
   const data = [
@@ -46,7 +55,7 @@ export default function EditBasicInfo({
   } as const;
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
-    if (selectCategory === "LOGOUT") router.replace("/");
+    if (selectCategory === "LOGOUT") handleLeave();
 
     if (selectCategory === "LEAVE") setShowModal(true);
 
@@ -97,7 +106,7 @@ export default function EditBasicInfo({
         onClose={handleModalClose}
         title="정말 탈퇴하시겠어요? 😢"
         confirmText="탈퇴"
-        onConfirm={handleLeave}
+        onConfirm={() => handleLeave(true)}
         contentStyle={{ color: COLORS.GRAYSCALE_600 }}
       >
         <Typography.H4Md>

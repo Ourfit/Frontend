@@ -1,19 +1,14 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const SportsPreferenceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  height: 100%;
-`;
-
-export const SportsPreferenceWrapper = styled.div`
+export const SportsPreferenceWrapper = styled.div<{
+  $isHeightFull?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 32px;
   color: ${COLORS.GRAYSCALE_900};
-  flex-grow: 1;
+  flex-grow: ${({ $isHeightFull = true }) => ($isHeightFull ? "1" : "auto")};
 `;
 
 export const SignupIntroContainer = styled.div`
@@ -30,7 +25,6 @@ export const SignupIntroTitleWrapper = styled.div`
 
 export const InfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   gap: 12px;
 `;
@@ -40,7 +34,12 @@ export const ButtonContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
+  bottom: 0;
+`;
+
+export const ButtonWrapper = styled.div`
+  box-sizing: border-box;
+  width: 65px;
 `;
 
 export const TextButtonWrapper = styled.div`

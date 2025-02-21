@@ -4,6 +4,14 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import React from "react";
 import "./globals.css";
+import ReactQueryProvider from "@/components/common/ReactQueryProvider";
+import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const pretendard = localFont({
   src: "../assets/fonts/PretendardVariable.woff2",
@@ -25,11 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pretendard.variable} font-pretendard`}>
-        <ThemeClient>
-          <GlobalStyle />
-          {children}
-        </ThemeClient>
+        <ReactQueryProvider>
+          <ThemeClient>
+            <GlobalStyle />
+            {children}
+          </ThemeClient>
+        </ReactQueryProvider>
       </body>
+      <KakaoScript />
     </html>
   );
 }

@@ -13,6 +13,7 @@ import * as S from "./Header.style";
 interface HeaderProps {
   isEditingProfile?: boolean;
   isChallenge?: boolean;
+  isSignup?: boolean;
   title?: string;
   onClick?: () => void;
 }
@@ -20,6 +21,7 @@ interface HeaderProps {
 export default function Header({
   isEditingProfile,
   isChallenge,
+  isSignup,
   title,
   onClick,
 }: HeaderProps) {
@@ -44,16 +46,9 @@ export default function Header({
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
 
-  const hasBottomBorder =
-    pathname === "/challenge/registration" ||
-    pathname === "/mypage/sports" ||
-    pathname === "/mypage/facility" ||
-    pathname === "/mypage/time";
-
   const isSearchPage = pathname === "/mate/search";
   const isChellengePage = pathname === "/challenge";
   const isSettingsPage = pathname.startsWith("/mypage");
-
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
@@ -89,7 +84,8 @@ export default function Header({
             <ChevronLeft
               style={{ display: "block" }}
               onClick={() => {
-                if (window.history.length > 1) {
+                if (onClick) onClick();
+                else if (window.history.length > 1) {
                   window.history.back();
                 } else {
                   window.location.href = "/";
@@ -126,7 +122,9 @@ export default function Header({
         <S.HeaderContainer
           $paddingLeft="0"
           $paddingRight="12px"
-          style={{ borderBottom: `1px solid ${COLORS.GRAYSCALE_100}` }}
+          style={{
+            borderBottom: isSignup ? "" : `1px solid ${COLORS.GRAYSCALE_100}`,
+          }}
         >
           <S.IconWrapper>
             <ChevronLeft

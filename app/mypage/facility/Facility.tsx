@@ -1,8 +1,6 @@
 "use client";
 
 import { Typography } from "@/components/atoms/Typography";
-import Button from "@/components/common/Button";
-import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useEffect, useState } from "react";
 import * as S from "./style";
 import Link from "next/link";
@@ -14,10 +12,13 @@ interface FacilityData {
 }
 
 export default function Facility() {
-  const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] = useState<FacilityData[]>([]);
+  const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
+    useState<FacilityData[]>([]);
 
   useEffect(() => {
-    const storedFacilities = localStorage.getItem("selectedPreferenceFacilities");
+    const storedFacilities = localStorage.getItem(
+      "selectedPreferenceFacilities",
+    );
     if (storedFacilities) {
       setSelectedPreferenceFacilities(JSON.parse(storedFacilities));
     }
@@ -41,7 +42,9 @@ export default function Facility() {
           selectedPreferenceFacilities.map((facility) => (
             <S.PreferencePlaceInfo key={facility.id}>
               <S.PreferencePlaceName>{facility.name}</S.PreferencePlaceName>
-              <S.PreferencePlaceAddress>{facility.address}</S.PreferencePlaceAddress>
+              <S.PreferencePlaceAddress>
+                {facility.address}
+              </S.PreferencePlaceAddress>
             </S.PreferencePlaceInfo>
           ))
         ) : (

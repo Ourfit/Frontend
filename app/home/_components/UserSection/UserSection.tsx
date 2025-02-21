@@ -9,7 +9,7 @@ import { PreferredWorkoutTime } from "@/types/user";
 interface UserSectionType {
   nickname: string;
   favoriteWorkouts: { code: string; name: string }[];
-  preferredWorkoutTime: PreferredWorkoutTime[];
+  preferredWorkoutTime: PreferredWorkoutTime;
 }
 
 export default function UserSection({
@@ -47,7 +47,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -62,7 +62,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -77,7 +77,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -94,7 +94,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -109,7 +109,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -124,7 +124,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -141,7 +141,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -156,7 +156,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",
@@ -171,7 +171,7 @@ export default function UserSection({
       gender: "F",
       skillLevel: "BEGINNER",
       introduction: "안녕하세요. 자기소개입니다.",
-      preferredWorkoutTime: ["WEEKDAY_MORNING"],
+      preferredWorkoutTime: "WEEKDAY_MORNING",
       favoriteWorkouts: [
         {
           code: "GYM",

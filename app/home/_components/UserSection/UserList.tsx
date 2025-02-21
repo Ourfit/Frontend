@@ -39,7 +39,7 @@ export default function UserList({
       {userList.length ? (
         <S.UserListWrapper>
           {userList.map((user, idx) => {
-            const word = user.preferredWorkoutTime[0].split("_").at(-1) as
+            const word = user.preferredWorkoutTime.split("_").at(-1) as
               | "MORNING"
               | "AFTERNOON"
               | "EVENING";
@@ -72,7 +72,7 @@ export default function UserList({
                     </S.PreferenceBadge>
                     <S.PreferenceBadge $isHighlighted={isTime}>
                       {ICONS[word]}
-                      {WorkoutTimeLabels[user.preferredWorkoutTime[0]]}
+                      {WorkoutTimeLabels[user.preferredWorkoutTime]}
                     </S.PreferenceBadge>
                   </S.ExercisePreferences>
                 </S.UserInfoWrapper>

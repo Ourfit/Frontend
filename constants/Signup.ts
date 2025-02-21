@@ -51,14 +51,14 @@ export const SPORTS_LABEL = {
 
 export const TIME_PREFERENCES = {
   WEEKDAY: [
-    { label: "평일 아침", icon: "MorningIcon" },
-    { label: "평일 낮", icon: "AfternoonIcon" },
-    { label: "평일 저녁", icon: "EveningIcon" },
+    { key: "WEEKDAY_MORNING", label: "평일 아침", icon: "MorningIcon" },
+    { key: "WEEKDAY_AFTERNOON", label: "평일 낮", icon: "AfternoonIcon" },
+    { key: "WEEKDAY_EVENING", label: "평일 저녁", icon: "EveningIcon" },
   ],
   WEEKEND: [
-    { label: "주말 아침", icon: "MorningIcon" },
-    { label: "주말 낮", icon: "AfternoonIcon" },
-    { label: "주말 저녁", icon: "EveningIcon" },
+    { key: "WEEKEND_MORNING", label: "주말 아침", icon: "MorningIcon" },
+    { key: "WEEKEND_AFTERNOON", label: "주말 낮", icon: "AfternoonIcon" },
+    { key: "WEEKEND_EVENING", label: "주말 저녁", icon: "EveningIcon" },
   ],
 } as const;
 

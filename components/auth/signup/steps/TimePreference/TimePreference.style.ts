@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
 
-export const TimePreferenceContainer = styled.div`
+export const TimePreferenceContainer = styled.div<{
+  $isHeightFull?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 36px;
-  height: 100%;
+  height: ${({ $isHeightFull = true }) => ($isHeightFull ? "100%" : "auto")};
 `;
 
 export const TimePreferenceWrapper = styled.div`
@@ -52,7 +54,6 @@ export const ButtonContainer = styled.div`
 export const TextButtonWrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 100%;
   gap: 10px;
   color: ${COLORS.GRAYSCALE_600};
   white-space: nowrap;
