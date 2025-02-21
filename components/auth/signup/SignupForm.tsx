@@ -33,7 +33,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<FormDataType | null>(null);
   const [toast, setToast] = useState("");
-  const { oAuthId, clearOAuthId } = useOAuthIdStore();
+  const { oAuthId } = useOAuthIdStore();
   const { addToken } = useTokenStore.getState();
 
   const handleFormDataChange = (
@@ -54,8 +54,6 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
         addToken(res.data.accessToken);
         sessionStorage.setItem("refreshToken", res.data.refreshToken);
 
-        clearOAuthId();
-
         router.replace("/");
       } else {
         if (res.status === 400) setToast("올바른 형식이 아닙니다");
@@ -63,7 +61,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
           setToast("이미 등록된 사용자가 존재합니다");
         else setToast("문제가 발생했습니다");
 
-        setTimeout(() => setToast(""), 1500);
+        setTimeout(() => setToast(""), 3000);
       }
     } else setToast("카카오 로그인을 진행해주세요");
   };

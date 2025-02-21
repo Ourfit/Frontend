@@ -42,7 +42,7 @@ export async function signup(oAuthId: string, formData: FormDataType) {
       gender,
       age,
       skillLevel,
-      preferredWorkoutTime,
+      preferredWorkoutTime: preferredWorkoutTime![0],
       favoriteWorkouts,
     }),
   });
