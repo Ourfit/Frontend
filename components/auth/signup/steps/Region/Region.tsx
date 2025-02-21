@@ -4,17 +4,49 @@ import * as S from "./Region.style";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { StepProps } from "@/types/step";
-import React, { useState } from "react";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
+import { getRegions } from "@/app/(beforeLogin)/auth/_lib/getRegions";
 
 const Region = ({ nextStep, value }: StepProps) => {
   const [inputValue, setInputValue] = useState("");
+  const deferredValue = useDeferredValue(inputValue);
+  const debouncedValue = useDebounce(inputValue, 1000);
+
   const [region, setRegion] = useState(typeof value === "string" ? value : "");
   const [showToast, setShowToast] = useState(false);
-  const [show, setShow] = useState(false);
+  const [regionList, setRegionList] = useState<string[] | null>(null);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["region", debouncedValue],
+    queryFn: () => debouncedValue && getRegions(debouncedValue),
+    staleTime: 0,
+    enabled: !!deferredValue,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setRegionList(
+        data.data.map(
+          (value: {
+            fullName: string;
+            region1: string;
+            region2: string;
+            region3: string;
+          }) => value.fullName,
+        ),
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setRegionList(null);
+  }, [inputValue]);
 
   const buttonClickHandler = () => {
     if (region) {
@@ -28,32 +60,20 @@ const Region = ({ nextStep, value }: StepProps) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-
-    setTimeout(() => {
-      setShow(true);
-    }, 1000);
   };
 
   const handleClick = (region: string) => {
     setRegion(region);
-    setShow(false);
+    setRegionList(null);
     setInputValue(region);
   };
-
-  const regionList = [
-    "송파구 신천동",
-    "송파구 신천동",
-    "송파구 신천동",
-    "송파구 신천동",
-    "송파구 신천동",
-  ];
 
   const style = {
     backgroundColor: COLORS.BASE_WHITE,
   };
 
   return (
-    <S.RegionContainer $gap={show ? "16px" : "36px"}>
+    <S.RegionContainer $gap={!regionList || !inputValue ? "36px" : "16px"}>
       <S.RegionWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
@@ -75,7 +95,7 @@ const Region = ({ nextStep, value }: StepProps) => {
           borderColor
         />
       </S.RegionWrapper>
-      {!show ? (
+      {isLoading ? null : !regionList || !inputValue ? (
         <S.ButtonContainer>
           <Button
             disabled={!region || region === value}

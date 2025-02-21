@@ -1,14 +1,15 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const SportsPreferenceWrapper = styled.div`
+export const SportsPreferenceWrapper = styled.div<{
+  $isHeightFull?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 32px;
   color: ${COLORS.GRAYSCALE_900};
-  flex-grow: 1;
+  flex-grow: ${({ $isHeightFull = true }) => ($isHeightFull ? "1" : "auto")};
 `;
-
 
 export const SignupIntroContainer = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ export const SignupIntroTitleWrapper = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-  display: flex;s
+  display: flex;
   justify-content: flex-start;
   gap: 12px;
 `;

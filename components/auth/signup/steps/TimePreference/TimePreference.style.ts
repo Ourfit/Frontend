@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { COLORS } from "@/constants/Theme";
 
-export const TimePreferenceContainer = styled.div`
+export const TimePreferenceContainer = styled.div<{
+  $isHeightFull?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 36px;
-  height: 100%;
+  height: ${({ $isHeightFull = true }) => ($isHeightFull ? "100%" : "auto")};
 `;
 
 export const TimePreferenceWrapper = styled.div`

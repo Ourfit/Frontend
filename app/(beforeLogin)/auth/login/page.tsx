@@ -5,8 +5,18 @@ import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import KakaoLogo from "@/assets/images/Kakao_logo.svg";
 import * as S from "./style";
 import { Typography } from "@/components/atoms/Typography";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const { token } = useTokenStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (token) router.replace("/");
+  }, [token]);
+
   const kakaoLoginHandler = () => {
     window.Kakao.Auth.authorize({
       redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
