@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import React from "react";
 import "./globals.css";
-import KakaoScript from "./auth/_components/KakaoScript";
+import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
 
 declare global {
   interface Window {
