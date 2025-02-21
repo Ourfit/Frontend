@@ -22,20 +22,14 @@ export default function EditBasicInfo({
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { token, clearToken } = useTokenStore.getState();
+  const { clearToken } = useTokenStore.getState();
 
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  const handleLeave = async (isLeave?: boolean) => {
-    clearToken();
-    sessionStorage.removeItem("refreshToken");
-    router.replace("/auth/login");
-
-    if (isLeave && token) {
-      await deleteAccount(token);
-    }
+  const handleLeave = async () => {
+    await deleteAccount();
   };
 
   const data = [
@@ -55,7 +49,10 @@ export default function EditBasicInfo({
   } as const;
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
-    if (selectCategory === "LOGOUT") handleLeave();
+    if (selectCategory === "LOGOUT") {
+      clearToken();
+      router.replace("/auth/login");
+    }
 
     if (selectCategory === "LEAVE") setShowModal(true);
 
@@ -106,7 +103,7 @@ export default function EditBasicInfo({
         onClose={handleModalClose}
         title="정말 탈퇴하시겠어요? 😢"
         confirmText="탈퇴"
-        onConfirm={() => handleLeave(true)}
+        onConfirm={() => handleLeave()}
         contentStyle={{ color: COLORS.GRAYSCALE_600 }}
       >
         <Typography.H4Md>

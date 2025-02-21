@@ -1,17 +1,19 @@
+import customFetch from "@/services/customFetch";
+import { useTokenStore } from "@/stores/tokenStore";
 import { redirect } from "next/navigation";
 
-export async function deleteAccount(token: string) {
-  const response = await fetch(
+export async function deleteAccount() {
+  const { clearToken } = useTokenStore.getState();
+
+  const response = await customFetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me`,
     {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     },
   );
 
   if (response.status === 204) {
+    clearToken();
     redirect("/auth/login");
   }
 
