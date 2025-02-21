@@ -1,6 +1,3 @@
-import Header from "@/components/common/Header/Header";
-import Frame from "@/components/layout/Frame";
-import { COLORS } from "@/constants/Theme";
 import HomeComponent from "./home/_components/HomeComponent/HomeComponent";
 import { redirect } from "next/navigation";
 import TokenHandler from "./(beforeLogin)/auth/_components/TokenHandler";
@@ -19,10 +16,5 @@ export default async function Home({ searchParams }: Props) {
     return <TokenHandler oAuthId={query.oAuthId} />;
   }
 
-  return (
-    <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
-      <Header />
-      <HomeComponent />
-    </Frame>
-  );
+  return <HomeComponent />;
 }
