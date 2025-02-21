@@ -10,7 +10,7 @@ export async function getRegions(region: string) {
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/regions?q=${region}`,
-    { headers },
+    { headers, cache: "force-cache" },
   );
 
   if (!response.ok) {

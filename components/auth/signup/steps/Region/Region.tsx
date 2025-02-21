@@ -25,7 +25,7 @@ const Region = ({ nextStep, value }: StepProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["region", debouncedValue],
     queryFn: () => debouncedValue && getRegions(debouncedValue),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
     enabled: !!deferredValue,
   });
 
@@ -43,6 +43,10 @@ const Region = ({ nextStep, value }: StepProps) => {
       );
     }
   }, [data]);
+
+  useEffect(() => {
+    setRegionList(null);
+  }, [inputValue]);
 
   const buttonClickHandler = () => {
     if (region) {
@@ -69,7 +73,7 @@ const Region = ({ nextStep, value }: StepProps) => {
   };
 
   return (
-    <S.RegionContainer $gap={regionList ? "16px" : "36px"}>
+    <S.RegionContainer $gap={!regionList || !inputValue ? "36px" : "16px"}>
       <S.RegionWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
