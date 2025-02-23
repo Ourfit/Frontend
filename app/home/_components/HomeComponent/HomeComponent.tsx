@@ -12,7 +12,8 @@ import { useTokenStore } from "@/stores/tokenStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
-import { User } from "@/types/user";
+import { useQuery } from "@tanstack/react-query";
+import getUserMe from "../../_lib/getUserMe";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
@@ -31,33 +32,11 @@ const MainContent = styled.div`
 `;
 
 export default function HomeComponent() {
-  // const { data: user } = useQuery({
-  //   queryKey: ["me"],
-  //   queryFn: () => getUserMe(),
-  // });
-  const user: User = {
-    id: 1,
-    profileUrl: "https://example.com/profile.jpg",
-    nickname: "닉네임입니다",
-    gender: "F",
-    skillLevel: "BEGINNER",
-    introduction: "안녕하세요. 자기소개입니다.",
-    preferredWorkoutTime: "WEEKDAY_MORNING",
-    favoriteWorkouts: [
-      {
-        code: "GYM",
-        name: "헬스",
-      },
-    ],
-    favoritePlaces: [
-      {
-        placeName: "에이블짐 잠실점",
-        address: "서울특별시 송파구 올림픽로35가길 11 지하1층 001호",
-      },
-    ],
-    createdAt: "2025-02-01T15:33:30",
-    nicknameUpdatedAt: "2025-02-05T12:21:30",
-  };
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["userMe"],
+    queryFn: () => getUserMe(),
+    staleTime: 5 * 60 * 1000,
+  });
 
   const { token } = useTokenStore();
   const router = useRouter();
@@ -69,18 +48,25 @@ export default function HomeComponent() {
     } else clearOAuthId();
   }, [token]);
 
+  if (isLoading || !user.data) {
+    return <div>loading</div>;
+  }
+
+  const { region2, region3, nickname, favoriteWorkouts, preferredWorkoutTime } =
+    user.data;
+
   return (
     <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
-      <Header />
+      <Header region={`${region2} ${region3}`} />
       <PageContainer>
         <Banner />
         <MainContent>
           <QuickMenuBar />
           <NotificationBanner />
           <UserSection
-            nickname={user.nickname}
-            favoriteWorkouts={user.favoriteWorkouts}
-            preferredWorkoutTime={user.preferredWorkoutTime}
+            nickname={nickname}
+            favoriteWorkouts={favoriteWorkouts}
+            preferredWorkoutTime={preferredWorkoutTime}
           />
         </MainContent>
       </PageContainer>
