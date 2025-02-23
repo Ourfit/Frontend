@@ -1,13 +1,5 @@
 import HomeComponent from "./home/_components/HomeComponent/HomeComponent";
 import AuthRouter from "./(beforeLogin)/auth/_components/AuthRouter";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "아워핏",
-  openGraph: {
-    title: "아워핏",
-  },
-};
 
 type Props = {
   searchParams: Promise<{ oAuthId?: string; status?: string }>;

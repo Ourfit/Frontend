@@ -32,21 +32,24 @@ const MainContent = styled.div`
 `;
 
 export default function HomeComponent() {
+  const { token } = useTokenStore();
+  const router = useRouter();
+  const { clearOAuthId } = useOAuthIdStore.getState();
+
   const { data: user, isLoading } = useQuery({
     queryKey: ["userMe"],
     queryFn: () => getUserMe(),
     staleTime: 5 * 60 * 1000,
+    enabled: !!token,
   });
-
-  const { token } = useTokenStore();
-  const router = useRouter();
-  const { clearOAuthId } = useOAuthIdStore.getState();
 
   useEffect(() => {
     if (!token) {
       router.replace("/auth/login");
     } else clearOAuthId();
   }, [token]);
+
+  if (!token) return null;
 
   if (isLoading || !user.data) {
     return <div>loading</div>;
