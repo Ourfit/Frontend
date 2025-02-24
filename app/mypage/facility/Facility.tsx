@@ -1,9 +1,9 @@
 "use client";
 
 import { Typography } from "@/components/atoms/Typography";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import * as S from "./style";
-import Link from "next/link";
 
 interface FacilityData {
   id: number;
@@ -11,7 +11,15 @@ interface FacilityData {
   address: string;
 }
 
-export default function Facility() {
+interface FacilityProps {
+  selectedPreferenceFacility: FacilityData | null;
+  handleNavigate: (facility: FacilityData) => void;
+}
+
+export default function Facility({
+  selectedPreferenceFacility,
+  handleNavigate,
+}: FacilityProps) {
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
     useState<FacilityData[]>([]);
 
