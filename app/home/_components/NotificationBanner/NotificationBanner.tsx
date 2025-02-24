@@ -16,7 +16,9 @@ export default function NotificationBanner({ nickname }: { nickname: string }) {
   });
 
   const mateHistory: MateHistory[] = data?.data.content;
-  const notification = mateHistory.filter((e) => e.targetNickname === nickname);
+  const notification = mateHistory
+    ? mateHistory.filter((e) => e.targetNickname === nickname)
+    : [];
 
   if (!data || isLoading || !notification.length) return <></>;
 
