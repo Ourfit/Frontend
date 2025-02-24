@@ -3,12 +3,10 @@ import ChevronRight from "@/assets/images/chevron-right.svg";
 import * as S from "./EditBasicInfo.style";
 import { useState } from "react";
 import { SIGNUP_STEPS, STEPS_LABEL } from "@/constants/Signup";
-import { useRouter } from "next/navigation";
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { useTokenStore } from "@/stores/tokenStore";
-import { deleteAccount } from "../_lib/deleteAccount";
+import { deleteAccount, deleteToken } from "../_lib/deleteAuth";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -17,15 +15,16 @@ interface EditBasicInfoProps {
 export default function EditBasicInfo({
   handleEditBasicInfo,
 }: EditBasicInfoProps) {
-  const router = useRouter();
-
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { clearToken } = useTokenStore.getState();
 
   const handleModalClose = () => {
     setShowModal(false);
+  };
+
+  const handleLogout = async () => {
+    await deleteToken();
   };
 
   const handleLeave = async () => {
@@ -49,10 +48,7 @@ export default function EditBasicInfo({
   } as const;
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
-    if (selectCategory === "LOGOUT") {
-      clearToken();
-      router.replace("/auth/login");
-    }
+    if (selectCategory === "LOGOUT") handleLogout();
 
     if (selectCategory === "LEAVE") setShowModal(true);
 
