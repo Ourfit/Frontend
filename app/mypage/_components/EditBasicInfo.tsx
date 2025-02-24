@@ -3,12 +3,10 @@ import ChevronRight from "@/assets/images/chevron-right.svg";
 import * as S from "./EditBasicInfo.style";
 import { useState } from "react";
 import { SIGNUP_STEPS, STEPS_LABEL } from "@/constants/Signup";
-import { useRouter } from "next/navigation";
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { useTokenStore } from "@/stores/tokenStore";
-import { deleteAccount } from "../_lib/deleteAccount";
+import { deleteAccount, deleteToken } from "../_lib/deleteAuth";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -17,25 +15,20 @@ interface EditBasicInfoProps {
 export default function EditBasicInfo({
   handleEditBasicInfo,
 }: EditBasicInfoProps) {
-  const router = useRouter();
-
   const [currentPage, setCurrentPage] = useState<number>(-1);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { token, clearToken } = useTokenStore.getState();
 
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  const handleLeave = async (isLeave?: boolean) => {
-    clearToken();
-    sessionStorage.removeItem("refreshToken");
-    router.replace("/auth/login");
+  const handleLogout = async () => {
+    await deleteToken();
+  };
 
-    if (isLeave && token) {
-      await deleteAccount(token);
-    }
+  const handleLeave = async () => {
+    await deleteAccount();
   };
 
   const data = [
@@ -55,7 +48,7 @@ export default function EditBasicInfo({
   } as const;
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
-    if (selectCategory === "LOGOUT") handleLeave();
+    if (selectCategory === "LOGOUT") handleLogout();
 
     if (selectCategory === "LEAVE") setShowModal(true);
 
@@ -106,7 +99,7 @@ export default function EditBasicInfo({
         onClose={handleModalClose}
         title="정말 탈퇴하시겠어요? 😢"
         confirmText="탈퇴"
-        onConfirm={() => handleLeave(true)}
+        onConfirm={() => handleLeave()}
         contentStyle={{ color: COLORS.GRAYSCALE_600 }}
       >
         <Typography.H4Md>

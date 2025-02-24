@@ -1,20 +1,46 @@
+import { refreshAccessToken } from "@/services/getTokens";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface TokenStore {
   token: string | null;
-  addToken: (newToken: string) => void;
+  expiresAt: number;
+  addToken: (newToken: string, expiresIn: number) => void;
   clearToken: () => void;
+  refreshAccessToken: () => Promise<string | undefined>;
 }
 
 export const useTokenStore = create(
   persist<TokenStore>(
-    (set) => ({
+    (set, get) => ({
       token: "",
-      addToken: (newToken) => set(() => ({ token: newToken })),
+      expiresAt: 0,
+
+      addToken: (token, expiresIn) => {
+        const expiresAt = Date.now() + expiresIn;
+        set(() => ({ token, expiresAt }));
+      },
       clearToken: () => {
-        set({ token: null });
+        set({ token: null, expiresAt: 0 });
         sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
+      },
+
+      refreshAccessToken: async () => {
+        try {
+          const refreshToken = sessionStorage.getItem("refreshToken");
+          if (get().token && refreshToken) {
+            const res = await refreshAccessToken(get().token!, refreshToken);
+
+            get().addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
+            sessionStorage.setItem("refreshToken", res.data.refreshToken);
+
+            return res.data.accessToken;
+          }
+        } catch (err) {
+          get().clearToken();
+          window.location.replace("/auth/login");
+        }
       },
     }),
     {
