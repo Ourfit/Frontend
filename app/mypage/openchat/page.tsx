@@ -7,7 +7,7 @@ import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
 
 import Header from "@/components/common/Header/Header";
-import { setOpenchatLink } from "@/services/setOpenchatLink";
+import { updateUserProfile } from "@/services/updateUserProfile";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
@@ -17,6 +17,7 @@ export default function OpenChatPage() {
   const pathname = usePathname();
   const router = useRouter();
   const { fetchUserInfo, userInfo } = useUserInfoStore();
+  const introduction = userInfo?.introduction;
 
   const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
@@ -64,7 +65,10 @@ export default function OpenChatPage() {
 
   const handleSubmit = async () => {
     try {
-      await setOpenchatLink(linkValue.trim());
+      await updateUserProfile({
+        introduction: introduction || null,
+        openChatUrl: linkValue.trim() || null,
+      });
       router.push("/mypage");
     } catch (error) {
       console.error("오픈 채팅 링크 등록 실패:", error);

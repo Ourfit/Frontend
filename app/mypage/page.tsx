@@ -30,7 +30,9 @@ export default function Mypage() {
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
-  const [description, setDescription] = useState<string>("");
+
+  const [introduction, setIntroduction] = useState("");
+
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [profileImage, setProfileImage] = useState<string | undefined>(
     userInfo?.profileUrl,
@@ -51,8 +53,9 @@ export default function Mypage() {
     }, 100);
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setDescription(e.target.value);
+  const handleIntroductionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => setIntroduction(e.target.value);
 
   const handleDescriptionBlur = () => {
     setIsEditingDescription(false);
@@ -78,7 +81,13 @@ export default function Mypage() {
 
   useEffect(() => {
     fetchUserInfo();
-  }, [fetchUserInfo]);
+  }, []);
+
+  useEffect(() => {
+    if (userInfo?.introduction !== undefined) {
+      setIntroduction(userInfo.introduction);
+    }
+  }, [userInfo?.introduction]);
 
   if (isEditingProfile) {
     return (
@@ -94,8 +103,8 @@ export default function Mypage() {
         handleEditDescription={handleEditDescription}
         fileInputRef={fileInputRef}
         handleFileChange={handleFileChange}
-        description={description}
-        handleDescriptionChange={handleDescriptionChange}
+        introduction={introduction}
+        handleIntroductionChange={handleIntroductionChange}
         handleDescriptionBlur={handleDescriptionBlur}
         descriptionInputRef={descriptionInputRef}
       />

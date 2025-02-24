@@ -1,6 +1,8 @@
 "use client";
 
 import Header from "@/components/common/Header/Header";
+import { updateUserProfile } from "@/services/updateUserProfile";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 import React, { useState } from "react";
 import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
@@ -19,8 +21,8 @@ interface EditProfileProps {
   handleEditDescription: () => void;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  description?: string;
-  handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  introduction?: string;
+  handleIntroductionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleDescriptionBlur: () => void;
   descriptionInputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
@@ -37,11 +39,31 @@ export default function EditProfile({
   handleEditDescription,
   fileInputRef,
   handleFileChange,
-  description,
-  handleDescriptionChange,
+  introduction,
+  handleIntroductionChange,
   handleDescriptionBlur,
   descriptionInputRef,
 }: EditProfileProps) {
+  const { userInfo, fetchUserInfo } = useUserInfoStore();
+
+  const saveDescription = async () => {
+    handleDescriptionBlur();
+
+    try {
+      const introductionValue = introduction?.trim() || null;
+
+      const openChatUrlValue = userInfo?.openChatUrl || null;
+
+      await updateUserProfile({
+        introduction: introductionValue,
+        openChatUrl: openChatUrlValue,
+      });
+      await fetchUserInfo();
+    } catch (error) {
+      console.error("자기소개 업데이트 실패:", error);
+    }
+  };
+
   const preferences = ["헬스", "필라테스"];
   const places = [
     {
@@ -123,9 +145,9 @@ export default function EditProfile({
               <S.DescriptionContent
                 ref={descriptionInputRef}
                 disabled={!isEditingDescription}
-                value={description}
-                onChange={handleDescriptionChange}
-                onBlur={handleDescriptionBlur}
+                value={introduction || ""}
+                onChange={handleIntroductionChange}
+                onBlur={saveDescription}
               />
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>
