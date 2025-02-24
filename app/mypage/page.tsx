@@ -1,10 +1,11 @@
 "use client";
 
+import { useUserInfoStore } from "@/stores/userInfoStore";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { useEffect, useRef, useState } from "react";
+import EditBasicInfo from "./_components/EditBasicInfo";
 import EditProfile from "./_components/EditProfile";
 import ViewProfile from "./_components/ViewProfile";
-import EditBasicInfo from "./_components/EditBasicInfo";
 
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
@@ -30,6 +31,10 @@ export default function Mypage() {
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [profileImage, setProfileImage] = useState<string>("/next.svg");
 
+  const { userInfo, fetchUserInfo } = useUserInfoStore();
+
+  console.log(userInfo);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -48,9 +53,6 @@ export default function Mypage() {
 
   const handleDescriptionBlur = () => {
     setIsEditingDescription(false);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("description", description);
-    }
   };
 
   const handleFileChange = async (
@@ -61,9 +63,6 @@ export default function Mypage() {
       try {
         const imageUrl = await readFileAsDataURL(file);
         setProfileImage(imageUrl);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("profileImage", imageUrl);
-        }
       } catch (error) {
         console.error("Error reading file:", error);
       }
@@ -71,13 +70,8 @@ export default function Mypage() {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedImage = localStorage.getItem("profileImage");
-      const savedDescription = localStorage.getItem("description");
-      if (savedImage) setProfileImage(savedImage);
-      if (savedDescription) setDescription(savedDescription);
-    }
-  }, []);
+    fetchUserInfo();
+  }, [fetchUserInfo]);
 
   if (isEditingProfile) {
     return (
@@ -103,7 +97,13 @@ export default function Mypage() {
 
   return (
     <ViewProfile
-      profileImage={profileImage}
+      profileImage={userInfo?.profileUrl}
+      nickname={userInfo?.nickname}
+      gender={userInfo?.gender}
+      sns={userInfo?.oAuthProvider}
+      age={userInfo?.age}
+      email={userInfo?.email}
+      skillLevel={userInfo?.skillLevel}
       handleEditProfile={handleEditProfile}
       handleEditBasicInfo={handleEditBasicInfo}
       managementLinks={managementLinks}
