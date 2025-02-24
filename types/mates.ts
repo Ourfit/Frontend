@@ -19,3 +19,15 @@ export interface MateInfo {
 export interface Mates extends PageResponse {
   content: MateInfo[];
 }
+
+export interface MateHistory {
+  id: number;
+  mateId: number;
+  actionType: "APPLY" | "ACCEPT" | "UNMATE";
+  isRead: boolean;
+  actorId: number;
+  actorNickname: string;
+  targetId: number;
+  targetNickname: string;
+  createdAt: string;
+}
