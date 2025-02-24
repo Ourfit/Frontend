@@ -1,4 +1,4 @@
-import { useTokenStore } from "@/stores/tokenStore";
+import customFetch from "@/services/customFetch";
 import { PreferredWorkoutTime } from "@/types/user";
 
 export default async function getMates(params: {
@@ -7,7 +7,6 @@ export default async function getMates(params: {
   size?: number;
 }) {
   const queryParams = new URLSearchParams();
-  const { token } = useTokenStore.getState();
 
   params.workoutTypes.forEach((type) =>
     queryParams.append("workoutTypes", type),
@@ -17,13 +16,8 @@ export default async function getMates(params: {
     queryParams.append("peferredTimes", type),
   );
 
-  const response = await fetch(
+  const response = await customFetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates?${queryParams.toString()}&size=${params.size || 5}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
 
   if (!response.ok) {

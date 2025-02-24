@@ -1,15 +1,8 @@
-import { useTokenStore } from "@/stores/tokenStore";
+import customFetch from "@/services/customFetch";
 
 export default async function getUserMe() {
-  const { token } = useTokenStore.getState();
-
-  const response = await fetch(
+  const response = await customFetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
 
   if (!response.ok) {
