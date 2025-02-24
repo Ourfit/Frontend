@@ -9,6 +9,7 @@ import styled from "styled-components";
 import Header from "@/components/common/Header/Header";
 import { COLORS } from "@/constants/Theme";
 import { useTokenStore } from "@/stores/tokenStore";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useQuery } from "@tanstack/react-query";
@@ -32,6 +33,7 @@ const MainContent = styled.div`
 
 export default function HomeComponent() {
   const { token } = useTokenStore();
+  const router = useRouter();
   const { clearOAuthId } = useOAuthIdStore.getState();
 
   const { data: user, isLoading } = useQuery({
@@ -42,8 +44,12 @@ export default function HomeComponent() {
   });
 
   useEffect(() => {
-    clearOAuthId();
-  }, []);
+    if (!token) {
+      router.replace("/auth/login");
+    } else clearOAuthId();
+  }, [token]);
+
+  if (!token) return null;
 
   if (isLoading || !user.data) {
     return <div>loading</div>;

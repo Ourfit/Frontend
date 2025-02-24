@@ -8,14 +8,18 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const { token } = useTokenStore();
   const router = useRouter();
   const pathname = usePathname();
+  const isExcept =
+    pathname !== "/" &&
+    pathname !== "/auth/login" &&
+    pathname !== "/auth/signup";
 
   useEffect(() => {
-    if (!token) {
+    if (!token && isExcept) {
       router.replace("/auth/login");
     }
   }, [token]);
 
-  if (pathname !== "/auth/login" && !token) return null;
+  if (!token && isExcept) return null;
 
   return <>{children}</>;
 }
