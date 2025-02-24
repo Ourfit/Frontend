@@ -1,5 +1,6 @@
 "use client";
 
+import { setImageUrl } from "@/services/mypage/setImageUrl";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { useEffect, useRef, useState } from "react";
@@ -25,13 +26,15 @@ const managementLinks = [
 ];
 
 export default function Mypage() {
+  const { userInfo, fetchUserInfo } = useUserInfoStore();
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
   const [description, setDescription] = useState<string>("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [profileImage, setProfileImage] = useState<string>("/next.svg");
-
-  const { userInfo, fetchUserInfo } = useUserInfoStore();
+  const [profileImage, setProfileImage] = useState<string | undefined>(
+    userInfo?.profileUrl,
+  );
 
   console.log(userInfo);
 
@@ -63,6 +66,10 @@ export default function Mypage() {
       try {
         const imageUrl = await readFileAsDataURL(file);
         setProfileImage(imageUrl);
+
+        await setImageUrl(file);
+
+        await fetchUserInfo();
       } catch (error) {
         console.error("Error reading file:", error);
       }
@@ -78,7 +85,11 @@ export default function Mypage() {
       <EditProfile
         handleEditProfile={handleEditProfile}
         isEditingDescription={isEditingDescription}
-        profileImage={profileImage}
+        profileImage={userInfo?.profileUrl}
+        nickname={userInfo?.nickname}
+        gender={userInfo?.gender}
+        age={userInfo?.age}
+        skillLevel={userInfo?.skillLevel}
         handleProfileImageClick={() => fileInputRef.current?.click()}
         handleEditDescription={handleEditDescription}
         fileInputRef={fileInputRef}

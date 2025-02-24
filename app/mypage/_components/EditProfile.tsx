@@ -1,21 +1,25 @@
 "use client";
 
 import Header from "@/components/common/Header/Header";
-import Facility from "../facility/Facility";
-import Time from "../time/Time";
 import React, { useState } from "react";
-import * as S from "../style";
+import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
+import * as S from "../style";
+import Time from "../time/Time";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
   isEditingDescription: boolean;
-  profileImage: string;
+  profileImage?: string;
+  nickname?: string;
+  age?: number;
+  gender?: string;
+  skillLevel?: string;
   handleProfileImageClick: () => void;
   handleEditDescription: () => void;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  description: string;
+  description?: string;
   handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleDescriptionBlur: () => void;
   descriptionInputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -25,6 +29,10 @@ export default function EditProfile({
   handleEditProfile,
   isEditingDescription,
   profileImage,
+  nickname,
+  age,
+  gender,
+  skillLevel,
   handleProfileImageClick,
   handleEditDescription,
   fileInputRef,
@@ -47,6 +55,12 @@ export default function EditProfile({
       address: "서울 마포구 양화로12길 34 2층 201호",
     },
   ];
+
+  const skillLevelMap: Record<string, string> = {
+    BEGINNER: "운동초보",
+    INTERMEDIATE: "운동중수",
+    ADVANCED: "운동고수",
+  };
 
   const [selectedPreferenceFacility, setSelectedPreferenceFacility] = useState<{
     id: number;
@@ -92,9 +106,13 @@ export default function EditProfile({
               onChange={handleFileChange}
             />
 
-            <S.ProfileName>정준영</S.ProfileName>
-            <S.ProfileInfo>남성 · 만 25세</S.ProfileInfo>
-            <S.PrimaryButton>운동중수</S.PrimaryButton>
+            <S.ProfileName>{nickname}</S.ProfileName>
+            <S.ProfileInfo>
+              {gender === "M" ? "남성" : "여성"} · 만 {age}세
+            </S.ProfileInfo>
+            <S.PrimaryButton>
+              {skillLevelMap[skillLevel || "BEGINNER"]}
+            </S.PrimaryButton>
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>

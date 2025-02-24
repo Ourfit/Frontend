@@ -343,7 +343,10 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   position: relative;
   width: 72px;
   height: 72px;
+
   border-radius: 50%;
+
+  border: 1px solid gray;
 
   overflow: hidden;
 
