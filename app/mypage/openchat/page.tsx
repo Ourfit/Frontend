@@ -6,13 +6,18 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
 
-import { usePathname } from "next/navigation";
+import Header from "@/components/common/Header/Header";
+import { setOpenchatLink } from "@/services/setOpenchatLink";
+import { useUserInfoStore } from "@/stores/userInfoStore";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
-import Header from "@/components/common/Header/Header";
 
 export default function OpenChatPage() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { fetchUserInfo, userInfo } = useUserInfoStore();
+
   const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
@@ -59,19 +64,12 @@ export default function OpenChatPage() {
 
   const handleSubmit = async () => {
     try {
-      await navigator.clipboard.writeText(linkValue);
-      setIsSubmitted(true);
-      console.log("등록 완료 버튼 클릭 및 링크 복사 완료");
+      await setOpenchatLink(linkValue.trim());
+      router.push("/mypage");
     } catch (error) {
-      setIsSubmitted(false);
-      console.error("클립보드 복사 실패", error);
+      console.error("오픈 채팅 링크 등록 실패:", error);
     }
   };
-
-  useEffect(() => {
-    console.log("Current pathname:", pathname);
-    console.log("Prev pathname:", prevPathnameRef.current);
-  }, [pathname]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
