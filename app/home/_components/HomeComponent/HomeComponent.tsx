@@ -68,6 +68,7 @@ export default function HomeComponent() {
           <NotificationBanner />
           <UserSection
             nickname={nickname}
+            region={region3}
             favoriteWorkouts={favoriteWorkouts}
             preferredWorkoutTime={preferredWorkoutTime}
           />

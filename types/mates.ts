@@ -6,6 +6,7 @@ export interface MateInfo {
   profileUrl: string;
   nickname: string;
   gender: "M" | "F";
+  age: number;
   skillLevel: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
   introduction: string;
   preferredWorkoutTime: PreferredWorkoutTime;

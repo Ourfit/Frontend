@@ -7,6 +7,10 @@ import Image from "next/image";
 import { Typography } from "@/components/atoms/Typography";
 import { MateInfo } from "@/types/mates";
 import { PreferredWorkoutTime } from "@/types/user";
+import { useQuery } from "@tanstack/react-query";
+import getMates from "../../_lib/getMates";
+import { WorkoutTimeLabels } from "@/constants/User";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 const ICONS = {
   MORNING: <MorningIcon />,
@@ -14,79 +18,87 @@ const ICONS = {
   EVENING: <EveningIcon />,
 };
 
-const WorkoutTimeLabels: Record<PreferredWorkoutTime, string> = {
-  WEEKDAY_MORNING: "평일 아침",
-  WEEKDAY_AFTERNOON: "평일 오후",
-  WEEKDAY_EVENING: "평일 저녁",
-  WEEKEND_MORNING: "주말 아침",
-  WEEKEND_AFTERNOON: "주말 오후",
-  WEEKEND_EVENING: "주말 저녁",
-};
-
 interface UserListProps {
   isWorkout: boolean;
   isTime: boolean;
-  userList: MateInfo[];
+  peferredTimes: PreferredWorkoutTime[];
+  workoutTypes: string[];
 }
 
 export default function UserList({
   isWorkout,
   isTime,
-  userList,
+  peferredTimes,
+  workoutTypes,
 }: UserListProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["mates"],
+    queryFn: () => getMates({ peferredTimes, workoutTypes }),
+  });
+
+  const mates: MateInfo[] = data?.data.content;
+
+  if (isLoading || !mates.length) {
+    return (
+      <S.UserListContainer>
+        <S.EmptyContainer>
+          메이트를
+          <br />
+          물색중이에요!
+        </S.EmptyContainer>
+      </S.UserListContainer>
+    );
+  }
+
   return (
     <S.UserListContainer>
-      {userList.length ? (
-        <S.UserListWrapper>
-          {userList.map((user, idx) => {
-            const word = user.preferredWorkoutTime.split("_").at(-1) as
-              | "MORNING"
-              | "AFTERNOON"
-              | "EVENING";
+      <S.UserListWrapper>
+        {mates.map((user, idx) => {
+          const word = user.preferredWorkoutTime.split("_").at(-1) as
+            | "MORNING"
+            | "AFTERNOON"
+            | "EVENING";
 
-            return (
-              <S.UserWrapper key={idx}>
-                <S.ProfileBadge>
-                  <S.ProfileImageWrapper>
+          return (
+            <S.UserWrapper key={idx}>
+              <S.ProfileBadge>
+                <S.ProfileImageWrapper>
+                  {user.profileUrl ? (
                     <Image
                       src={user.profileUrl}
                       alt="profile-image"
                       width={48}
                       height={48}
                     />
-                  </S.ProfileImageWrapper>
-                  <S.IconWrapper>
-                    <DumbbellsIcon />
-                  </S.IconWrapper>
-                </S.ProfileBadge>
-                <S.UserInfoWrapper>
-                  <S.UserInfo>
-                    <Typography.H4Sb>{user.nickname}</Typography.H4Sb>
-                    <Typography.H6Md>25세</Typography.H6Md>
-                  </S.UserInfo>
-                  <S.ExercisePreferences>
-                    <S.PreferenceBadge $isHighlighted={isWorkout}>
-                      {user.favoriteWorkouts.length > 1
-                        ? `${user.favoriteWorkouts[0].name} + ${user.favoriteWorkouts.length - 1}`
-                        : user.favoriteWorkouts[0].name}
-                    </S.PreferenceBadge>
-                    <S.PreferenceBadge $isHighlighted={isTime}>
-                      {ICONS[word]}
-                      {WorkoutTimeLabels[user.preferredWorkoutTime]}
-                    </S.PreferenceBadge>
-                  </S.ExercisePreferences>
-                </S.UserInfoWrapper>
-              </S.UserWrapper>
-            );
-          })}
-        </S.UserListWrapper>
-      ) : (
-        <S.EmptyContainer>
-          메이트를
-          <br />
-          물색중이에요!
-        </S.EmptyContainer>
-      )}
+                  ) : (
+                    <DefaultProfileImg />
+                  )}
+                </S.ProfileImageWrapper>
+                <S.IconWrapper>
+                  <DumbbellsIcon />
+                </S.IconWrapper>
+              </S.ProfileBadge>
+              <S.UserInfoWrapper>
+                <S.UserInfo>
+                  <Typography.H4Sb>{user.nickname}</Typography.H4Sb>
+                  <Typography.H6Md>{user.age}세</Typography.H6Md>
+                </S.UserInfo>
+                <S.ExercisePreferences>
+                  <S.PreferenceBadge $isHighlighted={isWorkout}>
+                    {user.favoriteWorkouts.length > 1
+                      ? `${user.favoriteWorkouts[0].name} + ${user.favoriteWorkouts.length - 1}`
+                      : user.favoriteWorkouts[0].name}
+                  </S.PreferenceBadge>
+                  <S.PreferenceBadge $isHighlighted={isTime}>
+                    {ICONS[word]}
+                    {WorkoutTimeLabels[user.preferredWorkoutTime]}
+                  </S.PreferenceBadge>
+                </S.ExercisePreferences>
+              </S.UserInfoWrapper>
+            </S.UserWrapper>
+          );
+        })}
+      </S.UserListWrapper>
     </S.UserListContainer>
   );
 }
