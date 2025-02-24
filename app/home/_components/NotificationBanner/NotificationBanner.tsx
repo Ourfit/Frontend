@@ -31,7 +31,7 @@ export default function NotificationBanner({ nickname }: { nickname: string }) {
           </S.IconWrapper>
           <S.NotificationContent $isHome={true}>
             <Typography.H6Md>
-              {dateFormat(new Date(notification[0].createdAt))}
+              {dateFormat(new Date(notification[0].createdAt), "MD")}
             </Typography.H6Md>
             <Typography.H4Sb>운동 메이트 신청이 있어요!</Typography.H4Sb>
           </S.NotificationContent>

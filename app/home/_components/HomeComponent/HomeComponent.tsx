@@ -51,12 +51,13 @@ export default function HomeComponent() {
 
   if (!token) return null;
 
-  if (isLoading || !user.data) {
-    return <div>loading</div>;
-  }
-
-  const { region2, region3, nickname, favoriteWorkouts, preferredWorkoutTime } =
-    user.data;
+  const {
+    region2 = "",
+    region3 = "",
+    nickname = "",
+    favoriteWorkouts = [],
+    preferredWorkoutTime = "",
+  } = isLoading || !user?.data ? {} : user.data;
 
   return (
     <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
