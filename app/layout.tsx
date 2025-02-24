@@ -6,6 +6,7 @@ import React from "react";
 import "./globals.css";
 import ReactQueryProvider from "@/components/common/ReactQueryProvider";
 import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
+import AuthGuard from "@/components/common/AuthGuard";
 
 declare global {
   interface Window {
@@ -36,7 +37,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ThemeClient>
             <GlobalStyle />
-            {children}
+            <AuthGuard>{children}</AuthGuard>
           </ThemeClient>
         </ReactQueryProvider>
       </body>
