@@ -3,7 +3,8 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 interface TokenStore {
   token: string | null;
-  addToken: (newToken: string) => void;
+  expiresAt: number;
+  addToken: (newToken: string, expiresIn: number) => void;
   clearToken: () => void;
 }
 
@@ -11,12 +12,14 @@ export const useTokenStore = create(
   persist<TokenStore>(
     (set) => ({
       token: "",
+      expiresAt: 0,
 
-      addToken: (token) => {
-        set(() => ({ token }));
+      addToken: (token, expiresIn) => {
+        const expiresAt = Date.now() + expiresIn * 1000;
+        set(() => ({ token, expiresAt }));
       },
       clearToken: () => {
-        set({ token: null });
+        set({ token: null, expiresAt: 0 });
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("refreshToken");
       },
