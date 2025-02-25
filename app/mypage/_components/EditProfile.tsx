@@ -23,7 +23,7 @@ interface EditProfileProps {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   introduction?: string;
   handleIntroductionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  handleDescriptionBlur: () => void;
+  handleIntroductionBlur: () => void;
   descriptionInputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
@@ -41,13 +41,13 @@ export default function EditProfile({
   handleFileChange,
   introduction,
   handleIntroductionChange,
-  handleDescriptionBlur,
+  handleIntroductionBlur,
   descriptionInputRef,
 }: EditProfileProps) {
   const { userInfo, fetchUserInfo } = useUserInfoStore();
 
-  const saveDescription = async () => {
-    handleDescriptionBlur();
+  const saveIntroduction = async () => {
+    handleIntroductionBlur();
 
     try {
       const introductionValue = introduction?.trim() || null;
@@ -147,7 +147,7 @@ export default function EditProfile({
                 disabled={!isEditingDescription}
                 value={introduction || ""}
                 onChange={handleIntroductionChange}
-                onBlur={saveDescription}
+                onBlur={saveIntroduction}
               />
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>

@@ -57,7 +57,7 @@ export default function Mypage() {
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => setIntroduction(e.target.value);
 
-  const handleDescriptionBlur = () => {
+  const handleIntroductionBlur = () => {
     setIsEditingDescription(false);
   };
 
@@ -105,7 +105,7 @@ export default function Mypage() {
         handleFileChange={handleFileChange}
         introduction={introduction}
         handleIntroductionChange={handleIntroductionChange}
-        handleDescriptionBlur={handleDescriptionBlur}
+        handleIntroductionBlur={handleIntroductionBlur}
         descriptionInputRef={descriptionInputRef}
       />
     );
