@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const ListContainer = styled.div`
   padding-left: 20px;
   padding-right: 20px;
+  height: 100%;
 `;
 
 export const ListItem = styled.div`
@@ -25,4 +26,5 @@ export const ListItem = styled.div`
 
 export const ComponentWrapper = styled.div`
   padding-top: 40px;
+  height: 100%;
 `;
