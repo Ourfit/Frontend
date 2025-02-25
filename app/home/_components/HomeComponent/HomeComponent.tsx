@@ -44,10 +44,11 @@ export default function HomeComponent() {
   });
 
   useEffect(() => {
-    if (!token) {
+    const accessToken = useTokenStore.getState().token;
+    if (!accessToken) {
       router.replace("/auth/login");
     } else clearOAuthId();
-  }, [token]);
+  }, []);
 
   if (!token) return null;
 
