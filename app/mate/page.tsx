@@ -5,6 +5,7 @@ import { Typography } from "@/components/atoms/Typography";
 import Header from "@/components/common/Header/Header";
 import Tab from "@/components/common/Tab/Tab";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { useState } from "react";
 import ExploreMate from "./_components/ExploreMate/ExploreMate";
 import MatchedMate from "./_components/MachedMate/MachedMate";
@@ -13,8 +14,12 @@ import * as S from "./style";
 export default function MatePage() {
   const tabs: string[] = ["메이트", "탐색"];
   const [showTooltip, setShowTooltip] = useState(true);
-  const [isMatched, setIsMatched] = useState(true);
   const [activeTab, setActiveTab] = useState("메이트");
+
+  const { data: mateInfo, isLoading } = useMateInfo();
+  const isMatched = !!mateInfo;
+
+  console.log(mateInfo);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -39,10 +44,9 @@ export default function MatePage() {
         {activeTab === "메이트" ? (
           isMatched ? (
             <MatchedMate
-              name="준영"
-              age={26}
+              name={mateInfo.myMate.nickname}
+              age={mateInfo.myMate.age}
               startDate="2025-01-25"
-              setIsMatched={setIsMatched}
             />
           ) : (
             <>

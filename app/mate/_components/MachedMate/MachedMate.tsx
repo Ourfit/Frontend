@@ -3,7 +3,9 @@
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
@@ -13,17 +15,20 @@ interface MatchedMateProps {
   name: string;
   age: number;
   startDate: string;
-  setIsMatched: (v: boolean) => void;
 }
 
 export default function MatchedMate({
   name,
   age,
   startDate,
-  setIsMatched,
 }: MatchedMateProps) {
   const router = useRouter();
-  const daysElapsed = calculateDaysElapsed(startDate);
+  const queryClient = useQueryClient();
+  const { data: mateInfo, isLoading } = useMateInfo();
+
+  const { myMate, workout } = mateInfo;
+
+  const daysElapsed = calculateDaysElapsed(mateInfo.startDate);
   const matchedMates = [
     {
       id: 1,
@@ -43,13 +48,25 @@ export default function MatchedMate({
     id: number;
     name: string;
     address: string;
-  } | null>(null);
+  } | null>(
+    workout
+      ? { id: 1, name: workout.placeName, address: workout.address }
+      : null,
+  );
 
   const [timeInfo, setTimeInfo] = useState<{
     days: string[];
     startTime: string;
     endTime: string;
-  } | null>(null);
+  } | null>(
+    workout
+      ? {
+          days: workout.workoutDayOfWeek,
+          startTime: workout.workoutStartAt,
+          endTime: workout.workoutEndAt,
+        }
+      : null,
+  );
 
   const [showModal, setShowModal] = useState(false);
 
@@ -61,14 +78,19 @@ export default function MatchedMate({
     setShowModal(false);
   };
 
-  const handleSetMateUnmatched = () => {
-    localStorage.removeItem("sportTimeInfo");
-    localStorage.removeItem("selectedFacility");
+  const handleSetMateUnmatched = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/me/unmatch`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
-    setSelectedFacility(null);
-    setTimeInfo(null);
+      await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
 
-    setIsMatched(false);
+      handleModalClose();
+    } catch (error) {
+      console.error("메이트 해제 실패:", error);
+    }
   };
 
   const handleNavigate = () => {
@@ -111,8 +133,10 @@ export default function MatchedMate({
           <S.MateCardContent>
             <S.MateCardInfo>
               <S.MateDetailInfo>
-                <Typography.H2Sb>{name}</Typography.H2Sb>
-                <Typography.H5Md color="#8A92A3">남, {age}세</Typography.H5Md>
+                <Typography.H2Sb>{myMate.nickname}</Typography.H2Sb>
+                <Typography.H5Md color="#8A92A3">
+                  남, {myMate.age}세
+                </Typography.H5Md>
               </S.MateDetailInfo>
 
               <Typography.H6Sb color="#6C727F">
