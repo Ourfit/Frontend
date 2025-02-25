@@ -24,7 +24,7 @@ const Region = ({ nextStep, value }: StepProps) => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["region", debouncedValue],
-    queryFn: () => debouncedValue && getRegions(debouncedValue),
+    queryFn: () => debouncedValue && !region && getRegions(debouncedValue),
     staleTime: 0,
     enabled: !!deferredValue,
   });
@@ -46,6 +46,7 @@ const Region = ({ nextStep, value }: StepProps) => {
 
   useEffect(() => {
     setRegionList(null);
+    if (!inputValue.trim()) setRegion("");
   }, [inputValue]);
 
   const buttonClickHandler = () => {

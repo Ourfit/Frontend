@@ -51,7 +51,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
     if (oAuthId) {
       const res = await signup(oAuthId, formData as FormDataType);
       if (res.message === "OK") {
-        addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
+        addToken(res.data.accessToken);
         sessionStorage.setItem("refreshToken", res.data.refreshToken);
 
         router.replace("/");

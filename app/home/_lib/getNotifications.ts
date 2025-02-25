@@ -1,13 +1,13 @@
-import customFetch from "@/services/customFetch";
+import { api } from "@/services/axiosInterceptor";
 
 export default async function getNotifications() {
-  const response = await customFetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/me/history?actionTypes=APPLY`,
-  );
+  try {
+    const response = await api(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/me/history?actionTypes=APPLY`,
+    );
 
-  if (!response.ok) {
-    throw new Error("fetch error");
+    return response.data;
+  } catch (err) {
+    throw err;
   }
-
-  return response.json();
 }

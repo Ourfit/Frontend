@@ -1,4 +1,4 @@
-import customFetch from "@/services/customFetch";
+import { api } from "@/services/axiosInterceptor";
 import { PreferredWorkoutTime } from "@/types/user";
 
 export default async function getMates(params: {
@@ -16,13 +16,13 @@ export default async function getMates(params: {
     queryParams.append("peferredTimes", type),
   );
 
-  const response = await customFetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates?${queryParams.toString()}&size=${params.size || 5}`,
-  );
+  try {
+    const response = await api(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates?${queryParams.toString()}&size=${params.size || 5}`,
+    );
 
-  if (!response.ok) {
-    throw new Error("fetch error");
+    return response.data;
+  } catch (err) {
+    throw err;
   }
-
-  return response.json();
 }

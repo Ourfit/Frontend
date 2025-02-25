@@ -36,10 +36,9 @@ export default function UserList({
     queryFn: () => getMates({ peferredTimes, workoutTypes }),
     staleTime: 5 * 60 * 1000,
   });
-
   const mates: MateInfo[] = data?.data.content;
 
-  if (isLoading || !mates.length) {
+  if (isLoading || !mates?.length) {
     return (
       <S.UserListContainer>
         <S.EmptyContainer>
@@ -59,9 +58,13 @@ export default function UserList({
             | "MORNING"
             | "AFTERNOON"
             | "EVENING";
-          const workouts = user.favoriteWorkouts.filter((e) =>
+          const filteredWorkouts = user.favoriteWorkouts.filter((e) =>
             workoutTypes.includes(e.code),
           );
+
+          const workout = filteredWorkouts.length
+            ? filteredWorkouts[0]
+            : user.favoriteWorkouts[0];
 
           return (
             <S.UserWrapper key={idx}>
@@ -89,9 +92,9 @@ export default function UserList({
                 </S.UserInfo>
                 <S.ExercisePreferences>
                   <S.PreferenceBadge $isHighlighted={isWorkout}>
-                    {workouts.length > 1
-                      ? `${workouts[0].name} + ${workouts.length - 1}`
-                      : workouts[0].name}
+                    {user.favoriteWorkouts.length > 1
+                      ? `${workout.name} + ${user.favoriteWorkouts.length - 1}`
+                      : workout.name}
                   </S.PreferenceBadge>
                   <S.PreferenceBadge $isHighlighted={isTime}>
                     {ICONS[word]}

@@ -1,21 +1,24 @@
+import axios from "axios";
+
 export async function getRegions(region: string) {
-  const headers = new Headers();
   const apiKey = process.env.NEXT_PUBLIC_X_OURFIT_API_KEY;
 
   if (!apiKey) {
     throw new Error("API key is undefined");
   }
 
-  headers.append("X-Ourfit-Api-Key", apiKey);
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/regions?q=${region}`,
+      {
+        headers: {
+          "X-Ourfit-Api-Key": apiKey,
+        },
+      },
+    );
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/regions?q=${region}`,
-    { headers, cache: "force-cache" },
-  );
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-
-  return response.json();
 }
