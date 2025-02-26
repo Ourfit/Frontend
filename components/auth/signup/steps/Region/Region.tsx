@@ -11,7 +11,7 @@ import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";
-import { getRegions } from "@/app/(beforeLogin)/auth/_lib/getRegions";
+import { getRegions } from "@/services/signup/getRegions";
 
 const Region = ({ nextStep, value }: StepProps) => {
   const [inputValue, setInputValue] = useState("");
@@ -25,7 +25,7 @@ const Region = ({ nextStep, value }: StepProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["region", debouncedValue],
     queryFn: () => debouncedValue && !region && getRegions(debouncedValue),
-    staleTime: 0,
+    staleTime: 1000 * 60 * 5,
     enabled: !!deferredValue,
   });
 

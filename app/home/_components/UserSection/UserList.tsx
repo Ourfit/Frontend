@@ -8,9 +8,9 @@ import { Typography } from "@/components/atoms/Typography";
 import { MateInfo } from "@/types/mates";
 import { PreferredWorkoutTime } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
-import getMates from "../../_lib/getMates";
 import { WorkoutTimeLabels } from "@/constants/User";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import getMates from "@/services/getMates";
 
 const ICONS = {
   MORNING: <MorningIcon />,

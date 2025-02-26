@@ -11,7 +11,7 @@ import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Input from "@/components/common/Input/Input";
 import { useQuery } from "@tanstack/react-query";
-import { nicknameDuplication } from "@/app/(beforeLogin)/auth/_lib/nicknameDuplication";
+import { nicknameDuplication } from "@/services/signup/nicknameDuplication";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const Nickname = ({ nextStep, value }: StepProps) => {

@@ -5,9 +5,9 @@ import DumbbellsIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
 import * as S from "./NotificationBanner.style";
 import { useQuery } from "@tanstack/react-query";
-import getNotifications from "../../_lib/getNotifications";
 import { MateHistory } from "@/types/mates";
 import { dateFormat } from "@/utils/monthList";
+import getNotifications from "@/services/getNotifications";
 
 export default function NotificationBanner({ nickname }: { nickname: string }) {
   const { data, isLoading } = useQuery({

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { SIGNUP_STEPS, StepLabel } from "@/constants/Signup";
 import StepIndicator from "@/components/common/StepIndicator";
 import * as S from "./SignupForm.style";
-import { signup } from "@/app/(beforeLogin)/auth/_lib/signup";
+import { signup } from "@/services/signup/signup";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";

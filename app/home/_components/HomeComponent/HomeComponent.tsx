@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useQuery } from "@tanstack/react-query";
-import getUserMe from "@/app/home/_lib/getUserMe";
+import getUserMe from "@/services/getUserMe";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
