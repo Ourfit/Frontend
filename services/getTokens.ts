@@ -1,40 +1,29 @@
+import axios from "axios";
+
 export async function getTokens(oAuthId: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ oAuthId }),
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens`,
+      { oAuthId },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("토큰 요청 실패:", error);
+    throw new Error();
   }
-
-  return response.json();
 }
 
 export async function refreshAccessToken(
   accessToken: string,
   refreshToken: string,
 ) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens/refresh`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ accessToken, refreshToken }),
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens/refresh`,
+      { accessToken, refreshToken },
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-
-  return response.json();
 }

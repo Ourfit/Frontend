@@ -11,7 +11,7 @@ import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Input from "@/components/common/Input/Input";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { nicknameDuplication } from "@/app/(beforeLogin)/auth/_lib/nicknameDuplication";
+import { nicknameDuplication } from "@/services/signup/nicknameDuplication";
 import { useDebounce } from "@/hooks/useDebounce";
 import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
 import { queryClient } from "@/components/common/ReactQueryProvider";

@@ -1,3 +1,5 @@
+"use client";
+
 import BannerImageSide from "@/assets/images/banner-img2.svg";
 import BannerImage from "@/assets/images/banner-img1.svg";
 import ArrowRightIcon from "@/assets/images/arrow_right.svg";

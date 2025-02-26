@@ -1,9 +1,8 @@
 import Dumbbells from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
-import { usePathname } from "next/navigation";
-import React from "react";
-import * as S from "./style";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import * as S from "./style";
 
 interface SportsProps {
   preferences: string[];
@@ -30,8 +29,8 @@ export default function Sports({ preferences }: SportsProps) {
       <S.PreferenceContent>
         {preferences.map((sport) => (
           <S.PreferenceBadge key={sport}>
-            <Dumbbells />
-            <span>{sport}</span> 
+            <Dumbbells color={"#004DFF"} />
+            <span>{sport}</span>
           </S.PreferenceBadge>
         ))}
       </S.PreferenceContent>
