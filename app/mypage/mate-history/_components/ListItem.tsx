@@ -4,17 +4,12 @@ import * as S from "./ListItem.style";
 import { Typography } from "@/components/atoms/Typography";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { MateType } from "@/types/mate";
+import { dateFormat } from "@/utils/monthList";
 
 interface ListItemProps {
   title: string;
-  data: {
-    id: number;
-    date: string;
-    name: string;
-    image?: string;
-    isRead?: boolean;
-    type: string;
-  };
+  data: MateType;
   children: React.ReactNode;
   hasArrowButton?: boolean;
 }
@@ -29,31 +24,35 @@ export default function ListItem({
 
   const handleClick = () => {
     // router.push(`/mate/mateprofile/${encodeURIComponent(data.name)}`);
-    if (data.type === "request")
+    if (data.actionType === "APPLY")
       router.push(`/mate/mateprofile/${encodeURIComponent("주녕이")}`);
   };
 
   return (
     <S.ItemContainer $isRead={data.isRead} onClick={handleClick}>
       <S.ItemWrapper>
-        {data.image ? (
+        {data.actionType === "APPLY" ? (
+          <S.IconWrapper>
+            <BellIcon />
+          </S.IconWrapper>
+        ) : data.profileUrl ? (
           <S.ProfileImageWrapper>
             <Image
-              src="/icons/Kakao_logo.png"
+              src={data.profileUrl}
               alt="profile-image"
               width={40}
               height={40}
             />
           </S.ProfileImageWrapper>
         ) : (
-          <S.IconWrapper>
-            <BellIcon />
-          </S.IconWrapper>
+          <></>
         )}
         <S.ContentWrpper>
           <S.Content>
             <Typography.H4Sb>{title}</Typography.H4Sb>
-            <Typography.H6Md>{data.date}</Typography.H6Md>
+            <Typography.H6Md>
+              {dateFormat(new Date(data.createdAt))}
+            </Typography.H6Md>
           </S.Content>
           <Typography.H5Md>{children}</Typography.H5Md>
         </S.ContentWrpper>
