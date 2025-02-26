@@ -32,7 +32,6 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
   const mutation = useMutation({
     mutationFn: () =>
       updateBasicInfo({
-        gender: gender === "여성" ? "F" : "M",
         age: Number(age.split("세")[0]),
       }),
     onSuccess: (status) => {
@@ -49,7 +48,7 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
   });
 
   const handleGenderClick = (selectedGender: string) => {
-    setGender(selectedGender);
+    if (nextStep) setGender(selectedGender);
   };
 
   const buttonClickHandler = () => {
@@ -64,10 +63,16 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
       <S.GenderAgeWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
-            <Typography.H1Sb>
-              <span style={{ color: COLORS.BLUE_500 }}>성별</span>과&nbsp;
-              <span style={{ color: COLORS.BLUE_500 }}>나이</span>를
-            </Typography.H1Sb>
+            {nextStep ? (
+              <Typography.H1Sb>
+                <span style={{ color: COLORS.BLUE_500 }}>성별</span>과&nbsp;
+                <span style={{ color: COLORS.BLUE_500 }}>나이</span>를
+              </Typography.H1Sb>
+            ) : (
+              <Typography.H1Sb>
+                <span style={{ color: COLORS.BLUE_500 }}>나이</span>를
+              </Typography.H1Sb>
+            )}
             <Typography.H1Sb>선택해주세요</Typography.H1Sb>
           </S.SignupIntroTitleWrapper>
           <Typography.H4Md color={COLORS.GRAYSCALE_600}>
