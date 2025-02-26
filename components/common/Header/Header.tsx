@@ -16,6 +16,7 @@ interface HeaderProps {
   isSignup?: boolean;
   title?: string;
   onClick?: () => void;
+  region?: string;
 }
 
 export default function Header({
@@ -24,6 +25,7 @@ export default function Header({
   isSignup,
   title,
   onClick,
+  region,
 }: HeaderProps) {
   const pathname = usePathname();
 
@@ -71,7 +73,7 @@ export default function Header({
           />
           <S.LocationContainer>
             <Compass style={{ width: "18px", height: "18px" }} />
-            <Typography.H4Sb>송파구 신천동</Typography.H4Sb>
+            <Typography.H4Sb>{region}</Typography.H4Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
       ) : title ? (

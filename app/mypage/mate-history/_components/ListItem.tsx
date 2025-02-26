@@ -13,7 +13,7 @@ interface ListItemProps {
     name: string;
     image?: string;
     isRead?: boolean;
-    type: string;
+    type?: string;
   };
   children: React.ReactNode;
   hasArrowButton?: boolean;
