@@ -1,10 +1,12 @@
 "use client";
 
+import { setImageUrl } from "@/services/mypage/setImageUrl";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { useEffect, useRef, useState } from "react";
+import EditBasicInfo from "./_components/EditBasicInfo";
 import EditProfile from "./_components/EditProfile";
 import ViewProfile from "./_components/ViewProfile";
-import EditBasicInfo from "./_components/EditBasicInfo";
 
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
@@ -24,11 +26,19 @@ const managementLinks = [
 ];
 
 export default function Mypage() {
+  const { userInfo, fetchUserInfo } = useUserInfoStore();
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
-  const [description, setDescription] = useState<string>("");
+
+  const [introduction, setIntroduction] = useState("");
+
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [profileImage, setProfileImage] = useState<string>("/next.svg");
+  const [profileImage, setProfileImage] = useState<string | undefined>(
+    userInfo?.profileUrl,
+  );
+
+  console.log(userInfo);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -43,14 +53,12 @@ export default function Mypage() {
     }, 100);
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setDescription(e.target.value);
+  const handleIntroductionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => setIntroduction(e.target.value);
 
-  const handleDescriptionBlur = () => {
+  const handleIntroductionBlur = () => {
     setIsEditingDescription(false);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("description", description);
-    }
   };
 
   const handleFileChange = async (
@@ -61,9 +69,10 @@ export default function Mypage() {
       try {
         const imageUrl = await readFileAsDataURL(file);
         setProfileImage(imageUrl);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("profileImage", imageUrl);
-        }
+
+        await setImageUrl(file);
+
+        await fetchUserInfo();
       } catch (error) {
         console.error("Error reading file:", error);
       }
@@ -71,27 +80,32 @@ export default function Mypage() {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedImage = localStorage.getItem("profileImage");
-      const savedDescription = localStorage.getItem("description");
-      if (savedImage) setProfileImage(savedImage);
-      if (savedDescription) setDescription(savedDescription);
-    }
+    fetchUserInfo();
   }, []);
+
+  useEffect(() => {
+    if (userInfo?.introduction !== undefined) {
+      setIntroduction(userInfo.introduction);
+    }
+  }, [userInfo?.introduction]);
 
   if (isEditingProfile) {
     return (
       <EditProfile
         handleEditProfile={handleEditProfile}
         isEditingDescription={isEditingDescription}
-        profileImage={profileImage}
+        profileImage={userInfo?.profileUrl}
+        nickname={userInfo?.nickname}
+        gender={userInfo?.gender}
+        age={userInfo?.age}
+        skillLevel={userInfo?.skillLevel}
         handleProfileImageClick={() => fileInputRef.current?.click()}
         handleEditDescription={handleEditDescription}
         fileInputRef={fileInputRef}
         handleFileChange={handleFileChange}
-        description={description}
-        handleDescriptionChange={handleDescriptionChange}
-        handleDescriptionBlur={handleDescriptionBlur}
+        introduction={introduction}
+        handleIntroductionChange={handleIntroductionChange}
+        handleIntroductionBlur={handleIntroductionBlur}
         descriptionInputRef={descriptionInputRef}
       />
     );
@@ -103,7 +117,13 @@ export default function Mypage() {
 
   return (
     <ViewProfile
-      profileImage={profileImage}
+      profileImage={userInfo?.profileUrl}
+      nickname={userInfo?.nickname}
+      gender={userInfo?.gender}
+      sns={userInfo?.oAuthProvider}
+      age={userInfo?.age}
+      email={userInfo?.email}
+      skillLevel={userInfo?.skillLevel}
       handleEditProfile={handleEditProfile}
       handleEditBasicInfo={handleEditBasicInfo}
       managementLinks={managementLinks}

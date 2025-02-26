@@ -242,6 +242,14 @@ export const ListItem = styled.li`
   }
 `;
 
+export const SNSLoginInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+`;
+
 export const LinksWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -310,7 +318,6 @@ export const SecondaryButton = styled.button`
   }
 `;
 
-
 export const Button = styled.button`
   bottom: 0;
   display: flex;
@@ -331,12 +338,15 @@ export const Button = styled.button`
   line-height: 150%;
   letter-spacing: -0.14px;
 `;
-  
+
 export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   position: relative;
   width: 72px;
   height: 72px;
+
   border-radius: 50%;
+
+  border: 1px solid gray;
 
   overflow: hidden;
 
