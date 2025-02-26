@@ -41,12 +41,14 @@ export default function Header({
     "/mate/time": "운동 시간",
     "/mate/mateprofile": "프로필",
     "/mate/search": "검색",
+    "/mate/explore": "탐색",
   };
 
   const isHome = pathname === "/";
   const isSubPage = pathname.split("/").length - 1 === 1;
 
   const isSearchPage = pathname === "/mate/search";
+  const isExplorePage = pathname === "/mate/explore";
   const isChellengePage = pathname === "/challenge";
   const isSettingsPage = pathname.startsWith("/mypage");
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");

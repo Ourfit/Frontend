@@ -6,8 +6,8 @@ import Header from "@/components/common/Header/Header";
 import Tab from "@/components/common/Tab/Tab";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ExploreMate from "./_components/ExploreMate/ExploreMate";
 import MatchedMate from "./_components/MachedMate/MachedMate";
 import * as S from "./style";
 
@@ -15,6 +15,7 @@ export default function MatePage() {
   const tabs: string[] = ["메이트", "탐색"];
   const [showTooltip, setShowTooltip] = useState(true);
   const [activeTab, setActiveTab] = useState("메이트");
+  const router = useRouter();
 
   const { data: mateInfo, isLoading } = useMateInfo();
   const isMatched = !!mateInfo;
@@ -24,6 +25,7 @@ export default function MatePage() {
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
     if (tab === "탐색") {
+      router.push("/mate/explore");
       setShowTooltip(false);
     }
   };
@@ -41,27 +43,23 @@ export default function MatePage() {
         )}
       </S.TabWrapper>
       <S.matePageContent>
-        {activeTab === "메이트" ? (
-          isMatched ? (
-            <MatchedMate
-              name={mateInfo.myMate.nickname}
-              age={mateInfo.myMate.age}
-              startDate="2025-01-25"
-            />
-          ) : (
-            <>
-              <S.alertTitle>
-                <Typography.H4Md color="#8A92A3">
-                  👀 현재는 메이트가 없어요!
-                </Typography.H4Md>
-              </S.alertTitle>
-              <S.mateView>
-                <OurfitLogo width="54" height="25" fill="#DCE0EA" />
-              </S.mateView>
-            </>
-          )
+        {isMatched ? (
+          <MatchedMate
+            name={mateInfo.myMate.nickname}
+            age={mateInfo.myMate.age}
+            startDate="2025-01-25"
+          />
         ) : (
-          <ExploreMate />
+          <>
+            <S.alertTitle>
+              <Typography.H4Md color="#8A92A3">
+                👀 현재는 메이트가 없어요!
+              </Typography.H4Md>
+            </S.alertTitle>
+            <S.mateView>
+              <OurfitLogo width="54" height="25" fill="#DCE0EA" />
+            </S.mateView>
+          </>
         )}
       </S.matePageContent>
     </S.matePageContainer>
