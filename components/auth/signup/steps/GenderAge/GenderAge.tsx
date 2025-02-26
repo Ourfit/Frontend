@@ -8,6 +8,11 @@ import { COLORS } from "@/constants/Theme";
 import { StepProps } from "@/types/step";
 import { useState } from "react";
 import * as S from "./GenderAge.style";
+import { useMutation } from "@tanstack/react-query";
+import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import Toast from "@/components/common/Toast/Toast";
 
 const GenderAge = ({ nextStep, value }: StepProps) => {
   const getValue = (value: StepValue | undefined) => {
@@ -19,16 +24,38 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
   const [gender, setGender] = useState<string | null>(
     getValue(value)?.gender || null,
   );
+  const [age, setAge] = useState<string>(
+    getValue(value)?.age ? `${getValue(value)?.age}세` : "00세",
+  );
+  const [toast, setToast] = useState("");
 
-  const [age, setAge] = useState<number | string>(getValue(value)?.age || 0);
+  const mutation = useMutation({
+    mutationFn: () =>
+      updateBasicInfo({
+        gender: gender === "여성" ? "F" : "M",
+        age: Number(age.split("세")[0]),
+      }),
+    onSuccess: (status) => {
+      if (status === 200) {
+        setToast(TOAST_STATUSES.SUCCESS);
+        setTimeout(() => setToast(""), 1500);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+      }
+    },
+    onError: () => {
+      setToast(TOAST_STATUSES.ERROR);
+      setTimeout(() => setToast(""), 1500);
+    },
+  });
 
   const handleGenderClick = (selectedGender: string) => {
     setGender(selectedGender);
   };
 
   const buttonClickHandler = () => {
-    if (gender && age && nextStep) {
-      nextStep(STEPS_LABEL.GENDER_AGE, { gender, age });
+    if (gender && age) {
+      if (nextStep) nextStep(STEPS_LABEL.GENDER_AGE, { gender, age });
+      else mutation.mutate();
     }
   };
 
@@ -75,15 +102,26 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
           disabled={
             !gender ||
             !age ||
-            (getValue(value)?.age === age && getValue(value)?.gender === gender)
+            (`${getValue(value)?.age}세` === age &&
+              getValue(value)?.gender === gender)
           }
           size={BUTTON_SIZES.LARGE}
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}
         >
-          다음
+          {nextStep ? "다음" : "변경 완료"}
         </Button>
       </S.ButtonContainer>
+      {toast && (
+        <Toast
+          message={
+            toast === TOAST_STATUSES.SUCCESS
+              ? TOAST_MESSAGES.SUCCESS
+              : TOAST_MESSAGES.ERROR
+          }
+          status={toast as ToastStatus}
+        />
+      )}
     </S.GenderAgeContainer>
   );
 };
