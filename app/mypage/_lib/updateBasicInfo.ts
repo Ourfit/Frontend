@@ -1,4 +1,5 @@
-import customFetch from "@/services/customFetch";
+import { useTokenStore } from "@/stores/tokenStore";
+import axios from "axios";
 
 interface BasicInfo {
   nickname?: string;
@@ -11,20 +12,20 @@ interface BasicInfo {
 }
 
 export default async function updateBasicInfo(info: BasicInfo) {
-  const response = await customFetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me/basic-info`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+  const { token } = useTokenStore.getState();
+
+  try {
+    const { status } = await axios.patch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me/basic-info`,
+      info,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-      body: JSON.stringify(info),
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(`${response.status}`);
+    );
+    return status;
+  } catch (err) {
+    throw err;
   }
-
-  return response.status;
 }

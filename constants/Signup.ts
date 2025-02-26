@@ -91,7 +91,7 @@ export const FITNESS_LEVELS = {
   },
 } as const;
 
-export type FitnessLevel = keyof typeof FITNESS_LEVELS;
+export type FitnessLevelType = keyof typeof FITNESS_LEVELS;
 
 export const SIGNUP_STEPS: {
   id: number;

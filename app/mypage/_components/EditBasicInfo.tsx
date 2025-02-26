@@ -4,7 +4,7 @@ import * as S from "./EditBasicInfo.style";
 import { useState } from "react";
 import {
   FITNESS_LEVELS,
-  FitnessLevel,
+  FitnessLevelType,
   INFO_LABEL,
   SIGNUP_STEPS,
   STEPS_LABEL,
@@ -46,7 +46,7 @@ export default function EditBasicInfo({
     nickname,
     `${region1} ${region2} ${region3}`,
     { age, gender: gender === "F" ? "여성" : "남성" },
-    FITNESS_LEVELS[skillLevel as FitnessLevel]?.label || "",
+    FITNESS_LEVELS[skillLevel as FitnessLevelType]?.label || "",
   ];
 
   const handleModalClose = () => {

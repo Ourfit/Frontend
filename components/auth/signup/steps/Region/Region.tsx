@@ -13,6 +13,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRegions } from "@/app/(beforeLogin)/auth/_lib/getRegions";
 import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 
 const Region = ({ nextStep, value }: StepProps) => {
   const [inputValue, setInputValue] = useState(
@@ -48,6 +49,7 @@ const Region = ({ nextStep, value }: StepProps) => {
       if (status === 200) {
         setToast(TOAST_STATUSES.SUCCESS);
         setTimeout(() => setToast(""), 1500);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
       }
     },
     onError: () => {

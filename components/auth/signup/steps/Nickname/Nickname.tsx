@@ -14,6 +14,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { nicknameDuplication } from "@/app/(beforeLogin)/auth/_lib/nicknameDuplication";
 import { useDebounce } from "@/hooks/useDebounce";
 import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import { AxiosError } from "axios";
 
 const Nickname = ({ nextStep, value }: StepProps) => {
   const [nickname, setNickname] = useState(
@@ -47,11 +49,14 @@ const Nickname = ({ nextStep, value }: StepProps) => {
     onSuccess: (status) => {
       if (status === 200) {
         showToast(TOAST_STATUSES.SUCCESS, TOAST_MESSAGES.SUCCESS);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
       }
     },
-    onError: (error) => {
+    onError: (err) => {
+      const error = err as AxiosError;
+      const statusCode = error.response?.status;
       const message =
-        error.message === "409"
+        statusCode === 409
           ? "닉네임 변경 후 30일이 지나지 않았습니다."
           : TOAST_MESSAGES.ERROR;
       showToast(TOAST_STATUSES.ERROR, message);
