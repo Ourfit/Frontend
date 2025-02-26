@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -26,4 +27,6 @@ export const MateHistoryList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
+  overflow-y: scroll;
 `;
