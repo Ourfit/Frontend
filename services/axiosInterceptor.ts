@@ -24,6 +24,7 @@ api.interceptors.request.use(
           }
 
           const res = await refreshAccessToken(token, preRefreshToken);
+          console.log(res);
 
           addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
 
@@ -45,4 +46,19 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+
+    if (status === 401) {
+      useTokenStore.getState().clearToken();
+      redirect("/auth/login");
+      return Promise.reject(new Error("인증이 필요합니다."));
+    }
+
+    return Promise.reject(error);
+  },
 );
