@@ -23,10 +23,11 @@ export default function MatePage() {
   console.log(mateInfo);
 
   const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
     if (tab === "탐색") {
-      router.push("/mate/explore");
       setShowTooltip(false);
+      router.push("/mate/explore");
+    } else {
+      router.push("/mate");
     }
   };
 
@@ -34,8 +35,8 @@ export default function MatePage() {
     <S.matePageContainer>
       <Header />
       <S.TabWrapper>
-        <Tab tabs={tabs} onClick={handleTabClick} />
-        {showTooltip && (
+        <Tab tabs={tabs} activeTab={activeTab} onClick={handleTabClick} />
+        {showTooltip && activeTab !== "탐색" && (
           <>
             <S.SmallDot $top={8} $left={105} />
             <Tooltip text="메이트를 찾아보세요!" position="left" left={119} />
