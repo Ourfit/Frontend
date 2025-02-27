@@ -1,7 +1,7 @@
 "use client";
 
 import Modal from "@/app/mate/_components/Modal/Modal";
-import * as S from "@/app/mate/mateprofile/[mateName]/style";
+import * as S from "@/app/mate/mateprofile/[mateId]/style";
 import Dumbbels from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
@@ -9,16 +9,24 @@ import Header from "@/components/common/Header/Header";
 import Toast from "@/components/common/Toast/Toast";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { TOAST_STATUSES } from "@/constants/Toast";
-import { useMateInfoStore } from "@/stores/mateInfoStore";
+import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function MateProfile() {
-  const { mateName } = useParams();
-  const decodedMateName = decodeURIComponent(mateName as string);
-  const mateInfo = useMateInfoStore((state) =>
-    state.mates.find((mate) => mate.name === decodedMateName),
-  );
+  const workoutTimeMap: Record<string, string> = {
+    WEEKDAY_MORNING: "🌅 평일 아침",
+    WEEKDAY_DAYTIME: "☀️ 평일 낮",
+    WEEKDAY_EVENING: "🌙 평일 저녁",
+    WEEKEND_MORNING: "🌅 주말 아침",
+    WEEKEND_DAYTIME: "☀️ 주말 낮",
+    WEEKEND_EVENING: "🌙 주말 저녁",
+  };
+
+  const params = useParams();
+  const mateId = Number(params.mateId);
+
+  const { data, isLoading, error } = useMateDetail(mateId);
 
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -41,10 +49,6 @@ export default function MateProfile() {
 
   const isEditingProfile = false;
 
-  if (!mateInfo) {
-    return <div>해당 메이트 정보를 찾을 수 없습니다.</div>;
-  }
-
   return (
     <>
       <Header isEditingProfile={isEditingProfile} />
@@ -54,8 +58,8 @@ export default function MateProfile() {
             <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
               <S.BackgroundImage
                 className="background-img"
-                src={mateInfo.profileImage}
-                alt={mateInfo.name}
+                src={data?.profileUrl}
+                alt={data?.nickname}
               />
               <S.OverlayImage
                 className="overlay"
@@ -64,19 +68,20 @@ export default function MateProfile() {
               />
             </S.ProfileImageWrapper>
 
-            <S.ProfileName>{mateInfo.name}</S.ProfileName>
+            <S.ProfileName>{data?.nickname}</S.ProfileName>
             <S.ProfileInfo>
-              {mateInfo.gender} · 만 {mateInfo.age}세
+              {data?.gender} · 만 {data?.age}세
             </S.ProfileInfo>
             <S.PrimaryButton>운동중수</S.PrimaryButton>
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>
               </S.DescriptionHeader>
-              <S.DescriptionContent
-                disabled={true}
-                defaultValue={mateInfo.description}
-              />
+              <S.DescriptionContent>
+                <Typography.H5Md color="#545862">
+                  {data?.introduction || ""}
+                </Typography.H5Md>
+              </S.DescriptionContent>
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>
           <S.Line />
@@ -89,15 +94,15 @@ export default function MateProfile() {
                   <Typography.H3Bd
                     style={{ marginLeft: "4px", color: "#004DFF" }}
                   >
-                    {mateInfo.tags.length}
+                    {data?.favoriteWorkouts.length}
                   </Typography.H3Bd>
                 </S.PreferenceTitle>
               </S.PreferenceHeader>
               <S.PreferenceContent>
-                {mateInfo.tags.map((sport) => (
-                  <S.PreferenceBadge key={sport}>
-                    <Dumbbels />
-                    {sport}
+                {data?.favoriteWorkouts.map((sport) => (
+                  <S.PreferenceBadge key={sport.code}>
+                    <Dumbbels color={"#004DFF"} />
+                    {sport.name}
                   </S.PreferenceBadge>
                 ))}
               </S.PreferenceContent>
@@ -111,14 +116,24 @@ export default function MateProfile() {
                   <Typography.H3Bd
                     style={{ marginLeft: "4px", color: "#004DFF" }}
                   >
-                    {mateInfo.preferencesFacility.length}
+                    {data?.favoritePlaces.length}
                   </Typography.H3Bd>
                 </S.PreferenceTitle>
               </S.PreferenceHeader>
+              {data?.favoritePlaces.length === 0 && (
+                <S.NoPreferenceView>
+                  <Typography.H4Md>-</Typography.H4Md>
+                  <Typography.H5Md color="#8A92A3">
+                    선호하는 시설이 없어요.
+                  </Typography.H5Md>
+                </S.NoPreferenceView>
+              )}
               <S.PreferencePlaceWrapper>
-                {mateInfo.preferencesFacility.map((place) => (
-                  <S.PreferencePlaceInfo key={place.name}>
-                    <S.PreferencePlaceName>{place.name}</S.PreferencePlaceName>
+                {data?.favoritePlaces.map((place) => (
+                  <S.PreferencePlaceInfo key={place.placeName}>
+                    <S.PreferencePlaceName>
+                      {place.placeName}
+                    </S.PreferencePlaceName>
                     <S.PreferencePlaceAddress>
                       {place.address}
                     </S.PreferencePlaceAddress>
@@ -133,12 +148,11 @@ export default function MateProfile() {
                 <S.PreferenceTitle>선호 운동 시간 </S.PreferenceTitle>
               </S.PreferenceHeader>
               <S.PreferenceTime>
-                <S.PreferenceTimeTitle>
-                  {mateInfo.preferencesTime.title}
-                </S.PreferenceTimeTitle>
-                <S.PreferenceTimeRange>
-                  {mateInfo.preferencesTime.range}
-                </S.PreferenceTimeRange>
+                <Typography.H4Md color="#27282D">
+                  {data?.preferredWorkoutTime
+                    ? workoutTimeMap[data.preferredWorkoutTime] || "미설정"
+                    : "미설정"}
+                </Typography.H4Md>
               </S.PreferenceTime>
             </S.PreferenceTimeWrapper>
           </S.PreferenceContainer>
@@ -146,10 +160,10 @@ export default function MateProfile() {
             <Button
               size={BUTTON_SIZES.MEDIUM}
               variant="outline"
-              disabled={!mateInfo.openchatLink}
+              disabled={!data?.openChatUrl}
               onClick={() => {
-                if (mateInfo.openchatLink) {
-                  window.open(mateInfo.openchatLink, "_blank");
+                if (data?.openChatUrl) {
+                  window.open(data.openChatUrl, "_blank");
                 }
               }}
             >

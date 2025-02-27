@@ -94,7 +94,7 @@ export const PreferenceSectionWrapper = styled.div`
   gap: 16px;
 
   width: 100%;
-  height: auto;
+  height: 137px;
 
   padding: 28px 20px;
   box-sizing: border-box;
@@ -106,7 +106,8 @@ export const PreferenceFacilityWrapper = styled.div`
   gap: 12px;
 
   width: 100%;
-  height: auto;
+  height: 165px;
+  min-height: 165px;
 
   padding: 28px 20px;
   box-sizing: border-box;
@@ -142,7 +143,7 @@ export const ProfileDescription = styled.div`
   flex-direction: column;
 
   width: 100%;
-  max-width: 390px;
+  max-width: 450px;
 
   height: 102px;
 
@@ -181,33 +182,32 @@ export const DescriptionEdit = styled.div`
   cursor: pointer;
 `;
 
-export const DescriptionContent = styled.textarea`
+export const DescriptionContent = styled.div`
   width: 100%;
   height: 72px;
-  max-height: 72px;
+  min-height: 72px;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: horizontal;
-  word-wrap: break-word;
-  word-break: break-all;
+  gap: 10px;
+
+  span {
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 
   margin-top: 6px;
 
   padding: 16px 24px;
+  box-sizing: border-box;
 
   border: 1px solid ${COLORS.GRAYSCALE_200};
   border-radius: 16px;
 
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: -0.13px;
-
   outline: none;
-  resize: none;
   background: transparent;
 `;
 
@@ -244,6 +244,23 @@ export const PreferenceTitle = styled.div`
   font-weight: 700;
   line-height: 150%;
   letter-spacing: -0.16px;
+`;
+
+export const NoPreferenceView = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  max-width: 450px;
+
+  height: 73px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border-radius: 16px;
 `;
 
 export const PreferenceEdit = styled.div`
@@ -325,13 +342,15 @@ export const PreferencePlaceAddress = styled.span`
 
 export const PreferenceTime = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 
-  width: 100%;
-  height: 73px;
+  width: 112px;
+  height: 45px;
 
-  padding: 16px 20px;
+  gap: 4px;
+
+  padding: 12px 20px 12px 16px;
   box-sizing: border-box;
 
   border-radius: 16px;
