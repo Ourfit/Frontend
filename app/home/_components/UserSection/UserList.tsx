@@ -73,7 +73,7 @@ export default function UserList({
             <S.UserWrapper key={idx}>
               <S.ProfileBadge>
                 <S.ProfileImageWrapper>
-                  {user.profileUrl || !imgError ? (
+                  {user.profileUrl && !imgError ? (
                     <Image
                       src={user.profileUrl}
                       alt="profile-image"
@@ -97,7 +97,7 @@ export default function UserList({
                 <S.ExercisePreferences>
                   <S.PreferenceBadge $isHighlighted={isWorkout}>
                     {user.favoriteWorkouts.length > 1
-                      ? `${workout.name} + ${user.favoriteWorkouts.length - 1}`
+                      ? `${workout.name}+${user.favoriteWorkouts.length - 1}`
                       : workout.name}
                   </S.PreferenceBadge>
                   <S.PreferenceBadge $isHighlighted={isTime}>

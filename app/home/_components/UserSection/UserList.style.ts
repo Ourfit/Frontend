@@ -102,7 +102,8 @@ export const ExercisePreferences = styled.div`
 export const PreferenceBadge = styled.div<{
   $isHighlighted: boolean;
 }>`
-  ${TypographyCss.H6Md}
+  ${({ $isHighlighted }) =>
+    $isHighlighted ? TypographyCss.H6Md : TypographyCss.H7Md}
 
   background-color: ${(props) =>
     props.$isHighlighted ? COLORS.BLUE_50 : COLORS.GRAYSCALE_100};
