@@ -70,8 +70,6 @@ export default function ExploreMate() {
   }) => {
     setFilters(newFilters);
 
-    refetch();
-
     setShowFilterPanel(false);
   };
 

@@ -16,6 +16,18 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
+  const TIME_OPTIONS = [
+    { label: "평일 낮", value: "WEEKDAY_DAYTIME" },
+    { label: "평일 저녁", value: "WEEKDAY_EVENING" },
+    { label: "주말 낮", value: "WEEKEND_DAYTIME" },
+    { label: "주말 저녁", value: "WEEKEND_EVENING" },
+  ];
+
+  const GENDER_OPTIONS = [
+    { label: "여성", value: "F" },
+    { label: "남성", value: "M" },
+  ];
+
   const { data: workoutTypes, isLoading, error } = useWorkoutTypes();
 
   const [startY, setStartY] = useState<number>(0);
@@ -61,8 +73,8 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
     }
   }, [currentY, onClose]);
 
-  const handleGenderClick = (gender: string) => {
-    setSelectedGender(gender === selectedGender ? null : gender);
+  const handleGenderClick = (value: "F" | "M") => {
+    setSelectedGender(value === selectedGender ? null : value);
   };
 
   const handleTimeClick = (time: string) => {
@@ -107,13 +119,17 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
         <S.GenderWrapper>
           <Typography.H4Sb>성별</Typography.H4Sb>
           <S.GenderOptionBox>
-            {["여성", "남성"].map((gender) => (
+            {GENDER_OPTIONS.map((opt) => (
               <S.GenderOption
-                key={gender}
-                $selected={selectedGender === gender}
-                onClick={() => handleGenderClick(gender)}
+                key={opt.value}
+                $selected={selectedGender === opt.value}
+                onClick={() =>
+                  setSelectedGender((prev) =>
+                    prev === opt.value ? null : opt.value,
+                  )
+                }
               >
-                <Typography.H4Md>{gender}</Typography.H4Md>
+                <Typography.H4Md>{opt.label}</Typography.H4Md>
               </S.GenderOption>
             ))}
           </S.GenderOptionBox>
@@ -122,13 +138,13 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           <Typography.H4Sb>시간대</Typography.H4Sb>
           <S.TimeOptionBox>
             <S.TimeOptionBox>
-              {["평일 낮", "평일 저녁", "주말 낮", "주말 저녁"].map((time) => (
+              {TIME_OPTIONS.map((time) => (
                 <S.TimeOption
-                  key={time}
-                  $selected={selectedTime === time}
-                  onClick={() => handleTimeClick(time)}
+                  key={time.value}
+                  $selected={selectedTime === time.value}
+                  onClick={() => handleTimeClick(time.value)}
                 >
-                  <Typography.H4Md>{time}</Typography.H4Md>
+                  <Typography.H4Md>{time.label}</Typography.H4Md>
                 </S.TimeOption>
               ))}
             </S.TimeOptionBox>
@@ -141,8 +157,8 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
               workoutTypes.map((workout) => (
                 <S.FilterChip
                   key={workout.code}
-                  $selected={selectedSports.includes(workout.name)}
-                  onClick={() => handleSportClick(workout.name)}
+                  $selected={selectedSports.includes(workout.code)}
+                  onClick={() => handleSportClick(workout.code)}
                 >
                   <Typography.H4Md>{workout.name}</Typography.H4Md>
                 </S.FilterChip>

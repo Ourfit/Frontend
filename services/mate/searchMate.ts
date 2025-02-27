@@ -46,12 +46,15 @@ export async function fetchMates({
   }
 
   try {
+    const preferredTimesParam = preferredTimes?.join(",");
+    const workoutTypesParam = workoutTypes?.join(",");
+
     const { data } = await axios.get<MateApiResponse>(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
       {
         params: {
-          preferredTimes,
-          workoutTypes,
+          preferredTimes: preferredTimesParam,
+          workoutTypes: workoutTypesParam,
           page: pageParam,
           size,
         },

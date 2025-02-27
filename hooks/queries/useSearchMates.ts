@@ -27,7 +27,7 @@ export function useSearchMates({
     (string | string[] | undefined)[],
     number //명시적 지정
   >({
-    queryKey: ["mates"],
+    queryKey: ["mates", preferredTimes, workoutTypes],
     queryFn: ({ pageParam = 0 }) =>
       fetchMates({
         pageParam,
