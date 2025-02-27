@@ -23,8 +23,7 @@ export default function AuthRouter({ query }: Props) {
       const res = await getTokens(query.oAuthId!);
 
       if (res.message === "OK") {
-        addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
-        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        addToken(res.data.accessToken);
 
         router.replace("/");
       }

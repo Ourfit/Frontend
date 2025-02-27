@@ -45,9 +45,12 @@ export default function HomeComponent() {
 
   useEffect(() => {
     const accessToken = useTokenStore.getState().token;
+
     if (!accessToken) {
       router.replace("/auth/login");
-    } else clearOAuthId();
+    } else {
+      clearOAuthId();
+    }
   }, []);
 
   if (!token) return null;

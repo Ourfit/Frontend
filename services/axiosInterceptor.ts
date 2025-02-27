@@ -1,7 +1,9 @@
 import { useTokenStore } from "@/stores/tokenStore";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { refreshAccessToken } from "./getTokens";
 import { redirect } from "next/navigation";
+
+axios.defaults.withCredentials = true;
 
 export const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
@@ -9,38 +11,12 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const { token, expiresAt, addToken, clearToken } = useTokenStore.getState();
-    if (token) {
-      const isTokenExpiring = Date.now() >= expiresAt - 60 * 1000;
-
-      if (isTokenExpiring) {
-        try {
-          const preRefreshToken = sessionStorage.getItem("refreshToken");
-
-          if (!preRefreshToken) {
-            console.error("refreshToken이 없습니다");
-            clearToken();
-            redirect("/auth/login");
-          }
-
-          const res = await refreshAccessToken(token, preRefreshToken);
-          console.log(res);
-
-          addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
-
-          if (res.data.refreshToken) {
-            sessionStorage.setItem("refreshToken", res.data.refreshToken);
-          }
-
-          config.headers.Authorization = `Bearer ${res.data.accessToken}`;
-        } catch (err) {
-          console.error("토큰 갱신 실패:", err);
-          clearToken();
-          redirect("/auth/login");
-        }
-      } else {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+    const { token, clearToken } = useTokenStore.getState();
+    if (!token) {
+      clearToken();
+      redirect("/auth/login");
+    } else {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
@@ -49,14 +25,33 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const status = error.response?.status;
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const errResponseStatus = error.response.status;
+    const prevRequest = error.config;
 
-    if (status === 401) {
-      useTokenStore.getState().clearToken();
-      redirect("/auth/login");
-      return Promise.reject(new Error("인증이 필요합니다."));
+    if (errResponseStatus === 401) {
+      try {
+        const { token, addToken } = useTokenStore.getState();
+        const res = await refreshAccessToken(token!);
+
+        addToken(res.data.accessToken);
+
+        prevRequest.headers = {
+          ...prevRequest.headers,
+          Authorization: `Bearer ${res.data.accessToken}`,
+        };
+
+        return api(prevRequest);
+      } catch (err) {
+        const error = err as AxiosError;
+        console.error("토큰 요청 실패:", error.response?.status);
+        useTokenStore.getState().clearToken();
+        redirect("/auth/login");
+        return Promise.reject(error);
+      }
     }
 
     return Promise.reject(error);

@@ -13,14 +13,16 @@ export async function getTokens(oAuthId: string) {
   }
 }
 
-export async function refreshAccessToken(
-  accessToken: string,
-  refreshToken: string,
-) {
+export async function refreshAccessToken(accessToken: string) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens/refresh`,
-      { accessToken, refreshToken },
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     return response.data;
   } catch (error) {
