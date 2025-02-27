@@ -50,6 +50,7 @@ const Region = ({ nextStep, value }: StepProps) => {
         setToast(TOAST_STATUSES.SUCCESS);
         setTimeout(() => setToast(""), 1500);
         queryClient.invalidateQueries({ queryKey: ["userMe"] });
+        queryClient.invalidateQueries({ queryKey: ["mates"] });
       }
     },
     onError: () => {

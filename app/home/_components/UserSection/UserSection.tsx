@@ -53,13 +53,13 @@ export default function UserSection({
             <UserList
               isWorkout={isWorkout}
               isTime={isTime}
-              peferredTimes={isTime ? [preferredWorkoutTime] : []}
+              preferredTimes={isTime ? preferredWorkoutTime : undefined}
               workoutTypes={
-                isWorkout
+                favoriteWorkouts.length && isWorkout
                   ? favoriteWorkouts.map(
                       (workout: { code: string; name: string }) => workout.code,
                     )
-                  : []
+                  : undefined
               }
             />
           </S.UserSectionWrapper>

@@ -59,7 +59,7 @@ export default function HomeComponent() {
     region2 = "",
     region3 = "",
     nickname = "",
-    favoriteWorkouts = [],
+    favoriteWorkouts = "",
     preferredWorkoutTime = "",
   } = isLoading || !user?.data ? {} : user.data;
 

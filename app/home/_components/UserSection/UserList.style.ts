@@ -33,7 +33,6 @@ export const UserWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 24px 20px;
 `;
 
 export const ProfileBadge = styled.div`
