@@ -2,32 +2,9 @@ import XIcon from "@/assets/images/x.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES } from "@/constants/Button";
+import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { useCallback, useEffect, useState } from "react";
 import * as S from "./style";
-
-export const sportsList = [
-  "헬스",
-  "필라테스",
-  "수영",
-  "댄스",
-  "요가",
-  "축구",
-  "배드민턴",
-  "크로스핏",
-  "스키",
-  "유도",
-  "검도",
-  "준영1",
-  "준영2",
-  "준영3",
-  "준영4",
-  "준영5",
-  "준영6",
-  "준영7",
-  "준영8",
-  "준영9",
-  "준영10",
-];
 
 interface FilterPanelProps {
   onClose: () => void;
@@ -39,6 +16,8 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
+  const { data: workoutTypes, isLoading, error } = useWorkoutTypes();
+
   const [startY, setStartY] = useState<number>(0);
   const [currentY, setCurrentY] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -158,15 +137,16 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
         <S.FilterWrapper>
           <Typography.H4Sb>운동 종류</Typography.H4Sb>
           <S.FilterFlex>
-            {sportsList.map((sport) => (
-              <S.FilterChip
-                key={sport}
-                $selected={selectedSports.includes(sport)}
-                onClick={() => handleSportClick(sport)}
-              >
-                <Typography.H4Md>{sport}</Typography.H4Md>
-              </S.FilterChip>
-            ))}
+            {workoutTypes &&
+              workoutTypes.map((workout) => (
+                <S.FilterChip
+                  key={workout.code}
+                  $selected={selectedSports.includes(workout.name)}
+                  onClick={() => handleSportClick(workout.name)}
+                >
+                  <Typography.H4Md>{workout.name}</Typography.H4Md>
+                </S.FilterChip>
+              ))}
           </S.FilterFlex>
         </S.FilterWrapper>
       </S.FilterPanelSection>
