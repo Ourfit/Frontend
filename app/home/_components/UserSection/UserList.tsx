@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { WorkoutTimeLabels } from "@/constants/User";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import getMates from "@/services/getMates";
+import { useState } from "react";
 
 const ICONS = {
   MORNING: <MorningIcon />,
@@ -31,6 +32,8 @@ export default function UserList({
   peferredTimes,
   workoutTypes,
 }: UserListProps) {
+  const [imgError, setImgError] = useState(false);
+
   const { data, isLoading } = useQuery({
     queryKey: ["mates", { peferredTimes, workoutTypes }],
     queryFn: () => getMates({ peferredTimes, workoutTypes }),
@@ -70,12 +73,13 @@ export default function UserList({
             <S.UserWrapper key={idx}>
               <S.ProfileBadge>
                 <S.ProfileImageWrapper>
-                  {user.profileUrl ? (
+                  {user.profileUrl || !imgError ? (
                     <Image
                       src={user.profileUrl}
                       alt="profile-image"
                       width={48}
                       height={48}
+                      onError={() => setImgError(true)}
                     />
                   ) : (
                     <DefaultProfileImg />
