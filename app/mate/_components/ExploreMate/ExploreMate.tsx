@@ -20,16 +20,22 @@ export default function ExploreMate() {
     sports: string[];
   }>({ gender: null, time: null, sports: [] });
 
-  const preferenceTimes = filters.time ? [filters.time] : undefined;
+  const preferredTimes = filters.time ? [filters.time] : undefined;
   const workoutTypes = filters.sports.length > 0 ? filters.sports : undefined;
 
   // useInfiniteQuery 훅
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useSearchMates({
-      preferenceTimes,
-      workoutTypes,
-      size: 10,
-    });
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useSearchMates({
+    preferredTimes,
+    workoutTypes,
+    size: 10,
+  });
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -63,6 +69,9 @@ export default function ExploreMate() {
     sports: string[];
   }) => {
     setFilters(newFilters);
+
+    refetch();
+
     setShowFilterPanel(false);
   };
 
@@ -117,9 +126,7 @@ export default function ExploreMate() {
           <S.MateListItem
             key={mate.id}
             onClick={() =>
-              router.push(
-                `/mate/mateprofile/${encodeURIComponent(mate.nickname)}`,
-              )
+              router.push(`/mate/mateprofile/${encodeURIComponent(mate.id)}`)
             }
           >
             <S.MateProfileImageWrapper>

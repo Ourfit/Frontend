@@ -25,18 +25,18 @@ export interface MateItem {
 
 /**
  * @param pageParam
- * @param preferenceTimes
+ * @param preferredTimes
  * @param workoutTypes
  * @param size
  */
 export async function fetchMates({
-  pageParam = 1,
-  preferenceTimes,
+  pageParam = 0,
+  preferredTimes,
   workoutTypes,
   size = 10,
 }: {
   pageParam?: number;
-  preferenceTimes?: string[];
+  preferredTimes?: string[];
   workoutTypes?: string[];
   size?: number;
 }): Promise<MateListResponse> {
@@ -50,7 +50,7 @@ export async function fetchMates({
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
       {
         params: {
-          preferenceTimes,
+          preferredTimes,
           workoutTypes,
           page: pageParam,
           size,
