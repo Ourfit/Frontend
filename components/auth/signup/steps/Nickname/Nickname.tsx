@@ -13,7 +13,7 @@ import Input from "@/components/common/Input/Input";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { nicknameDuplication } from "@/services/signup/nicknameDuplication";
 import { useDebounce } from "@/hooks/useDebounce";
-import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
 import { queryClient } from "@/components/common/ReactQueryProvider";
 import { AxiosError } from "axios";
 

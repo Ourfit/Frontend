@@ -13,7 +13,7 @@ import {
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 import { useMutation } from "@tanstack/react-query";
-import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
 import { queryClient } from "@/components/common/ReactQueryProvider";
 
 const FitnessLevel = ({ nextStep, value }: StepProps) => {

@@ -12,9 +12,9 @@ import {
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { deleteAccount, deleteToken } from "../_lib/deleteAuth";
 import { useQuery } from "@tanstack/react-query";
-import getUserMe from "../_lib/getUserMe";
+import getUserMe from "@/services/getUserMe";
+import { deleteAccount, deleteToken } from "@/services/mypage/deleteAuth";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;

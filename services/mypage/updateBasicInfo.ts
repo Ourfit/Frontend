@@ -1,5 +1,4 @@
-import { useTokenStore } from "@/stores/tokenStore";
-import axios from "axios";
+import { api } from "../axiosInterceptor";
 
 interface BasicInfo {
   nickname?: string;
@@ -12,18 +11,12 @@ interface BasicInfo {
 }
 
 export default async function updateBasicInfo(info: BasicInfo) {
-  const { token } = useTokenStore.getState();
-
   try {
-    const { status } = await axios.patch(
+    const { status } = await api.patch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me/basic-info`,
       info,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
+
     return status;
   } catch (err) {
     throw err;

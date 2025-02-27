@@ -12,7 +12,7 @@ import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRegions } from "@/services/signup/getRegions";
-import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
 import { queryClient } from "@/components/common/ReactQueryProvider";
 
 const Region = ({ nextStep, value }: StepProps) => {

@@ -9,7 +9,7 @@ import { StepProps } from "@/types/step";
 import { useState } from "react";
 import * as S from "./GenderAge.style";
 import { useMutation } from "@tanstack/react-query";
-import updateBasicInfo from "@/app/mypage/_lib/updateBasicInfo";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
 import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 import { queryClient } from "@/components/common/ReactQueryProvider";
 import Toast from "@/components/common/Toast/Toast";
