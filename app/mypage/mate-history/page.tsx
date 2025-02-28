@@ -23,14 +23,14 @@ export default function MateHistoryPage() {
 
   const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      initialPageParam: 1,
+      initialPageParam: 0,
       queryKey: ["mates", active],
       queryFn: ({ pageParam }) =>
         active === CATEGORY.REQUEST
-          ? getMatesHistory({ pageParam: pageParam - 1, actionTypes: "APPLY" })
-          : getMatesHistory({ pageParam: pageParam - 1 }),
+          ? getMatesHistory({ pageParam: pageParam, actionTypes: "APPLY" })
+          : getMatesHistory({ pageParam }),
       getNextPageParam: (lastPage) =>
-        lastPage.data.hasNext ? lastPage.data.pageable.pageNumber + 2 : null,
+        lastPage.data.hasNext ? lastPage.data.pageable.pageNumber + 1 : null,
     });
 
   useEffect(() => {

@@ -6,6 +6,7 @@ export const ListContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   color: ${COLORS.GRAYSCALE_900};
+  height: 100%;
 `;
 
 export const ListItemWrapper = styled.div`
