@@ -52,6 +52,7 @@ export default function Header({
   const isChellengePage = pathname === "/challenge";
   const isSettingsPage = pathname.startsWith("/mypage");
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
+  const isNotificationPage = pathname === "/notifications";
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
   const isGnbTab = Object.values(GNB_LABELS).includes(
@@ -112,13 +113,16 @@ export default function Header({
                 ? "검색"
                 : pageNames[pathname]}
           </Typography.H1Sb>
-          {!isSettingsPage && !isSearchPage && !isChellengePage && (
-            <SearchIcon
-              style={{ width: "24px", height: "24px", cursor: "pointer" }}
-              stroke={"#0A0A0A"}
-              onClick={() => router.push("/mate/search")}
-            />
-          )}
+          {!isSettingsPage &&
+            !isSearchPage &&
+            !isChellengePage &&
+            !isNotificationPage && (
+              <SearchIcon
+                style={{ width: "24px", height: "24px", cursor: "pointer" }}
+                stroke={"#0A0A0A"}
+                onClick={() => router.push("/mate/search")}
+              />
+            )}
         </S.HeaderContainer>
       ) : (
         <S.HeaderContainer
