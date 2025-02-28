@@ -45,11 +45,7 @@ export default function MatePage() {
       </S.TabWrapper>
       <S.matePageContent>
         {isMatched ? (
-          <MatchedMate
-            name={mateInfo.myMate.nickname}
-            age={mateInfo.myMate.age}
-            startDate="2025-01-25"
-          />
+          <MatchedMate />
         ) : (
           <>
             <S.alertTitle>

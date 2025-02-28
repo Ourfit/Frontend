@@ -4,6 +4,8 @@ import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { MyPageData, useMyPageInfo } from "@/hooks/queries/useMypageInfo";
+import { unmatchMate } from "@/services/mate/unmatchMate";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -11,36 +13,28 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import * as S from "./style";
 
-interface MatchedMateProps {
-  name: string;
-  age: number;
-  startDate: string;
-}
-
-export default function MatchedMate({
-  name,
-  age,
-  startDate,
-}: MatchedMateProps) {
+export default function MatchedMate() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { data: myProfile, isLoading: isLoadingMy } = useMyPageInfo();
   const { data: mateInfo, isLoading } = useMateInfo();
 
   const { myMate, workout } = mateInfo;
+  console.log(myProfile);
 
   const daysElapsed = calculateDaysElapsed(mateInfo.startDate);
-  const matchedMates = [
+  const matchedMates: MyPageData[] = [
     {
-      id: 0,
-      name: "내 닉네임",
-      age: 99,
-      profileImage: "/my-image.jpg",
+      id: myProfile?.id,
+      nickname: myProfile?.nickname,
+      age: myProfile?.age,
+      profileUrl: myProfile?.profileUrl,
     },
     {
       id: myMate.id,
-      name: myMate.nickname,
+      nickname: myMate.nickname,
       age: myMate.age,
-      profileImage: myMate.profileUrl,
+      profileUrl: myMate.profileUrl,
     },
   ];
 
@@ -79,17 +73,17 @@ export default function MatchedMate({
   };
 
   const handleSetMateUnmatched = async () => {
+    if (!mateInfo?.mateId) {
+      console.error("메이트 ID가 존재하지 않습니다.");
+      return;
+    }
+
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/me/unmatch`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-
+      await unmatchMate(mateInfo?.mateId);
       await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
-
-      handleModalClose();
+      setShowModal(false);
     } catch (error) {
-      console.error("메이트 해제 실패:", error);
+      alert(error);
     }
   };
 
@@ -109,9 +103,9 @@ export default function MatchedMate({
             <S.ProfileImageWrapper>
               {matchedMates.map((mate) => (
                 <S.ProfileImage
-                  key={mate.id}
-                  src={mate.profileImage}
-                  alt={mate.name}
+                  key={`${mate.id}-${mate.nickname}`}
+                  src={mate.profileUrl}
+                  alt={mate.nickname}
                 />
               ))}
             </S.ProfileImageWrapper>
@@ -128,7 +122,7 @@ export default function MatchedMate({
               </S.MateDetailInfo>
 
               <Typography.H6Sb color="#6C727F">
-                프론트엔드 님은 {daysElapsed}일째 메이트예요!
+                {myProfile?.nickname} 님과 {daysElapsed}일째 메이트예요!
               </Typography.H6Sb>
             </S.MateCardInfo>
 
