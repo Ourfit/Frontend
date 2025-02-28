@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export async function getRegions(region: string) {
-  const apiKey = process.env.NEXT_PUBLIC_X_OURFIT_API_KEY;
+  const data = await fetch("/api/x-api-key").then((res) => res.json());
 
-  if (!apiKey) {
+  if (!data) {
     throw new Error("API key is undefined");
   }
 
@@ -12,7 +12,7 @@ export async function getRegions(region: string) {
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/regions?q=${region}`,
       {
         headers: {
-          "X-Ourfit-Api-Key": apiKey,
+          "X-Ourfit-Api-Key": data.apiKey,
         },
       },
     );

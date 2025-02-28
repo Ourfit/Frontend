@@ -15,4 +15,5 @@ export const NotificationSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 36px;
+  padding: 12px 20px 0;
 `;

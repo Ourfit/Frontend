@@ -1,24 +1,30 @@
 import { api } from "@/services/axiosInterceptor";
 import { PreferredWorkoutTime } from "@/types/user";
 
-export default async function getMates(params: {
-  peferredTimes: PreferredWorkoutTime[] | [];
-  workoutTypes: string[] | [];
+export default async function getMates({
+  preferredTimes,
+  workoutTypes,
+  size,
+}: {
+  preferredTimes?: PreferredWorkoutTime;
+  workoutTypes?: string[];
   size?: number;
 }) {
-  const queryParams = new URLSearchParams();
+  const params: Record<string, string | PreferredWorkoutTime | number> = {
+    size: size || 5,
+  };
 
-  params.workoutTypes.forEach((type) =>
-    queryParams.append("workoutTypes", type),
-  );
+  if (preferredTimes) {
+    params.preferredTimes = preferredTimes;
+  }
 
-  params.peferredTimes.forEach((type) =>
-    queryParams.append("peferredTimes", type),
-  );
-
+  if (workoutTypes?.length) {
+    params.workoutTypes = workoutTypes.join(",");
+  }
   try {
     const response = await api(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates?${queryParams.toString()}&size=${params.size || 5}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
+      { params },
     );
 
     return response.data;

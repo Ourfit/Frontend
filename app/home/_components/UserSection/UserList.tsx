@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { WorkoutTimeLabels } from "@/constants/User";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import getMates from "@/services/getMates";
+import { useState } from "react";
 
 const ICONS = {
   MORNING: <MorningIcon />,
@@ -21,19 +22,21 @@ const ICONS = {
 interface UserListProps {
   isWorkout: boolean;
   isTime: boolean;
-  peferredTimes: PreferredWorkoutTime[];
-  workoutTypes: string[];
+  preferredTimes: PreferredWorkoutTime | undefined;
+  workoutTypes: string[] | undefined;
 }
 
 export default function UserList({
   isWorkout,
   isTime,
-  peferredTimes,
+  preferredTimes,
   workoutTypes,
 }: UserListProps) {
+  const [imgError, setImgError] = useState(false);
+
   const { data, isLoading } = useQuery({
-    queryKey: ["mates", { peferredTimes, workoutTypes }],
-    queryFn: () => getMates({ peferredTimes, workoutTypes }),
+    queryKey: ["mates", preferredTimes, workoutTypes?.join(",")],
+    queryFn: () => getMates({ preferredTimes, workoutTypes }),
     staleTime: 5 * 60 * 1000,
   });
   const mates: MateInfo[] = data?.data.content;
@@ -59,7 +62,7 @@ export default function UserList({
             | "AFTERNOON"
             | "EVENING";
           const filteredWorkouts = user.favoriteWorkouts.filter((e) =>
-            workoutTypes.includes(e.code),
+            workoutTypes?.includes(e.code),
           );
 
           const workout = filteredWorkouts.length
@@ -70,12 +73,13 @@ export default function UserList({
             <S.UserWrapper key={idx}>
               <S.ProfileBadge>
                 <S.ProfileImageWrapper>
-                  {user.profileUrl ? (
+                  {user.profileUrl && !imgError ? (
                     <Image
                       src={user.profileUrl}
                       alt="profile-image"
                       width={48}
                       height={48}
+                      onError={() => setImgError(true)}
                     />
                   ) : (
                     <DefaultProfileImg />
@@ -93,7 +97,7 @@ export default function UserList({
                 <S.ExercisePreferences>
                   <S.PreferenceBadge $isHighlighted={isWorkout}>
                     {user.favoriteWorkouts.length > 1
-                      ? `${workout.name} + ${user.favoriteWorkouts.length - 1}`
+                      ? `${workout.name}+${user.favoriteWorkouts.length - 1}`
                       : workout.name}
                   </S.PreferenceBadge>
                   <S.PreferenceBadge $isHighlighted={isTime}>
