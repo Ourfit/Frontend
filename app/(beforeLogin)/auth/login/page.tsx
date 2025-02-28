@@ -19,7 +19,10 @@ export default function LoginPage() {
 
   const kakaoLoginHandler = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+      redirectUri:
+        process.env.NODE_ENV === "development"
+          ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL
+          : process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
     });
   };
 

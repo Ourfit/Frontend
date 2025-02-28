@@ -17,6 +17,15 @@ export const STEPS_LABEL = {
   WELCOME: "Welcome",
 } as const;
 
+export const INFO_LABEL = {
+  NICKNAME: "닉네임 변경",
+  GENDER_AGE: "나이 변경",
+  REGION: "지역 변경",
+  FITNESS_LEVEL: "운동 실력 변경",
+  LOGOUT: "로그아웃",
+  LEAVE: "탈퇴하기",
+} as const;
+
 export type StepLabel = (typeof STEPS_LABEL)[keyof typeof STEPS_LABEL];
 
 export type StepValue = string | string[] | { age: number; gender: string };
@@ -81,6 +90,8 @@ export const FITNESS_LEVELS = {
     description: "운동이 이제 완전 내 몸 같은 단계! 고난도 동작도 척척",
   },
 } as const;
+
+export type FitnessLevelType = keyof typeof FITNESS_LEVELS;
 
 export const SIGNUP_STEPS: {
   id: number;

@@ -20,12 +20,14 @@ export default function NotificationList({
   return (
     <S.ListContainer>
       <Typography.H4Md>{isPrev ? "이전" : "오늘"}</Typography.H4Md>
-      {list.map((item) => (
-        <ListItem key={item.id} title="메이트 신청" data={item}>
-          <span>{item.name}</span>님이 메이트 신청을
-          {item.type === "request" ? " 보냈어요!" : " 수락했어요!"}
-        </ListItem>
-      ))}
+      <S.ListItemWrapper>
+        {list.map((item) => (
+          <ListItem key={item.id} title="메이트 신청" data={item}>
+            <span>{item.name}</span>님이 메이트 신청을
+            {item.type === "request" ? " 보냈어요!" : " 수락했어요!"}
+          </ListItem>
+        ))}
+      </S.ListItemWrapper>
     </S.ListContainer>
   );
 }

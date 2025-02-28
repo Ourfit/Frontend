@@ -5,15 +5,42 @@ import { useState } from "react";
 import * as S from "./FitnessLeve.style";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { FITNESS_LEVELS, STEPS_LABEL } from "@/constants/Signup";
+import {
+  FITNESS_LEVELS,
+  FitnessLevelType,
+  STEPS_LABEL,
+} from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
-import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
+import { useMutation } from "@tanstack/react-query";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 
 const FitnessLevel = ({ nextStep, value }: StepProps) => {
   const [level, setLevel] = useState<string | null>(
     typeof value === "string" ? value : null,
   );
-  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: () =>
+      updateBasicInfo({
+        skillLevel: Object.entries(FITNESS_LEVELS).filter(
+          ([, { label }]) => label === level,
+        )[0][0] as FitnessLevelType,
+      }),
+    onSuccess: (status) => {
+      if (status === 200) {
+        setToast(TOAST_STATUSES.SUCCESS);
+        setTimeout(() => setToast(""), 1500);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+      }
+    },
+    onError: () => {
+      setToast(TOAST_STATUSES.ERROR);
+      setTimeout(() => setToast(""), 1500);
+    },
+  });
 
   const handleLevelClick = (selectedGender: string) => {
     setLevel(selectedGender);
@@ -22,10 +49,7 @@ const FitnessLevel = ({ nextStep, value }: StepProps) => {
   const buttonClickHandler = () => {
     if (level) {
       if (nextStep) nextStep(STEPS_LABEL.FITNESS_LEVEL, level);
-      else {
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 1500);
-      }
+      else mutation.mutate();
     }
   };
 
@@ -65,13 +89,17 @@ const FitnessLevel = ({ nextStep, value }: StepProps) => {
           variant={BUTTON_VARIANTS.PRIMARY}
           onClick={buttonClickHandler}
         >
-          다음
+          {nextStep ? "다음" : "변경 완료"}
         </Button>
       </S.ButtonContainer>
-      {showToast && (
+      {toast && (
         <Toast
-          message={TOAST_MESSAGES.SUCCESS}
-          status={TOAST_STATUSES.SUCCESS}
+          message={
+            toast === TOAST_STATUSES.SUCCESS
+              ? TOAST_MESSAGES.SUCCESS
+              : TOAST_MESSAGES.ERROR
+          }
+          status={toast as ToastStatus}
         />
       )}
     </S.FitnessLevelContainer>

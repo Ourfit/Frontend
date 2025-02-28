@@ -2,11 +2,19 @@ import Header from "@/components/common/Header/Header";
 import ChevronRight from "@/assets/images/chevron-right.svg";
 import * as S from "./EditBasicInfo.style";
 import { useState } from "react";
-import { SIGNUP_STEPS, STEPS_LABEL } from "@/constants/Signup";
+import {
+  FITNESS_LEVELS,
+  FitnessLevelType,
+  INFO_LABEL,
+  SIGNUP_STEPS,
+  STEPS_LABEL,
+} from "@/constants/Signup";
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { deleteAccount, deleteToken } from "../_lib/deleteAuth";
+import { useQuery } from "@tanstack/react-query";
+import getUserMe from "@/services/getUserMe";
+import { deleteAccount, deleteToken } from "@/services/mypage/deleteAuth";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -19,6 +27,28 @@ export default function EditBasicInfo({
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["userMe"],
+    queryFn: () => getUserMe(),
+  });
+
+  const {
+    nickname = "",
+    region1 = "",
+    region2 = "",
+    region3 = "",
+    age = 0,
+    gender = "",
+    skillLevel = "",
+  } = isLoading || !data?.data ? {} : data.data;
+
+  const user = [
+    nickname,
+    `${region1} ${region2} ${region3}`,
+    { age, gender: gender === "F" ? "여성" : "남성" },
+    FITNESS_LEVELS[skillLevel as FitnessLevelType]?.label || "",
+  ];
+
   const handleModalClose = () => {
     setShowModal(false);
   };
@@ -30,22 +60,6 @@ export default function EditBasicInfo({
   const handleLeave = async () => {
     await deleteAccount();
   };
-
-  const data = [
-    "중수다람쥐",
-    "송파구 신천동",
-    { age: 16, gender: "여성" },
-    "초보",
-  ];
-
-  const INFO_LABEL = {
-    NICKNAME: "닉네임 변경",
-    GENDER_AGE: "나이 변경",
-    REGION: "지역 변경",
-    FITNESS_LEVEL: "운동 실력 변경",
-    LOGOUT: "로그아웃",
-    LEAVE: "탈퇴하기",
-  } as const;
 
   const handleListItemClick = (selectCategory: keyof typeof INFO_LABEL) => {
     if (selectCategory === "LOGOUT") handleLogout();
@@ -90,7 +104,7 @@ export default function EditBasicInfo({
           ))
         ) : (
           <S.ComponentWrapper>
-            <CurrentComponent value={data[currentPage]} />
+            <CurrentComponent value={user[currentPage]} />
           </S.ComponentWrapper>
         )}
       </S.ListContainer>
