@@ -12,12 +12,12 @@ import getMatesHistory from "@/services/getMatesHistory";
 export default function NotificationBanner() {
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
-    queryFn: () => getMatesHistory({ actionTypes: "APPLY" }),
+    queryFn: () => getMatesHistory({ actionTypes: "RECEIVE", size: 1 }),
   });
 
   const mateHistory: MateHistory[] = data?.data.content;
   const notification = mateHistory
-    ? mateHistory.filter((e) => e.roleType === "TARGET")
+    ? mateHistory.filter((e) => e.roleType === "TARGET" && !e.isRead)
     : [];
 
   if (!data || isLoading || !notification.length) return <></>;

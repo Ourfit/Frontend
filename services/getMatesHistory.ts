@@ -13,7 +13,7 @@ export default async function getMatesHistory({
     const response = await api(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/me/history`,
       {
-        params: { actionTypes, page: pageParam || 1, size: size || 10 },
+        params: { actionTypes, page: pageParam || 0, size: size || 10 },
       },
     );
 

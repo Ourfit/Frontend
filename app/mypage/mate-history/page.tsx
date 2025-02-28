@@ -38,9 +38,9 @@ export default function MateHistoryPage() {
       fetchNextPage();
   }, [inView, hasNextPage]);
 
-  const mates: MateHistory[] = !data?.pages[0].data.content.length
+  const mates: MateHistory[] = !data?.pages
     ? []
-    : data?.pages[0].data.content;
+    : data.pages.map((page) => page.data).flat();
 
   const handleClick = (selectCategory: string) => {
     setActive(selectCategory);
