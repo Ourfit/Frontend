@@ -10,8 +10,9 @@ import Toast from "@/components/common/Toast/Toast";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
+import { sendMateRequest } from "@/services/mate/sendMateRequest";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 export default function MateProfile() {
   const workoutTimeMap: Record<string, string> = {
@@ -31,20 +32,37 @@ export default function MateProfile() {
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [toastStatus, setToastStatus] = useState(TOAST_STATUSES.SUCCESS);
+  const [toastStatus, setToastStatus] = useState<"success" | "error">(
+    TOAST_STATUSES.SUCCESS,
+  );
+
+  const [isPending, startTransition] = useTransition();
 
   const handleModalClose = () => {
     setShowModal(false);
   };
 
   const handleSendMateRequest = () => {
-    setToastMessage("메이트 신청이 완료되었습니다.");
-    setToastStatus(TOAST_STATUSES.SUCCESS);
-    setShowToast(true);
+    startTransition(async () => {
+      try {
+        await sendMateRequest(mateId);
 
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
+        setToastMessage("메이트 신청이 완료되었습니다.");
+        setToastStatus(TOAST_STATUSES.SUCCESS);
+        setShowToast(true);
+
+        setShowModal(false);
+
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
+      } catch (error) {
+        setToastMessage("메이트 신청에 실패했습니다.");
+        setToastStatus(TOAST_STATUSES.ERROR);
+        setShowToast(true);
+        setShowModal(false);
+      }
+    });
   };
 
   const isEditingProfile = false;
@@ -200,7 +218,9 @@ export default function MateProfile() {
               <Typography.H3Md color="#545862">취소</Typography.H3Md>
             </S.StyledButton>
             <S.StyledButton onClick={handleSendMateRequest}>
-              <Typography.H3Md color="#ffffff">신청</Typography.H3Md>
+              <Typography.H3Md color="#ffffff">
+                {isPending ? "처리 중..." : "신청"}
+              </Typography.H3Md>
             </S.StyledButton>
           </S.ModalButtonWrapper>
         </Modal>

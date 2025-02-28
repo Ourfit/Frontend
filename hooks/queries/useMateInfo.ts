@@ -2,6 +2,14 @@ import { getMateInfo } from "@/services/mate/getMateInfo";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useQuery } from "@tanstack/react-query";
 
+interface MyMateData {
+  id: number;
+  profileUrl: string;
+  nickname: string;
+  gender: string;
+  age: number;
+}
+
 export const useMateInfo = () => {
   const token = useTokenStore.getState().token;
 
@@ -23,7 +31,17 @@ export const useMateInfo = () => {
         return null;
       }
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 6 * 10000 * 5,
+    refetchInterval: (query) => {
+      const data = query.state.data as MyMateData | null;
+
+      if (data?.id) {
+        return false;
+      }
+      return 30000;
+    },
+
+    refetchIntervalInBackground: true,
     enabled: !!token,
   });
 };
