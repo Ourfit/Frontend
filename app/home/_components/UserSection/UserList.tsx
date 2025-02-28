@@ -1,10 +1,10 @@
-import MorningIcon from "@/assets/images/morning.svg";
-import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
 import DumbbellsIcon from "@/assets/images/dumbbells.svg";
-import * as S from "./UserList.style";
-import Image from "next/image";
+import EveningIcon from "@/assets/images/evening.svg";
+import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
+import Image from "next/image";
+import * as S from "./UserList.style";
 
 const ICONS = {
   아침: <MorningIcon />,

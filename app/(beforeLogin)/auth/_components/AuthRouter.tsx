@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { getTokens } from "@/services/getTokens";
-import { useTokenStore } from "@/stores/tokenStore";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   query: {
@@ -23,8 +23,7 @@ export default function AuthRouter({ query }: Props) {
       const res = await getTokens(query.oAuthId!);
 
       if (res.message === "OK") {
-        addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
-        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        addToken(res.data.accessToken);
 
         router.replace("/");
       }

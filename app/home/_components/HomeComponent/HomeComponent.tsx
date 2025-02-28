@@ -1,17 +1,17 @@
 "use client";
 
+import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
+import { COLORS } from "@/constants/Theme";
+import { useOAuthIdStore } from "@/stores/oAuthIdStore";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import styled from "styled-components";
 import Banner from "../Banner/Banner";
 import NotificationBanner from "../NotificationBanner/NotificationBanner";
 import QuickMenuBar from "../QuickMenuBar/QuickMenuBar";
 import UserSection from "../UserSection/UserSection";
-import styled from "styled-components";
-import Header from "@/components/common/Header/Header";
-import { COLORS } from "@/constants/Theme";
-import { useTokenStore } from "@/stores/tokenStore";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 
 const PageContainer = styled.div`
   overflow-y: scroll;

@@ -1,13 +1,13 @@
 "use client";
 
-import Frame from "@/components/layout/Frame";
-import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import KakaoLogo from "@/assets/images/Kakao_logo.svg";
-import * as S from "./style";
+import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
+import Frame from "@/components/layout/Frame";
 import { useTokenStore } from "@/stores/tokenStore";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import * as S from "./style";
 
 export default function LoginPage() {
   const { token } = useTokenStore();
@@ -19,7 +19,10 @@ export default function LoginPage() {
 
   const kakaoLoginHandler = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+      redirectUri:
+        process.env.NODE_ENV === "development"
+          ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_LOCAL
+          : process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
     });
   };
 
