@@ -12,11 +12,13 @@ export interface MateItem {
 }
 
 export function useSearchMates({
+  nickname,
   gender,
   preferredTimes,
   workoutTypes,
   size = 10,
 }: {
+  nickname?: string;
   gender?: string;
   preferredTimes?: string[];
   workoutTypes?: string[];
@@ -29,10 +31,11 @@ export function useSearchMates({
     (string | string[] | undefined)[],
     number //명시적 지정
   >({
-    queryKey: ["mates", gender, preferredTimes, workoutTypes],
+    queryKey: ["mates", nickname, gender, preferredTimes, workoutTypes],
     queryFn: ({ pageParam = 0 }) =>
       fetchMates({
         pageParam,
+        nickname,
         gender,
         preferredTimes,
         workoutTypes,
