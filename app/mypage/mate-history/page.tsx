@@ -27,10 +27,10 @@ export default function MateHistoryPage() {
       queryKey: ["mates", active],
       queryFn: ({ pageParam }) =>
         active === CATEGORY.REQUEST
-          ? getMatesHistory({ pageParam, actionTypes: "APPLY" })
-          : getMatesHistory({ pageParam }),
+          ? getMatesHistory({ pageParam: pageParam - 1, actionTypes: "APPLY" })
+          : getMatesHistory({ pageParam: pageParam - 1 }),
       getNextPageParam: (lastPage) =>
-        lastPage.page ? lastPage.page + 1 : null,
+        lastPage.data.hasNext ? lastPage.data.pageable.pageNumber + 2 : null,
     });
 
   useEffect(() => {
@@ -40,50 +40,16 @@ export default function MateHistoryPage() {
 
   const mates: MateHistory[] = !data?.pages
     ? []
-    : data.pages.map((page) => page.data).flat();
+    : data.pages.map((page) => page.data.content).flat();
 
   const handleClick = (selectCategory: string) => {
     setActive(selectCategory);
   };
 
-  const MateRequestList = mates.filter(
-    (mate) => mate.roleType === "ACTOR" && mate.actionType === "APPLY",
+  const MateRequestList = mates.filter((mate) => mate.roleType === "ACTOR");
+  const MatchingList = mates.filter(
+    (mate) => mate.actionType !== "APPLY" && mate.actionType !== "RECEIVE",
   );
-  const MatchingList = mates.filter((mate) => mate.actionType !== "APPLY");
-
-  // const MateRequestList: MateHistory[] = [
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "APPLY",
-  //     roleType: "ACTOR",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     actorProfileImageUrl: "https://aws.s3.com/images/users/profiles/1.jpg",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     targetProfileImageUrl: "https://aws.s3.com/images/users/profiles/2.jpg",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  // ];
-
-  // const MatchingList: MateHistory[] = [
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "ACCEPT",
-  //     roleType: "ACTOR",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     actorProfileImageUrl: "https://aws.s3.com/images/users/profiles/1.jpg",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     targetProfileImageUrl: "https://aws.s3.com/images/users/profiles/2.jpg",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  // ];
 
   return (
     <>

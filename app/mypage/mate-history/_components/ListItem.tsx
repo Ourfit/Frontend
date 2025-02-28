@@ -26,9 +26,10 @@ export default function ListItem({
   const router = useRouter();
 
   const handleClick = () => {
-    // router.push(`/mate/mateprofile/${encodeURIComponent(data.name)}`);
     if (data.actionType === "APPLY")
-      router.push(`/mate/mateprofile/${encodeURIComponent("주녕이")}`);
+      router.push(
+        `/mate/mateprofile/${encodeURIComponent(data.targetNickname)}`,
+      );
   };
 
   return (

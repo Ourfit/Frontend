@@ -23,7 +23,7 @@ export interface Mates extends PageResponse {
 export interface MateHistory {
   id: number;
   mateId: number;
-  actionType: "APPLY" | "ACCEPT" | "UNMATE";
+  actionType: "APPLY" | "ACCEPT" | "UNMATE" | "RECEIVE";
   roleType: "ACTOR" | "TARGET";
   isRead: boolean;
   actorId: number;
