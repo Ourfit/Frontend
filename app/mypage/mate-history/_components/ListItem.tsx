@@ -28,6 +28,7 @@ export default function ListItem({
   const [imgError, setImgError] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
+  const isNotificationsPage = pathName === "/notifications";
 
   const notificationReadReq = async (historyId: number) => {
     await api.patch(
@@ -41,7 +42,7 @@ export default function ListItem({
         `/mate/mateprofile/${encodeURIComponent(data.targetNickname)}`,
       );
 
-    if (pathName === "/notifications") {
+    if (isNotificationsPage) {
       if (!data.isRead) notificationReadReq(data.id);
       router.push(
         `/mate/mateprofile/${encodeURIComponent(data.actionType === "RECEIVE" ? data.actorNickname : data.targetNickname)}`,
@@ -49,21 +50,27 @@ export default function ListItem({
     }
   };
 
+  const getProfileImage = () => {
+    if (data.roleType === "ACTOR") {
+      return data.targetProfileImageUrl;
+    } else return data.actorProfileImageUrl;
+  };
+
   return (
     <S.ItemContainer
-      $isRead={data.isRead}
+      $isRead={isNotificationsPage && data.isRead}
       $isPrev={isPrev}
       onClick={handleClick}
     >
       <S.ItemWrapper>
-        {data.actionType === "APPLY" || pathName === "/notifications" ? (
+        {data.actionType === "APPLY" || isNotificationsPage ? (
           <S.IconWrapper>
             <BellIcon />
           </S.IconWrapper>
-        ) : data.targetProfileImageUrl && !imgError ? (
+        ) : getProfileImage() && !imgError ? (
           <S.ProfileImageWrapper>
             <Image
-              src={data.targetProfileImageUrl}
+              src={getProfileImage()}
               alt="profile-image"
               width={40}
               height={40}

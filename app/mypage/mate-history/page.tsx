@@ -48,7 +48,7 @@ export default function MateHistoryPage() {
 
   const MateRequestList = mates.filter((mate) => mate.roleType === "ACTOR");
   const MatchingList = mates.filter(
-    (mate) => mate.actionType !== "APPLY" && mate.actionType !== "RECEIVE",
+    (mate) => mate.actionType === "ACCEPT" || mate.actionType === "UNMATE",
   );
 
   return (
