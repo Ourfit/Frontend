@@ -24,10 +24,13 @@ export interface MateHistory {
   id: number;
   mateId: number;
   actionType: "APPLY" | "ACCEPT" | "UNMATE";
+  roleType: "ACTOR" | "TARGET";
   isRead: boolean;
   actorId: number;
   actorNickname: string;
+  actorProfileImageUrl: string;
   targetId: number;
   targetNickname: string;
+  targetProfileImageUrl: string;
   createdAt: string;
 }

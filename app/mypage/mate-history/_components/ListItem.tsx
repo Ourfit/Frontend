@@ -4,12 +4,14 @@ import * as S from "./ListItem.style";
 import { Typography } from "@/components/atoms/Typography";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MateType } from "@/types/mate";
 import { dateFormat } from "@/utils/monthList";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import { useState } from "react";
+import { MateHistory } from "@/types/mates";
 
 interface ListItemProps {
   title: string;
-  data: MateType;
+  data: MateHistory;
   children: React.ReactNode;
   hasArrowButton?: boolean;
 }
@@ -20,6 +22,7 @@ export default function ListItem({
   children,
   hasArrowButton = true,
 }: ListItemProps) {
+  const [imgError, setImgError] = useState(false);
   const router = useRouter();
 
   const handleClick = () => {
@@ -35,23 +38,26 @@ export default function ListItem({
           <S.IconWrapper>
             <BellIcon />
           </S.IconWrapper>
-        ) : data.profileUrl ? (
+        ) : data.targetProfileImageUrl && !imgError ? (
           <S.ProfileImageWrapper>
             <Image
-              src={data.profileUrl}
+              src={data.targetProfileImageUrl}
               alt="profile-image"
               width={40}
               height={40}
+              onError={() => setImgError(true)}
             />
           </S.ProfileImageWrapper>
         ) : (
-          <></>
+          <S.ProfileImageWrapper>
+            <DefaultProfileImg />
+          </S.ProfileImageWrapper>
         )}
         <S.ContentWrpper>
           <S.Content>
             <Typography.H4Sb>{title}</Typography.H4Sb>
             <Typography.H6Md>
-              {dateFormat(new Date(data.createdAt))}
+              {dateFormat(new Date(data.createdAt), "alarm")}
             </Typography.H6Md>
           </S.Content>
           <Typography.H5Md>{children}</Typography.H5Md>

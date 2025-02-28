@@ -7,17 +7,17 @@ import * as S from "./NotificationBanner.style";
 import { useQuery } from "@tanstack/react-query";
 import { MateHistory } from "@/types/mates";
 import { dateFormat } from "@/utils/monthList";
-import getNotifications from "@/services/getNotifications";
+import getMatesHistory from "@/services/getMatesHistory";
 
-export default function NotificationBanner({ nickname }: { nickname: string }) {
+export default function NotificationBanner() {
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
-    queryFn: () => getNotifications(),
+    queryFn: () => getMatesHistory({ actionTypes: "APPLY" }),
   });
 
   const mateHistory: MateHistory[] = data?.data.content;
   const notification = mateHistory
-    ? mateHistory.filter((e) => e.targetNickname === nickname)
+    ? mateHistory.filter((e) => e.roleType === "TARGET")
     : [];
 
   if (!data || isLoading || !notification.length) return <></>;

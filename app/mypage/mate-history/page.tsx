@@ -4,10 +4,10 @@ import Header from "@/components/common/Header/Header";
 import ListItem from "@/app/mypage/mate-history/_components/ListItem";
 import * as S from "./style";
 import { useEffect, useState } from "react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import getMates from "./_lib/getMates";
-import { MateType } from "@/types/mate";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
+import getMatesHistory from "@/services/getMatesHistory";
+import { MateHistory } from "@/types/mates";
 
 const CATEGORY = {
   REQUEST: "신청 내역",
@@ -24,11 +24,11 @@ export default function MateHistoryPage() {
   const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       initialPageParam: 1,
-      queryKey: ["mates"],
+      queryKey: ["mates", active],
       queryFn: ({ pageParam }) =>
         active === CATEGORY.REQUEST
-          ? getMates(pageParam, "APPLY")
-          : getMates(pageParam),
+          ? getMatesHistory({ pageParam, actionTypes: "APPLY" })
+          : getMatesHistory({ pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage.page ? lastPage.page + 1 : null,
     });
@@ -38,393 +38,49 @@ export default function MateHistoryPage() {
       fetchNextPage();
   }, [inView, hasNextPage]);
 
-  const mates: MateType[] = [];
+  const mates: MateHistory[] = !data?.pages[0].data.content.length
+    ? []
+    : data?.pages[0].data.content;
 
   const handleClick = (selectCategory: string) => {
     setActive(selectCategory);
   };
 
   const MateRequestList = mates.filter(
-    (mate) => mate.actionType === "APPLY" && mate.actorNickname === "감자",
+    (mate) => mate.roleType === "ACTOR" && mate.actionType === "APPLY",
   );
   const MatchingList = mates.filter((mate) => mate.actionType !== "APPLY");
 
-  // const MateRequestList = [
+  // const MateRequestList: MateHistory[] = [
   //   {
   //     id: 5,
   //     mateId: 2,
-  //     actionType: "REQUEST",
+  //     actionType: "APPLY",
+  //     roleType: "ACTOR",
   //     isRead: false,
   //     actorId: 2,
   //     actorNickname: "운초",
+  //     actorProfileImageUrl: "https://aws.s3.com/images/users/profiles/1.jpg",
   //     targetId: 4,
   //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
+  //     targetProfileImageUrl: "https://aws.s3.com/images/users/profiles/2.jpg",
   //     createdAt: "2021-08-01T12:00:00",
   //   },
   // ];
 
-  // const MatchingList = [
+  // const MatchingList: MateHistory[] = [
   //   {
   //     id: 5,
   //     mateId: 2,
-  //     actionType: "REQUEST",
+  //     actionType: "ACCEPT",
+  //     roleType: "ACTOR",
   //     isRead: false,
   //     actorId: 2,
   //     actorNickname: "운초",
+  //     actorProfileImageUrl: "https://aws.s3.com/images/users/profiles/1.jpg",
   //     targetId: 4,
   //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
-  //     createdAt: "2021-08-01T12:00:00",
-  //   },
-  //   {
-  //     id: 5,
-  //     mateId: 2,
-  //     actionType: "REQUEST",
-  //     isRead: false,
-  //     actorId: 2,
-  //     actorNickname: "운초",
-  //     targetId: 4,
-  //     targetNickname: "운동왕",
+  //     targetProfileImageUrl: "https://aws.s3.com/images/users/profiles/2.jpg",
   //     createdAt: "2021-08-01T12:00:00",
   //   },
   // ];
@@ -464,9 +120,9 @@ export default function MateHistoryPage() {
                   hasArrowButton={false}
                 >
                   <span>
-                    {item.targetNickname === "감자"
-                      ? item.actorNickname
-                      : item.targetNickname}
+                    {item.roleType === "ACTOR"
+                      ? item.targetNickname
+                      : item.actorNickname}
                   </span>
                   님과 메이트가 {item.actionType === "UNMATE" && "해제"}
                   되었어요.

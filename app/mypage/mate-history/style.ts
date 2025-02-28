@@ -29,4 +29,8 @@ export const MateHistoryList = styled.div`
   gap: 20px;
   height: 100%;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
