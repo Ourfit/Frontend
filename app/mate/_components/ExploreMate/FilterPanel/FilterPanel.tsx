@@ -73,10 +73,6 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
     }
   }, [currentY, onClose]);
 
-  const handleGenderClick = (value: "F" | "M") => {
-    setSelectedGender(value === selectedGender ? null : value);
-  };
-
   const handleTimeClick = (time: string) => {
     setSelectedTime(time === selectedTime ? null : time);
   };

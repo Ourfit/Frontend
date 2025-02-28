@@ -3,7 +3,6 @@ import ChevronLeft from "@/assets/images/chevron-left.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
 import { useSearchMates } from "@/hooks/queries/useSearchMates";
-import { MateItem } from "@/services/mate/searchMate";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import FilterPanel from "./FilterPanel/FilterPanel";
@@ -20,22 +19,19 @@ export default function ExploreMate() {
     sports: string[];
   }>({ gender: null, time: null, sports: [] });
 
+  console.log(filters);
+
   const preferredTimes = filters.time ? [filters.time] : undefined;
   const workoutTypes = filters.sports.length > 0 ? filters.sports : undefined;
 
   // useInfiniteQuery 훅
-  const {
-    data,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    refetch,
-  } = useSearchMates({
-    preferredTimes,
-    workoutTypes,
-    size: 10,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSearchMates({
+      gender: filters.gender || undefined,
+      preferredTimes,
+      workoutTypes,
+      size: 10,
+    });
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -54,11 +50,6 @@ export default function ExploreMate() {
   const mates = data?.pages.flatMap((page) => page.content) ?? [];
 
   console.log(mates);
-
-  const filteredMates = mates.filter((mate: MateItem) => {
-    if (filters.gender && mate.gender !== filters.gender) return false;
-    return true;
-  });
 
   const isFilterApplied =
     !!filters.gender || !!filters.time || filters.sports.length > 0;
@@ -120,7 +111,7 @@ export default function ExploreMate() {
 
       {/* 실제 메이트 리스트 */}
       <S.MateList>
-        {filteredMates.map((mate) => (
+        {mates.map((mate) => (
           <S.MateListItem
             key={mate.id}
             onClick={() =>

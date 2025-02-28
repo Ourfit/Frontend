@@ -7,7 +7,7 @@ import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../Modal/Modal";
 import * as S from "./style";
 
@@ -31,16 +31,16 @@ export default function MatchedMate({
   const daysElapsed = calculateDaysElapsed(mateInfo.startDate);
   const matchedMates = [
     {
-      id: 1,
-      name: "준영",
-      age: 26,
-      profileImage: "/next.svg",
+      id: 0,
+      name: "내 닉네임",
+      age: 99,
+      profileImage: "/my-image.jpg",
     },
     {
-      id: 2,
-      name: "수연",
-      age: 27,
-      profileImage: "/globe.svg",
+      id: myMate.id,
+      name: myMate.nickname,
+      age: myMate.age,
+      profileImage: myMate.profileUrl,
     },
   ];
 
@@ -100,18 +100,6 @@ export default function MatchedMate({
   const handleNavigateToTime = () => {
     router.push("/mate/time");
   };
-
-  useEffect(() => {
-    const storedTimeInfo = localStorage.getItem("sportTimeInfo");
-    const savedFacility = localStorage.getItem("selectedFacility");
-
-    if (storedTimeInfo) {
-      setTimeInfo(JSON.parse(storedTimeInfo));
-    }
-    if (savedFacility) {
-      setSelectedFacility(JSON.parse(savedFacility));
-    }
-  }, []);
 
   return (
     <S.MatchedMateContainer>

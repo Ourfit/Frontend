@@ -25,17 +25,20 @@ export interface MateItem {
 
 /**
  * @param pageParam
+ * @param gender
  * @param preferredTimes
  * @param workoutTypes
  * @param size
  */
 export async function fetchMates({
   pageParam = 0,
+  gender,
   preferredTimes,
   workoutTypes,
   size = 10,
 }: {
   pageParam?: number;
+  gender?: string;
   preferredTimes?: string[];
   workoutTypes?: string[];
   size?: number;
@@ -53,6 +56,7 @@ export async function fetchMates({
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
       {
         params: {
+          gender,
           preferredTimes: preferredTimesParam,
           workoutTypes: workoutTypesParam,
           page: pageParam,
