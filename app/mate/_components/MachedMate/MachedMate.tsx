@@ -7,11 +7,28 @@ import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { MyPageData, useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { unmatchMate } from "@/services/mate/unmatchMate";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
+import { toKoreanDay, toKoreanTime } from "@/utils/formatWorkout";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import * as S from "./style";
+
+const KOREAN_DAY_ORDER: Record<string, number> = {
+  월: 0,
+  화: 1,
+  수: 2,
+  목: 3,
+  금: 4,
+  토: 5,
+  일: 6,
+};
+
+function sortKoreanDays(days: string[]) {
+  return days
+    .sort((a, b) => KOREAN_DAY_ORDER[a] - KOREAN_DAY_ORDER[b])
+    .join(", ");
+}
 
 export default function MatchedMate() {
   const router = useRouter();
@@ -20,6 +37,14 @@ export default function MatchedMate() {
   const { data: mateInfo, isLoading } = useMateInfo();
 
   const { myMate, workout } = mateInfo;
+
+  const daysInKorean = sortKoreanDays(
+    workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
+  );
+
+  const timeRange = `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
+    workout.workoutEndAt,
+  )}`;
   console.log(myProfile);
 
   const daysElapsed = calculateDaysElapsed(mateInfo.startDate);
@@ -208,10 +233,8 @@ export default function MatchedMate() {
 
           {timeInfo ? (
             <S.TimeCard>
-              <Typography.H4Sb>{timeInfo.days.join(", ")}</Typography.H4Sb>
-              <Typography.H5Md color="#8A92A3">
-                {timeInfo.startTime} ~ {timeInfo.endTime}
-              </Typography.H5Md>
+              <Typography.H4Sb>{daysInKorean}</Typography.H4Sb>
+              <Typography.H5Md color="#8A92A3">{timeRange}</Typography.H5Md>
             </S.TimeCard>
           ) : (
             <Button

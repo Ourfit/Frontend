@@ -6,16 +6,45 @@ import Header from "@/components/common/Header/Header";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { useUpdateMateTime } from "@/hooks/queries/useUpdateMateTime";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as S from "./style";
 
+function parseTime(amPm: string, hourStr: string) {
+  let hour = parseInt(hourStr.replace("시", ""), 10);
+
+  if (amPm === "오후" && hour < 12) {
+    hour += 12;
+  }
+
+  if (amPm === "오전" && hour === 12) {
+    hour = 0;
+  }
+
+  return String(hour).padStart(2, "0") + ":00:00";
+}
+
 export default function SportTime() {
+  const DAY_MAPPING: Record<string, string> = {
+    월: "MONDAY",
+    화: "TUESDAY",
+    수: "WEDNESDAY",
+    목: "THURSDAY",
+    금: "FRIDAY",
+    토: "SATURDAY",
+    일: "SUNDAY",
+  };
+
   const [startAmPm, setStartAmPm] = useState<string>("오전/오후");
   const [startHour, setStartHour] = useState<string>("00시");
   const [endAmPm, setEndAmPm] = useState<string>("오전/오후");
   const [endHour, setEndHour] = useState<string>("00시");
 
+  const { data: mateInfo, isLoading } = useMateInfo();
+
+  const { mutate: updateTimeMutate } = useUpdateMateTime(mateInfo.mateId);
   const router = useRouter();
 
   const DayOfTheWeeks = ["월", "화", "수", "목", "금", "토", "일"];
@@ -37,14 +66,28 @@ export default function SportTime() {
 
   const handleSaveTimeInfo = () => {
     if (!isButtonEnabled) return;
-    const timeInfo = {
-      days: selectedDays,
-      startTime: `${startAmPm} ${startHour}`,
-      endTime: `${endAmPm} ${endHour}`,
-    };
 
-    localStorage.setItem("sportTimeInfo", JSON.stringify(timeInfo));
-    router.push("/mate");
+    const workoutDays = selectedDays.map((d) => DAY_MAPPING[d]);
+
+    const parsedStartTime = parseTime(startAmPm, startHour);
+    const parsedEndTime = parseTime(endAmPm, endHour);
+
+    //mutation 훅 호출해버리기
+    updateTimeMutate(
+      {
+        workoutDays,
+        startAt: parsedStartTime,
+        endAt: parsedEndTime,
+      },
+      {
+        onSuccess: () => {
+          router.push("/mate");
+        },
+        onError: (err) => {
+          console.error("운동 시간 수정 실패", err);
+        },
+      },
+    );
   };
 
   return (
