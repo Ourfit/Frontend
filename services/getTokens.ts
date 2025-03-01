@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export async function getTokens(oAuthId: string) {
+export async function getTokens(oAuthId: string, code: string) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/auth/tokens`,
-      { oAuthId },
+      { oAuthId, code },
     );
     return response.data;
   } catch (error) {

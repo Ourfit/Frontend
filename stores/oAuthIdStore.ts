@@ -3,7 +3,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface OAuthIdStore {
   oAuthId: string | null;
-  addOAuthId: (oAuthId: string) => void;
+  code: string | null;
+  addOAuthId: (oAuthId: string, code: string) => void;
   clearOAuthId: () => void;
 }
 
@@ -11,9 +12,10 @@ export const useOAuthIdStore = create(
   persist<OAuthIdStore>(
     (set) => ({
       oAuthId: "",
-      addOAuthId: (oAuthId) => set(() => ({ oAuthId })),
+      code: "",
+      addOAuthId: (oAuthId, code) => set(() => ({ oAuthId, code })),
       clearOAuthId: () => {
-        set({ oAuthId: null });
+        set({ oAuthId: null, code: null });
         sessionStorage.removeItem("oAuthId");
       },
     }),
