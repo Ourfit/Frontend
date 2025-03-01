@@ -200,8 +200,6 @@ export const FacilityInfoHeaderTitle = styled.div<{ $hasData: boolean }>`
 
   width: 100%;
   height: 24px;
-
-  cursor: pointer;
 `;
 
 export const TimeInfoHeaderTitle = styled(FacilityInfoHeaderTitle)``;

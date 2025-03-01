@@ -179,7 +179,13 @@ export default function MatchedMate() {
             {selectedFacility ? (
               <S.FacilityInfoHeaderTitle $hasData={!!selectedFacility}>
                 <Typography.H3Bd>🏃🏻 운동 시설</Typography.H3Bd>
-                <Typography.H5Md color="#004DFF" onClick={handleNavigate}>
+                <Typography.H5Md
+                  color="#004DFF"
+                  onClick={handleNavigate}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
                   편집
                 </Typography.H5Md>
               </S.FacilityInfoHeaderTitle>
@@ -219,7 +225,13 @@ export default function MatchedMate() {
             {timeInfo ? (
               <S.TimeInfoHeaderTitle $hasData={!!timeInfo}>
                 <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
-                <Typography.H5Md color="#004DFF" onClick={handleNavigateToTime}>
+                <Typography.H5Md
+                  color="#004DFF"
+                  onClick={handleNavigateToTime}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
                   편집
                 </Typography.H5Md>
               </S.TimeInfoHeaderTitle>
