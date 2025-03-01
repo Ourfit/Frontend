@@ -2,7 +2,10 @@
 
 import Modal from "@/app/mate/_components/Modal/Modal";
 import * as S from "@/app/mate/mateprofile/[mateId]/style";
+import AfternoonIcon from "@/assets/images/afternoon.svg";
 import Dumbbels from "@/assets/images/dumbbells.svg";
+import EveningIcon from "@/assets/images/evening.svg";
+import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
@@ -12,16 +15,31 @@ import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
 import { useParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { JSX, useState, useTransition } from "react";
+
+function getTimeSlot(
+  timeKey: string,
+): "morning" | "afternoon" | "evening" | "" {
+  if (timeKey.includes("MORNING")) return "morning";
+  if (timeKey.includes("AFTERNOON")) return "afternoon";
+  if (timeKey.includes("EVENING")) return "evening";
+  return "";
+}
 
 export default function MateProfile() {
   const workoutTimeMap: Record<string, string> = {
-    WEEKDAY_MORNING: "🌅 평일 아침",
-    WEEKDAY_DAYTIME: "☀️ 평일 낮",
-    WEEKDAY_EVENING: "🌙 평일 저녁",
-    WEEKEND_MORNING: "🌅 주말 아침",
-    WEEKEND_DAYTIME: "☀️ 주말 낮",
-    WEEKEND_EVENING: "🌙 주말 저녁",
+    WEEKDAY_MORNING: "평일 아침",
+    WEEKDAY_AFTERNOON: "평일 낮",
+    WEEKDAY_EVENING: "평일 저녁",
+    WEEKEND_MORNING: "주말 아침",
+    WEEKEND_AFTERNOON: "주말 낮",
+    WEEKEND_EVENING: "주말 저녁",
+  };
+
+  const iconMapping: Record<string, JSX.Element> = {
+    morning: <MorningIcon />,
+    afternoon: <AfternoonIcon />,
+    evening: <EveningIcon />,
   };
 
   const params = useParams();
@@ -167,9 +185,19 @@ export default function MateProfile() {
               </S.PreferenceHeader>
               <S.PreferenceTime>
                 <Typography.H4Md color="#27282D">
-                  {data?.preferredWorkoutTime
-                    ? workoutTimeMap[data.preferredWorkoutTime] || "미설정"
-                    : "미설정"}
+                  {data?.preferredWorkoutTime ? (
+                    <>
+                      {iconMapping[getTimeSlot(data.preferredWorkoutTime)]}
+                      <Typography.H4Md
+                        color="#27282D"
+                        style={{ marginLeft: "8px" }}
+                      >
+                        {workoutTimeMap[data.preferredWorkoutTime] || "미설정"}
+                      </Typography.H4Md>
+                    </>
+                  ) : (
+                    <Typography.H4Md color="#27282D">미설정</Typography.H4Md>
+                  )}
                 </Typography.H4Md>
               </S.PreferenceTime>
             </S.PreferenceTimeWrapper>

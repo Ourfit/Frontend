@@ -353,7 +353,7 @@ export const PreferenceTime = styled.div`
   padding: 12px 20px 12px 16px;
   box-sizing: border-box;
 
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid ${COLORS.GRAYSCALE_200};
 `;
 

@@ -12,6 +12,15 @@ import FilterPanel from "./FilterPanel/FilterPanel";
 
 import * as S from "./style";
 
+function getTimeSlot(
+  timeKey: string,
+): "morning" | "afternoon" | "evening" | "" {
+  if (timeKey.includes("MORNING")) return "morning";
+  if (timeKey.includes("AFTERNOON")) return "afternoon";
+  if (timeKey.includes("EVENING")) return "evening";
+  return "";
+}
+
 export default function ExploreMate() {
   const router = useRouter();
 
@@ -29,15 +38,6 @@ export default function ExploreMate() {
     afternoon: <AfternoonIcon />,
     evening: <EveningIcon />,
   };
-
-  function getTimeSlot(
-    timeKey: string,
-  ): "morning" | "afternoon" | "evening" | "" {
-    if (timeKey.includes("MORNING")) return "morning";
-    if (timeKey.includes("AFTERNOON")) return "afternoon";
-    if (timeKey.includes("EVENING")) return "evening";
-    return "";
-  }
 
   const [showTooltip, setShowTooltip] = useState(true);
   const [showFilterPanel, setShowFilterPanel] = useState(false);
