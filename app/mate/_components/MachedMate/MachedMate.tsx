@@ -134,7 +134,7 @@ export default function MatchedMate() {
                 />
               ))}
             </S.ProfileImageWrapper>
-            <S.daysLeft>D+{daysElapsed}</S.daysLeft>
+            <S.daysLeft>D+{mateInfo.daySinceAccepted}</S.daysLeft>
           </S.MateCardHeader>
 
           <S.MateCardContent>
@@ -147,7 +147,8 @@ export default function MatchedMate() {
               </S.MateDetailInfo>
 
               <Typography.H6Sb color="#6C727F">
-                {myProfile?.nickname} 님과 {daysElapsed}일째 메이트예요!
+                {myProfile?.nickname} 님과 {mateInfo.daySinceAccepted}일째
+                메이트예요!
               </Typography.H6Sb>
             </S.MateCardInfo>
 
