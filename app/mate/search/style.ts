@@ -135,6 +135,23 @@ export const Tag = styled.div`
   background-color: ${COLORS.GRAYSCALE_100};
 `;
 
+export const TimeTag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 2px;
+
+  width: auto;
+  height: 100%;
+
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+
+  background-color: ${COLORS.GRAYSCALE_100};
+`;
+
 export const ProfileText = styled.div`
   max-width: 235px;
   white-space: nowrap;

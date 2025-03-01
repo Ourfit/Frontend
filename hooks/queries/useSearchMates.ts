@@ -2,15 +2,6 @@ import type { MateListResponse } from "@/services/mate/searchMate";
 import { fetchMates } from "@/services/mate/searchMate";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
-export interface MateItem {
-  id: number;
-  nickname: string;
-  age: number;
-  gender: string;
-  profileUrl: string;
-  introduction: string;
-}
-
 export function useSearchMates({
   nickname,
   gender,

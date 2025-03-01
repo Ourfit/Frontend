@@ -21,6 +21,8 @@ export interface MateItem {
   gender: string;
   profileUrl: string;
   introduction: string;
+  favoriteWorkouts: { code: string; name: string }[];
+  preferredWorkoutTime: string;
 }
 
 /**
