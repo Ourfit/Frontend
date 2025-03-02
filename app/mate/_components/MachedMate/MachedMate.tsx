@@ -6,7 +6,6 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { MyPageData, useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { unmatchMate } from "@/services/mate/unmatchMate";
-import { calculateDaysElapsed } from "@/utils/dateUtils";
 import { toKoreanDay, toKoreanTime } from "@/utils/formatWorkout";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -47,7 +46,6 @@ export default function MatchedMate() {
   )}`;
   console.log(myProfile);
 
-  const daysElapsed = calculateDaysElapsed(mateInfo.startDate);
   const matchedMates: MyPageData[] = [
     {
       id: myProfile?.id,
