@@ -1,70 +1,80 @@
 "use client";
 
+import OurfitLogo from "@/assets/images/ourfit-logo.svg";
+import { Typography } from "@/components/atoms/Typography";
+import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
+import Button from "@/components/common/Button";
+import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { Typography } from "@/components/atoms/Typography";
-import Header from "@/components/common/Header/Header";
-import Button from "@/components/common/Button";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { COLORS } from "@/constants/Theme";
-import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
-import * as S from "./style";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import * as S from "./style";
 
-const dummyFacilities = [
-  {
-    id: 1,
-    name: "아워핏짐 잠실",
-    address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-  },
-  { id: 2, name: "아워핏짐 강남", address: "서울 강남구 강남대로 123" },
-  {
-    id: 3,
-    name: "에이블짐 잠실",
-    address: "서울 송파구 올림픽로35가길 12 5층 001호",
-  },
-  {
-    id: 4,
-    name: "에이블필라테스 잠실",
-    address: "서울 송파구 올림픽로35가길 13 10층 001호",
-  },
-];
+interface FacilityItem {
+  id: string;
+  name: string;
+  address: string;
+}
 
 export default function SportFacility() {
   const [facilityValue, setFacilityValue] = useState("");
-  const [searchResults, setSearchResults] = useState<
-    { id: number; name: string; address: string }[]
-  >([]);
-  const [selectedFacility, setSelectedFacility] = useState<null | {
-    id: number;
-    name: string;
-    address: string;
-  }>(null); 
+  const [searchResults, setSearchResults] = useState<FacilityItem[]>([]);
+  const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(
+    null,
+  );
+
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (facilityValue.trim() === "") {
+    if (!facilityValue.trim()) {
       setSearchResults([]);
       return;
     }
 
-    const timeout = setTimeout(() => {
-      const filteredResults = dummyFacilities.filter((facility) =>
-        facility.name.includes(facilityValue),
-      );
-      setSearchResults(filteredResults);
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      try {
+        console.log("Searching for:", facilityValue);
+
+        const res = await fetch(
+          `/api/kakaoPlaceSearch?query=${encodeURIComponent(facilityValue)}`,
+        );
+        if (!res.ok) {
+          console.error("API 요청 실패", res.status);
+          setSearchResults([]);
+          return;
+        }
+        const data = await res.json();
+
+        if (data.documents) {
+          const facilities = data.documents.map((doc: any) => ({
+            id: doc.id,
+            name: doc.place_name,
+            address: doc.road_address_name || doc.address_name,
+          }));
+          setSearchResults(facilities);
+        } else {
+          setSearchResults([]);
+        }
+      } catch (error) {
+        console.error("fetch error:", error);
+        setSearchResults([]);
+      }
     }, 1000);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    };
   }, [facilityValue]);
 
-  const handleSelectFacility = (facility: {
-    id: number;
-    name: string;
-    address: string;
-  }) => {
-    setSelectedFacility(facility); 
-    localStorage.setItem("selectedFacility", JSON.stringify(facility)); 
+  const handleSelectFacility = (facility: FacilityItem) => {
+    setSelectedFacility(facility);
   };
 
   const pathname = usePathname();
@@ -117,10 +127,10 @@ export default function SportFacility() {
               key={result.id}
               onClick={() => handleSelectFacility(result)}
             >
-              <img src="/next.svg" width="40" height="40" />
+              <OurfitLogo width="40" height="40" color="#004DFF" />
               <S.FacilityInfo>
                 <Typography.H4Sb>{result.name}</Typography.H4Sb>
-                <Typography.H5Md color="#8A92A3">
+                <Typography.H5Md color="#333333">
                   {result.address}
                 </Typography.H5Md>
               </S.FacilityInfo>

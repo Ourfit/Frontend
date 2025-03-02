@@ -1,11 +1,11 @@
+import ReactQueryProvider from "@/components/common/ReactQueryProvider";
 import ThemeClient from "@/components/common/ThemeClient";
 import GlobalStyle from "@/styles/GlobalStyle";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import React from "react";
-import "./globals.css";
-import ReactQueryProvider from "@/components/common/ReactQueryProvider";
 import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
+import "./globals.css";
 
 declare global {
   interface Window {
