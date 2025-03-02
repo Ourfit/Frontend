@@ -17,9 +17,9 @@ interface FilterPanelProps {
 
 export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
   const TIME_OPTIONS = [
-    { label: "평일 낮", value: "WEEKDAY_DAYTIME" },
+    { label: "평일 낮", value: "WEEKDAY_AFTERNOON" },
     { label: "평일 저녁", value: "WEEKDAY_EVENING" },
-    { label: "주말 낮", value: "WEEKEND_DAYTIME" },
+    { label: "주말 낮", value: "WEEKEND_AFTERNOON" },
     { label: "주말 저녁", value: "WEEKEND_EVENING" },
   ];
 
