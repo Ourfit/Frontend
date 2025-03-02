@@ -130,7 +130,7 @@ export default function SportFacility() {
               <OurfitLogo width="40" height="40" color="#004DFF" />
               <S.FacilityInfo>
                 <Typography.H4Sb>{result.name}</Typography.H4Sb>
-                <Typography.H5Md color="#333333">
+                <Typography.H5Md color="#8A92A3">
                   {result.address}
                 </Typography.H5Md>
               </S.FacilityInfo>

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("query"); // ?query=시설명으로 대입 고고
+  const query = searchParams.get("query");
 
   if (!query) {
     return NextResponse.json({ message: "No query provided" }, { status: 400 });
