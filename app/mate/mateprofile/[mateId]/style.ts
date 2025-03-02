@@ -20,10 +20,23 @@ export const PageContainer = styled.div`
   }
 `;
 
+export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: auto;
+
+  padding: 32px 0px 120px 0px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+`;
+
 export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 
   overflow: hidden;
@@ -44,9 +57,9 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
 
 export const BackgroundImage = styled.img`
   width: 100%;
-  max-width: 72px;
+  max-width: 80px;
   height: 100%;
-  max-height: 72px;
+  max-height: 80px;
 
   transition: all 0.3s ease;
 `;
@@ -85,6 +98,7 @@ export const ProfileOverviewWrapper = styled.div`
   width: 100%;
   height: 328px;
   padding: 0px 20px;
+
   box-sizing: border-box;
 `;
 
@@ -119,23 +133,10 @@ export const PreferenceTimeWrapper = styled.div`
   gap: 12px;
 
   width: 100%;
-  height: auto;
+  height: 167px;
 
   padding: 28px 20px;
   box-sizing: border-box;
-`;
-
-export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-  height: auto;
-
-  padding: 12px 0px 120px 0px;
-  box-sizing: border-box;
-  background-color: #ffffff;
 `;
 
 export const ProfileDescription = styled.div`
@@ -375,7 +376,7 @@ export const PreferenceTimeRange = styled.span`
 
 export const PrimaryButton = styled.button`
   padding: 8px 10px;
-  width: 68px;
+  width: auto;
   height: 34px;
   margin-top: 16px;
 

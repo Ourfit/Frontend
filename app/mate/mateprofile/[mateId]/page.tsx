@@ -27,6 +27,12 @@ function getTimeSlot(
 }
 
 export default function MateProfile() {
+  const skillLevelMap: Record<string, string> = {
+    BEGINNER: "운동 초보",
+    INTERMEDIATE: "운동 중수",
+    ADVANCED: "운동 고수",
+  };
+
   const workoutTimeMap: Record<string, string> = {
     WEEKDAY_MORNING: "평일 아침",
     WEEKDAY_AFTERNOON: "평일 낮",
@@ -97,18 +103,15 @@ export default function MateProfile() {
                 src={data?.profileUrl}
                 alt={data?.nickname}
               />
-              <S.OverlayImage
-                className="overlay"
-                src="/image-2.svg"
-                alt="Gallery"
-              />
             </S.ProfileImageWrapper>
 
             <S.ProfileName>{data?.nickname}</S.ProfileName>
             <S.ProfileInfo>
               {data?.gender} · 만 {data?.age}세
             </S.ProfileInfo>
-            <S.PrimaryButton>운동중수</S.PrimaryButton>
+            <S.PrimaryButton>
+              {skillLevelMap[data?.skillLevel || ""] || "미정"}
+            </S.PrimaryButton>
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>
