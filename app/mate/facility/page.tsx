@@ -10,6 +10,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
 
+import { queryClient } from "@/components/common/ReactQueryProvider";
 import { useUpdateMatePlace } from "@/hooks/queries/useUpdateMatePlace";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -90,7 +91,8 @@ export default function SportFacility() {
         address: facility.address,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
           router.push("/mate");
         },
         onError: (err: Error) => {
