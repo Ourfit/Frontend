@@ -2,6 +2,7 @@
 
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
 import { MyPageData, useMyPageInfo } from "@/hooks/queries/useMypageInfo";
@@ -34,6 +35,15 @@ export default function MatchedMate() {
   const queryClient = useQueryClient();
   const { data: myProfile, isLoading: isLoadingMy } = useMyPageInfo();
   const { data: mateInfo, isLoading } = useMateInfo();
+
+  const [errorMap, setErrorMap] = useState<{ [id: string]: boolean }>({});
+
+  const handleImageError = (mateId: string | number) => {
+    setErrorMap((prev) => ({
+      ...prev,
+      [mateId]: true,
+    }));
+  };
 
   const { myMate, workout } = mateInfo;
 
@@ -124,13 +134,22 @@ export default function MatchedMate() {
         <S.MateCard>
           <S.MateCardHeader>
             <S.ProfileImageWrapper>
-              {matchedMates.map((mate) => (
-                <S.ProfileImage
-                  key={`${mate.id}-${mate.nickname}`}
-                  src={mate.profileUrl}
-                  alt={mate.nickname}
-                />
-              ))}
+              {matchedMates.map((mate) => {
+                const isError = errorMap[mate.id];
+
+                if (isError) {
+                  return <DefaultProfileImg key={mate.id} />;
+                }
+
+                return (
+                  <S.ProfileImage
+                    key={mate.id + mate.nickname}
+                    src={mate.profileUrl}
+                    alt={mate.nickname}
+                    onError={() => handleImageError(mate.id)}
+                  />
+                );
+              })}
             </S.ProfileImageWrapper>
             <S.daysLeft>D+{mateInfo.daySinceAccepted}</S.daysLeft>
           </S.MateCardHeader>
