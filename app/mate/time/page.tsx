@@ -83,7 +83,7 @@ export default function SportTime() {
         onSuccess: () => {
           router.push("/mate");
         },
-        onError: (err) => {
+        onError: (err: Error) => {
           console.error("운동 시간 수정 실패", err);
         },
       },

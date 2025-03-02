@@ -8,8 +8,11 @@ import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
+
+import { useUpdateMatePlace } from "@/hooks/queries/useUpdateMatePlace";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import * as S from "./style";
 
@@ -25,6 +28,11 @@ export default function SportFacility() {
   const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(
     null,
   );
+
+  const router = useRouter();
+
+  const { data: mateInfo, isLoading } = useMateInfo();
+  const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateInfo.mateId);
 
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -75,6 +83,21 @@ export default function SportFacility() {
 
   const handleSelectFacility = (facility: FacilityItem) => {
     setSelectedFacility(facility);
+
+    updatePlaceMutate(
+      {
+        placeName: facility.name,
+        address: facility.address,
+      },
+      {
+        onSuccess: () => {
+          router.push("/mate");
+        },
+        onError: (err: Error) => {
+          console.error("운동 시간 수정 실패", err);
+        },
+      },
+    );
   };
 
   const pathname = usePathname();

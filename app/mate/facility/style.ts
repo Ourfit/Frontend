@@ -74,9 +74,8 @@ export const ResultList = styled.div`
 
   padding: 0px 20px;
   box-sizing: border-box;
-  height: auto;
+  height: 100%;
 
-  max-height: 800px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
