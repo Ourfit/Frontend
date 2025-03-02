@@ -168,13 +168,14 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           size={BUTTON_SIZES.LARGE}
           variant="primary"
           disabled={!isApplyEnabled}
-          onClick={() =>
+          onClick={() => {
+            if (!isApplyEnabled) return;
             onApply({
               gender: selectedGender,
               time: selectedTime,
               sports: selectedSports,
-            })
-          }
+            });
+          }}
         >
           적용하기
         </Button>
