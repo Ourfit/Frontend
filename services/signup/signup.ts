@@ -6,7 +6,11 @@ import {
 } from "@/constants/Signup";
 import axios from "axios";
 
-export async function signup(oAuthId: string, formData: FormDataType) {
+export async function signup(
+  oAuthId: string,
+  code: string,
+  formData: FormDataType,
+) {
   const nickname = formData.nickname;
   const region = formData.region?.split(" ");
   const region1 = region![0];
@@ -31,6 +35,7 @@ export async function signup(oAuthId: string, formData: FormDataType) {
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users`,
       {
         oAuthId,
+        code,
         provider: "KAKAO",
         nickname,
         region1,

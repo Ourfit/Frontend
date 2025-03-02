@@ -33,7 +33,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<FormDataType | null>(null);
   const [toast, setToast] = useState("");
-  const { oAuthId } = useOAuthIdStore();
+  const { oAuthId, code } = useOAuthIdStore();
   const { addToken } = useTokenStore.getState();
 
   const handleFormDataChange = (
@@ -48,8 +48,8 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
   };
 
   const handleStartClick = async () => {
-    if (oAuthId) {
-      const res = await signup(oAuthId, formData as FormDataType);
+    if (oAuthId && code) {
+      const res = await signup(oAuthId, code, formData as FormDataType);
       if (res.message === "OK") {
         addToken(res.data.accessToken);
 

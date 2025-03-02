@@ -69,5 +69,9 @@ export const dateFormat = (date: Date, type?: string) => {
     return `${formatMonth}월 ${formatDate}일`;
   }
 
+  if (type === "alarm") {
+    return `${date.getFullYear()}.${formatMonth}.${formatDate}`;
+  }
+
   return `${date.getFullYear()}-${formatMonth}-${formatDate}`;
 };

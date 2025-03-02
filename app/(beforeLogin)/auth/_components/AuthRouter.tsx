@@ -10,6 +10,7 @@ interface Props {
   query: {
     oAuthId?: string;
     status?: string;
+    code?: string;
   };
 }
 
@@ -20,7 +21,7 @@ export default function AuthRouter({ query }: Props) {
 
   useEffect(() => {
     const handleTokens = async () => {
-      const res = await getTokens(query.oAuthId!);
+      const res = await getTokens(query.oAuthId!, query.code!);
 
       if (res.message === "OK") {
         addToken(res.data.accessToken);
@@ -33,8 +34,8 @@ export default function AuthRouter({ query }: Props) {
       handleTokens();
     }
 
-    if (query.status === "new" && query.oAuthId) {
-      addOAuthId(query.oAuthId);
+    if (query.status === "new" && query.oAuthId && query.code) {
+      addOAuthId(query.oAuthId, query.code);
       router.replace("/auth/signup");
     }
   }, []);
