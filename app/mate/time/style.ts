@@ -69,6 +69,7 @@ export const DayOfWeeksBox = styled.div<{ $isSelected: boolean }>`
 export const DetailInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 
   width: 100%;
   height: 52px;
