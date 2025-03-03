@@ -7,6 +7,9 @@ import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+import getUserMe from "@/services/getUserMe";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import Banner from "../Banner/Banner";
 import NotificationBanner from "../NotificationBanner/NotificationBanner";
@@ -34,21 +37,47 @@ export default function HomeComponent() {
   const router = useRouter();
   const { clearOAuthId } = useOAuthIdStore.getState();
 
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["userMe"],
+    queryFn: () => getUserMe(),
+    staleTime: 5 * 60 * 1000,
+    enabled: !!token,
+  });
+
   useEffect(() => {
-    if (!token) {
+    const accessToken = useTokenStore.getState().token;
+
+    if (!accessToken) {
       router.replace("/auth/login");
-    } else clearOAuthId();
-  }, [token]);
+    } else {
+      clearOAuthId();
+    }
+  }, []);
+
+  if (!token) return null;
+
+  const {
+    region2 = "",
+    region3 = "",
+    nickname = "",
+    favoriteWorkouts = "",
+    preferredWorkoutTime = "",
+  } = isLoading || !user?.data ? {} : user.data;
 
   return (
     <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>
-      <Header />
+      <Header region={`${region2} ${region3}`} />
       <PageContainer>
         <Banner />
         <MainContent>
           <QuickMenuBar />
           <NotificationBanner />
-          <UserSection />
+          <UserSection
+            nickname={nickname}
+            region={region3}
+            favoriteWorkouts={favoriteWorkouts}
+            preferredWorkoutTime={preferredWorkoutTime}
+          />
         </MainContent>
       </PageContainer>
     </Frame>

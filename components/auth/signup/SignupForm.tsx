@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { SIGNUP_STEPS, StepLabel } from "@/constants/Signup";
 import StepIndicator from "@/components/common/StepIndicator";
 import * as S from "./SignupForm.style";
-import { signup } from "@/app/(beforeLogin)/auth/_lib/signup";
+import { signup } from "@/services/signup/signup";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";
@@ -33,7 +33,7 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<FormDataType | null>(null);
   const [toast, setToast] = useState("");
-  const { oAuthId } = useOAuthIdStore();
+  const { oAuthId, code } = useOAuthIdStore();
   const { addToken } = useTokenStore.getState();
 
   const handleFormDataChange = (
@@ -48,11 +48,10 @@ const SignupForm = ({ step, setStep }: SignupFormProps) => {
   };
 
   const handleStartClick = async () => {
-    if (oAuthId) {
-      const res = await signup(oAuthId, formData as FormDataType);
+    if (oAuthId && code) {
+      const res = await signup(oAuthId, code, formData as FormDataType);
       if (res.message === "OK") {
-        addToken(res.data.accessToken, res.data.accessTokenExpiresIn);
-        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        addToken(res.data.accessToken);
 
         router.replace("/");
       } else {

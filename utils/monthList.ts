@@ -61,9 +61,17 @@ export const selectCalendarList = (date?: Date) => {
   }
 };
 
-export const dateFormat = (date: Date) => {
+export const dateFormat = (date: Date, type?: string) => {
   const formatMonth = `${date.getMonth() + 1}`.padStart(2, "0");
   const formatDate = `${date.getDate()}`.padStart(2, "0");
+
+  if (type === "MD") {
+    return `${formatMonth}월 ${formatDate}일`;
+  }
+
+  if (type === "alarm") {
+    return `${date.getFullYear()}.${formatMonth}.${formatDate}`;
+  }
 
   return `${date.getFullYear()}-${formatMonth}-${formatDate}`;
 };

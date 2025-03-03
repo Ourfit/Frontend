@@ -16,6 +16,7 @@ interface HeaderProps {
   isSignup?: boolean;
   title?: string;
   onClick?: () => void;
+  region?: string;
 }
 
 export default function Header({
@@ -24,6 +25,7 @@ export default function Header({
   isSignup,
   title,
   onClick,
+  region,
 }: HeaderProps) {
   const pathname = usePathname();
 
@@ -52,6 +54,7 @@ export default function Header({
   const isChellengePage = pathname === "/challenge";
   const isSettingsPage = pathname.startsWith("/mypage");
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
+  const isNotificationPage = pathname === "/notifications";
 
   type GnbLabel = (typeof GNB_LABELS)[keyof typeof GNB_LABELS];
   const isGnbTab = Object.values(GNB_LABELS).includes(
@@ -73,7 +76,7 @@ export default function Header({
           />
           <S.LocationContainer>
             <Compass style={{ width: "18px", height: "18px" }} />
-            <Typography.H4Sb>송파구 신천동</Typography.H4Sb>
+            <Typography.H4Sb>{region}</Typography.H4Sb>
           </S.LocationContainer>
         </S.HeaderContainer>
       ) : title ? (
@@ -112,13 +115,16 @@ export default function Header({
                 ? "검색"
                 : pageNames[pathname]}
           </Typography.H1Sb>
-          {!isSettingsPage && !isSearchPage && !isChellengePage && (
-            <SearchIcon
-              style={{ width: "24px", height: "24px", cursor: "pointer" }}
-              stroke={"#0A0A0A"}
-              onClick={() => router.push("/mate/search")}
-            />
-          )}
+          {!isSettingsPage &&
+            !isSearchPage &&
+            !isChellengePage &&
+            !isNotificationPage && (
+              <SearchIcon
+                style={{ width: "24px", height: "24px", cursor: "pointer" }}
+                stroke={"#0A0A0A"}
+                onClick={() => router.push("/mate/search")}
+              />
+            )}
         </S.HeaderContainer>
       ) : (
         <S.HeaderContainer

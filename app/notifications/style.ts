@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   & > span {
     color: ${COLORS.GRAYSCALE_900};
@@ -15,4 +16,11 @@ export const NotificationSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 36px;
+  padding: 12px 20px 0;
+  height: 100%;
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

@@ -6,6 +6,7 @@ export const RegionContainer = styled.div<{ $gap: string }>`
   display: flex;
   flex-direction: column;
   gap: ${({ $gap }) => $gap};
+  height: 100%;
 `;
 
 export const RegionWrapper = styled.div`
@@ -37,6 +38,12 @@ export const ButtonContainer = styled.div`
 export const RegionList = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Region = styled.div`

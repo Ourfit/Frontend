@@ -4,8 +4,13 @@ import {
   SPORTS_LABEL,
   TIME_PREFERENCES,
 } from "@/constants/Signup";
+import axios from "axios";
 
-export async function signup(oAuthId: string, formData: FormDataType) {
+export async function signup(
+  oAuthId: string,
+  code: string,
+  formData: FormDataType,
+) {
   const nickname = formData.nickname;
   const region = formData.region?.split(" ");
   const region1 = region![0];
@@ -25,31 +30,27 @@ export async function signup(oAuthId: string, formData: FormDataType) {
     )[0][0];
   });
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      oAuthId,
-      provider: "KAKAO",
-      nickname,
-      region1,
-      region2,
-      region3,
-      gender,
-      age,
-      skillLevel,
-      preferredWorkoutTime,
-      favoriteWorkouts,
-    }),
-  });
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users`,
+      {
+        oAuthId,
+        code,
+        provider: "KAKAO",
+        nickname,
+        region1,
+        region2,
+        region3,
+        gender,
+        age,
+        skillLevel,
+        preferredWorkoutTime,
+        favoriteWorkouts,
+      },
+    );
 
-  if (!response.ok) {
-    return {
-      code: response.status,
-    };
+    return response.data;
+  } catch (err) {
+    throw err;
   }
-
-  return response.json();
 }

@@ -1,81 +1,70 @@
+"use client";
+
 import UserSectionTitle from "./UserSectionTitle";
 import * as S from "./UserSection.style";
 import UserList from "./UserList";
+import { PreferredWorkoutTime } from "@/types/user";
+import { GROUP_TYPES } from "@/constants/User";
 
-export default function UserSection() {
+interface UserSectionType {
+  nickname: string;
+  region: string;
+  favoriteWorkouts: { code: string; name: string }[];
+  preferredWorkoutTime: PreferredWorkoutTime;
+}
+
+export default function UserSection({
+  nickname,
+  region,
+  favoriteWorkouts,
+  preferredWorkoutTime,
+}: UserSectionType) {
   const UserGroups = [
     {
+      type: GROUP_TYPES.REGION,
       title: "📍 같은 동네에 있어요",
-      description: "같은 신천동에 있는 메이트",
-      userList: [
-        {
-          userId: 1,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스", "헬스"],
-          time: "주말 저녁",
-        },
-        {
-          userId: 2,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스"],
-          time: "주말 아침",
-        },
-        {
-          userId: 3,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스"],
-          time: "평일 낮",
-        },
-        {
-          userId: 4,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스"],
-          time: "평일 낮",
-        },
-      ],
+      description: `같은 ${region}에 있는 메이트`,
     },
     {
+      type: GROUP_TYPES.WORKOUT,
       title: "👊🏻 선호 운동이 일치해요",
       description: "선호하는 운동이 일치한 메이트",
-      userList: [
-        {
-          userId: 5,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스"],
-          time: "주말 저녁",
-        },
-        {
-          userId: 6,
-          name: "초보다람쥐",
-          age: 27,
-          sports: ["헬스"],
-          time: "주말 저녁",
-        },
-      ],
     },
     {
+      type: GROUP_TYPES.TIME,
       title: "⏱️ 선호 운동 시간이 일치해요",
       description: "선호 운동 시간대가 일치한 메이트",
-      userList: [],
     },
   ];
 
   return (
     <S.UserSectionContainer>
-      {UserGroups.map((group, idx) => (
-        <S.UserSectionWrapper key={idx}>
-          <UserSectionTitle
-            title={group.title}
-            description={group.description}
-          />
-          <UserList idx={idx} userList={group.userList} />
-        </S.UserSectionWrapper>
-      ))}
+      {UserGroups.map((group) => {
+        const isWorkout = group.type === GROUP_TYPES.WORKOUT;
+        const isTime = group.type === GROUP_TYPES.TIME;
+
+        return (
+          <S.UserSectionWrapper key={group.type}>
+            <UserSectionTitle
+              title={group.title}
+              description={group.description}
+              nickname={nickname}
+            />
+            <UserList
+              isWorkout={isWorkout}
+              isTime={isTime}
+              preferredTimes={isTime ? preferredWorkoutTime : undefined}
+              workoutTypes={
+                favoriteWorkouts.length && isWorkout
+                  ? favoriteWorkouts.map(
+                      (workout: { code: string; name: string }) => workout.code,
+                    )
+                  : undefined
+              }
+            />
+          </S.UserSectionWrapper>
+        );
+      })}
     </S.UserSectionContainer>
   );
 }

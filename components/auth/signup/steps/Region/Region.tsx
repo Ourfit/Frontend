@@ -7,54 +7,75 @@ import { StepProps } from "@/types/step";
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
-import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useQuery } from "@tanstack/react-query";
-import { getRegions } from "@/app/(beforeLogin)/auth/_lib/getRegions";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getRegions } from "@/services/signup/getRegions";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 
 const Region = ({ nextStep, value }: StepProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const deferredValue = useDeferredValue(inputValue);
-  const debouncedValue = useDebounce(inputValue, 1000);
+  const [inputValue, setInputValue] = useState(
+    typeof value === "string" ? value : "",
+  );
+  const deferredValue = useDeferredValue(
+    inputValue === value ? "" : inputValue,
+  );
+  const debouncedValue = useDebounce(
+    inputValue === value ? "" : inputValue,
+    1000,
+  );
 
-  const [region, setRegion] = useState(typeof value === "string" ? value : "");
-  const [showToast, setShowToast] = useState(false);
+  const [region, setRegion] = useState("");
+  const [toast, setToast] = useState("");
   const [regionList, setRegionList] = useState<string[] | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["region", debouncedValue],
-    queryFn: () => debouncedValue && getRegions(debouncedValue),
-    staleTime: 0,
+    queryFn: () => debouncedValue && !region && getRegions(debouncedValue),
+    staleTime: 1000 * 60 * 5,
     enabled: !!deferredValue,
   });
 
+  const mutation = useMutation({
+    mutationFn: () =>
+      updateBasicInfo({
+        region1: region.split(" ")[0].trim(),
+        region2: region.split(" ")[1].trim(),
+        region3: region.split(" ")[2].trim(),
+      }),
+    onSuccess: (status) => {
+      if (status === 200) {
+        setToast(TOAST_STATUSES.SUCCESS);
+        setTimeout(() => setToast(""), 1500);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+        queryClient.invalidateQueries({ queryKey: ["mates"] });
+      }
+    },
+    onError: () => {
+      setToast(TOAST_STATUSES.ERROR);
+      setTimeout(() => setToast(""), 1500);
+    },
+  });
+
   useEffect(() => {
-    if (data) {
+    if (data?.data) {
       setRegionList(
-        data.data.map(
-          (value: {
-            fullName: string;
-            region1: string;
-            region2: string;
-            region3: string;
-          }) => value.fullName,
-        ),
+        data.data.map(({ fullName }: { fullName: string }) => fullName),
       );
     }
   }, [data]);
 
   useEffect(() => {
     setRegionList(null);
+    if (!inputValue.trim()) setRegion("");
   }, [inputValue]);
 
-  const buttonClickHandler = () => {
+  const handleButtonClick = () => {
     if (region) {
       if (nextStep) nextStep(STEPS_LABEL.REGION, region);
-      else {
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 1500);
-      }
+      else mutation.mutate();
     }
   };
 
@@ -62,10 +83,10 @@ const Region = ({ nextStep, value }: StepProps) => {
     setInputValue(e.target.value);
   };
 
-  const handleClick = (region: string) => {
-    setRegion(region);
+  const handleRegionClick = (selectedRegion: string) => {
+    setRegion(selectedRegion);
+    setInputValue(selectedRegion);
     setRegionList(null);
-    setInputValue(region);
   };
 
   const style = {
@@ -73,7 +94,9 @@ const Region = ({ nextStep, value }: StepProps) => {
   };
 
   return (
-    <S.RegionContainer $gap={!regionList || !inputValue ? "36px" : "16px"}>
+    <S.RegionContainer
+      $gap={!regionList || !inputValue || region ? "36px" : "16px"}
+    >
       <S.RegionWrapper>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
@@ -95,30 +118,34 @@ const Region = ({ nextStep, value }: StepProps) => {
           borderColor
         />
       </S.RegionWrapper>
-      {isLoading ? null : !regionList || !inputValue ? (
+      {isLoading || !regionList || !inputValue || region ? (
         <S.ButtonContainer>
           <Button
             disabled={!region || region === value}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
-            onClick={buttonClickHandler}
+            onClick={handleButtonClick}
           >
-            다음
+            {nextStep ? "다음" : "변경 완료"}
           </Button>
         </S.ButtonContainer>
       ) : (
         <S.RegionList>
           {regionList.map((region, idx) => (
-            <S.Region key={idx} onClick={() => handleClick(region)}>
+            <S.Region key={idx} onClick={() => handleRegionClick(region)}>
               {region}
             </S.Region>
           ))}
         </S.RegionList>
       )}
-      {showToast && (
+      {toast && (
         <Toast
-          message={TOAST_MESSAGES.SUCCESS}
-          status={TOAST_STATUSES.SUCCESS}
+          message={
+            toast === TOAST_STATUSES.SUCCESS
+              ? TOAST_MESSAGES.SUCCESS
+              : TOAST_MESSAGES.ERROR
+          }
+          status={toast as ToastStatus}
         />
       )}
     </S.RegionContainer>

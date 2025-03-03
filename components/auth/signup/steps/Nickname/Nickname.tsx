@@ -7,21 +7,30 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { STEPS_LABEL } from "@/constants/Signup";
 import Toast from "@/components/common/Toast/Toast";
-import { TOAST_MESSAGES, TOAST_STATUSES } from "@/constants/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Input from "@/components/common/Input/Input";
-import { useQuery } from "@tanstack/react-query";
-import { nicknameDuplication } from "@/app/(beforeLogin)/auth/_lib/nicknameDuplication";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { nicknameDuplication } from "@/services/signup/nicknameDuplication";
 import { useDebounce } from "@/hooks/useDebounce";
+import updateBasicInfo from "@/services/mypage/updateBasicInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import { AxiosError } from "axios";
 
 const Nickname = ({ nextStep, value }: StepProps) => {
   const [nickname, setNickname] = useState(
     typeof value === "string" ? value : "",
   );
-  const deferredValue = useDeferredValue(nickname);
-  const debouncedNickname = useDebounce(nickname, 500);
+  const deferredValue = useDeferredValue(nickname === value ? "" : nickname);
+  const debouncedNickname = useDebounce(
+    nickname === value ? "" : nickname,
+    500,
+  );
 
-  const [showToast, setShowToast] = useState(false);
+  const [toast, setToast] = useState<{
+    status: ToastStatus;
+    message: string;
+  } | null>(null);
   const [status, setStatus] = useState<InputStatus>("default");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -32,44 +41,49 @@ const Nickname = ({ nextStep, value }: StepProps) => {
     enabled: !!debouncedNickname,
   });
 
+  const mutation = useMutation({
+    mutationFn: () =>
+      updateBasicInfo({
+        nickname: debouncedNickname,
+      }),
+    onSuccess: (status) => {
+      if (status === 200) {
+        showToast(TOAST_STATUSES.SUCCESS, TOAST_MESSAGES.SUCCESS);
+        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+      }
+    },
+    onError: (err) => {
+      const error = err as AxiosError;
+      const statusCode = error.response?.status;
+      const message =
+        statusCode === 409
+          ? "닉네임 변경 후 30일이 지나지 않았습니다."
+          : TOAST_MESSAGES.ERROR;
+      showToast(TOAST_STATUSES.ERROR, message);
+    },
+  });
+
   useEffect(() => {
-    if (nickname.trim() !== "") {
-      if (data?.available) setStatus(INPUT_STATUS.COMPLETE);
-      else setStatus(INPUT_STATUS.ERROR);
+    if (nickname.trim() !== "" && data && nickname !== value) {
+      setStatus(data.available ? INPUT_STATUS.COMPLETE : INPUT_STATUS.ERROR);
     }
   }, [data]);
 
-  const inputStyle = {
-    backgroundColor: COLORS.BASE_WHITE,
-    color: COLORS.GRAYSCALE_900,
-  };
-
-  const buttonClickHandler = () => {
-    if (nickname.trim()) {
-      if (nextStep) nextStep(STEPS_LABEL.NICKNAME, nickname);
-      else {
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 1500);
-      }
-    }
+  const showToast = (status: ToastStatus, message: string) => {
+    setToast({ status, message });
+    setTimeout(() => setToast(null), 2000);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-
-    if (nickname.trim() === "") {
-      setStatus(INPUT_STATUS.DEFAULT);
-      setIsTyping(false);
-    } else {
-      setIsTyping(true);
-      setStatus(INPUT_STATUS.TYPING);
-    }
+    const newValue = e.target.value;
+    setNickname(newValue);
+    setIsTyping(!!newValue.trim());
+    setStatus(newValue.trim() ? INPUT_STATUS.TYPING : INPUT_STATUS.DEFAULT);
   };
 
   const handleInputBlur = () => {
-    if (nickname.trim() !== "") {
-      if (data?.available) setStatus(INPUT_STATUS.COMPLETE);
-      else setStatus(INPUT_STATUS.ERROR);
+    if (nickname.trim() !== "" && data && nickname !== value) {
+      setStatus(data.available ? INPUT_STATUS.COMPLETE : INPUT_STATUS.ERROR);
     } else {
       setStatus(INPUT_STATUS.DEFAULT);
     }
@@ -79,6 +93,13 @@ const Nickname = ({ nextStep, value }: StepProps) => {
   const handleClear = () => {
     setNickname("");
     setStatus(INPUT_STATUS.DEFAULT);
+  };
+
+  const buttonClickHandler = () => {
+    if (nickname.trim()) {
+      if (nextStep) nextStep(STEPS_LABEL.NICKNAME, nickname);
+      else mutation.mutate();
+    }
   };
 
   return (
@@ -107,7 +128,10 @@ const Nickname = ({ nextStep, value }: StepProps) => {
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onClear={handleClear}
-            inputStyle={{ ...inputStyle }}
+            inputStyle={{
+              backgroundColor: COLORS.BASE_WHITE,
+              color: COLORS.GRAYSCALE_900,
+            }}
             borderColor
           />
           {nickname !== "" && data && !data.available && (
@@ -125,12 +149,7 @@ const Nickname = ({ nextStep, value }: StepProps) => {
           {nextStep ? "다음" : "변경완료"}
         </Button>
       </S.ButtonContainer>
-      {showToast && (
-        <Toast
-          message={TOAST_MESSAGES.SUCCESS}
-          status={TOAST_STATUSES.SUCCESS}
-        />
-      )}
+      {toast && <Toast message={toast.message} status={toast.status} />}
     </S.NicknameContainer>
   );
 };

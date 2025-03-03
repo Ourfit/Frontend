@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ["d4xl8v7lnk0qh.cloudfront.net", "aws.s3.com"],
+  },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,

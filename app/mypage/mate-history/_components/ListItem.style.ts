@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const ItemContainer = styled.div<{
   $isRead?: boolean;
+  $isPrev?: boolean;
 }>`
   background-color: #ffffff;
   border: 1px solid ${COLORS.GRAYSCALE_200};
@@ -19,6 +20,10 @@ export const ItemContainer = styled.div<{
     height: 20px;
     color: ${COLORS.GRAYSCALE_300};
   }
+
+  &:last-of-type {
+    margin-bottom: ${({ $isPrev }) => ($isPrev ? "16px" : "")};
+  }
 `;
 
 export const ItemWrapper = styled.div`
@@ -33,6 +38,9 @@ export const ProfileImageWrapper = styled.div`
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   > img {
     width: 100%;

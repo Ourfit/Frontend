@@ -20,7 +20,7 @@ export const getMypageInfo = async () => {
       },
     );
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error("마이페이지 정보 조회 실패:", error);
     throw error;
