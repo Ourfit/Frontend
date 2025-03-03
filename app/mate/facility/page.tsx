@@ -12,9 +12,10 @@ import { useMateInfo } from "@/hooks/queries/useMateInfo";
 
 import { queryClient } from "@/components/common/ReactQueryProvider";
 import { useUpdateMatePlace } from "@/hooks/queries/useUpdateMatePlace";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 
 interface FacilityItem {
@@ -23,12 +24,21 @@ interface FacilityItem {
   address: string;
 }
 
+interface KakaoPlaceResponse {
+  documents: {
+    id: string;
+    place_name: string;
+    road_address_name?: string;
+    address_name?: string;
+  }[];
+}
+
 export default function SportFacility() {
   const [facilityValue, setFacilityValue] = useState("");
-  const [searchResults, setSearchResults] = useState<FacilityItem[]>([]);
   const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(
     null,
   );
+  const [debouncedValue, setDebouncedValue] = useState(facilityValue);
 
   const router = useRouter();
 
@@ -36,52 +46,37 @@ export default function SportFacility() {
   const mateId = mateInfo?.mateId;
   const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateId);
 
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   useEffect(() => {
-    if (!facilityValue.trim()) {
-      setSearchResults([]);
-      return;
-    }
-
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
-
-    searchTimeoutRef.current = setTimeout(async () => {
-      try {
-        console.log("Searching for:", facilityValue);
-
-        const res = await fetch(
-          `/api/kakaoPlaceSearch?query=${encodeURIComponent(facilityValue)}`,
-        );
-        if (!res.ok) {
-          console.error("API 요청 실패", res.status);
-          setSearchResults([]);
-          return;
-        }
-        const data = await res.json();
-
-        if (data.documents) {
-          const facilities = data.documents.map((doc: any) => ({
-            id: doc.id,
-            name: doc.place_name,
-            address: doc.road_address_name || doc.address_name,
-          }));
-          setSearchResults(facilities);
-        } else {
-          setSearchResults([]);
-        }
-      } catch (error) {
-        console.error("fetch error:", error);
-        setSearchResults([]);
-      }
+    const timeoutId = setTimeout(() => {
+      setDebouncedValue(facilityValue);
     }, 1000);
-
-    return () => {
-      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
-    };
+    return () => clearTimeout(timeoutId);
   }, [facilityValue]);
+
+  const {
+    data: searchData,
+    isLoading: isSearchLoading,
+    error: searchError,
+  } = useQuery<KakaoPlaceResponse, Error>({
+    queryKey: ["kakaoPlaceSearch", debouncedValue],
+    queryFn: async () => {
+      const res = await fetch(
+        `/api/kakaoPlaceSearch?query=${encodeURIComponent(debouncedValue)}`,
+      );
+      if (!res.ok) {
+        throw new Error(`API 요청 실패: ${res.status}`);
+      }
+      return res.json();
+    },
+    enabled: !!debouncedValue.trim(),
+  });
+
+  const searchResults: FacilityItem[] =
+    searchData?.documents?.map((doc: any) => ({
+      id: doc.id,
+      name: doc.place_name,
+      address: doc.road_address_name || doc.address_name,
+    })) || [];
 
   const handleSelectFacility = (facility: FacilityItem) => {
     setSelectedFacility(facility);
