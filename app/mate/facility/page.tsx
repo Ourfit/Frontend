@@ -33,7 +33,8 @@ export default function SportFacility() {
   const router = useRouter();
 
   const { data: mateInfo, isLoading } = useMateInfo();
-  const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateInfo.mateId);
+  const mateId = mateInfo?.mateId;
+  const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateId);
 
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 

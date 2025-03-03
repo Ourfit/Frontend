@@ -43,8 +43,9 @@ export default function SportTime() {
   const [endHour, setEndHour] = useState<string>("00시");
 
   const { data: mateInfo, isLoading } = useMateInfo();
+  const mateId = mateInfo?.mateId;
 
-  const { mutate: updateTimeMutate } = useUpdateMateTime(mateInfo.mateId);
+  const { mutate: updateTimeMutate } = useUpdateMateTime(mateId);
   const router = useRouter();
 
   const DayOfTheWeeks = ["월", "화", "수", "목", "금", "토", "일"];
