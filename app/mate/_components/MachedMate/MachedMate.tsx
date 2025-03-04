@@ -182,6 +182,11 @@ export default function MatchedMate() {
                 disabled={false}
                 size={BUTTON_SIZES.EXTRA_SMALL}
                 variant={BUTTON_VARIANTS.PRIMARY}
+                onClick={() =>
+                  router.push(
+                    `/mate/mateprofile/${encodeURIComponent(myMate.id)}`,
+                  )
+                }
               >
                 프로필 보기
               </Button>
