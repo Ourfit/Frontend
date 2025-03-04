@@ -11,6 +11,7 @@ import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
 import Toast from "@/components/common/Toast/Toast";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { TIME_MAPPING } from "@/constants/Time";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
@@ -31,15 +32,6 @@ export default function MateProfile() {
     BEGINNER: "운동 초보",
     INTERMEDIATE: "운동 중수",
     ADVANCED: "운동 고수",
-  };
-
-  const workoutTimeMap: Record<string, string> = {
-    WEEKDAY_MORNING: "평일 아침",
-    WEEKDAY_AFTERNOON: "평일 낮",
-    WEEKDAY_EVENING: "평일 저녁",
-    WEEKEND_MORNING: "주말 아침",
-    WEEKEND_AFTERNOON: "주말 낮",
-    WEEKEND_EVENING: "주말 저녁",
   };
 
   const iconMapping: Record<string, JSX.Element> = {
@@ -200,7 +192,7 @@ export default function MateProfile() {
                         color="#27282D"
                         style={{ marginLeft: "8px" }}
                       >
-                        {workoutTimeMap[data.preferredWorkoutTime] || "미설정"}
+                        {TIME_MAPPING[data.preferredWorkoutTime]}
                       </Typography.H4Md>
                     </>
                   ) : (

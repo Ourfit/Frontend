@@ -5,6 +5,7 @@ import EveningIcon from "@/assets/images/evening.svg";
 import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
+import { TIME_MAPPING } from "@/constants/Time";
 import { useSearchMates } from "@/hooks/queries/useSearchMates";
 import { useRouter } from "next/navigation";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -23,15 +24,6 @@ function getTimeSlot(
 
 export default function ExploreMate() {
   const router = useRouter();
-
-  const timeMapping: Record<string, string> = {
-    WEEKDAY_MORNING: "평일 아침",
-    WEEKDAY_AFTERNOON: "평일 낮",
-    WEEKDAY_EVENING: "평일 저녁",
-    WEEKEND_MORNING: "주말 아침",
-    WEEKEND_AFTERNOON: "주말 낮",
-    WEEKEND_EVENING: "주말 저녁",
-  };
 
   const iconMapping: Record<string, JSX.Element> = {
     morning: <MorningIcon />,
@@ -179,7 +171,7 @@ export default function ExploreMate() {
                     {timeSlot && iconMapping[timeSlot] && iconMapping[timeSlot]}
 
                     <Typography.H6Md color="#6C727F">
-                      {timeMapping[mate.preferredWorkoutTime]}
+                      {TIME_MAPPING[mate.preferredWorkoutTime]}
                     </Typography.H6Md>
                   </S.TimeTag>
                 </S.PreferenceTags>
