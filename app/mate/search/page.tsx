@@ -6,8 +6,9 @@ import { Typography } from "@/components/atoms/Typography";
 import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { useSearchMates } from "@/hooks/queries/useSearchMates";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useRouter } from "next/navigation";
-import { JSX, useDeferredValue, useState } from "react";
+import { JSX, useState } from "react";
 import * as S from "./style";
 
 export default function SearchPage() {
@@ -37,12 +38,12 @@ export default function SearchPage() {
 
   const [inputValue, setInputValue] = useState("");
 
-  const deferredInput = useDeferredValue(inputValue);
-  const shouldSearch = deferredInput.trim().length > 0;
+  const debouncedInput = useDebounce(inputValue, 300);
+  const shouldSearch = debouncedInput.trim().length > 0;
   const router = useRouter();
 
   const { data: searchData } = useSearchMates({
-    nickname: shouldSearch ? deferredInput : "",
+    nickname: shouldSearch ? debouncedInput : "",
     size: 10,
   });
 
