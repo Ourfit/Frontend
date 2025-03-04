@@ -104,7 +104,7 @@ export default function MateProfile() {
 
             <S.ProfileName>{data?.nickname}</S.ProfileName>
             <S.ProfileInfo>
-              {data?.gender} · 만 {data?.age}세
+              {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
             </S.ProfileInfo>
             <S.PrimaryButton>
               {skillLevelMap[data?.skillLevel || ""] || "미정"}
