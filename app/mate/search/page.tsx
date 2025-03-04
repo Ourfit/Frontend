@@ -88,7 +88,7 @@ export default function SearchPage() {
                         <S.ProfileInfoTitle>
                           <Typography.H3Sb>{mate.nickname}</Typography.H3Sb>
                           <Typography.H6Md color="#6C727F">
-                            {mate.gender}, {mate.age}세
+                            {mate.gender === "F" ? "여" : "남"}, {mate.age}세
                           </Typography.H6Md>
                         </S.ProfileInfoTitle>
                         <S.ProfileText>
