@@ -159,7 +159,7 @@ export default function MatchedMate() {
               <S.MateDetailInfo>
                 <Typography.H2Sb>{myMate.nickname}</Typography.H2Sb>
                 <Typography.H5Md color="#8A92A3">
-                  남, {myMate.age}세
+                  {myMate.gender === "F" ? "여" : "남"}, {myMate.age}세
                 </Typography.H5Md>
               </S.MateDetailInfo>
 
