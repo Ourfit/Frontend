@@ -84,6 +84,11 @@ export default function MateProfile() {
         setToastMessage("메이트 신청에 실패했습니다.");
         setToastStatus(TOAST_STATUSES.ERROR);
         setShowToast(true);
+
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
+
         setShowModal(false);
       }
     });
