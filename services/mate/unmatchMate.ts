@@ -1,21 +1,10 @@
-import { useTokenStore } from "@/stores/tokenStore";
 import axios from "axios";
+import { api } from "../axiosInterceptor";
 
 export const unmatchMate = async (mateId: number) => {
-  const token = useTokenStore.getState().token;
-
-  if (!token) {
-    throw new Error("인증 토큰이 없습니다. 로그인하세요.");
-  }
   try {
-    const response = await axios.delete(
+    const response = await api.delete(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/mates/${mateId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      },
     );
 
     return response.data;

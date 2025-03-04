@@ -1,5 +1,4 @@
-import { useTokenStore } from "@/stores/tokenStore";
-import axios from "axios";
+import { api } from "../axiosInterceptor";
 
 interface MateDetailApiResponse {
   message: string;
@@ -38,18 +37,9 @@ export interface MateDetail {
  * @param userId
  */
 export async function getMateDetail(userId: number): Promise<MateDetail> {
-  const token = useTokenStore.getState().token;
-  if (!token) throw new Error("인증 토큰이 없습니다. 로그인하세요.");
-
   try {
-    const response = await axios.get<MateDetailApiResponse>(
+    const response = await api<MateDetailApiResponse>(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      },
     );
     return response.data.data;
   } catch (error) {
