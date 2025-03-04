@@ -8,8 +8,8 @@ export default async function ExplorePage() {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["mates"],
-    initialPageParam: 1,
-    queryFn: ({ pageParam = 1 }) => fetchMates({ pageParam }),
+    initialPageParam: 0,
+    queryFn: ({ pageParam = 0 }) => fetchMates({ pageParam }),
   });
 
   console.log(
