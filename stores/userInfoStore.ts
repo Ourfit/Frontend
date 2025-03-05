@@ -40,7 +40,7 @@ export const useUserInfoStore = create<UserInfoStore>((set) => ({
   fetchUserInfo: async () => {
     try {
       const result = await getMypageInfo();
-      set({ userInfo: result.data });
+      set({ userInfo: result });
     } catch (error) {
       console.error("유저 정보 가져오기 실패:", error);
     }

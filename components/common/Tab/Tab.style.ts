@@ -19,16 +19,16 @@ export const Tablist = styled.ul`
   padding-left: 20px;
 `;
 
-export const TabItem = styled.li<{ $prevTab: boolean }>`
+export const TabItem = styled.li<{ $isActive: boolean }>`
   position: relative;
   color: ${(props) =>
-    props.$prevTab ? COLORS.BLUE_500 : COLORS.GRAYSCALE_400};
+    props.$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_400};
   list-style: none;
   cursor: pointer;
   height: 100%;
   line-height: 40px;
-  border-bottom: ${(props) => (props.$prevTab ? "2px" : "1px")} solid
-    ${(props) => (props.$prevTab ? COLORS.BLUE_500 : COLORS.GRAYSCALE_100)};
+  border-bottom: ${(props) => (props.$isActive ? "2px" : "1px")} solid
+    ${(props) => (props.$isActive ? COLORS.BLUE_500 : COLORS.GRAYSCALE_100)};
 `;
 
 export const NotificationBadge = styled.span`

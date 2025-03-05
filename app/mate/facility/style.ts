@@ -8,8 +8,7 @@ export const facilityContainer = styled.div`
   justify-content: flex-start;
 
   width: 100%;
-  height: 229px;
-  min-height: 229px;
+  height: 100%;
 
   gap: 36px;
 `;
@@ -75,7 +74,22 @@ export const ResultList = styled.div`
 
   padding: 0px 20px;
   box-sizing: border-box;
-  height: auto;
+  height: 100%;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 export const ResultItem = styled.div`

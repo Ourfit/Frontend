@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { getTokens } from "@/services/getTokens";
-import { useTokenStore } from "@/stores/tokenStore";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
+import { useTokenStore } from "@/stores/tokenStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   query: {

@@ -2,32 +2,9 @@ import XIcon from "@/assets/images/x.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES } from "@/constants/Button";
+import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { useCallback, useEffect, useState } from "react";
 import * as S from "./style";
-
-export const sportsList = [
-  "헬스",
-  "필라테스",
-  "수영",
-  "댄스",
-  "요가",
-  "축구",
-  "배드민턴",
-  "크로스핏",
-  "스키",
-  "유도",
-  "검도",
-  "준영1",
-  "준영2",
-  "준영3",
-  "준영4",
-  "준영5",
-  "준영6",
-  "준영7",
-  "준영8",
-  "준영9",
-  "준영10",
-];
 
 interface FilterPanelProps {
   onClose: () => void;
@@ -39,6 +16,20 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
+  const TIME_OPTIONS = [
+    { label: "평일 낮", value: "WEEKDAY_AFTERNOON" },
+    { label: "평일 저녁", value: "WEEKDAY_EVENING" },
+    { label: "주말 낮", value: "WEEKEND_AFTERNOON" },
+    { label: "주말 저녁", value: "WEEKEND_EVENING" },
+  ];
+
+  const GENDER_OPTIONS = [
+    { label: "여성", value: "F" },
+    { label: "남성", value: "M" },
+  ];
+
+  const { data: workoutTypes, isLoading, error } = useWorkoutTypes();
+
   const [startY, setStartY] = useState<number>(0);
   const [currentY, setCurrentY] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -82,10 +73,6 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
     }
   }, [currentY, onClose]);
 
-  const handleGenderClick = (gender: string) => {
-    setSelectedGender(gender === selectedGender ? null : gender);
-  };
-
   const handleTimeClick = (time: string) => {
     setSelectedTime(time === selectedTime ? null : time);
   };
@@ -128,13 +115,17 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
         <S.GenderWrapper>
           <Typography.H4Sb>성별</Typography.H4Sb>
           <S.GenderOptionBox>
-            {["여성", "남성"].map((gender) => (
+            {GENDER_OPTIONS.map((opt) => (
               <S.GenderOption
-                key={gender}
-                $selected={selectedGender === gender}
-                onClick={() => handleGenderClick(gender)}
+                key={opt.value}
+                $selected={selectedGender === opt.value}
+                onClick={() =>
+                  setSelectedGender((prev) =>
+                    prev === opt.value ? null : opt.value,
+                  )
+                }
               >
-                <Typography.H4Md>{gender}</Typography.H4Md>
+                <Typography.H4Md>{opt.label}</Typography.H4Md>
               </S.GenderOption>
             ))}
           </S.GenderOptionBox>
@@ -143,13 +134,13 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           <Typography.H4Sb>시간대</Typography.H4Sb>
           <S.TimeOptionBox>
             <S.TimeOptionBox>
-              {["평일 낮", "평일 저녁", "주말 낮", "주말 저녁"].map((time) => (
+              {TIME_OPTIONS.map((time) => (
                 <S.TimeOption
-                  key={time}
-                  $selected={selectedTime === time}
-                  onClick={() => handleTimeClick(time)}
+                  key={time.value}
+                  $selected={selectedTime === time.value}
+                  onClick={() => handleTimeClick(time.value)}
                 >
-                  <Typography.H4Md>{time}</Typography.H4Md>
+                  <Typography.H4Md>{time.label}</Typography.H4Md>
                 </S.TimeOption>
               ))}
             </S.TimeOptionBox>
@@ -158,15 +149,16 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
         <S.FilterWrapper>
           <Typography.H4Sb>운동 종류</Typography.H4Sb>
           <S.FilterFlex>
-            {sportsList.map((sport) => (
-              <S.FilterChip
-                key={sport}
-                $selected={selectedSports.includes(sport)}
-                onClick={() => handleSportClick(sport)}
-              >
-                <Typography.H4Md>{sport}</Typography.H4Md>
-              </S.FilterChip>
-            ))}
+            {workoutTypes &&
+              workoutTypes.map((workout) => (
+                <S.FilterChip
+                  key={workout.code}
+                  $selected={selectedSports.includes(workout.code)}
+                  onClick={() => handleSportClick(workout.code)}
+                >
+                  <Typography.H4Md>{workout.name}</Typography.H4Md>
+                </S.FilterChip>
+              ))}
           </S.FilterFlex>
         </S.FilterWrapper>
       </S.FilterPanelSection>
@@ -176,13 +168,14 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           size={BUTTON_SIZES.LARGE}
           variant="primary"
           disabled={!isApplyEnabled}
-          onClick={() =>
+          onClick={() => {
+            if (!isApplyEnabled) return;
             onApply({
               gender: selectedGender,
               time: selectedTime,
               sports: selectedSports,
-            })
-          }
+            });
+          }}
         >
           적용하기
         </Button>
