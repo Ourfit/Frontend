@@ -1,23 +1,21 @@
 import { useState } from "react";
-import * as RS from "../Content/RegistrationStepContent.style";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
-import Calendar from "@/app/challenge/_components/Calendar";
 import { COLORS } from "@/constants/Theme";
 import { CalendarBadge } from "@/constants/Calendar";
+import Calendar from "./Calendar";
+import * as S from "./CalendarComponent.style";
 
-interface RegistrationStepContent4Props {
-  onNext: () => void;
+interface CalendarComponentProps {
   onSelectionChange: (date: Date | null) => void;
-  disabled: boolean;
   isRegistration?: boolean;
   data?: { [key: string]: CalendarBadge } | null;
 }
 
-const RegistrationStepContent4 = ({
+export default function CalendarComponent({
   onSelectionChange,
   isRegistration,
   data,
-}: RegistrationStepContent4Props) => {
+}: CalendarComponentProps) {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -27,8 +25,8 @@ const RegistrationStepContent4 = ({
   );
 
   return (
-    <RS.PeriodContentContainer>
-      <RS.PeriodContentWrapper>
+    <S.PeriodContentContainer>
+      <S.PeriodContentWrapper>
         <SelectBar
           selectType="date"
           optionValue={selectedDate}
@@ -41,20 +39,18 @@ const RegistrationStepContent4 = ({
             height: "45px",
           }}
           isCalendar={{
-            startDate: !isRegistration ? new Date("2024.11.23") : undefined,
+            startDate: !isRegistration ? new Date() : undefined,
           }}
         />
-      </RS.PeriodContentWrapper>
-      <RS.CalendarContentWrapper>
+      </S.PeriodContentWrapper>
+      <S.CalendarContentWrapper>
         <Calendar
           selectedDate={selectedDate}
           onSelectionChange={onSelectionChange}
           isRegistration={isRegistration}
           data={data}
         />
-      </RS.CalendarContentWrapper>
-    </RS.PeriodContentContainer>
+      </S.CalendarContentWrapper>
+    </S.PeriodContentContainer>
   );
-};
-
-export default RegistrationStepContent4;
+}

@@ -22,9 +22,9 @@ export default function Calendar({
   const nowDate = new Date(selectedDate);
   const allDay: Date[] = monthList(nowDate);
 
-  const handleClickDate = (day: Date) => {
-    setClickedDate(day);
-    onSelectionChange(day);
+  const handleClickDate = (date: Date) => {
+    setClickedDate(date);
+    onSelectionChange(date);
   };
 
   return (

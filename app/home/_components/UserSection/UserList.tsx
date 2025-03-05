@@ -1,17 +1,14 @@
 import MorningIcon from "@/assets/images/morning.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
-import DumbbellsIcon from "@/assets/images/dumbbells.svg";
 import * as S from "./UserList.style";
-import Image from "next/image";
 import { Typography } from "@/components/atoms/Typography";
 import { MateInfo } from "@/types/mates";
 import { PreferredWorkoutTime } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 import { WorkoutTimeLabels } from "@/constants/User";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import getMates from "@/services/getMates";
-import { useState } from "react";
+import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 
 const ICONS = {
   MORNING: <MorningIcon />,
@@ -32,8 +29,6 @@ export default function UserList({
   preferredTimes,
   workoutTypes,
 }: UserListProps) {
-  const [imgError, setImgError] = useState(false);
-
   const { data, isLoading } = useQuery({
     queryKey: ["mates", preferredTimes, workoutTypes?.join(",")],
     queryFn: () => getMates({ preferredTimes, workoutTypes }),
@@ -71,24 +66,7 @@ export default function UserList({
 
           return (
             <S.UserWrapper key={idx}>
-              <S.ProfileBadge>
-                <S.ProfileImageWrapper>
-                  {user.profileUrl && !imgError ? (
-                    <Image
-                      src={user.profileUrl}
-                      alt="profile-image"
-                      width={48}
-                      height={48}
-                      onError={() => setImgError(true)}
-                    />
-                  ) : (
-                    <DefaultProfileImg />
-                  )}
-                </S.ProfileImageWrapper>
-                <S.IconWrapper>
-                  <DumbbellsIcon />
-                </S.IconWrapper>
-              </S.ProfileBadge>
+              <ProfileImgBadge imageUrl={user.profileUrl} />
               <S.UserInfoWrapper>
                 <S.UserInfo>
                   <Typography.H4Sb>{user.nickname}</Typography.H4Sb>

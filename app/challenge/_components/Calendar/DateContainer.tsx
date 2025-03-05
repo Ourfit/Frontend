@@ -20,9 +20,11 @@ export default function DateContainer({
   nowDate,
   data,
 }: DateContainerProps) {
-  const sameDay = new Date().toDateString() === day.toDateString();
-  const afterToday =
-    isRegistration && new Date() <= new Date(day.toDateString());
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sameDay = today.toDateString() === day.toDateString();
+  const afterToday = isRegistration && today <= day;
   const clicked =
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();

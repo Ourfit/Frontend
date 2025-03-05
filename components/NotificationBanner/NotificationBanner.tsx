@@ -9,7 +9,11 @@ import { MateHistory } from "@/types/mates";
 import { dateFormat } from "@/utils/monthList";
 import getMatesHistory from "@/services/getMatesHistory";
 
-export default function NotificationBanner() {
+export default function NotificationBanner({
+  isChallenge,
+}: {
+  isChallenge?: boolean;
+}) {
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
     queryFn: () => getMatesHistory({ actionTypes: "RECEIVE", size: 1 }),
@@ -20,23 +24,29 @@ export default function NotificationBanner() {
     ? mateHistory.filter((e) => e.roleType === "TARGET" && !e.isRead)
     : [];
 
-  if (!data || isLoading || !notification.length) return <></>;
+  if (!isChallenge && (isLoading || !notification.length)) return <></>;
 
   return (
     <S.BannerWrapper>
-      <S.BannerContainer $isHome={true}>
+      <S.BannerContainer $isChallenge={isChallenge}>
         <S.ContentWrapper>
-          <S.IconWrapper>
+          <S.IconWrapper $isChallenge={isChallenge}>
             <DumbbellsIcon />
           </S.IconWrapper>
-          <S.NotificationContent $isHome={true}>
+          <S.NotificationContent $isChallenge={isChallenge}>
             <Typography.H6Md>
-              {dateFormat(new Date(notification[0].createdAt), "MD")}
+              {isChallenge
+                ? "챌린지 도전"
+                : dateFormat(new Date(notification[0].createdAt), "MD")}
             </Typography.H6Md>
-            <Typography.H4Sb>운동 메이트 신청이 있어요!</Typography.H4Sb>
+            <Typography.H4Sb>
+              {isChallenge
+                ? "챌린지 시작 +24일!"
+                : "운동 메이트 신청이 있어요!"}
+            </Typography.H4Sb>
           </S.NotificationContent>
         </S.ContentWrapper>
-        <ChevroRightIcon />
+        {!isChallenge && <ChevroRightIcon />}
       </S.BannerContainer>
     </S.BannerWrapper>
   );

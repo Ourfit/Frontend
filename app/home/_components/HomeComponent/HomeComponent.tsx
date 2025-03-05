@@ -2,7 +2,6 @@
 
 import Frame from "@/components/layout/Frame";
 import Banner from "../Banner/Banner";
-import NotificationBanner from "../NotificationBanner/NotificationBanner";
 import QuickMenuBar from "../QuickMenuBar/QuickMenuBar";
 import UserSection from "../UserSection/UserSection";
 import styled from "styled-components";
@@ -14,6 +13,7 @@ import { useEffect } from "react";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useQuery } from "@tanstack/react-query";
 import getUserMe from "@/services/getUserMe";
+import NotificationBanner from "@/components/NotificationBanner/NotificationBanner";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
