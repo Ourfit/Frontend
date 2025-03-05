@@ -161,18 +161,18 @@ export default function ExploreMate() {
                 <S.PreferenceTags>
                   {mate.favoriteWorkouts.map((workout) => (
                     <S.Tag key={workout.code}>
-                      <Typography.H6Md color="#6C727F">
+                      <Typography.H7Md color="#6C727F">
                         {workout.name}
-                      </Typography.H6Md>
+                      </Typography.H7Md>
                     </S.Tag>
                   ))}
 
                   <S.TimeTag>
                     {timeSlot && iconMapping[timeSlot] && iconMapping[timeSlot]}
 
-                    <Typography.H6Md color="#6C727F">
+                    <Typography.H7Md color="#6C727F">
                       {TIME_MAPPING[mate.preferredWorkoutTime]}
-                    </Typography.H6Md>
+                    </Typography.H7Md>
                   </S.TimeTag>
                 </S.PreferenceTags>
               </S.MateInfoWrapper>

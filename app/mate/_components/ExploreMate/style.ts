@@ -82,7 +82,7 @@ export const MateList = styled.div`
 
 export const MateListItem = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   gap: 12px;
 
@@ -140,8 +140,7 @@ export const PreferenceTags = styled.div`
   display: flex;
   gap: 6px;
 
-  width: auto;
-  min-width: 117px;
+  width: 100%;
   height: 26px;
 `;
 
@@ -150,13 +149,13 @@ export const Tag = styled.div`
   justify-content: center;
   align-items: center;
 
+  gap: 2px;
+
   width: auto;
   height: 100%;
 
   border-radius: 8px;
   padding: 4px 8px;
-  box-sizing: border-box;
-
   background-color: ${COLORS.GRAYSCALE_100};
 `;
 
