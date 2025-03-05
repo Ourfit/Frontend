@@ -6,8 +6,8 @@ import { useUserInfoStore } from "@/stores/userInfoStore";
 import React, { useState } from "react";
 import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
-import * as S from "../style";
 import Time from "../time/Time";
+import * as S from "./EditProfile.style";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
@@ -151,12 +151,16 @@ export default function EditProfile({
               />
             </S.ProfileDescription>
           </S.ProfileOverviewWrapper>
+
           <S.PreferenceContainer>
+            <S.Line />
             <Sports preferences={preferences} />
+            <S.Line />
             <Facility
               selectedPreferenceFacility={selectedPreferenceFacility}
               handleNavigate={() => handleNavigate(places[0])}
             />
+            <S.Line />
             <Time preferences={preferences} />
           </S.PreferenceContainer>
         </S.ProfileSection>

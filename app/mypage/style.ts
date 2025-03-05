@@ -179,7 +179,6 @@ export const ProfileInfo = styled.p`
 
 export const ManagementSection = styled.section`
   background-color: #ffffff;
-  border-top: 1px solid #e6e6e6;
 
   width: 100%;
   height: 432px;
