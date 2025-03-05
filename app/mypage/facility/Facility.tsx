@@ -21,7 +21,18 @@ export default function Facility({
   handleNavigate,
 }: FacilityProps) {
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
-    useState<FacilityData[]>([]);
+    useState<FacilityData[]>([
+      {
+        id: 1,
+        name: "에이블짐 잠실점",
+        address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
+      },
+      {
+        id: 2,
+        name: "에이블짐 홍대점",
+        address: "서울 마포구 양화로12길 34 2층 201호",
+      },
+    ]);
 
   useEffect(() => {
     const storedFacilities = localStorage.getItem(
