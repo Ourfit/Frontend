@@ -53,6 +53,7 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   border-radius: 50%;
   border: 1px solid gray;
   overflow: hidden;
+  flex-shrink: 0;
 
   ${({ $isEditingProfile }) =>
     $isEditingProfile &&
