@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
 import Time from "../time/Time";
-import * as S from "./EdorProfile.style";
+import * as S from "./EditProfile.style";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
