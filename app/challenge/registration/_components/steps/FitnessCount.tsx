@@ -6,19 +6,15 @@ import TextButton from "@/components/common/TextButton";
 import Button from "@/components/common/Button";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { useState } from "react";
-import { DAY_LABEL, DayKey, STEPS_LABEL } from "@/constants/Challenge";
+import {
+  COUNT_OPTIONS,
+  DAY_LABEL,
+  DayKey,
+  DAYS_OPTIONS,
+  STEPS_LABEL,
+} from "@/constants/Challenge";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";
-
-const COUNT_OPTIONS = [
-  [1, 2, 3],
-  [4, 5, 6, 7],
-];
-
-const DAYS_OPTIONS = [
-  ["월", "화", "수"],
-  ["목", "금", "토", "일"],
-];
 
 export default function FitnessCount({ step, nextStep }: ChallengeStepProps) {
   const [selectedCount, setSelectedCount] = useState<number>(0);

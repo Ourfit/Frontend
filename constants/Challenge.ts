@@ -15,6 +15,16 @@ export const STEPS_LABEL = {
 
 export type StepLabel = (typeof STEPS_LABEL)[keyof typeof STEPS_LABEL];
 
+export const COUNT_OPTIONS = [
+  [1, 2, 3],
+  [4, 5, 6, 7],
+];
+
+export const DAYS_OPTIONS = [
+  ["월", "화", "수"],
+  ["목", "금", "토", "일"],
+];
+
 const DAY_LABEL_ENTRIES = [
   ["월", "MONDAY"],
   ["화", "TUESDAY"],

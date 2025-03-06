@@ -3,7 +3,7 @@
 import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
 import Tab from "@/components/common/Tab/Tab";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import NotificationBanner from "@/components/NotificationBanner/NotificationBanner";
 import MateCard from "./_components/MateCard/MateCard";
@@ -13,9 +13,11 @@ import { useQuery } from "@tanstack/react-query";
 import getMyMates from "@/services/challenge/getMyMates";
 import getUserMe from "@/services/getUserMe";
 import getChallenge from "@/services/challenge/getChallenge";
+import { useChallengeStore } from "@/stores/challengeStore";
 
 export default function Page() {
   const router = useRouter();
+  const { addChallenge } = useChallengeStore();
   const tabItems = ["챌린지", "기록"];
   const [selectedTab, setSelectedTab] = useState(tabItems[0]);
 
@@ -52,6 +54,15 @@ export default function Page() {
     { info: { ...userInfo, isMine: true }, challenge: myChallenge.me },
     { info: myMateInfo, challenge: myChallenge.myMate },
   ];
+
+  useEffect(() => {
+    if (myChallenge?.me) {
+      addChallenge({
+        id: myChallenge.me.challengeId,
+        days: myChallenge.me.goalWorkoutDayOfWeeks,
+      });
+    }
+  }, [myChallenge, addChallenge]);
 
   return (
     <Frame>
