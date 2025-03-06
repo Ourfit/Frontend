@@ -47,7 +47,7 @@ export default function Page() {
     profileUrl: user?.profileUrl || "",
     skillLevel: user?.skillLevel || "",
   };
-  const myChallenge = challenge?.data || {};
+  const myChallenge = challenge || {};
   const myMateInfo = mate?.data?.myMate || {};
 
   const challengeList = [

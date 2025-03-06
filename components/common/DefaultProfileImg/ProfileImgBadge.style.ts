@@ -10,6 +10,9 @@ export const ProfileImageWrapper = styled.div`
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   > img {
     width: 100%;
