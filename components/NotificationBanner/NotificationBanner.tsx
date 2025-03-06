@@ -11,8 +11,10 @@ import getMatesHistory from "@/services/getMatesHistory";
 
 export default function NotificationBanner({
   isChallenge,
+  dayElapsed,
 }: {
   isChallenge?: boolean;
+  dayElapsed?: number;
 }) {
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
@@ -41,7 +43,7 @@ export default function NotificationBanner({
             </Typography.H6Md>
             <Typography.H4Sb>
               {isChallenge
-                ? "챌린지 시작 +24일!"
+                ? `챌린지 시작 +${dayElapsed || 0}일!`
                 : "운동 메이트 신청이 있어요!"}
             </Typography.H4Sb>
           </S.NotificationContent>

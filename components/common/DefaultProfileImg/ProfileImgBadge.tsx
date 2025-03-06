@@ -17,6 +17,7 @@ export default function ProfileImgBadge({ imageUrl }: { imageUrl: string }) {
             width={48}
             height={48}
             onError={() => setImgError(true)}
+            priority
           />
         ) : (
           <DefaultProfileImg />

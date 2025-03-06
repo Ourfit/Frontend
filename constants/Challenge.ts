@@ -15,15 +15,20 @@ export const STEPS_LABEL = {
 
 export type StepLabel = (typeof STEPS_LABEL)[keyof typeof STEPS_LABEL];
 
-export const DAY_LABEL = {
-  월: "MONDAY",
-  화: "TUESDAY",
-  수: "WEDNESDAY",
-  목: "THURSDAY",
-  금: "FRIDAY",
-  토: "SATURDAY",
-  일: "SUNDAY",
-} as const;
+const DAY_LABEL_ENTRIES = [
+  ["월", "MONDAY"],
+  ["화", "TUESDAY"],
+  ["수", "WEDNESDAY"],
+  ["목", "THURSDAY"],
+  ["금", "FRIDAY"],
+  ["토", "SATURDAY"],
+  ["일", "SUNDAY"],
+] as const;
+
+export const DAY_LABEL = Object.fromEntries(DAY_LABEL_ENTRIES);
+export const DAY_REVERSE_LABEL = Object.fromEntries(
+  DAY_LABEL_ENTRIES.map(([kor, eng]) => [eng, kor]),
+);
 
 export type DayKey = keyof typeof DAY_LABEL;
 

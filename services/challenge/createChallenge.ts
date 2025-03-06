@@ -28,7 +28,7 @@ export async function createChallenge(mateId: number, formData: FormDataType) {
       },
     );
 
-    return response.data;
+    return response.status;
   } catch (err) {
     throw err;
   }

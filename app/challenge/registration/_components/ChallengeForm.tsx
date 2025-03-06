@@ -4,11 +4,13 @@ import { CHALLENGE_STEPS, DayLabel, StepLabel } from "@/constants/Challenge";
 import StepIndicator from "@/components/common/StepIndicator";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import Button from "@/components/common/Button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createChallenge } from "@/services/challenge/createChallenge";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 
 interface ChallengeFormProps {
   step: number;
@@ -24,9 +26,13 @@ export type FormDataType = {
 
 export default function ChallengeForm({ step, setStep }: ChallengeFormProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [formData, setFormData] = useState<FormDataType | null>(null);
   const [toast, setToast] = useState("");
+
   const isComplete = step === CHALLENGE_STEPS.length;
+  const id = pathname.split("/").at(-1);
 
   const handleFormDataChange = (
     field: StepLabel,
@@ -39,13 +45,15 @@ export default function ChallengeForm({ step, setStep }: ChallengeFormProps) {
     setStep((prev) => prev + 1);
   };
 
-  const handleStartClick = async () => {
-    try {
-      const res = await createChallenge(1, formData!);
-      if (res.message === "OK") {
+  const mutation = useMutation({
+    mutationFn: () => createChallenge(Number(id), formData!),
+    onSuccess: (status) => {
+      if (status === 201) {
         router.replace("/challenge");
+        queryClient.invalidateQueries({ queryKey: ["myChallenge"] });
       }
-    } catch (err) {
+    },
+    onError: (err) => {
       const error = err as AxiosError;
       if (error.status === 400) setToast("올바른 형식이 아닙니다");
       else if (error.status === 409)
@@ -53,7 +61,11 @@ export default function ChallengeForm({ step, setStep }: ChallengeFormProps) {
       else setToast("문제가 발생했습니다");
 
       setTimeout(() => setToast(""), 3000);
-    }
+    },
+  });
+
+  const handleStartClick = async () => {
+    mutation.mutate();
   };
 
   const CurrentStepComponent = CHALLENGE_STEPS[step - 1]?.component;

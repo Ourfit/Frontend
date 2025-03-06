@@ -1,11 +1,16 @@
 import { TypographyCss } from "@/components/atoms/Typography";
+import {
+  OptionItem,
+  SelectOptions,
+} from "@/components/common/SelectBar/SelectBar.style";
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
   width: 100%;
   min-width: 90%;
-  height: 100%;
+  max-height: 480px;
+  box-sizing: content-box;
   padding: 24px 0 48px 0;
 `;
 
@@ -40,6 +45,29 @@ export const BasicInfo = styled.div`
 
   & > span:last-child {
     color: ${COLORS.GRAYSCALE_600};
+  }
+`;
+
+export const MoreButton = styled.div`
+  position: relative;
+
+  & > svg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+`;
+
+export const SelectOption = styled(SelectOptions)`
+  width: 166px;
+  top: calc(100% + 7px);
+  left: auto;
+  right: -69px;
+`;
+
+export const Option = styled(OptionItem)`
+  &:hover {
+    background-color: ${COLORS.GRAYSCALE_100};
   }
 `;
 

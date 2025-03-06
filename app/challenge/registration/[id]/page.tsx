@@ -2,7 +2,7 @@
 
 import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
-import ChallengeForm from "./_components/ChallengeForm";
+import ChallengeForm from "../_components/ChallengeForm";
 import { useState } from "react";
 import { CHALLENGE_STEPS } from "@/constants/Challenge";
 import { COLORS } from "@/constants/Theme";
@@ -24,7 +24,7 @@ export default function Page() {
 
   return (
     <Frame style={bgColor} contentStyle={{ ...bgColor, height: "100%" }}>
-      <Header onClick={onClick} />
+      <Header title="챌린지 등록" onClick={onClick} />
       <ChallengeForm step={step} setStep={setStep} />
     </Frame>
   );

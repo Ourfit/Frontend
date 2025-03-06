@@ -6,17 +6,21 @@ export default function EmptyComponent({
   title,
   buttonContent,
   onClick,
+  isMine,
 }: {
   title: string;
   buttonContent: string;
   onClick: () => void;
+  isMine?: boolean;
 }) {
   return (
     <S.EmptyContainer>
       <Typography.H4Md>{title}</Typography.H4Md>
-      <Button size="xs" variant="primary" disabled={false} onClick={onClick}>
-        {buttonContent}
-      </Button>
+      {isMine && (
+        <Button size="xs" variant="primary" disabled={false} onClick={onClick}>
+          {buttonContent}
+        </Button>
+      )}
     </S.EmptyContainer>
   );
 }
