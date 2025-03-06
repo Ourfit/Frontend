@@ -5,12 +5,19 @@ import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
 import TextButton from "@/components/common/TextButton";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
 import { COLORS } from "@/constants/Theme";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
+import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
+import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
 import { StepProps } from "@/types/step";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import * as S from "./style";
+
+interface WorkoutType {
+  code: string;
+  name: string;
+}
 
 const SportsPreference = ({ nextStep }: StepProps) => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
@@ -18,6 +25,9 @@ const SportsPreference = ({ nextStep }: StepProps) => {
   const pathname = usePathname();
   const isMypageSports = pathname === "/mypage/sports";
   const isSignup = pathname === "/auth/signup";
+
+  const { data: userInfo, refetch } = useMyPageInfo();
+  const { data: workoutTypes } = useWorkoutTypes();
 
   const handleSportClick = (sport: string) => {
     setSelectedSports((prev) => {
@@ -31,13 +41,27 @@ const SportsPreference = ({ nextStep }: StepProps) => {
     });
   };
 
-  const buttonClickHandler = () => {
-    if (selectedSports.length >= 1 && nextStep) {
-      nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
-    }
-
+  const buttonClickHandler = async () => {
     if (isMypageSports) {
-      router.back();
+      try {
+        const preferredWorkoutTime = userInfo?.preferredWorkoutTime ?? null;
+        const favoritePlaces = userInfo?.favoritePlaces ?? null;
+
+        const requestBody = {
+          preferredWorkoutTime,
+          favoriteWorkouts: selectedSports,
+          favoritePlaces,
+        };
+
+        await setWorkoutPreferences(requestBody);
+
+        await refetch();
+
+        router.back();
+      } catch (error) {
+        console.error(error);
+        alert("운동 선호 정보를 수정하는데 실패했습니다.");
+      }
     }
   };
 
@@ -58,13 +82,13 @@ const SportsPreference = ({ nextStep }: StepProps) => {
         </S.SignupIntroContainer>
         <S.InfoContainer>
           <S.TextButtonWrapper>
-            {Object.values(SPORTS_LABEL).map((sport) => (
+            {workoutTypes?.map((workout: WorkoutType) => (
               <TextButton
-                key={sport}
-                isActive={selectedSports.includes(sport)}
-                onClick={() => handleSportClick(sport)}
+                key={workout.code}
+                isActive={selectedSports.includes(workout.code)}
+                onClick={() => handleSportClick(workout.code)}
               >
-                {sport}
+                {workout.name}
               </TextButton>
             ))}
           </S.TextButtonWrapper>

@@ -192,6 +192,9 @@ export const DescriptionContent = styled.textarea`
   line-height: 150%;
   letter-spacing: -0.13px;
 
+  font-family: inherit;
+  font-style: normal;
+
   outline: none;
   resize: none;
   background: transparent;

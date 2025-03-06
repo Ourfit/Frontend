@@ -113,3 +113,17 @@ export const PreferenceContent = styled.div`
   width: 100%;
   height: 41px;
 `;
+
+export const PreferenceBadge = styled.div`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  width: auto;
+  height: 41px;
+
+  padding: 10px 16px 10px 10px;
+
+  border-radius: 12px;
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+`;

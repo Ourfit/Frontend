@@ -1,12 +1,16 @@
+import Dumbbels from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import * as S from "./style";
 
-export default function Sports() {
-  const pathname = usePathname();
-  const isMypageSports = pathname === "/mypage/sports";
+interface WorkoutProps {
+  code: string;
+  name: string;
+}
 
+export default function Sports() {
+  const { data: userInfo } = useMyPageInfo();
   return (
     <S.PreferenceSectionWrapper>
       <S.PreferenceHeader>
@@ -21,7 +25,14 @@ export default function Sports() {
         </Link>
       </S.PreferenceHeader>
 
-      <S.PreferenceContent></S.PreferenceContent>
+      <S.PreferenceContent>
+        {userInfo?.favoriteWorkouts?.map((workout: WorkoutProps) => (
+          <S.PreferenceBadge key={workout.code}>
+            <Dumbbels color={"#004DFF"} />
+            {workout.name}
+          </S.PreferenceBadge>
+        ))}
+      </S.PreferenceContent>
     </S.PreferenceSectionWrapper>
   );
 }
