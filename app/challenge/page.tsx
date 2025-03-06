@@ -67,7 +67,7 @@ export default function Page() {
   return (
     <Frame>
       <Header />
-      <Tab tabs={tabItems} onClick={handleTabChange} />
+      <Tab tabs={tabItems} activeTab={selectedTab} onClick={handleTabChange} />
 
       <S.PageContainer $bgColorGray={true}>
         <NotificationBanner

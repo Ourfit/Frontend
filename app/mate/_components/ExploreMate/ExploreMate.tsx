@@ -1,108 +1,78 @@
 "use client";
+import AfternoonIcon from "@/assets/images/afternoon.svg";
 import ChevronLeft from "@/assets/images/chevron-left.svg";
-import Evening from "@/assets/images/evening.svg";
+import EveningIcon from "@/assets/images/evening.svg";
+import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
+import { TIME_MAPPING } from "@/constants/Time";
+import { useSearchMates } from "@/hooks/queries/useSearchMates";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import FilterPanel from "./FilterPanel/FilterPanel";
+
 import * as S from "./style";
 
-const dummyMates = [
-  {
-    id: 1,
-    name: "주녕이",
-    gender: "남성",
-    age: 26,
-    description:
-      "저랑 주말 저녁에 같이 헬스하실 분! 포기하지 말고 같이 도전해서 목표를 이뤄봅시다 👊🏻",
-    profileImage: "/next.svg",
-    tags: ["헬스", "주말 저녁"],
-  },
-  {
-    id: 2,
-    name: "운동 고수",
-    gender: "여성",
-    age: 28,
-    description: "필라테스를 함께 하실 분을 찾고 있어요! 💪",
-    profileImage: "/next.svg",
-    tags: ["필라테스", "평일 저녁"],
-  },
-  {
-    id: 3,
-    name: "테니스 마스터",
-    gender: "남성",
-    age: 30,
-    description: "테니스 한 판 같이 치실 분 구해요! 🎾",
-    profileImage: "/next.svg",
-    tags: ["테니스", "주말 낮"],
-  },
-  {
-    id: 4,
-    name: "수영 매니아",
-    gender: "여성",
-    age: 25,
-    description: "수영 좋아하는 분들 같이 연습해요! 🏊‍♀️",
-    profileImage: "/next.svg",
-    tags: ["수영", "평일 낮"],
-  },
-  {
-    id: 5,
-    name: "요가러",
-    gender: "남성",
-    age: 27,
-    description: "요가로 건강한 몸 만들어요! 🧘",
-    profileImage: "/next.svg",
-    tags: ["요가", "주말 저녁"],
-  },
-  {
-    id: 6,
-    name: "요가러",
-    gender: "남성",
-    age: 27,
-    description: "요가로 건강한 몸 만들어요! 🧘",
-    profileImage: "/next.svg",
-    tags: ["요가", "주말 저녁"],
-  },
-  {
-    id: 7,
-    name: "요가러",
-    gender: "남성",
-    age: 27,
-    description: "요가로 건강한 몸 만들어요! 🧘",
-    profileImage: "/next.svg",
-    tags: ["요가", "주말 저녁"],
-  },
-];
+function getTimeSlot(
+  timeKey: string,
+): "morning" | "afternoon" | "evening" | "" {
+  if (timeKey.includes("MORNING")) return "morning";
+  if (timeKey.includes("AFTERNOON")) return "afternoon";
+  if (timeKey.includes("EVENING")) return "evening";
+  return "";
+}
 
 export default function ExploreMate() {
-  const [showTooltip, setShowTooltip] = useState(true);
-  const [showFilterPanel, setShowFilterPanel] = useState(false);
   const router = useRouter();
 
+  const iconMapping: Record<string, JSX.Element> = {
+    morning: <MorningIcon />,
+    afternoon: <AfternoonIcon />,
+    evening: <EveningIcon />,
+  };
+
+  const [showTooltip, setShowTooltip] = useState(true);
+  const [showFilterPanel, setShowFilterPanel] = useState(false);
   const [filters, setFilters] = useState<{
     gender: string | null;
     time: string | null;
     sports: string[];
   }>({ gender: null, time: null, sports: [] });
 
-  const filteredMates = dummyMates.filter((mate) => {
-    if (filters.gender && mate.gender !== filters.gender) return false;
+  console.log(filters);
 
-    if (filters.time && !mate.tags.includes(filters.time)) return false;
+  const preferredTimes = filters.time ? [filters.time] : undefined;
+  const workoutTypes = filters.sports.length > 0 ? filters.sports : undefined;
 
-    if (
-      filters.sports.length > 0 &&
-      !filters.sports.some((sport) => mate.tags.includes(sport))
-    )
-      return false;
+  // useInfiniteQuery 훅
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSearchMates({
+      gender: filters.gender || undefined,
+      preferredTimes,
+      workoutTypes,
+      size: 10,
+    });
 
-    return true;
-  });
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
 
-  const isFilterApplied = Boolean(
-    filters.gender || filters.time || filters.sports.length > 0,
-  );
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const mates = data?.pages.flatMap((page) => page.content) ?? [];
+
+  console.log(mates);
+
+  const isFilterApplied =
+    !!filters.gender || !!filters.time || filters.sports.length > 0;
 
   const handleFilterApply = (newFilters: {
     gender: string | null;
@@ -110,6 +80,7 @@ export default function ExploreMate() {
     sports: string[];
   }) => {
     setFilters(newFilters);
+
     setShowFilterPanel(false);
   };
 
@@ -118,18 +89,12 @@ export default function ExploreMate() {
     setShowFilterPanel(!showFilterPanel);
   };
 
-  const getFilterCount = () => {
-    let count = 0;
-    if (filters.gender) count += 1;
-    if (filters.time) count += 1;
-    count += filters.sports.length;
-    return count;
-  };
-
-  const filterCount = getFilterCount();
+  const filterCount =
+    (filters.gender ? 1 : 0) + (filters.time ? 1 : 0) + filters.sports.length;
 
   return (
     <S.ExploreMateContainer>
+      {/* 필터 버튼 */}
       <S.FilterWrapper>
         <S.MateFilterTrigger
           $isFilterApplied={isFilterApplied}
@@ -147,15 +112,16 @@ export default function ExploreMate() {
             height="16px"
           />
         </S.MateFilterTrigger>
-        {showTooltip ? (
+        {showTooltip && (
           <Tooltip
             text="원하는 메이트 조건을 설정해보세요!"
             position="left"
             left={99}
-          ></Tooltip>
-        ) : null}
+          />
+        )}
       </S.FilterWrapper>
 
+      {/* 필터 패널 */}
       {showFilterPanel && (
         <FilterPanel
           onClose={() => setShowFilterPanel(false)}
@@ -163,46 +129,59 @@ export default function ExploreMate() {
         />
       )}
 
+      {/* 실제 메이트 리스트 */}
       <S.MateList>
-        {(isFilterApplied ? filteredMates : dummyMates).map((mate) => (
-          <S.MateListItem
-            key={mate.id}
-            onClick={() =>
-              router.push(`/mate/mateprofile/${encodeURIComponent(mate.name)}`)
-            }
-          >
-            <S.MateProfileImageWrapper>
-              <S.ProfileImage src={mate.profileImage} alt={mate.name} />
-            </S.MateProfileImageWrapper>
-            <S.MateInfoWrapper>
-              <S.ProfileInfo>
-                <S.ProfileInfoTitle>
-                  <Typography.H3Sb>{mate.name}</Typography.H3Sb>
-                  <Typography.H6Md color="#6C727F">
-                    {mate.gender}, {mate.age}세
-                  </Typography.H6Md>
-                </S.ProfileInfoTitle>
+        {mates.map((mate) => {
+          const timeSlot = getTimeSlot(mate.preferredWorkoutTime);
 
-                <S.ProfileText>
-                  <Typography.H6Md color="#8A92A3">
-                    {mate.description}
-                  </Typography.H6Md>
-                </S.ProfileText>
-              </S.ProfileInfo>
-              <S.PreferenceTags>
-                {mate.tags.map((tag, index) => (
-                  <S.Tag key={index}>
-                    {tag === "주말 저녁" && (
-                      <Evening width="14px" height="14px" />
-                    )}
-                    <Typography.H6Md color="#6C727F">{tag}</Typography.H6Md>
-                  </S.Tag>
-                ))}
-              </S.PreferenceTags>
-            </S.MateInfoWrapper>
-          </S.MateListItem>
-        ))}
+          return (
+            <S.MateListItem
+              key={mate.id}
+              onClick={() =>
+                router.push(`/mate/mateprofile/${encodeURIComponent(mate.id)}`)
+              }
+            >
+              <S.MateProfileImageWrapper>
+                <S.ProfileImage src={mate.profileUrl} alt={mate.nickname} />
+              </S.MateProfileImageWrapper>
+              <S.MateInfoWrapper>
+                <S.ProfileInfo>
+                  <S.ProfileInfoTitle>
+                    <Typography.H3Sb>{mate.nickname}</Typography.H3Sb>
+                    <Typography.H6Md color="#6C727F">
+                      {mate.gender === "F" ? "여" : "남"}, {mate.age}세
+                    </Typography.H6Md>
+                  </S.ProfileInfoTitle>
+                  <S.ProfileText>
+                    <Typography.H6Md color="#8A92A3">
+                      {mate.introduction}
+                    </Typography.H6Md>
+                  </S.ProfileText>
+                </S.ProfileInfo>
+                <S.PreferenceTags>
+                  {mate.favoriteWorkouts.map((workout) => (
+                    <S.Tag key={workout.code}>
+                      <Typography.H7Md color="#6C727F">
+                        {workout.name}
+                      </Typography.H7Md>
+                    </S.Tag>
+                  ))}
+
+                  <S.TimeTag>
+                    {timeSlot && iconMapping[timeSlot] && iconMapping[timeSlot]}
+
+                    <Typography.H7Md color="#6C727F">
+                      {TIME_MAPPING[mate.preferredWorkoutTime]}
+                    </Typography.H7Md>
+                  </S.TimeTag>
+                </S.PreferenceTags>
+              </S.MateInfoWrapper>
+            </S.MateListItem>
+          );
+        })}
       </S.MateList>
+
+      <div ref={loadMoreRef} style={{ height: 1 }} />
     </S.ExploreMateContainer>
   );
 }

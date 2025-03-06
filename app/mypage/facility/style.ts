@@ -1,6 +1,17 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
+export const PreferenceFacilityWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 20px;
+  box-sizing: border-box;
+
+  width: 100%;
+  height: auto;
+`;
+
 export const PreferenceHeader = styled.div`
   display: flex;
   justify-content: space-between;

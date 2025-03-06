@@ -6,6 +6,9 @@ export const PreferenceSectionWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
 
+  padding: 28px 20px;
+  box-sizing: border-box;
+
   width: 100%;
   height: auto;
 `;

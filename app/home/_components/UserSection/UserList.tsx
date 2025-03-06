@@ -1,14 +1,14 @@
-import MorningIcon from "@/assets/images/morning.svg";
-import EveningIcon from "@/assets/images/evening.svg";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
-import * as S from "./UserList.style";
+import EveningIcon from "@/assets/images/evening.svg";
+import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
+import { WorkoutTimeLabels } from "@/constants/User";
+import getMates from "@/services/getMates";
 import { MateInfo } from "@/types/mates";
 import { PreferredWorkoutTime } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
-import { WorkoutTimeLabels } from "@/constants/User";
-import getMates from "@/services/getMates";
 import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
+import * as S from "./UserList.style";
 
 const ICONS = {
   MORNING: <MorningIcon />,

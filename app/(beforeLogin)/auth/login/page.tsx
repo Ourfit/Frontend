@@ -1,13 +1,13 @@
 "use client";
 
-import Frame from "@/components/layout/Frame";
-import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import KakaoLogo from "@/assets/images/Kakao_logo.svg";
-import * as S from "./style";
+import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
+import Frame from "@/components/layout/Frame";
 import { useTokenStore } from "@/stores/tokenStore";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import * as S from "./style";
 
 export default function LoginPage() {
   const { token } = useTokenStore();

@@ -3,9 +3,9 @@
 import ArrowDown from "@/assets/images/arrow-down2.svg";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
+import { selectCalendarList } from "@/utils/monthList";
 import React, { useState } from "react";
 import * as S from "./SelectBar.style";
-import { selectCalendarList } from "@/utils/monthList";
 
 interface SelectBarProps<T> {
   selectType: string;
@@ -38,7 +38,10 @@ export default function SelectBar<T extends string | number>({
         : selectType === "ampm"
           ? ["오전", "오후"]
           : selectType === "hour"
-            ? Array.from({ length: 12 }, (_, i) => `${(13 + i) % 24}시`)
+            ? Array.from(
+                { length: 24 },
+                (_, i) => `${String(i).padStart(2, "0")}시`,
+              )
             : selectType === "date"
               ? isCalendar?.startDate
                 ? selectCalendarList(isCalendar?.startDate)

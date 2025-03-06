@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const SelectWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: auto;
 `;
 
 export const SelectBox = styled.div<{ $isOpen: boolean; width?: string }>`

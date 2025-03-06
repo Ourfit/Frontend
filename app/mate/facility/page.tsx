@@ -1,70 +1,101 @@
 "use client";
 
+import OurfitLogo from "@/assets/images/ourfit-logo.svg";
+import { Typography } from "@/components/atoms/Typography";
+import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
+import Button from "@/components/common/Button";
+import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { Typography } from "@/components/atoms/Typography";
-import Header from "@/components/common/Header/Header";
-import Button from "@/components/common/Button";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { COLORS } from "@/constants/Theme";
-import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
-import * as S from "./style";
-import Link from "next/link";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
 
-const dummyFacilities = [
-  {
-    id: 1,
-    name: "아워핏짐 잠실",
-    address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-  },
-  { id: 2, name: "아워핏짐 강남", address: "서울 강남구 강남대로 123" },
-  {
-    id: 3,
-    name: "에이블짐 잠실",
-    address: "서울 송파구 올림픽로35가길 12 5층 001호",
-  },
-  {
-    id: 4,
-    name: "에이블필라테스 잠실",
-    address: "서울 송파구 올림픽로35가길 13 10층 001호",
-  },
-];
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import { useUpdateMatePlace } from "@/hooks/queries/useUpdateMatePlace";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import * as S from "./style";
+
+interface FacilityItem {
+  id: string;
+  name: string;
+  address: string;
+}
+
+interface KakaoPlaceResponse {
+  documents: {
+    id: string;
+    place_name: string;
+    road_address_name?: string;
+    address_name?: string;
+  }[];
+}
 
 export default function SportFacility() {
   const [facilityValue, setFacilityValue] = useState("");
-  const [searchResults, setSearchResults] = useState<
-    { id: number; name: string; address: string }[]
-  >([]);
-  const [selectedFacility, setSelectedFacility] = useState<null | {
-    id: number;
-    name: string;
-    address: string;
-  }>(null); 
+  const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(
+    null,
+  );
+  const [debouncedValue, setDebouncedValue] = useState(facilityValue);
+
+  const router = useRouter();
+
+  const { data: mateInfo, isLoading } = useMateInfo();
+  const mateId = mateInfo?.mateId;
+  const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateId);
 
   useEffect(() => {
-    if (facilityValue.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      const filteredResults = dummyFacilities.filter((facility) =>
-        facility.name.includes(facilityValue),
-      );
-      setSearchResults(filteredResults);
+    const timeoutId = setTimeout(() => {
+      setDebouncedValue(facilityValue);
     }, 1000);
-
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timeoutId);
   }, [facilityValue]);
 
-  const handleSelectFacility = (facility: {
-    id: number;
-    name: string;
-    address: string;
-  }) => {
-    setSelectedFacility(facility); 
-    localStorage.setItem("selectedFacility", JSON.stringify(facility)); 
+  const {
+    data: searchData,
+    isLoading: isSearchLoading,
+    error: searchError,
+  } = useQuery<KakaoPlaceResponse, Error>({
+    queryKey: ["kakaoPlaceSearch", debouncedValue],
+    queryFn: async () => {
+      const res = await fetch(
+        `/api/kakaoPlaceSearch?query=${encodeURIComponent(debouncedValue)}`,
+      );
+      if (!res.ok) {
+        throw new Error(`API 요청 실패: ${res.status}`);
+      }
+      return res.json();
+    },
+    enabled: !!debouncedValue.trim(),
+  });
+
+  const searchResults: FacilityItem[] =
+    searchData?.documents?.map((doc: any) => ({
+      id: doc.id,
+      name: doc.place_name,
+      address: doc.road_address_name || doc.address_name,
+    })) || [];
+
+  const handleSelectFacility = (facility: FacilityItem) => {
+    setSelectedFacility(facility);
+
+    updatePlaceMutate(
+      {
+        placeName: facility.name,
+        address: facility.address,
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
+          router.push("/mate");
+        },
+        onError: (err: Error) => {
+          console.error("운동 시간 수정 실패", err);
+        },
+      },
+    );
   };
 
   const pathname = usePathname();
@@ -117,7 +148,7 @@ export default function SportFacility() {
               key={result.id}
               onClick={() => handleSelectFacility(result)}
             >
-              <img src="/next.svg" width="40" height="40" />
+              <OurfitLogo width="40" height="40" color="#004DFF" />
               <S.FacilityInfo>
                 <Typography.H4Sb>{result.name}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">

@@ -7,12 +7,13 @@ import UserSection from "../UserSection/UserSection";
 import styled from "styled-components";
 import Header from "@/components/common/Header/Header";
 import { COLORS } from "@/constants/Theme";
+import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useOAuthIdStore } from "@/stores/oAuthIdStore";
-import { useQuery } from "@tanstack/react-query";
+
 import getUserMe from "@/services/getUserMe";
+import { useQuery } from "@tanstack/react-query";
 import NotificationBanner from "@/components/NotificationBanner/NotificationBanner";
 
 const PageContainer = styled.div`

@@ -2,40 +2,72 @@
 
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
-import { calculateDaysElapsed } from "@/utils/dateUtils";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { MyPageData, useMyPageInfo } from "@/hooks/queries/useMypageInfo";
+import { unmatchMate } from "@/services/mate/unmatchMate";
+import { toKoreanDay, toKoreanTime } from "@/utils/formatWorkout";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../Modal/Modal";
 import * as S from "./style";
 
-interface MatchedMateProps {
-  name: string;
-  age: number;
-  startDate: string;
-  setIsMatched: (v: boolean) => void;
+const KOREAN_DAY_ORDER: Record<string, number> = {
+  월: 0,
+  화: 1,
+  수: 2,
+  목: 3,
+  금: 4,
+  토: 5,
+  일: 6,
+};
+
+function sortKoreanDays(days: string[]) {
+  return days
+    .sort((a, b) => KOREAN_DAY_ORDER[a] - KOREAN_DAY_ORDER[b])
+    .join(", ");
 }
 
-export default function MatchedMate({
-  name,
-  age,
-  startDate,
-  setIsMatched,
-}: MatchedMateProps) {
+export default function MatchedMate() {
   const router = useRouter();
-  const daysElapsed = calculateDaysElapsed(startDate);
-  const matchedMates = [
+  const queryClient = useQueryClient();
+  const { data: myProfile, isLoading: isLoadingMy } = useMyPageInfo();
+  const { data: mateInfo, isLoading } = useMateInfo();
+
+  const [errorMap, setErrorMap] = useState<{ [id: string]: boolean }>({});
+
+  const handleImageError = (mateId: string | number) => {
+    setErrorMap((prev) => ({
+      ...prev,
+      [mateId]: true,
+    }));
+  };
+
+  const { myMate, workout } = mateInfo;
+
+  const daysInKorean = sortKoreanDays(
+    workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
+  );
+
+  const timeRange = `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
+    workout.workoutEndAt,
+  )}`;
+  console.log(myProfile);
+
+  const matchedMates: MyPageData[] = [
     {
-      id: 1,
-      name: "준영",
-      age: 26,
-      profileImage: "/next.svg",
+      id: myProfile?.id,
+      nickname: myProfile?.nickname,
+      age: myProfile?.age,
+      profileUrl: myProfile?.profileUrl,
     },
     {
-      id: 2,
-      name: "수연",
-      age: 27,
-      profileImage: "/globe.svg",
+      id: myMate.id,
+      nickname: myMate.nickname,
+      age: myMate.age,
+      profileUrl: myMate.profileUrl,
     },
   ];
 
@@ -43,13 +75,25 @@ export default function MatchedMate({
     id: number;
     name: string;
     address: string;
-  } | null>(null);
+  } | null>(
+    workout
+      ? { id: 1, name: workout.placeName, address: workout.address }
+      : null,
+  );
 
   const [timeInfo, setTimeInfo] = useState<{
     days: string[];
     startTime: string;
     endTime: string;
-  } | null>(null);
+  } | null>(
+    workout
+      ? {
+          days: workout.workoutDayOfWeek,
+          startTime: workout.workoutStartAt,
+          endTime: workout.workoutEndAt,
+        }
+      : null,
+  );
 
   const [showModal, setShowModal] = useState(false);
 
@@ -61,14 +105,19 @@ export default function MatchedMate({
     setShowModal(false);
   };
 
-  const handleSetMateUnmatched = () => {
-    localStorage.removeItem("sportTimeInfo");
-    localStorage.removeItem("selectedFacility");
+  const handleSetMateUnmatched = async () => {
+    if (!mateInfo?.mateId) {
+      console.error("메이트 ID가 존재하지 않습니다.");
+      return;
+    }
 
-    setSelectedFacility(null);
-    setTimeInfo(null);
-
-    setIsMatched(false);
+    try {
+      await unmatchMate(mateInfo?.mateId);
+      await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
+      setShowModal(false);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleNavigate = () => {
@@ -79,44 +128,44 @@ export default function MatchedMate({
     router.push("/mate/time");
   };
 
-  useEffect(() => {
-    const storedTimeInfo = localStorage.getItem("sportTimeInfo");
-    const savedFacility = localStorage.getItem("selectedFacility");
-
-    if (storedTimeInfo) {
-      setTimeInfo(JSON.parse(storedTimeInfo));
-    }
-    if (savedFacility) {
-      setSelectedFacility(JSON.parse(savedFacility));
-    }
-  }, []);
-
   return (
     <S.MatchedMateContainer>
       <S.MateCardWrapper>
         <S.MateCard>
           <S.MateCardHeader>
             <S.ProfileImageWrapper>
-              {matchedMates.map((mate) => (
-                <S.ProfileImage
-                  key={mate.id}
-                  src={mate.profileImage}
-                  alt={mate.name}
-                />
-              ))}
+              {matchedMates.map((mate) => {
+                const isError = errorMap[mate.id];
+
+                if (isError) {
+                  return <DefaultProfileImg key={mate.id} />;
+                }
+
+                return (
+                  <S.ProfileImage
+                    key={mate.id + mate.nickname}
+                    src={mate.profileUrl}
+                    alt={mate.nickname}
+                    onError={() => handleImageError(mate.id)}
+                  />
+                );
+              })}
             </S.ProfileImageWrapper>
-            <S.daysLeft>D+{daysElapsed}</S.daysLeft>
+            <S.daysLeft>D+{mateInfo.daySinceAccepted}</S.daysLeft>
           </S.MateCardHeader>
 
           <S.MateCardContent>
             <S.MateCardInfo>
               <S.MateDetailInfo>
-                <Typography.H2Sb>{name}</Typography.H2Sb>
-                <Typography.H5Md color="#8A92A3">남, {age}세</Typography.H5Md>
+                <Typography.H2Sb>{myMate.nickname}</Typography.H2Sb>
+                <Typography.H5Md color="#8A92A3">
+                  {myMate.gender === "F" ? "여" : "남"}, {myMate.age}세
+                </Typography.H5Md>
               </S.MateDetailInfo>
 
               <Typography.H6Sb color="#6C727F">
-                프론트엔드 님은 {daysElapsed}일째 메이트예요!
+                {myProfile?.nickname} 님과 {mateInfo.daySinceAccepted}일째
+                메이트예요!
               </Typography.H6Sb>
             </S.MateCardInfo>
 
@@ -133,6 +182,11 @@ export default function MatchedMate({
                 disabled={false}
                 size={BUTTON_SIZES.EXTRA_SMALL}
                 variant={BUTTON_VARIANTS.PRIMARY}
+                onClick={() =>
+                  router.push(
+                    `/mate/mateprofile/${encodeURIComponent(myMate.id)}`,
+                  )
+                }
               >
                 프로필 보기
               </Button>
@@ -147,7 +201,13 @@ export default function MatchedMate({
             {selectedFacility ? (
               <S.FacilityInfoHeaderTitle $hasData={!!selectedFacility}>
                 <Typography.H3Bd>🏃🏻 운동 시설</Typography.H3Bd>
-                <Typography.H5Md color="#004DFF" onClick={handleNavigate}>
+                <Typography.H5Md
+                  color="#004DFF"
+                  onClick={handleNavigate}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
                   편집
                 </Typography.H5Md>
               </S.FacilityInfoHeaderTitle>
@@ -187,7 +247,13 @@ export default function MatchedMate({
             {timeInfo ? (
               <S.TimeInfoHeaderTitle $hasData={!!timeInfo}>
                 <Typography.H3Bd>⏱️ 운동 시간</Typography.H3Bd>
-                <Typography.H5Md color="#004DFF" onClick={handleNavigateToTime}>
+                <Typography.H5Md
+                  color="#004DFF"
+                  onClick={handleNavigateToTime}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
                   편집
                 </Typography.H5Md>
               </S.TimeInfoHeaderTitle>
@@ -202,10 +268,8 @@ export default function MatchedMate({
 
           {timeInfo ? (
             <S.TimeCard>
-              <Typography.H4Sb>{timeInfo.days.join(", ")}</Typography.H4Sb>
-              <Typography.H5Md color="#8A92A3">
-                {timeInfo.startTime} ~ {timeInfo.endTime}
-              </Typography.H5Md>
+              <Typography.H4Sb>{daysInKorean}</Typography.H4Sb>
+              <Typography.H5Md color="#8A92A3">{timeRange}</Typography.H5Md>
             </S.TimeCard>
           ) : (
             <Button
