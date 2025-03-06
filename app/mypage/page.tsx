@@ -1,7 +1,7 @@
 "use client";
 
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { setImageUrl } from "@/services/mypage/setImageUrl";
-import { useUserInfoStore } from "@/stores/userInfoStore";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { useEffect, useRef, useState } from "react";
 import EditBasicInfo from "./_components/EditBasicInfo";
@@ -26,7 +26,7 @@ const managementLinks = [
 ];
 
 export default function Mypage() {
-  const { userInfo, fetchUserInfo } = useUserInfoStore();
+  const { data: userInfo, refetch } = useMyPageInfo();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
@@ -72,16 +72,12 @@ export default function Mypage() {
 
         await setImageUrl(file);
 
-        await fetchUserInfo();
+        await refetch();
       } catch (error) {
         console.error("Error reading file:", error);
       }
     }
   };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
 
   useEffect(() => {
     if (userInfo?.introduction !== undefined) {

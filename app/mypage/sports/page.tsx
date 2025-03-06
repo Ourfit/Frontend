@@ -1,18 +1,91 @@
 "use client";
 
+import { Typography } from "@/components/atoms/Typography";
+import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
-import { SIGNUP_STEPS } from "@/constants/Signup";
-import { Container } from "@mui/material";
-import React, { useState } from "react";
-import SignupForm from "@/components/auth/signup/SignupForm";
+import TextButton from "@/components/common/TextButton";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
+import { COLORS } from "@/constants/Theme";
+import { StepProps } from "@/types/step";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import * as S from "./style";
 
-export default function Page() {
-  const [step, setStep] = useState<number>(SIGNUP_STEPS[5].id);
+const SportsPreference = ({ nextStep }: StepProps) => {
+  const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const isMypageSports = pathname === "/mypage/sports";
+  const isSignup = pathname === "/auth/signup";
+
+  const handleSportClick = (sport: string) => {
+    setSelectedSports((prev) => {
+      if (prev.includes(sport)) {
+        return prev.filter((item) => item !== sport);
+      } else if (prev.length < 3) {
+        return [...prev, sport];
+      } else {
+        return prev;
+      }
+    });
+  };
+
+  const buttonClickHandler = () => {
+    if (selectedSports.length >= 1 && nextStep) {
+      nextStep(STEPS_LABEL.SPORTS_PREFERENCES, selectedSports);
+    }
+
+    if (isMypageSports) {
+      router.back();
+    }
+  };
 
   return (
     <>
       <Header />
-      <SignupForm step={step} setStep={setStep} />
+      <S.SportsPreferenceWrapper $isHeightFull={!isSignup}>
+        <S.SignupIntroContainer>
+          <S.SignupIntroTitleWrapper>
+            <Typography.H1Sb>
+              선호하는 <span style={{ color: COLORS.BLUE_500 }}>운동</span>을
+              선택해주세요!
+            </Typography.H1Sb>
+          </S.SignupIntroTitleWrapper>
+          <Typography.H4Md color={COLORS.GRAYSCALE_600}>
+            최소 1개, 최대 3개까지 선택해주세요.
+          </Typography.H4Md>
+        </S.SignupIntroContainer>
+        <S.InfoContainer>
+          <S.TextButtonWrapper>
+            {Object.values(SPORTS_LABEL).map((sport) => (
+              <TextButton
+                key={sport}
+                isActive={selectedSports.includes(sport)}
+                onClick={() => handleSportClick(sport)}
+              >
+                {sport}
+              </TextButton>
+            ))}
+          </S.TextButtonWrapper>
+        </S.InfoContainer>
+      </S.SportsPreferenceWrapper>
+      <S.ButtonContainer>
+        <Button
+          disabled={selectedSports.length === 0}
+          size={BUTTON_SIZES.LARGE}
+          variant={BUTTON_VARIANTS.PRIMARY}
+          onClick={buttonClickHandler}
+          style={{
+            maxWidth: "410px",
+            height: "53px",
+          }}
+        >
+          {isMypageSports ? "변경 완료" : "다음"}
+        </Button>
+      </S.ButtonContainer>
     </>
   );
-}
+};
+
+export default SportsPreference;

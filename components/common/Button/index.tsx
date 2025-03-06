@@ -11,6 +11,7 @@ interface ButtonProps {
   variant?: (typeof BUTTON_VARIANTS)[keyof typeof BUTTON_VARIANTS];
   icon?: React.ReactNode;
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
   variant,
   icon,
   onClick,
+  style,
   children,
 }: ButtonProps) => {
   return (
@@ -27,6 +29,7 @@ const Button = ({
       $variant={variant}
       $disabled={disabled}
       onClick={onClick}
+      style={style}
     >
       {icon && <S.IconWrapper>{icon}</S.IconWrapper>}
       {children}

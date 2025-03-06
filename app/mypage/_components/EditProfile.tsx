@@ -154,7 +154,7 @@ export default function EditProfile({
 
           <S.PreferenceContainer>
             <S.Line />
-            <Sports preferences={preferences} />
+            <Sports />
             <S.Line />
             <Facility
               selectedPreferenceFacility={selectedPreferenceFacility}
