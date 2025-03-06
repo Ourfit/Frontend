@@ -3,6 +3,7 @@
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 import TextButton from "@/components/common/TextButton";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
@@ -55,7 +56,10 @@ const SportsPreference = ({ nextStep }: StepProps) => {
 
         await setWorkoutPreferences(requestBody);
 
-        await refetch();
+        await queryClient.refetchQueries({
+          queryKey: ["myPageInfo"],
+          type: "active",
+        });
 
         router.back();
       } catch (error) {
@@ -88,7 +92,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
                 isActive={selectedSports.includes(workout.code)}
                 onClick={() => handleSportClick(workout.code)}
               >
-                {workout.name}
+                <Typography.H4Md>{workout.name}</Typography.H4Md>
               </TextButton>
             ))}
           </S.TextButtonWrapper>
