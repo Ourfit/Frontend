@@ -40,7 +40,7 @@ export default function EditBasicInfo({
     age = 0,
     gender = "",
     skillLevel = "",
-  } = isLoading || !data?.data ? {} : data.data;
+  } = isLoading || !data ? {} : data;
 
   const user = [
     nickname,

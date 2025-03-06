@@ -62,7 +62,7 @@ export default function HomeComponent() {
     nickname = "",
     favoriteWorkouts = "",
     preferredWorkoutTime = "",
-  } = isLoading || !user?.data ? {} : user.data;
+  } = isLoading || !user ? {} : user;
 
   return (
     <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>

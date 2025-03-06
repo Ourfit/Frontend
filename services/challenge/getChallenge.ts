@@ -6,7 +6,7 @@ export default async function getChallenge() {
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/challenges/me`,
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     throw err;
   }

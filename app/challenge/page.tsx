@@ -10,10 +10,10 @@ import MateCard from "./_components/MateCard/MateCard";
 import EmptyComponent from "./_components/EmptyComponet/EmptyComponent";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import getMyMates from "@/services/challenge/getMyMates";
 import getUserMe from "@/services/getUserMe";
 import getChallenge from "@/services/challenge/getChallenge";
 import { useChallengeStore } from "@/stores/challengeStore";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
 
 export default function Page() {
   const router = useRouter();
@@ -37,18 +37,18 @@ export default function Page() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const { data: mate } = useQuery({
-    queryKey: ["myMates"],
-    queryFn: () => getMyMates(),
-    staleTime: 5 * 60 * 1000,
-  });
+  const mate = useMateInfo();
 
-  const { id, nickname, age, gender, profileUrl, skillLevel } = user
-    ? user.data
-    : {};
-  const userInfo = { id, nickname, age, gender, profileUrl, skillLevel };
-  const myChallenge = challenge ? challenge.data : {};
-  const myMateInfo = mate ? mate.data?.myMate : {};
+  const userInfo = {
+    id: user?.id || "",
+    nickname: user?.nickname || "",
+    age: user?.age || 0,
+    gender: user?.gender || "",
+    profileUrl: user?.profileUrl || "",
+    skillLevel: user?.skillLevel || "",
+  };
+  const myChallenge = challenge?.data || {};
+  const myMateInfo = mate?.data?.myMate || {};
 
   const challengeList = [
     { info: { ...userInfo, isMine: true }, challenge: myChallenge.me },
