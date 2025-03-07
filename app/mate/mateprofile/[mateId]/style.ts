@@ -11,6 +11,7 @@ export const PageContainer = styled.div`
 
   width: 100%;
   background-color: #ffffff;
+  color: ${COLORS.GRAYSCALE_900};
   height: auto;
   min-height: calc(100vh - 94px);
 

@@ -18,6 +18,7 @@ export const FilterPanelContainer = styled.div`
   height: 100%;
 
   background: #ffffff;
+  color: ${COLORS.GRAYSCALE_900};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 
