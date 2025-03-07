@@ -9,6 +9,7 @@ import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProf
 import { useState } from "react";
 import { MateHistory } from "@/types/mates";
 import { api } from "@/services/axiosInterceptor";
+import { useNotificationStore } from "@/stores/NotificationStore";
 
 interface ListItemProps {
   title: string;
@@ -29,6 +30,7 @@ export default function ListItem({
   const router = useRouter();
   const pathName = usePathname();
   const isNotificationsPage = pathName === "/notifications";
+  const { addNotification } = useNotificationStore();
 
   const notificationReadReq = async (historyId: number) => {
     await api.patch(
@@ -37,15 +39,16 @@ export default function ListItem({
   };
 
   const handleClick = () => {
-    if (data.actionType === "APPLY")
-      router.push(
-        `/mate/mateprofile/${encodeURIComponent(data.targetNickname)}`,
-      );
+    addNotification({ type: "APPLY" });
+
+    if (data.actionType === "APPLY") {
+      router.push(`/mate/mateprofile/${data.targetId}`);
+    }
 
     if (isNotificationsPage) {
       if (!data.isRead) notificationReadReq(data.id);
       router.push(
-        `/mate/mateprofile/${encodeURIComponent(data.actionType === "RECEIVE" ? data.actorNickname : data.targetNickname)}`,
+        `/mate/mateprofile/${data.actionType === "RECEIVE" ? data.actorId : data.targetId}`,
       );
     }
   };
