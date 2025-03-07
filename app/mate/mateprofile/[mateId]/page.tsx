@@ -15,17 +15,9 @@ import { TIME_MAPPING } from "@/constants/Time";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
+import getTimeSlot from "@/utils/getTimeSlot";
 import { useParams } from "next/navigation";
 import { JSX, useState, useTransition } from "react";
-
-function getTimeSlot(
-  timeKey: string,
-): "morning" | "afternoon" | "evening" | "" {
-  if (timeKey.includes("MORNING")) return "morning";
-  if (timeKey.includes("AFTERNOON")) return "afternoon";
-  if (timeKey.includes("EVENING")) return "evening";
-  return "";
-}
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -138,7 +130,7 @@ export default function MateProfile() {
                 {data?.favoriteWorkouts.map((sport) => (
                   <S.PreferenceBadge key={sport.code}>
                     <Dumbbels color={"#004DFF"} />
-                    {sport.name}
+                    <Typography.H4Md>{sport.name}</Typography.H4Md>
                   </S.PreferenceBadge>
                 ))}
               </S.PreferenceContent>

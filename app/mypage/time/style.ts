@@ -118,16 +118,19 @@ export const PreferenceTimeWrapper = styled.div`
 
 export const PreferenceTime = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 
-  width: 100%;
-  height: 73px;
+  width: auto;
+  max-width: 120px;
+  height: 45px;
 
-  padding: 16px 20px;
+  gap: 4px;
+
+  padding: 12px 20px 12px 16px;
   box-sizing: border-box;
 
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid ${COLORS.GRAYSCALE_200};
 `;
 

@@ -156,10 +156,7 @@ export default function EditProfile({
             <S.Line />
             <Sports />
             <S.Line />
-            <Facility
-              selectedPreferenceFacility={selectedPreferenceFacility}
-              handleNavigate={() => handleNavigate(places[0])}
-            />
+            <Facility />
             <S.Line />
             <Time />
           </S.PreferenceContainer>

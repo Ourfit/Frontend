@@ -29,7 +29,7 @@ export default function Sports() {
         {userInfo?.favoriteWorkouts?.map((workout: WorkoutProps) => (
           <S.PreferenceBadge key={workout.code}>
             <Dumbbels color={"#004DFF"} />
-            {workout.name}
+            <Typography.H4Md>{workout.name}</Typography.H4Md>
           </S.PreferenceBadge>
         ))}
       </S.PreferenceContent>
