@@ -75,6 +75,7 @@ export const Tooltip = styled.div`
 export const LoginButton = styled.button`
   width: 100%;
   background-color: #fae300;
+  color: ${COLORS.GRAYSCALE_900};
   border: none;
   border-radius: 100px;
   padding: 16px 0;
