@@ -53,9 +53,14 @@ export default function ChallengeState() {
     }
   }, [myChallenge, addChallenge]);
 
+  console.log(myChallenge);
+
   return (
     <>
-      <NotificationBanner dayElapsed={myChallenge?.me.dayElapsed} isChallenge />
+      <NotificationBanner
+        dayElapsed={myChallenge?.me?.dayElapsed}
+        isChallenge
+      />
       <S.MateContent>
         {mate?.data && myMateInfo ? (
           <S.MateList>
