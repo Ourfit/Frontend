@@ -1,7 +1,11 @@
 "use client";
 
-import Header from "@/components/common/Header/Header";
 import Frame from "@/components/layout/Frame";
+import Banner from "../Banner/Banner";
+import QuickMenuBar from "../QuickMenuBar/QuickMenuBar";
+import UserSection from "../UserSection/UserSection";
+import styled from "styled-components";
+import Header from "@/components/common/Header/Header";
 import { COLORS } from "@/constants/Theme";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useTokenStore } from "@/stores/tokenStore";
@@ -10,11 +14,7 @@ import { useEffect } from "react";
 
 import getUserMe from "@/services/getUserMe";
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
-import Banner from "../Banner/Banner";
-import NotificationBanner from "../NotificationBanner/NotificationBanner";
-import QuickMenuBar from "../QuickMenuBar/QuickMenuBar";
-import UserSection from "../UserSection/UserSection";
+import NotificationBanner from "@/components/NotificationBanner/NotificationBanner";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
@@ -62,7 +62,7 @@ export default function HomeComponent() {
     nickname = "",
     favoriteWorkouts = "",
     preferredWorkoutTime = "",
-  } = isLoading || !user?.data ? {} : user.data;
+  } = isLoading || !user ? {} : user;
 
   return (
     <Frame contentStyle={{ backgroundColor: COLORS.GRAYSCALE_100 }}>

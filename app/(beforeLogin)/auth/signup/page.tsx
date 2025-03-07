@@ -29,7 +29,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Frame style={{ ...bgColor }} contentStyle={{ ...bgColor, height: "100%" }}>
+    <Frame style={bgColor} contentStyle={{ ...bgColor, height: "100%" }}>
       <Header onClick={onClick} isSignup={step === SIGNUP_STEPS.length} />
       <SignupForm step={step} setStep={setStep} />
     </Frame>

@@ -24,7 +24,7 @@ export const UserListWrapper = styled.div`
 `;
 
 export const UserWrapper = styled.div`
-  background-color: #ffffff;
+  background-color: ${COLORS.BASE_WHITE};
   min-width: 154px;
   height: 161px;
   border-radius: 16px;
@@ -33,42 +33,6 @@ export const UserWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
-`;
-
-export const ProfileBadge = styled.div`
-  position: relative;
-`;
-
-export const ProfileImageWrapper = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-
-  > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-export const IconWrapper = styled.div`
-  background-color: ${COLORS.BLUE_500};
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  > svg {
-    width: 12px;
-    height: 12px;
-    color: #ffffff;
-  }
 `;
 
 export const UserInfoWrapper = styled.div`
