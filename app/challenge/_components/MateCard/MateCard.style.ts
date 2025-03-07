@@ -9,7 +9,7 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
   width: 100%;
   min-width: 90%;
-  max-height: 480px;
+  max-height: 450px;
   box-sizing: content-box;
   padding: 24px 0 48px 0;
 `;
