@@ -15,6 +15,8 @@ import { useChallengeStore } from "@/stores/challengeStore";
 import { queryClient } from "../common/ReactQueryProvider";
 import { useState } from "react";
 import Toast from "../common/Toast/Toast";
+import BottomSheet from "./BottomSheet/BottomSheet";
+import { TOAST_STATUSES } from "@/constants/Toast";
 
 interface NotificationBannerType {
   isHome?: boolean;
@@ -33,6 +35,7 @@ export default function NotificationBanner({
 }: NotificationBannerType) {
   const { challenge } = useChallengeStore();
   const [toast, setToast] = useState("");
+  const [modalShow, setModalShow] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
@@ -40,9 +43,12 @@ export default function NotificationBanner({
   });
 
   const mutation = useMutation({
-    mutationFn: () => challengeComplete(1, challenge?.id),
+    mutationFn: (intensity: number) =>
+      challengeComplete(intensity, challenge?.id),
     onSuccess: (status) => {
-      if (status === 200) {
+      if (status === 201) {
+        setToast("💪🏻 오늘 운동 완료! 완전 멋져요!");
+        setTimeout(() => setToast(""), 3000);
         queryClient.invalidateQueries({ queryKey: ["challengeRecord"] });
       }
     },
@@ -57,7 +63,14 @@ export default function NotificationBanner({
     mateHistory?.filter((e) => e.roleType === "TARGET" && !e.isRead) || [];
   const isCompolete = todayRecord?.isCompleted;
 
-  const handleComplete = () => {};
+  const handleClose = () => {
+    setModalShow(false);
+  };
+
+  const completeWorkout = (intensity: number) => {
+    mutation.mutate(intensity);
+    handleClose();
+  };
 
   if (isHome && (isLoading || !notification.length)) return <></>;
 
@@ -93,13 +106,25 @@ export default function NotificationBanner({
             $size={BUTTON_SIZES.EXTRA_SMALL}
             $variant={BUTTON_VARIANTS.PRIMARY}
             $disabled={isCompolete}
-            onClick={handleComplete}
+            onClick={() => !isCompolete && setModalShow(true)}
           >
             운동 완료
           </S.CompleteButton>
         )}
       </S.BannerContainer>
-      {toast && <Toast message={toast} />}
+      {toast &&
+        (toast === "잠시 후 다시 시도해주세요." ? (
+          <Toast message={toast} status={TOAST_STATUSES.ERROR} />
+        ) : (
+          <Toast message={toast} />
+        ))}
+      {modalShow && (
+        <BottomSheet
+          modalShow={modalShow}
+          handleClose={handleClose}
+          completeWorkout={completeWorkout}
+        />
+      )}
     </S.BannerWrapper>
   );
 }

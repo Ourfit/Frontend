@@ -31,6 +31,7 @@ export default function MateCard({ info, challenge, mateId }: MateCardProps) {
     onSuccess: (status) => {
       if (status === 200) {
         queryClient.invalidateQueries({ queryKey: ["myChallenge"] });
+        queryClient.invalidateQueries({ queryKey: ["challengeRecord"] });
       }
     },
     onError: () => {
