@@ -2,45 +2,110 @@
 
 import * as S from "@/app/mate/facility/style";
 import LogoumbbellsIcon from "@/assets/images/LogoDumbbells.svg";
+import XIcon from "@/assets/images/x.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { usePlacesSearch } from "@/hooks/queries/usePlacesSearch";
-import { Container } from "@mui/material";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { setFacilityPreference } from "@/services/mypage/setFacilityPreferences";
+import { useMutation } from "@tanstack/react-query";
+import { usePathname, useRouter } from "next/navigation";
+
 import { useState } from "react";
+import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
 
 export default function FacilitySearch() {
   const [facilityValue, setFacilityValue] = useState("");
+  const router = useRouter();
 
   const { data: searchResults } = usePlacesSearch(facilityValue);
+  const { data: userInfo } = useMyPageInfo();
 
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
     useState<
       {
-        id: number;
-        name: string;
+        placeName: string;
         address: string;
       }[]
     >([]);
 
   const handleSelectFacility = (facility: {
-    id: number;
-    name: string;
+    placeName: string;
     address: string;
   }) => {
+    const alreadySelected = selectedPreferenceFacilities.some(
+      (f) =>
+        f.placeName === facility.placeName && f.address === facility.address,
+    );
+
+    if (alreadySelected) {
+      return;
+    }
+
     if (selectedPreferenceFacilities.length < 3) {
       setSelectedPreferenceFacilities((prev) => [...prev, facility]);
+    } else {
+      return;
     }
   };
 
-  const handleRemoveFacility = (id: number) => {
+  const handleRemoveFacility = (placeName: string) => {
     const updatedFacilities = selectedPreferenceFacilities.filter(
-      (facility) => facility.id !== id,
+      (facility) => facility.placeName !== placeName,
     );
     setSelectedPreferenceFacilities(updatedFacilities);
+  };
+
+  const { mutate: updateFacilityPreference } = useMutation({
+    mutationFn: () =>
+      setFacilityPreference({
+        preferredWorkoutTime: userInfo?.preferredWorkoutTime ?? null,
+        favoriteWorkouts:
+          userInfo?.favoriteWorkouts?.map((w: WorkoutType) => w.code) ?? null,
+        favoritePlaces: selectedPreferenceFacilities,
+      }),
+
+    onMutate: async (newData) => {
+      await queryClient.cancelQueries({ queryKey: ["myPageInfo"] });
+
+      const previousData = queryClient.getQueryData(["myPageInfo"]);
+
+      queryClient.setQueryData(["myPageInfo"], (oldData: any) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          preferredWorkoutTime: oldData.preferredWorkoutTime,
+          favoriteWorkouts:
+            oldData.favoriteWorkouts?.map((w: WorkoutType) => w.code) ?? null,
+          favoritePlaces: oldData.favoritePlaces ?? null,
+        };
+      });
+
+      return { previousData };
+    },
+
+    onError: (error, _, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["myPageInfo"], context.previousData);
+      }
+      alert("운동 시설 정보를 수정하는데 실패했습니다.");
+      console.error(error);
+    },
+
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      router.back();
+    },
+  });
+
+  const buttonClickHandler = () => {
+    if (selectedPreferenceFacilities.length > 0) {
+      updateFacilityPreference();
+    }
   };
 
   const pathname = usePathname();
@@ -68,7 +133,7 @@ export default function FacilitySearch() {
         )}
         <MS.PreferencePlaceWrapper>
           {selectedPreferenceFacilities.map((facility) => (
-            <MS.PreferencePlaceContainer key={facility.id}>
+            <MS.PreferencePlaceContainer key={facility.placeName}>
               <MS.PreferencePlaceInfo2>
                 <MS.PreferenceInfoWrapper>
                   <LogoumbbellsIcon
@@ -77,15 +142,15 @@ export default function FacilitySearch() {
                     height={20}
                   />
 
-                  <MS.PreferencePlaceName2>
-                    {facility.name}
-                  </MS.PreferencePlaceName2>
+                  <Typography.H5Sb color="#004DFF">
+                    {facility.placeName}
+                  </Typography.H5Sb>
                 </MS.PreferenceInfoWrapper>
 
                 <MS.PreferenceButton
-                  onClick={() => handleRemoveFacility(facility.id)}
+                  onClick={() => handleRemoveFacility(facility.placeName)}
                 >
-                  X
+                  <XIcon color="#8AADFF" />
                 </MS.PreferenceButton>
               </MS.PreferencePlaceInfo2>
             </MS.PreferencePlaceContainer>
@@ -104,7 +169,15 @@ export default function FacilitySearch() {
 
         <S.ResultList>
           {searchResults.map((result) => (
-            <S.ResultItem key={result.addressName}>
+            <S.ResultItem
+              key={result.addressName}
+              onClick={() =>
+                handleSelectFacility({
+                  placeName: result.placeName,
+                  address: result.addressName,
+                })
+              }
+            >
               <img src="/next.svg" width="40" height="40" />
               <S.FacilityInfo>
                 <Typography.H4Sb>{result.placeName}</Typography.H4Sb>
@@ -116,13 +189,16 @@ export default function FacilitySearch() {
           ))}
         </S.ResultList>
 
-        <Container>
-          <Link href="/mypage" passHref>
-            <Button size="l" variant="primary" disabled={false}>
-              변경 완료
-            </Button>
-          </Link>
-        </Container>
+        <MS.ButtonContainer>
+          <Button
+            disabled={selectedPreferenceFacilities.length === 0}
+            size={BUTTON_SIZES.LARGE}
+            variant={BUTTON_VARIANTS.PRIMARY}
+            onClick={buttonClickHandler}
+          >
+            변경완료
+          </Button>
+        </MS.ButtonContainer>
       </S.facilityContainer2>
     </>
   );
