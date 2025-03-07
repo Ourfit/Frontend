@@ -71,7 +71,7 @@ export default function HomeComponent() {
         <Banner />
         <MainContent>
           <QuickMenuBar />
-          <NotificationBanner />
+          <NotificationBanner isHome />
           <UserSection
             nickname={nickname}
             region={region3}
