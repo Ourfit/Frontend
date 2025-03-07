@@ -128,11 +128,11 @@ export const EmptyContainer = styled.div`
   width: 154px;
   height: 162px;
   border-radius: 16px;
-  background-color: ${COLORS.GRAYSCALE_50};
+  background-color: ${COLORS.BASE_WHITE};
   color: ${COLORS.GRAYSCALE_500};
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: 1px dashed #dce0ea;
+  border: 1px dashed ${COLORS.GRAYSCALE_300};
 `;

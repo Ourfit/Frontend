@@ -17,10 +17,16 @@ export default function NotificationBanner() {
 
   const mateHistory: MateHistory[] = data?.data.content;
   const notification = mateHistory
-    ? mateHistory.filter((e) => e.roleType === "TARGET" && !e.isRead)
+    ? mateHistory.filter(
+        (e) =>
+          e.roleType === "TARGET" &&
+          !e.isRead &&
+          new Date(e.createdAt).setHours(0, 0, 0, 0) ===
+            new Date().setHours(0, 0, 0, 0),
+      )
     : [];
 
-  if (!data || isLoading || !notification.length) return <></>;
+  const isNoAlarm = !data || isLoading || !notification.length;
 
   return (
     <S.BannerWrapper>
@@ -30,13 +36,15 @@ export default function NotificationBanner() {
             <DumbbellsIcon />
           </S.IconWrapper>
           <S.NotificationContent $isHome={true}>
-            <Typography.H6Md>
-              {dateFormat(new Date(notification[0].createdAt), "MD")}
-            </Typography.H6Md>
-            <Typography.H4Sb>운동 메이트 신청이 있어요!</Typography.H4Sb>
+            <Typography.H6Md>{dateFormat(new Date(), "MD")}</Typography.H6Md>
+            <Typography.H4Sb>
+              {isNoAlarm
+                ? "오늘은 알림 소식이 없어요!"
+                : "운동 메이트 신청이 있어요!"}
+            </Typography.H4Sb>
           </S.NotificationContent>
         </S.ContentWrapper>
-        <ChevroRightIcon />
+        {!isNoAlarm && <ChevroRightIcon />}
       </S.BannerContainer>
     </S.BannerWrapper>
   );

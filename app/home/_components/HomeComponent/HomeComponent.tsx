@@ -27,7 +27,7 @@ const PageContainer = styled.div`
 const MainContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 32px;
   padding-top: 24px;
   padding-bottom: 64px;
 `;

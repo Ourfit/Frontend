@@ -10,7 +10,7 @@ import * as S from "./QuickMenuBar.style";
 const QUICK_MENUS = [
   {
     label: "메이트 찾기",
-    path: "/mate",
+    path: "/mate/explore",
     icon: <SearchIcon />,
   },
   {
