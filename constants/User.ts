@@ -13,4 +13,4 @@ export const GROUP_TYPES = {
   REGION: "동네",
   WORKOUT: "운동",
   TIME: "시간",
-};
+} as const;
