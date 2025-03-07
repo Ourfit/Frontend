@@ -11,6 +11,7 @@ import getMatesHistory from "@/services/getMatesHistory";
 import { useEffect } from "react";
 import { MateHistory } from "@/types/mates";
 import { dateFormat } from "@/utils/monthList";
+import NoAlarmIcon from "@/assets/images/no-alarm.svg";
 
 export default function NotificationsPage() {
   const { ref, inView } = useInView({
@@ -55,12 +56,21 @@ export default function NotificationsPage() {
       <Header />
       <S.PageContainer>
         <Typography.H3Sb>알림 전체</Typography.H3Sb>
-        <S.NotificationSection>
-          {TodayList.length ? <NotificationList list={TodayList} /> : null}
-          {PrevList.length ? (
-            <NotificationList list={PrevList} ref={ref} isPrev />
-          ) : null}
-        </S.NotificationSection>
+        {notifications?.length ? (
+          <S.NotificationSection>
+            {TodayList.length ? <NotificationList list={TodayList} /> : null}
+            {PrevList.length ? (
+              <NotificationList list={PrevList} ref={ref} isPrev />
+            ) : null}
+          </S.NotificationSection>
+        ) : (
+          <S.EmptyContainer>
+            <S.EmptyWrapper>
+              <NoAlarmIcon />
+              <Typography.H4Sb>아직 알림 소식이 없어요.</Typography.H4Sb>
+            </S.EmptyWrapper>
+          </S.EmptyContainer>
+        )}
       </S.PageContainer>
     </Frame>
   );
