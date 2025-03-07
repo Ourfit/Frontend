@@ -2,46 +2,12 @@
 
 import { Typography } from "@/components/atoms/Typography";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as S from "./style";
 
-interface FacilityData {
-  id: number;
-  name: string;
-  address: string;
-}
-
-interface FacilityProps {
-  selectedPreferenceFacility: FacilityData | null;
-  handleNavigate: (facility: FacilityData) => void;
-}
-
-export default function Facility({
-  selectedPreferenceFacility,
-  handleNavigate,
-}: FacilityProps) {
+export default function Facility() {
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
-    useState<FacilityData[]>([
-      {
-        id: 1,
-        name: "에이블짐 잠실점",
-        address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-      },
-      {
-        id: 2,
-        name: "에이블짐 홍대점",
-        address: "서울 마포구 양화로12길 34 2층 201호",
-      },
-    ]);
-
-  useEffect(() => {
-    const storedFacilities = localStorage.getItem(
-      "selectedPreferenceFacilities",
-    );
-    if (storedFacilities) {
-      setSelectedPreferenceFacilities(JSON.parse(storedFacilities));
-    }
-  }, []);
+    useState([]);
 
   return (
     <>
@@ -58,20 +24,9 @@ export default function Facility({
           </Link>
         </S.PreferenceHeader>
         <S.PreferencePlaceWrapper2>
-          {selectedPreferenceFacilities.length > 0 ? (
-            selectedPreferenceFacilities.map((facility) => (
-              <S.PreferencePlaceInfo key={facility.id}>
-                <S.PreferencePlaceName>{facility.name}</S.PreferencePlaceName>
-                <S.PreferencePlaceAddress>
-                  {facility.address}
-                </S.PreferencePlaceAddress>
-              </S.PreferencePlaceInfo>
-            ))
-          ) : (
-            <Typography.H4Md color="#8A92A3">
-              아직 선택한 시설이 없습니다.
-            </Typography.H4Md>
-          )}
+          <Typography.H4Md color="#8A92A3">
+            아직 선택한 시설이 없습니다.
+          </Typography.H4Md>
         </S.PreferencePlaceWrapper2>
       </S.PreferenceFacilityWrapper>
     </>

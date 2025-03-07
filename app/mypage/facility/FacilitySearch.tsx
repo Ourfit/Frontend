@@ -1,44 +1,22 @@
 "use client";
 
+import * as S from "@/app/mate/facility/style";
 import LogoumbbellsIcon from "@/assets/images/LogoDumbbells.svg";
-import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import Placeholder from "@/components/common/Placeholder/Placeholder";
+import { usePlacesSearch } from "@/hooks/queries/usePlacesSearch";
 import { Container } from "@mui/material";
-import * as S from "@/app/mate/facility/style";
-import * as MS from "./style";
 import Link from "next/link";
-
-const dummy2Facilities = [
-  {
-    id: 1,
-    name: "아워핏짐 잠실",
-    address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-  },
-  { id: 2, name: "아워핏짐 강남", address: "서울 강남구 강남대로 123" },
-  {
-    id: 3,
-    name: "에이블짐 잠실",
-    address: "서울 송파구 올림픽로35가길 12 5층 001호",
-  },
-  {
-    id: 4,
-    name: "에이블필라테스 잠실",
-    address: "서울 송파구 올림픽로35가길 13 10층 001호",
-  },
-];
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import * as MS from "./style";
 
 export default function FacilitySearch() {
   const [facilityValue, setFacilityValue] = useState("");
-  const [searchResults, setSearchResults] = useState<
-    {
-      id: number;
-      name: string;
-      address: string;
-    }[]
-  >([]);
+
+  const { data: searchResults } = usePlacesSearch(facilityValue);
+
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
     useState<
       {
@@ -48,22 +26,6 @@ export default function FacilitySearch() {
       }[]
     >([]);
 
-  useEffect(() => {
-    if (facilityValue.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      const filteredResults = dummy2Facilities.filter((facility) =>
-        facility.name.includes(facilityValue),
-      );
-      setSearchResults(filteredResults);
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [facilityValue]);
-
   const handleSelectFacility = (facility: {
     id: number;
     name: string;
@@ -71,10 +33,6 @@ export default function FacilitySearch() {
   }) => {
     if (selectedPreferenceFacilities.length < 3) {
       setSelectedPreferenceFacilities((prev) => [...prev, facility]);
-      localStorage.setItem(
-        "selectedPreferenceFacilities",
-        JSON.stringify([...selectedPreferenceFacilities, facility]),
-      );
     }
   };
 
@@ -83,10 +41,6 @@ export default function FacilitySearch() {
       (facility) => facility.id !== id,
     );
     setSelectedPreferenceFacilities(updatedFacilities);
-    localStorage.setItem(
-      "selectedPreferenceFacilities",
-      JSON.stringify(updatedFacilities),
-    );
   };
 
   const pathname = usePathname();
@@ -150,15 +104,12 @@ export default function FacilitySearch() {
 
         <S.ResultList>
           {searchResults.map((result) => (
-            <S.ResultItem
-              key={result.id}
-              onClick={() => handleSelectFacility(result)}
-            >
+            <S.ResultItem key={result.addressName}>
               <img src="/next.svg" width="40" height="40" />
               <S.FacilityInfo>
-                <Typography.H4Sb>{result.name}</Typography.H4Sb>
+                <Typography.H4Sb>{result.placeName}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">
-                  {result.address}
+                  {result.addressName}
                 </Typography.H5Md>
               </S.FacilityInfo>
             </S.ResultItem>
