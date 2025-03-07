@@ -30,7 +30,7 @@ export default function CalendarComponent({
   );
 
   const { data } = useQuery({
-    queryKey: ["challengeRecord", selectedDate],
+    queryKey: ["challengeRecord", selectedDate, challenge],
     queryFn: () =>
       getChallengeRecord(selectedDate.replace(". ", "-"), challenge?.id),
     staleTime: 5 * 60 * 1000,
@@ -42,7 +42,7 @@ export default function CalendarComponent({
         (item: RecordType) => item.recordDate === dateFormat(new Date()),
       );
 
-      handleTodayWorkout(today);
+      if (today) handleTodayWorkout(today);
     }
   }, [data]);
 

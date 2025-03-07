@@ -55,7 +55,7 @@ export default function ChallengeState() {
 
   return (
     <>
-      <NotificationBanner dayElapsed={myChallenge?.dayElapsed} isChallenge />
+      <NotificationBanner dayElapsed={myChallenge?.me.dayElapsed} isChallenge />
       <S.MateContent>
         {mate?.data && myMateInfo ? (
           <S.MateList>

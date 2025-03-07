@@ -14,6 +14,7 @@ import { queryClient } from "@/components/common/ReactQueryProvider";
 import { useMutation } from "@tanstack/react-query";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";
+import { useChallengeStore } from "@/stores/challengeStore";
 
 interface MateCardProps {
   info: ChallengeUserInfo;
@@ -25,6 +26,7 @@ export default function MateCard({ info, challenge, mateId }: MateCardProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [toast, setToast] = useState("");
+  const { resetChallenge } = useChallengeStore();
 
   const mutation = useMutation({
     mutationFn: () => deleteChallenge(challenge?.challengeId),
@@ -32,6 +34,8 @@ export default function MateCard({ info, challenge, mateId }: MateCardProps) {
       if (status === 200) {
         queryClient.invalidateQueries({ queryKey: ["myChallenge"] });
         queryClient.invalidateQueries({ queryKey: ["challengeRecord"] });
+
+        resetChallenge();
       }
     },
     onError: () => {
