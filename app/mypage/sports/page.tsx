@@ -11,6 +11,7 @@ import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
 import { StepProps } from "@/types/step";
+import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import * as S from "./style";
@@ -42,31 +43,61 @@ const SportsPreference = ({ nextStep }: StepProps) => {
     });
   };
 
-  const buttonClickHandler = async () => {
-    if (isMypageSports) {
-      try {
-        const preferredWorkoutTime = userInfo?.preferredWorkoutTime ?? null;
-        const favoritePlaces = userInfo?.favoritePlaces ?? null;
+  const { mutate: updateWorkoutPreferences } = useMutation({
+    mutationFn: async (requestBody: {
+      preferredWorkoutTime: string | null;
+      favoriteWorkouts: string[];
+      favoritePlaces:
+        | {
+            placeName: string;
+            address: string;
+          }[]
+        | null;
+    }) => {
+      return await setWorkoutPreferences(requestBody);
+    },
 
-        const requestBody = {
-          preferredWorkoutTime,
-          favoriteWorkouts: selectedSports,
-          favoritePlaces,
+    onMutate: async (newData) => {
+      await queryClient.cancelQueries({ queryKey: ["myPageInfo"] });
+
+      const previousData = queryClient.getQueryData(["myPageInfo"]);
+
+      queryClient.setQueryData(["myPageInfo"], (oldData: any) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          preferredWorkoutTime: newData.preferredWorkoutTime,
+          favoriteWorkouts: newData.favoriteWorkouts,
+          favoritePlaces: newData.favoritePlaces,
         };
+      });
 
-        await setWorkoutPreferences(requestBody);
+      return { previousData };
+    },
 
-        await queryClient.refetchQueries({
-          queryKey: ["myPageInfo"],
-          type: "active",
-        });
-
-        router.back();
-      } catch (error) {
-        console.error(error);
-        alert("운동 선호 정보를 수정하는데 실패했습니다.");
+    onError: (error, _newData, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["myPageInfo"], context.previousData);
       }
-    }
+      alert("운동 선호 정보를 수정하는데 실패했습니다.");
+      console.error(error);
+    },
+
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+
+      router.back();
+    },
+  });
+
+  const buttonClickHandler = () => {
+    const requestBody = {
+      preferredWorkoutTime: userInfo?.preferredWorkoutTime ?? null,
+      favoriteWorkouts: selectedSports,
+      favoritePlaces: userInfo?.favoritePlaces ?? null,
+    };
+
+    updateWorkoutPreferences(requestBody);
   };
 
   return (
