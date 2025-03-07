@@ -18,7 +18,6 @@ export const SportsPreferenceWrapper = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 
   overflow-y: auto;
 
