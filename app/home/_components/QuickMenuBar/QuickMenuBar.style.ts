@@ -24,4 +24,12 @@ export const MenuIcon = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 11.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    width: 28px;
+    height: 28px;
+  }
 `;

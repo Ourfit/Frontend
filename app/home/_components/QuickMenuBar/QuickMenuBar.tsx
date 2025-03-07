@@ -1,5 +1,9 @@
 "use client";
 
+import ProfileIcon from "@/assets/images/home-profile.svg";
+import RecordIcon from "@/assets/images/home-record.svg";
+import ChatIcon from "@/assets/images/home-chat.svg";
+import SearchIcon from "@/assets/images/home-search.svg";
 import { usePathname, useRouter } from "next/navigation";
 import * as S from "./QuickMenuBar.style";
 
@@ -7,22 +11,22 @@ const QUICK_MENUS = [
   {
     label: "메이트 찾기",
     path: "/mate",
-    icon: "",
+    icon: <SearchIcon />,
   },
   {
     label: "오픈채팅",
     path: "/mypage/openchat",
-    icon: "/",
+    icon: <ChatIcon />,
   },
   {
     label: "운동 기록",
     path: "/challenge",
-    icon: "",
+    icon: <RecordIcon />,
   },
   {
     label: "내 프로필",
     path: "/mypage",
-    icon: "",
+    icon: <ProfileIcon />,
   },
 ];
 
@@ -43,7 +47,7 @@ export default function QuickMenuBar() {
           key={menu.path}
           onClick={() => handleMenuClick(menu.path)}
         >
-          <S.MenuIcon />
+          <S.MenuIcon>{menu.icon}</S.MenuIcon>
           {menu.label}
         </S.MenuWrapper>
       ))}
