@@ -120,7 +120,7 @@ export const PreferenceFacilityWrapper = styled.div`
   gap: 12px;
 
   width: 100%;
-  height: 165px;
+  height: auto;
   min-height: 165px;
 
   padding: 28px 20px;
@@ -304,7 +304,8 @@ export const PreferenceBadge = styled.div`
 export const PreferencePlaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
   height: auto;
 
   gap: 16px;

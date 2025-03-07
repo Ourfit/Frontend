@@ -157,13 +157,16 @@ export default function MateProfile() {
                 </S.PreferenceTitle>
               </S.PreferenceHeader>
               {data?.favoritePlaces.length === 0 && (
-                <S.NoPreferenceView>
-                  <Typography.H4Md>-</Typography.H4Md>
-                  <Typography.H5Md color="#8A92A3">
-                    선호하는 시설이 없어요.
-                  </Typography.H5Md>
-                </S.NoPreferenceView>
+                <S.PreferencePlaceWrapper>
+                  <S.NoPreferenceView>
+                    <Typography.H4Md>-</Typography.H4Md>
+                    <Typography.H5Md color="#8A92A3">
+                      선호하는 시설이 없어요.
+                    </Typography.H5Md>
+                  </S.NoPreferenceView>
+                </S.PreferencePlaceWrapper>
               )}
+
               <S.PreferencePlaceWrapper>
                 {data?.favoritePlaces.map((place) => (
                   <S.PreferencePlaceInfo key={place.placeName}>
