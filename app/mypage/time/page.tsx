@@ -44,9 +44,36 @@ const TimePreference = () => {
       return await setTimePreference({
         preferredWorkoutTime: selectedTimes,
         favoriteWorkouts:
-          userInfo?.favoriteWorkouts.map((w: WorkoutType) => w.code) ?? null,
+          userInfo?.favoriteWorkouts?.map((w: WorkoutType) => w.code) ?? null,
         favoritePlaces: userInfo?.favoritePlaces ?? null,
       });
+    },
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["myPageInfo"] });
+
+      const previousData = queryClient.getQueryData(["myPageInfo"]);
+
+      queryClient.setQueryData(["myPageInfo"], (oldData: any) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          preferredWorkoutTime: selectedTimes,
+          favoriteWorkouts:
+            oldData.favoriteWorkouts?.map((w: WorkoutType) => w.code) ?? null,
+          favoritePlaces: oldData.favoritePlaces ?? null,
+        };
+      });
+
+      return { previousData };
+    },
+
+    onError: (error, _variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["myPageInfo"], context.previousData);
+      }
+      console.error(error);
+      alert("운동 선호 정보를 수정하는데 실패했습니다.");
     },
 
     onSuccess: async () => {
@@ -55,10 +82,6 @@ const TimePreference = () => {
       if (isMypageTime) {
         router.back();
       }
-    },
-
-    onError: (error) => {
-      console.error(error);
     },
   });
 

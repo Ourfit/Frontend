@@ -10,7 +10,6 @@ import { COLORS } from "@/constants/Theme";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
-import { StepProps } from "@/types/step";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,7 +20,7 @@ export interface WorkoutType {
   name: string;
 }
 
-const SportsPreference = ({ nextStep }: StepProps) => {
+const SportsPreference = () => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
