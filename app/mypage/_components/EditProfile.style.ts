@@ -142,6 +142,7 @@ export const DescriptionHeader = styled.div`
 
   width: 100%;
   height: 24px;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const DescriptionTitle = styled.div`

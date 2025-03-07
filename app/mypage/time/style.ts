@@ -55,6 +55,7 @@ export const PreferenceTimeWrapper = styled.div`
 
   width: 100%;
   height: auto;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const PreferenceTime = styled.div`

@@ -13,6 +13,7 @@ export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  color: ${COLORS.BASE_BLACK};
 
   & > span:last-child {
     color: ${COLORS.GRAYSCALE_600};

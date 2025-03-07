@@ -10,6 +10,7 @@ export const PreferenceFacilityWrapper = styled.div`
 
   width: 100%;
   height: auto;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const PreferenceHeader = styled.div`
