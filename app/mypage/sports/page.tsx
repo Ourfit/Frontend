@@ -15,7 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import * as S from "./style";
 
-interface WorkoutType {
+export interface WorkoutType {
   code: string;
   name: string;
 }
@@ -27,7 +27,7 @@ const SportsPreference = ({ nextStep }: StepProps) => {
   const isMypageSports = pathname === "/mypage/sports";
   const isSignup = pathname === "/auth/signup";
 
-  const { data: userInfo, refetch } = useMyPageInfo();
+  const { data: userInfo } = useMyPageInfo();
   const { data: workoutTypes } = useWorkoutTypes();
 
   const handleSportClick = (sport: string) => {

@@ -1,15 +1,15 @@
 "use client";
 
 import { Typography } from "@/components/atoms/Typography";
-import React from "react";
-import * as S from "./style";
+import { TIME_MAPPING } from "@/constants/Time";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import Link from "next/link";
+import * as S from "./style";
 
-interface TimeProps {
-  preferences: string[];
-}
+export default function Time() {
+  const { data: userInfo } = useMyPageInfo();
 
-export default function Time({ preferences}: TimeProps) {
+  const preferenceKey = userInfo?.preferredWorkoutTime;
   return (
     <S.PreferenceTimeWrapper>
       <S.PreferenceHeader>
@@ -24,7 +24,9 @@ export default function Time({ preferences}: TimeProps) {
         </Link>
       </S.PreferenceHeader>
       <S.PreferenceTime>
-        <S.PreferenceTimeTitle>주말 아침</S.PreferenceTimeTitle>
+        <S.PreferenceTimeTitle>
+          {preferenceKey ? TIME_MAPPING[preferenceKey] : "선호 시간 없음"}
+        </S.PreferenceTimeTitle>
         <S.PreferenceTimeRange>오전 9시 ~ 오전 11시</S.PreferenceTimeRange>
       </S.PreferenceTime>
     </S.PreferenceTimeWrapper>

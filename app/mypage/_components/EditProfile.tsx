@@ -161,7 +161,7 @@ export default function EditProfile({
               handleNavigate={() => handleNavigate(places[0])}
             />
             <S.Line />
-            <Time preferences={preferences} />
+            <Time />
           </S.PreferenceContainer>
         </S.ProfileSection>
       </S.PageContainer>
