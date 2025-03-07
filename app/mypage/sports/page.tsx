@@ -127,21 +127,17 @@ const SportsPreference = () => {
             ))}
           </S.TextButtonWrapper>
         </S.InfoContainer>
+        <S.ButtonContainer>
+          <Button
+            disabled={selectedSports.length === 0}
+            size={BUTTON_SIZES.LARGE}
+            variant={BUTTON_VARIANTS.PRIMARY}
+            onClick={buttonClickHandler}
+          >
+            변경완료
+          </Button>
+        </S.ButtonContainer>
       </S.SportsPreferenceWrapper>
-      <S.ButtonContainer>
-        <Button
-          disabled={selectedSports.length === 0}
-          size={BUTTON_SIZES.LARGE}
-          variant={BUTTON_VARIANTS.PRIMARY}
-          onClick={buttonClickHandler}
-          style={{
-            maxWidth: "410px",
-            height: "53px",
-          }}
-        >
-          {isMypageSports ? "변경 완료" : "다음"}
-        </Button>
-      </S.ButtonContainer>
     </>
   );
 };

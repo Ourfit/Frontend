@@ -18,13 +18,21 @@ export const SportsPreferenceWrapper = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
   gap: 32px;
   color: ${COLORS.GRAYSCALE_900};
   flex-grow: ${({ $isHeightFull = true }) => ($isHeightFull ? "1" : "auto")};
   padding: 48px 20px 0px 20px;
   box-sizing: border-box;
-
-  top: 97px;
 `;
 
 export const SignupIntroContainer = styled.div`
@@ -48,11 +56,12 @@ export const InfoContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
+  max-width: 410px;
   justify-content: center;
   align-items: center;
+  margin-top: auto;
 
-  position: absolute;
-  bottom: 84px;
+  padding: 12px 0px 20px 0px;
 `;
 
 export const ButtonWrapper = styled.div`
