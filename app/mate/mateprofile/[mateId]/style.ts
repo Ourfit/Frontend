@@ -402,24 +402,26 @@ export const PreferenceTimeRange = styled.span`
   color: ${COLORS.GRAYSCALE_600};
 `;
 
-export const PrimaryButton = styled.button`
+export const SkillLevelInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 8px 10px;
   width: auto;
   height: 34px;
 
+  box-sizing: border-box;
   font-size: 12px;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.12px;
 
-  box-sizing: border-box;
-
-  color: ${COLORS.BLUE_500};
+  color: #004dff;
 
   background-color: ${COLORS.BLUE_50};
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.div`

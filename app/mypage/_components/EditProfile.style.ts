@@ -130,7 +130,11 @@ export const ProfileInfo = styled.p`
   color: #888888;
 `;
 
-export const PrimaryButton = styled.button`
+export const SkillLevelInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 8px 10px;
   width: 68px;
   height: 34px;
@@ -146,7 +150,6 @@ export const PrimaryButton = styled.button`
 
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const ProfileDescription = styled.div`

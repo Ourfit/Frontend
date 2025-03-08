@@ -112,7 +112,7 @@ export default function FacilitySearch() {
 
   return (
     <>
-      <MS.facilityContainer2>
+      <MS.facilityNewContainer>
         <MS.facilityContent>
           <MS.facilityTitle>
             <Typography.H1Sb>선호하는</Typography.H1Sb>
@@ -198,7 +198,7 @@ export default function FacilitySearch() {
             변경완료
           </Button>
         </MS.ButtonContainer>
-      </MS.facilityContainer2>
+      </MS.facilityNewContainer>
     </>
   );
 }

@@ -118,9 +118,9 @@ export default function EditProfile({
                     {gender === "M" ? "남성" : "여성"} · 만 {age}세
                   </S.ProfileInfo>
                 </S.ProfileNameInfoWrapper>
-                <S.PrimaryButton>
+                <S.SkillLevelInfo>
                   {skillLevelMap[skillLevel || "BEGINNER"]}
-                </S.PrimaryButton>
+                </S.SkillLevelInfo>
               </S.ProfileHeaderWrapper>
             </S.ProfileContainerWrapper>
 

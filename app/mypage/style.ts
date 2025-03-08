@@ -292,7 +292,11 @@ export const ButtonWrapper = styled.div`
   margin-top: 15px;
 `;
 
-export const PrimaryButton = styled.button`
+export const SkillLevelInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 8px 10px;
   width: 68px;
   height: 34px;
@@ -309,7 +313,6 @@ export const PrimaryButton = styled.button`
   background-color: ${COLORS.BLUE_50};
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const SecondaryButton = styled.button`

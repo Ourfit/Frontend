@@ -162,12 +162,13 @@ export const PreferenceButton = styled.button`
 export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  max-width: 410px;
+  max-width: 450px;
   justify-content: center;
   align-items: center;
   margin-top: auto;
 
-  padding: 12px 0px 20px 0px;
+  padding: 12px 20px 20px 20px;
+  box-sizing: border-box;
 `;
 
 export const facilityContainer = styled.div`
@@ -181,15 +182,24 @@ export const facilityContainer = styled.div`
   gap: 36px;
 `;
 
-export const facilityContainer2 = styled.div`
+export const facilityNewContainer = styled.div`
   display: flex;
   flex-direction: column;
 
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
+  flex: 1;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
 
   height: 100%;
+
   gap: 36px;
 `;
 
@@ -236,8 +246,9 @@ export const ResultList = styled.div`
   gap: 16px;
 
   width: 100%;
-  max-width: 410px;
+  max-width: 450px;
   padding: 0px 20px;
+  box-sizing: border-box;
 
   overflow-y: auto;
 
@@ -252,11 +263,14 @@ export const ResultList = styled.div`
     background-color: transparent;
   }
 
-  height: 100%;
+  height: auto;
+  min-height: 200px;
+  flex: 1;
 `;
 
 export const ResultItem = styled.div`
   display: flex;
+  justify-content: flex-start;
   gap: 12px;
 
   width: 100%;
@@ -268,6 +282,7 @@ export const FacilityInfo = styled.div`
   flex-direction: column;
 
   align-items: flex-start;
+  gap: 2px;
 
   width: 298px;
   height: 100%;

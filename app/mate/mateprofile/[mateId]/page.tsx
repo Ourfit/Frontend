@@ -24,9 +24,9 @@ import { JSX, useState, useTransition } from "react";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
-    BEGINNER: "운동 초보",
-    INTERMEDIATE: "운동 중수",
-    ADVANCED: "운동 고수",
+    BEGINNER: "운동초보",
+    INTERMEDIATE: "운동중수",
+    ADVANCED: "운동고수",
   };
 
   const iconMapping: Record<string, JSX.Element> = {
@@ -108,9 +108,9 @@ export default function MateProfile() {
                     {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
                   </S.ProfileInfo>
                 </S.ProfileNameInfoWrapper>
-                <S.PrimaryButton>
+                <S.SkillLevelInfo>
                   {skillLevelMap[data?.skillLevel || ""] || "미정"}
-                </S.PrimaryButton>
+                </S.SkillLevelInfo>
               </S.ProfileHeaderWrapper>
             </S.ProfileContainerWrapper>
 
