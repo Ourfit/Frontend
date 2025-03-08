@@ -1,5 +1,6 @@
 import { useTokenStore } from "@/stores/tokenStore";
-import axios from "axios";
+
+import { api } from "../axiosInterceptor";
 
 export const getMypageInfo = async () => {
   try {
@@ -10,7 +11,7 @@ export const getMypageInfo = async () => {
       throw new Error("Unauthorized");
     }
 
-    const response = await axios.get(
+    const response = await api(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me`,
       {
         headers: {
