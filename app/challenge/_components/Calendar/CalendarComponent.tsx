@@ -12,7 +12,7 @@ import { RecordType } from "@/constants/Calendar";
 interface CalendarComponentProps {
   onSelectionChange?: (date: Date | null) => void;
   isRegistration?: boolean;
-  handleTodayWorkout: (record: RecordType) => void;
+  handleTodayWorkout?: (record: RecordType) => void;
 }
 
 export default function CalendarComponent({
@@ -42,7 +42,7 @@ export default function CalendarComponent({
         (item: RecordType) => item.recordDate === dateFormat(new Date()),
       );
 
-      if (today) handleTodayWorkout(today);
+      if (today && handleTodayWorkout) handleTodayWorkout(today);
     }
   }, [data]);
 
