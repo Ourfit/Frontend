@@ -13,9 +13,15 @@ import { setFacilityPreference } from "@/services/mypage/setFacilityPreferences"
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
+
+type FacilityRequestBody = {
+  preferredWorkoutTime: string | null;
+  favoriteWorkouts: { code: string; name: string }[] | null;
+  favoritePlaces: { placeName: string; address: string }[] | null;
+};
 
 export default function FacilitySearch() {
   const [facilityValue, setFacilityValue] = useState("");
@@ -59,7 +65,12 @@ export default function FacilitySearch() {
     setSelectedPreferenceFacilities(updatedFacilities);
   };
 
-  const { mutate: updateFacilityPreference } = useMutation({
+  const { mutate: updateFacilityPreference } = useMutation<
+    void,
+    unknown,
+    FacilityRequestBody,
+    any
+  >({
     mutationFn: () =>
       setFacilityPreference({
         preferredWorkoutTime: userInfo?.preferredWorkoutTime ?? null,
@@ -77,10 +88,9 @@ export default function FacilitySearch() {
         if (!oldData) return oldData;
         return {
           ...oldData,
-          preferredWorkoutTime: oldData.preferredWorkoutTime,
-          favoriteWorkouts:
-            oldData.favoriteWorkouts?.map((w: WorkoutType) => w.code) ?? null,
-          favoritePlaces: oldData.favoritePlaces ?? null,
+          preferredWorkoutTime: newData.preferredWorkoutTime,
+          favoriteWorkouts: newData.favoriteWorkouts,
+          favoritePlaces: newData.favoritePlaces,
         };
       });
 
@@ -103,12 +113,23 @@ export default function FacilitySearch() {
 
   const buttonClickHandler = () => {
     if (selectedPreferenceFacilities.length > 0) {
-      updateFacilityPreference();
+      const requestBody: FacilityRequestBody = {
+        preferredWorkoutTime: userInfo?.preferredWorkoutTime ?? null,
+        favoriteWorkouts: userInfo?.favoriteWorkouts ?? null,
+        favoritePlaces: selectedPreferenceFacilities,
+      };
+      updateFacilityPreference(requestBody);
     }
   };
 
   const pathname = usePathname();
   const isMypageFacility = pathname === "/mypage/facility";
+
+  useEffect(() => {
+    if (userInfo?.favoritePlaces) {
+      setSelectedPreferenceFacilities(userInfo.favoritePlaces);
+    }
+  }, [userInfo]);
 
   return (
     <>

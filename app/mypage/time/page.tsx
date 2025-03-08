@@ -12,7 +12,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { TIME_PREFERENCES } from "@/constants/Signup";
 import { COLORS } from "@/constants/Theme";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
@@ -90,6 +90,12 @@ const TimePreference = () => {
       updateTimePreference();
     }
   };
+
+  useEffect(() => {
+    if (userInfo?.preferredWorkoutTime) {
+      setSelectedTimes(userInfo.preferredWorkoutTime);
+    }
+  }, [userInfo]);
 
   return (
     <>

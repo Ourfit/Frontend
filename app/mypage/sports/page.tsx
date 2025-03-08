@@ -12,7 +12,7 @@ import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 
 export interface WorkoutType {
@@ -98,6 +98,14 @@ const SportsPreference = () => {
 
     updateWorkoutPreferences(requestBody);
   };
+
+  useEffect(() => {
+    if (userInfo?.favoriteWorkouts) {
+      setSelectedSports(
+        userInfo.favoriteWorkouts.map((v: WorkoutType) => v.code),
+      );
+    }
+  }, [userInfo]);
 
   return (
     <>
