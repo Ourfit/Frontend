@@ -235,7 +235,7 @@ export const IconWrapper = styled.div`
   .circle-x-icon {
     position: absolute;
 
-    top: -2px;
+    top: -1px;
     left: 20px;
     width: 18px;
     height: 18px;
