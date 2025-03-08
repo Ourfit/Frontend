@@ -24,8 +24,9 @@ import { sendMateRequest } from "@/services/mate/sendMateRequest";
 import { useNotificationStore } from "@/stores/NotificationStore";
 import getTimeSlot from "@/utils/getTimeSlot";
 import { useParams, useRouter } from "next/navigation";
-import { JSX, useEffect, useState, useTransition } from "react";
+import { JSX, use, useEffect, useState, useTransition } from "react";
 import LoadingIcon from "@/assets/images/loader-white.svg";
+import { AxiosError } from "axios";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -125,6 +126,18 @@ export default function MateProfile() {
       }
     });
   };
+
+  useEffect(() => {
+    if (error) {
+      const err = error as AxiosError;
+
+      if (err.status === 404) {
+        setToastMessage("탈퇴한 사용자입니다.");
+        setToastStatus(TOAST_STATUSES.ERROR);
+        setShowToast(true);
+      }
+    }
+  }, [error]);
 
   useEffect(() => {
     if (notification.type) {

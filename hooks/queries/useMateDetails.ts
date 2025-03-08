@@ -10,5 +10,6 @@ export function useMateDetail(userId?: number) {
     },
     enabled: !!userId,
     staleTime: 60 * 1000,
+    retry: false,
   });
 }
