@@ -86,6 +86,7 @@ export const BackgroundImage = styled.img`
   max-width: 80px;
   height: 100%;
   max-height: 80px;
+  object-fit: cover;
 
   transition: all 0.3s ease;
 `;
@@ -125,7 +126,7 @@ export const ProfileOverviewWrapper = styled.div`
   width: 100%;
   height: auto;
 
-  padding: 0px 20px 20px 20px;
+  padding: 0px 20px 32px 20px;
 
   box-sizing: border-box;
 `;
@@ -136,7 +137,6 @@ export const PreferenceSectionWrapper = styled.div`
   gap: 16px;
 
   width: 100%;
-  height: 137px;
 
   padding: 28px 20px;
   box-sizing: border-box;
@@ -161,7 +161,6 @@ export const PreferenceTimeWrapper = styled.div`
   gap: 12px;
 
   width: 100%;
-  height: 167px;
 
   padding: 28px 20px;
   box-sizing: border-box;
@@ -243,13 +242,10 @@ export const DescriptionContent = styled.div`
 export const PreferenceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
   width: 100%;
   max-width: 450px;
   height: auto;
-
-  margin-top: 16px;
 `;
 
 export const PreferenceHeader = styled.div`

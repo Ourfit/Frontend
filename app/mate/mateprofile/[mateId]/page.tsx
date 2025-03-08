@@ -27,6 +27,7 @@ import { useParams, useRouter } from "next/navigation";
 import { JSX, use, useEffect, useState, useTransition } from "react";
 import LoadingIcon from "@/assets/images/loader-white.svg";
 import { AxiosError } from "axios";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -164,11 +165,15 @@ export default function MateProfile() {
           <S.ProfileOverviewWrapper>
             <S.ProfileContainerWrapper>
               <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-                <S.BackgroundImage
-                  className="background-img"
-                  src={data?.profileUrl}
-                  alt={data?.nickname}
-                />
+                {data?.profileUrl ? (
+                  <S.BackgroundImage
+                    className="background-img"
+                    src={data.profileUrl}
+                    alt={data?.nickname}
+                  />
+                ) : (
+                  <DefaultProfileImg size={34} />
+                )}
               </S.ProfileImageWrapper>
               <S.DumbberIconWrapper>
                 <DumbbbelIcon color="#FFFFFF" />
