@@ -77,6 +77,10 @@ export default function ExploreMate() {
     !!filters.gender || !!filters.time || filters.sports.length > 0;
 
   useEffect(() => {
+    if (filter.time || filter.sports.length) {
+      setShowTooltip(false);
+    }
+
     return () => {
       resetFilter();
     };
