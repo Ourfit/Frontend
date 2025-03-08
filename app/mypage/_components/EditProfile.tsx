@@ -77,14 +77,6 @@ export default function EditProfile({
     address: string;
   } | null>(null);
 
-  const handleNavigate = (facility: {
-    id: number;
-    name: string;
-    address: string;
-  }) => {
-    setSelectedPreferenceFacility(facility);
-  };
-
   return (
     <>
       <Header title="프로필 편집" onClick={handleEditProfile} />
