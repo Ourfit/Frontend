@@ -52,6 +52,7 @@ export default function NotificationBanner({
         setToast("💪🏻 오늘 운동 완료! 완전 멋져요!");
         setTimeout(() => setToast(""), 3000);
         queryClient.invalidateQueries({ queryKey: ["challengeRecord"] });
+        queryClient.invalidateQueries({ queryKey: ["myChallenge"] });
       }
     },
     onError: () => {
