@@ -21,6 +21,7 @@ export const PageContainer = styled.div`
 `;
 
 export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,14 +36,38 @@ export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
     props.$isEditingProfile ? "0px solid #F9F9FA" : "10px solid #F9F9FA"};
 `;
 
+export const ProfileContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const ProfileHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileNameInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+`;
+
 export const ProfileOverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 100%;
-  height: 328px;
-  padding: 0px 20px;
+  height: auto;
+  padding: 0px 20px 20px 20px;
   box-sizing: border-box;
 `;
 
@@ -51,7 +76,8 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 1px solid gray;
+
+  border: 2px solid ${COLORS.GRAYSCALE_100};
   overflow: hidden;
   flex-shrink: 0;
 
@@ -104,11 +130,14 @@ export const ProfileInfo = styled.p`
   color: #888888;
 `;
 
-export const PrimaryButton = styled.button`
+export const SkillLevelInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 8px 10px;
   width: 68px;
   height: 34px;
-  margin-top: 16px;
 
   font-size: 12px;
   font-weight: 600;
@@ -121,7 +150,6 @@ export const PrimaryButton = styled.button`
 
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const ProfileDescription = styled.div`
@@ -132,7 +160,7 @@ export const ProfileDescription = styled.div`
   max-width: 450px;
   height: 102px;
 
-  margin: 29px 0px;
+  margin: 29px 0px 0px 0px;
 `;
 
 export const DescriptionHeader = styled.div`
@@ -193,6 +221,9 @@ export const DescriptionContent = styled.textarea`
   line-height: 150%;
   letter-spacing: -0.13px;
 
+  font-family: inherit;
+  font-style: normal;
+
   outline: none;
   resize: none;
   background: transparent;
@@ -219,4 +250,22 @@ export const Line = styled.div`
 
   height: 10px;
   background-color: ${COLORS.GRAYSCALE_50};
+`;
+
+export const DumbberIconWrapper = styled.div`
+  position: absolute;
+  top: 50px;
+  right: calc(50% - 38px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #004dff;
+
+  width: 28px;
+  height: 28px;
+  z-index: 50;
+
+  border-radius: 50%;
 `;

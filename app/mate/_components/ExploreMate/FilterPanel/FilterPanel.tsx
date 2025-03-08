@@ -41,7 +41,7 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
 
   useEffect(() => {
     setIsApplyEnabled(
-      !!selectedGender && !!selectedTime && selectedSports.length > 0,
+      !!selectedGender || !!selectedTime || selectedSports.length > 0,
     );
   }, [selectedGender, selectedTime, selectedSports]);
 

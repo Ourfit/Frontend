@@ -34,11 +34,36 @@ export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
   background-color: #ffffff;
 `;
 
+export const ProfileContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const ProfileHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileNameInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+`;
+
 export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   position: relative;
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  border: 2px solid ${COLORS.GRAYSCALE_100};
 
   overflow: hidden;
 
@@ -92,13 +117,15 @@ export const ProfileInfo = styled.p`
 `;
 
 export const ProfileOverviewWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 100%;
-  height: 328px;
-  padding: 0px 20px;
+  height: auto;
+
+  padding: 0px 20px 20px 20px;
 
   box-sizing: border-box;
 `;
@@ -121,7 +148,7 @@ export const PreferenceFacilityWrapper = styled.div`
   gap: 12px;
 
   width: 100%;
-  height: 165px;
+  height: auto;
   min-height: 165px;
 
   padding: 28px 20px;
@@ -305,7 +332,8 @@ export const PreferenceBadge = styled.div`
 export const PreferencePlaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
   height: auto;
 
   gap: 16px;
@@ -375,25 +403,26 @@ export const PreferenceTimeRange = styled.span`
   color: ${COLORS.GRAYSCALE_600};
 `;
 
-export const PrimaryButton = styled.button`
+export const SkillLevelInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 8px 10px;
   width: auto;
   height: 34px;
-  margin-top: 16px;
 
+  box-sizing: border-box;
   font-size: 12px;
   font-weight: 600;
   line-height: 150%;
   letter-spacing: -0.12px;
 
-  box-sizing: border-box;
-
-  color: ${COLORS.BLUE_500};
+  color: #004dff;
 
   background-color: ${COLORS.BLUE_50};
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -491,4 +520,22 @@ export const Line = styled.div`
   height: 10px;
 
   background-color: ${COLORS.GRAYSCALE_50};
+`;
+
+export const DumbberIconWrapper = styled.div`
+  position: absolute;
+  top: 55px;
+  right: calc(50% - 38px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #004dff;
+
+  width: 28px;
+  height: 28px;
+  z-index: 50;
+
+  border-radius: 50%;
 `;

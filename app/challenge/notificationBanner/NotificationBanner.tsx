@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DumbbellsIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
-import * as S from "../../home/_components/NotificationBanner/NotificationBanner.style";
+import * as S from "@/components/NotificationBanner/NotificationBanner.style";
 import * as CS from "./NotificationBanner.style";
 import { CheckButton } from "../mate/Profile/MateProfile.style";
 import XButtonIcon from "@/assets/images/x.svg";

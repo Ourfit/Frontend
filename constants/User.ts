@@ -14,3 +14,9 @@ export const GROUP_TYPES = {
   WORKOUT: "운동",
   TIME: "시간",
 } as const;
+
+export const skillLevelMap: Record<string, string> = {
+  BEGINNER: "운동초보",
+  INTERMEDIATE: "운동중수",
+  ADVANCED: "운동고수",
+};

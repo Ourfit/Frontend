@@ -1,8 +1,12 @@
 "use client";
 
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_STATUSES } from "@/constants/Toast";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { setImageUrl } from "@/services/mypage/setImageUrl";
-import { useUserInfoStore } from "@/stores/userInfoStore";
+import { ToastProps } from "@/types/toast";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
+import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import EditBasicInfo from "./_components/EditBasicInfo";
 import EditProfile from "./_components/EditProfile";
@@ -26,7 +30,8 @@ const managementLinks = [
 ];
 
 export default function Mypage() {
-  const { userInfo, fetchUserInfo } = useUserInfoStore();
+  const [toast, setToast] = useState<ToastProps | null>(null);
+  const { data: userInfo, refetch } = useMyPageInfo();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
@@ -72,16 +77,20 @@ export default function Mypage() {
 
         await setImageUrl(file);
 
-        await fetchUserInfo();
-      } catch (error) {
-        console.error("Error reading file:", error);
+        await refetch();
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response?.status === 429) {
+          setToast({
+            message: "1분 뒤에 프로필 변경이 가능해요! ",
+            status: TOAST_STATUSES.ERROR,
+          });
+          setTimeout(() => {
+            setToast(null);
+          }, 3000);
+        }
       }
     }
   };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
 
   useEffect(() => {
     if (userInfo?.introduction !== undefined) {
@@ -89,44 +98,43 @@ export default function Mypage() {
     }
   }, [userInfo?.introduction]);
 
-  if (isEditingProfile) {
-    return (
-      <EditProfile
-        handleEditProfile={handleEditProfile}
-        isEditingDescription={isEditingDescription}
-        profileImage={userInfo?.profileUrl}
-        nickname={userInfo?.nickname}
-        gender={userInfo?.gender}
-        age={userInfo?.age}
-        skillLevel={userInfo?.skillLevel}
-        handleProfileImageClick={() => fileInputRef.current?.click()}
-        handleEditDescription={handleEditDescription}
-        fileInputRef={fileInputRef}
-        handleFileChange={handleFileChange}
-        introduction={introduction}
-        handleIntroductionChange={handleIntroductionChange}
-        handleIntroductionBlur={handleIntroductionBlur}
-        descriptionInputRef={descriptionInputRef}
-      />
-    );
-  }
-
-  if (isEditingBasicInfo) {
-    return <EditBasicInfo handleEditBasicInfo={handleEditBasicInfo} />;
-  }
-
   return (
-    <ViewProfile
-      profileImage={userInfo?.profileUrl}
-      nickname={userInfo?.nickname}
-      gender={userInfo?.gender}
-      sns={userInfo?.oAuthProvider}
-      age={userInfo?.age}
-      email={userInfo?.email}
-      skillLevel={userInfo?.skillLevel}
-      handleEditProfile={handleEditProfile}
-      handleEditBasicInfo={handleEditBasicInfo}
-      managementLinks={managementLinks}
-    />
+    <>
+      {isEditingProfile ? (
+        <EditProfile
+          handleEditProfile={handleEditProfile}
+          isEditingDescription={isEditingDescription}
+          profileImage={userInfo?.profileUrl}
+          nickname={userInfo?.nickname}
+          gender={userInfo?.gender}
+          age={userInfo?.age}
+          skillLevel={userInfo?.skillLevel}
+          handleProfileImageClick={() => fileInputRef.current?.click()}
+          handleEditDescription={handleEditDescription}
+          fileInputRef={fileInputRef}
+          handleFileChange={handleFileChange}
+          introduction={introduction}
+          handleIntroductionChange={handleIntroductionChange}
+          handleIntroductionBlur={handleIntroductionBlur}
+          descriptionInputRef={descriptionInputRef}
+        />
+      ) : isEditingBasicInfo ? (
+        <EditBasicInfo handleEditBasicInfo={handleEditBasicInfo} />
+      ) : (
+        <ViewProfile
+          profileImage={userInfo?.profileUrl}
+          nickname={userInfo?.nickname}
+          gender={userInfo?.gender}
+          sns={userInfo?.oAuthProvider}
+          age={userInfo?.age}
+          email={userInfo?.email}
+          skillLevel={userInfo?.skillLevel}
+          handleEditProfile={handleEditProfile}
+          handleEditBasicInfo={handleEditBasicInfo}
+          managementLinks={managementLinks}
+        />
+      )}
+      {toast && <Toast message={toast.message} status={toast.status} />}
+    </>
   );
 }

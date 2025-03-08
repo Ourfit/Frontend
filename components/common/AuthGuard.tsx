@@ -1,11 +1,10 @@
 "use client";
 
-import { useTokenStore } from "@/stores/tokenStore";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { token } = useTokenStore();
+  const isLogin = localStorage.getItem("token");
   const router = useRouter();
   const pathname = usePathname();
   const isExcept =
@@ -14,12 +13,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     pathname !== "/auth/signup";
 
   useEffect(() => {
-    if (!token && isExcept) {
+    if (!isLogin && isExcept) {
       router.replace("/auth/login");
     }
-  }, [token]);
+  }, [isLogin, isExcept]);
 
-  if (!token && isExcept) return null;
+  if (!isLogin && isExcept) return null;
 
   return <>{children}</>;
 }

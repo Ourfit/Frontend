@@ -22,7 +22,7 @@ export default function NotificationsPage() {
     useInfiniteQuery({
       initialPageParam: 0,
       queryKey: ["mates"],
-      queryFn: ({ pageParam }) => getMatesHistory({ pageParam }),
+      queryFn: ({ pageParam }) => getMatesHistory({ pageParam, size: 50 }),
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.pageable.pageNumber + 1 : null,
     });

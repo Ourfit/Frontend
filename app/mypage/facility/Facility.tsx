@@ -1,47 +1,18 @@
 "use client";
 
 import { Typography } from "@/components/atoms/Typography";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import * as S from "./style";
 
-interface FacilityData {
-  id: number;
-  name: string;
+interface placeInfoProps {
+  placeName: string;
   address: string;
 }
 
-interface FacilityProps {
-  selectedPreferenceFacility: FacilityData | null;
-  handleNavigate: (facility: FacilityData) => void;
-}
-
-export default function Facility({
-  selectedPreferenceFacility,
-  handleNavigate,
-}: FacilityProps) {
-  const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
-    useState<FacilityData[]>([
-      {
-        id: 1,
-        name: "에이블짐 잠실점",
-        address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-      },
-      {
-        id: 2,
-        name: "에이블짐 홍대점",
-        address: "서울 마포구 양화로12길 34 2층 201호",
-      },
-    ]);
-
-  useEffect(() => {
-    const storedFacilities = localStorage.getItem(
-      "selectedPreferenceFacilities",
-    );
-    if (storedFacilities) {
-      setSelectedPreferenceFacilities(JSON.parse(storedFacilities));
-    }
-  }, []);
+export default function Facility() {
+  const { data: userInfo } = useMyPageInfo();
+  const favoritePlaces = userInfo?.favoritePlaces ?? [];
 
   return (
     <>
@@ -50,7 +21,7 @@ export default function Facility({
           <S.PreferenceTitle>
             선호 운동 시설
             <Typography.H3Bd style={{ marginLeft: "4px", color: "#004DFF" }}>
-              {selectedPreferenceFacilities.length}
+              {favoritePlaces.length}
             </Typography.H3Bd>
           </S.PreferenceTitle>
           <Link href="/mypage/facility">
@@ -58,14 +29,16 @@ export default function Facility({
           </Link>
         </S.PreferenceHeader>
         <S.PreferencePlaceWrapper2>
-          {selectedPreferenceFacilities.length > 0 ? (
-            selectedPreferenceFacilities.map((facility) => (
-              <S.PreferencePlaceInfo key={facility.id}>
-                <S.PreferencePlaceName>{facility.name}</S.PreferencePlaceName>
-                <S.PreferencePlaceAddress>
-                  {facility.address}
-                </S.PreferencePlaceAddress>
-              </S.PreferencePlaceInfo>
+          {favoritePlaces.length > 0 ? (
+            favoritePlaces.map((place: placeInfoProps) => (
+              <S.PreferencePlaceItem key={place.placeName}>
+                <Typography.H4Sb color="#27282D">
+                  {place.placeName}
+                </Typography.H4Sb>
+                <Typography.H6Md color="#8A92A3">
+                  {place.address}
+                </Typography.H6Md>
+              </S.PreferencePlaceItem>
             ))
           ) : (
             <Typography.H4Md color="#8A92A3">

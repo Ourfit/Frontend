@@ -3,7 +3,10 @@
 import Modal from "@/app/mate/_components/Modal/Modal";
 import * as S from "@/app/mate/mateprofile/[mateId]/style";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
-import Dumbbels from "@/assets/images/dumbbells.svg";
+import {
+  default as DumbbbelIcon,
+  default as Dumbbels,
+} from "@/assets/images/dumbbells.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
@@ -15,23 +18,15 @@ import { TIME_MAPPING } from "@/constants/Time";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
+import getTimeSlot from "@/utils/getTimeSlot";
 import { useParams } from "next/navigation";
 import { JSX, useState, useTransition } from "react";
 
-function getTimeSlot(
-  timeKey: string,
-): "morning" | "afternoon" | "evening" | "" {
-  if (timeKey.includes("MORNING")) return "morning";
-  if (timeKey.includes("AFTERNOON")) return "afternoon";
-  if (timeKey.includes("EVENING")) return "evening";
-  return "";
-}
-
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
-    BEGINNER: "운동 초보",
-    INTERMEDIATE: "운동 중수",
-    ADVANCED: "운동 고수",
+    BEGINNER: "운동초보",
+    INTERMEDIATE: "운동중수",
+    ADVANCED: "운동고수",
   };
 
   const iconMapping: Record<string, JSX.Element> = {
@@ -94,21 +89,31 @@ export default function MateProfile() {
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={isEditingProfile}>
           <S.ProfileOverviewWrapper>
-            <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-              <S.BackgroundImage
-                className="background-img"
-                src={data?.profileUrl}
-                alt={data?.nickname}
-              />
-            </S.ProfileImageWrapper>
+            <S.ProfileContainerWrapper>
+              <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
+                <S.BackgroundImage
+                  className="background-img"
+                  src={data?.profileUrl}
+                  alt={data?.nickname}
+                />
+              </S.ProfileImageWrapper>
+              <S.DumbberIconWrapper>
+                <DumbbbelIcon color="#FFFFFF" />
+              </S.DumbberIconWrapper>
 
-            <S.ProfileName>{data?.nickname}</S.ProfileName>
-            <S.ProfileInfo>
-              {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
-            </S.ProfileInfo>
-            <S.PrimaryButton>
-              {skillLevelMap[data?.skillLevel || ""] || "미정"}
-            </S.PrimaryButton>
+              <S.ProfileHeaderWrapper>
+                <S.ProfileNameInfoWrapper>
+                  <S.ProfileName>{data?.nickname}</S.ProfileName>
+                  <S.ProfileInfo>
+                    {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
+                  </S.ProfileInfo>
+                </S.ProfileNameInfoWrapper>
+                <S.SkillLevelInfo>
+                  {skillLevelMap[data?.skillLevel || ""] || "미정"}
+                </S.SkillLevelInfo>
+              </S.ProfileHeaderWrapper>
+            </S.ProfileContainerWrapper>
+
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>
@@ -138,7 +143,7 @@ export default function MateProfile() {
                 {data?.favoriteWorkouts.map((sport) => (
                   <S.PreferenceBadge key={sport.code}>
                     <Dumbbels color={"#004DFF"} />
-                    {sport.name}
+                    <Typography.H4Md>{sport.name}</Typography.H4Md>
                   </S.PreferenceBadge>
                 ))}
               </S.PreferenceContent>
@@ -157,13 +162,16 @@ export default function MateProfile() {
                 </S.PreferenceTitle>
               </S.PreferenceHeader>
               {data?.favoritePlaces.length === 0 && (
-                <S.NoPreferenceView>
-                  <Typography.H4Md>-</Typography.H4Md>
-                  <Typography.H5Md color="#8A92A3">
-                    선호하는 시설이 없어요.
-                  </Typography.H5Md>
-                </S.NoPreferenceView>
+                <S.PreferencePlaceWrapper>
+                  <S.NoPreferenceView>
+                    <Typography.H4Md>-</Typography.H4Md>
+                    <Typography.H5Md color="#8A92A3">
+                      선호하는 시설이 없어요.
+                    </Typography.H5Md>
+                  </S.NoPreferenceView>
+                </S.PreferencePlaceWrapper>
               )}
+
               <S.PreferencePlaceWrapper>
                 {data?.favoritePlaces.map((place) => (
                   <S.PreferencePlaceInfo key={place.placeName}>

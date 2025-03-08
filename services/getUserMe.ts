@@ -6,7 +6,7 @@ export default async function getUserMe() {
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me`,
     );
 
-    return response.data;
+    if (response.data.message === "OK") return response.data.data;
   } catch (err) {
     throw err;
   }

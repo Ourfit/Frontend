@@ -1,13 +1,72 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
 
-export const PreferenceSectionWrapper = styled.div`
+export const TimePreferenceContainer = styled.div<{
+  $isHeightFull?: boolean;
+}>`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 36px;
+  height: ${({ $isHeightFull = true }) => ($isHeightFull ? "100%" : "auto")};
+
+  padding: 48px 20px 0px 20px;
+  box-sizing: border-box;
+
+  align-items: center;
+`;
+
+export const TimePreferenceWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  color: ${COLORS.GRAYSCALE_900};
+  flex-grow: 1;
 
   width: 100%;
-  height: auto;
+`;
+
+export const SignupIntroContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const SignupIntroTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 410px;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+
+  padding: 12px 0px 20px 0px;
+`;
+
+export const TextButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  color: ${COLORS.GRAYSCALE_600};
+  white-space: nowrap;
 `;
 
 export const PreferenceHeader = styled.div`
@@ -60,16 +119,19 @@ export const PreferenceTimeWrapper = styled.div`
 
 export const PreferenceTime = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 
-  width: 100%;
-  height: 73px;
+  width: auto;
+  max-width: 120px;
+  height: 45px;
 
-  padding: 16px 20px;
+  gap: 4px;
+
+  padding: 12px 20px 12px 16px;
   box-sizing: border-box;
 
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid ${COLORS.GRAYSCALE_200};
 `;
 
