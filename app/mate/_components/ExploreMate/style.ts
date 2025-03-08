@@ -4,6 +4,8 @@ import { COLORS } from "@/constants/Theme";
 import { styled } from "styled-components";
 
 export const ExploreMateContainer = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -191,4 +193,52 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
 
   background-color: ${COLORS.GRAYSCALE_300};
+`;
+
+export const EmptyWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  width: 153px;
+  height: 73px;
+
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  align-items: center;
+`;
+
+export const IconWrapper = styled.div`
+  position: relative;
+  width: 40px;
+  height: 40px;
+
+  .search-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 40px;
+    height: 40px;
+    stroke: #dce0ea;
+  }
+
+  .circle-x-icon {
+    position: absolute;
+
+    top: -2px;
+    left: 20px;
+    width: 18px;
+    height: 18px;
+    stroke: #dce0ea;
+  }
 `;

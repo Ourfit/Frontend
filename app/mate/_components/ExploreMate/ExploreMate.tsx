@@ -1,8 +1,10 @@
 "use client";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
 import ChevronLeft from "@/assets/images/chevron-left.svg";
+import CircleXIcon from "@/assets/images/circle-x.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import MorningIcon from "@/assets/images/morning.svg";
+import SearchIcon from "@/assets/images/search.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Tooltip from "@/components/common/Tooltip/Tooltip";
 import { TIME_MAPPING } from "@/constants/Time";
@@ -129,57 +131,71 @@ export default function ExploreMate() {
         />
       )}
 
-      {/* 실제 메이트 리스트 */}
-      <S.MateList>
-        {mates.map((mate) => {
-          const timeSlot = getTimeSlot(mate.preferredWorkoutTime);
+      {mates.length === 0 ? (
+        <S.EmptyWrapper>
+          <S.IconWrapper>
+            <SearchIcon className="search-icon" />
+            <CircleXIcon className="circle-x-icon" />
+          </S.IconWrapper>
+          <Typography.H4Sb color="#8A92A3">
+            해당하는 메이트가 없어요
+          </Typography.H4Sb>
+        </S.EmptyWrapper>
+      ) : (
+        <S.MateList>
+          {mates.map((mate) => {
+            const timeSlot = getTimeSlot(mate.preferredWorkoutTime);
 
-          return (
-            <S.MateListItem
-              key={mate.id}
-              onClick={() =>
-                router.push(`/mate/mateprofile/${encodeURIComponent(mate.id)}`)
-              }
-            >
-              <S.MateProfileImageWrapper>
-                <S.ProfileImage src={mate.profileUrl} alt={mate.nickname} />
-              </S.MateProfileImageWrapper>
-              <S.MateInfoWrapper>
-                <S.ProfileInfo>
-                  <S.ProfileInfoTitle>
-                    <Typography.H3Sb>{mate.nickname}</Typography.H3Sb>
-                    <Typography.H6Md color="#6C727F">
-                      {mate.gender === "F" ? "여" : "남"}, {mate.age}세
-                    </Typography.H6Md>
-                  </S.ProfileInfoTitle>
-                  <S.ProfileText>
-                    <Typography.H6Md color="#8A92A3">
-                      {mate.introduction}
-                    </Typography.H6Md>
-                  </S.ProfileText>
-                </S.ProfileInfo>
-                <S.PreferenceTags>
-                  {mate.favoriteWorkouts.map((workout) => (
-                    <S.Tag key={workout.code}>
+            return (
+              <S.MateListItem
+                key={mate.id}
+                onClick={() =>
+                  router.push(
+                    `/mate/mateprofile/${encodeURIComponent(mate.id)}`,
+                  )
+                }
+              >
+                <S.MateProfileImageWrapper>
+                  <S.ProfileImage src={mate.profileUrl} alt={mate.nickname} />
+                </S.MateProfileImageWrapper>
+                <S.MateInfoWrapper>
+                  <S.ProfileInfo>
+                    <S.ProfileInfoTitle>
+                      <Typography.H3Sb>{mate.nickname}</Typography.H3Sb>
+                      <Typography.H6Md color="#6C727F">
+                        {mate.gender === "F" ? "여" : "남"}, {mate.age}세
+                      </Typography.H6Md>
+                    </S.ProfileInfoTitle>
+                    <S.ProfileText>
+                      <Typography.H6Md color="#8A92A3">
+                        {mate.introduction}
+                      </Typography.H6Md>
+                    </S.ProfileText>
+                  </S.ProfileInfo>
+                  <S.PreferenceTags>
+                    {mate.favoriteWorkouts.map((workout) => (
+                      <S.Tag key={workout.code}>
+                        <Typography.H7Md color="#6C727F">
+                          {workout.name}
+                        </Typography.H7Md>
+                      </S.Tag>
+                    ))}
+
+                    <S.TimeTag>
+                      {timeSlot &&
+                        iconMapping[timeSlot] &&
+                        iconMapping[timeSlot]}
                       <Typography.H7Md color="#6C727F">
-                        {workout.name}
+                        {TIME_MAPPING[mate.preferredWorkoutTime]}
                       </Typography.H7Md>
-                    </S.Tag>
-                  ))}
-
-                  <S.TimeTag>
-                    {timeSlot && iconMapping[timeSlot] && iconMapping[timeSlot]}
-
-                    <Typography.H7Md color="#6C727F">
-                      {TIME_MAPPING[mate.preferredWorkoutTime]}
-                    </Typography.H7Md>
-                  </S.TimeTag>
-                </S.PreferenceTags>
-              </S.MateInfoWrapper>
-            </S.MateListItem>
-          );
-        })}
-      </S.MateList>
+                    </S.TimeTag>
+                  </S.PreferenceTags>
+                </S.MateInfoWrapper>
+              </S.MateListItem>
+            );
+          })}
+        </S.MateList>
+      )}
 
       <div ref={loadMoreRef} style={{ height: 1 }} />
     </S.ExploreMateContainer>
