@@ -17,6 +17,7 @@ export const facilityContainer2 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
 
   height: 100%;
 
@@ -66,8 +67,6 @@ export const ResultList = styled.div`
   align-items: flex-start;
 
   gap: 16px;
-
-  box-sizing: border-box;
 
   width: 100%;
   max-width: 450px;

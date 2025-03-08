@@ -1,13 +1,13 @@
-import { StepProps } from "@/types/step";
 import { Typography } from "@/components/atoms/Typography";
-import { COLORS } from "@/constants/Theme";
 import Button from "@/components/common/Button";
-import * as S from "./SportsPreference.style";
+import TextButton from "@/components/common/TextButton";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { SPORTS_LABEL, STEPS_LABEL } from "@/constants/Signup";
+import { COLORS } from "@/constants/Theme";
+import { StepProps } from "@/types/step";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import TextButton from "@/components/common/TextButton";
+import * as S from "./SportsPreference.style";
 
 const SportsPreference = ({ nextStep }: StepProps) => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);

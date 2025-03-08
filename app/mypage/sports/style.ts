@@ -13,6 +13,69 @@ export const PreferenceSectionWrapper = styled.div`
   height: auto;
 `;
 
+export const SportsPreferenceWrapper = styled.div<{
+  $isHeightFull?: boolean;
+}>`
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  gap: 32px;
+  color: ${COLORS.GRAYSCALE_900};
+  flex-grow: ${({ $isHeightFull = true }) => ($isHeightFull ? "1" : "auto")};
+  padding: 48px 20px 0px 20px;
+  box-sizing: border-box;
+`;
+
+export const SignupIntroContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const SignupIntroTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 410px;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+
+  padding: 12px 0px 20px 0px;
+`;
+
+export const ButtonWrapper = styled.div`
+  box-sizing: border-box;
+  width: 65px;
+`;
+
+export const TextButtonWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  white-space: nowrap;
+  flex-wrap: wrap;
+`;
+
 export const PreferenceHeader = styled.div`
   display: flex;
   justify-content: space-between;

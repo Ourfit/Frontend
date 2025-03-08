@@ -62,7 +62,15 @@ export default function SelectBar<T extends string | number>({
         style={{ ...boxStyle }}
       >
         <div style={{ width: "73px" }}>
-          <Typography.H4Md>{optionValue}</Typography.H4Md>
+          <Typography.H4Md
+            color={
+              optionValue !== "오전/오후" && optionValue !== "00시"
+                ? COLORS.GRAYSCALE_900
+                : COLORS.GRAYSCALE_600
+            }
+          >
+            {optionValue}
+          </Typography.H4Md>
         </div>
         {hasSuffix && suffixText && (
           <Typography.H4Md color="#545862">{suffixText}</Typography.H4Md>

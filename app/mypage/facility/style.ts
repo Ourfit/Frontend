@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const PreferenceFacilityWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   gap: 12px;
   padding: 28px 20px;
   box-sizing: border-box;
@@ -75,6 +76,21 @@ export const PreferencePlaceContainer = styled.div`
   align-items: center;
 `;
 
+export const PreferencePlaceItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 16px 20px;
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 75px;
+  border: 1px solid ${COLORS.GRAYSCALE_200};
+  border-radius: 16px;
+`;
+
 export const PreferencePlaceInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -117,6 +133,8 @@ export const PreferencePlaceInfo2 = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 8px 10px;
+
+  width: 100%;
   align-items: center;
   gap: 4px;
 
@@ -137,4 +155,153 @@ export const PreferenceButton = styled.button`
   border: none;
   color: #8aadff;
   background: ${COLORS.BLUE_50};
+
+  cursor: pointer;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 450px;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+
+  padding: 12px 20px 20px 20px;
+  box-sizing: border-box;
+`;
+
+export const facilityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  width: 100%;
+  height: 100%;
+
+  gap: 36px;
+`;
+
+export const facilityNewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
+
+  height: 100%;
+
+  gap: 36px;
+`;
+
+export const facilityContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+
+  padding: 48px 20px 0px 20px;
+  box-sizing: border-box;
+`;
+
+export const facilityTitle = styled.div`
+  width: 350px;
+  height: 64px;
+
+  white-space: pre-line;
+  word-break: break-word;
+`;
+
+export const HighlightedText = styled.span`
+  color: #004dff;
+`;
+
+export const PlaceHolderWrapper = styled.div`
+  display: flex;
+
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+
+  height: auto;
+`;
+
+export const ResultList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  width: 100%;
+  max-width: 450px;
+  padding: 0px 20px;
+  box-sizing: border-box;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  height: auto;
+  min-height: 200px;
+  flex: 1;
+`;
+
+export const ResultItem = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+
+  width: 100%;
+  height: 43px;
+`;
+
+export const FacilityInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  gap: 2px;
+
+  width: 298px;
+  height: 100%;
+`;
+
+export const AddText = styled.div`
+  display: flex;
+  padding: 0px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+
+  color: var(--Blue-500, #004eff);
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.14px;
 `;

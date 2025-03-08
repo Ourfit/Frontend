@@ -1,5 +1,5 @@
 import { useTokenStore } from "@/stores/tokenStore";
-import axios from "axios";
+import { api } from "../axiosInterceptor";
 
 interface MateApiResponse {
   message: string;
@@ -56,7 +56,7 @@ export async function fetchMates({
     const preferredTimesParam = preferredTimes?.join(",");
     const workoutTypesParam = workoutTypes?.join(",");
 
-    const { data } = await axios.get<MateApiResponse>(
+    const { data } = await api<MateApiResponse>(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
       {
         params: {
@@ -67,10 +67,6 @@ export async function fetchMates({
           page: pageParam,
           size,
         },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
       },
     );
     console.log("✅ API 응답 성공:", data);
