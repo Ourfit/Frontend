@@ -23,3 +23,23 @@ export const NotificationSection = styled.div`
     display: none;
   }
 `;
+
+export const EmptyContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  color: ${COLORS.GRAYSCALE_600};
+
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
+`;

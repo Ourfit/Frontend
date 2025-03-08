@@ -17,12 +17,12 @@ export const useTokenStore = create(
       },
       clearToken: () => {
         set({ token: null });
-        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
       },
     }),
     {
       name: "token",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

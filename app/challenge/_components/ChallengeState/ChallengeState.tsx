@@ -6,19 +6,15 @@ import MateCard from "../MateCard/MateCard";
 import { useEffect } from "react";
 import { useChallengeStore } from "@/stores/challengeStore";
 import { useQuery } from "@tanstack/react-query";
-import getUserMe from "@/services/getUserMe";
 import getChallenge from "@/services/challenge/getChallenge";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 
 export default function ChallengeState() {
   const router = useRouter();
   const { addChallenge } = useChallengeStore();
 
-  const { data: user } = useQuery({
-    queryKey: ["userMe"],
-    queryFn: () => getUserMe(),
-    staleTime: 5 * 60 * 1000,
-  });
+  const { data: user } = useMyPageInfo();
 
   const { data: challenge } = useQuery({
     queryKey: ["myChallenge"],

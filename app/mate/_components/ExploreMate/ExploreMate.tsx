@@ -14,6 +14,7 @@ import { JSX, useEffect, useRef, useState } from "react";
 import FilterPanel from "./FilterPanel/FilterPanel";
 
 import * as S from "./style";
+import { useMateFilterStore } from "@/stores/mateFilterStore";
 
 function getTimeSlot(
   timeKey: string,
@@ -25,6 +26,7 @@ function getTimeSlot(
 }
 
 export default function ExploreMate() {
+  const { filter, resetFilter } = useMateFilterStore();
   const router = useRouter();
 
   const iconMapping: Record<string, JSX.Element> = {
@@ -39,7 +41,7 @@ export default function ExploreMate() {
     gender: string | null;
     time: string | null;
     sports: string[];
-  }>({ gender: null, time: null, sports: [] });
+  }>({ gender: null, time: filter.time, sports: filter.sports });
 
   console.log(filters);
 
@@ -75,6 +77,16 @@ export default function ExploreMate() {
 
   const isFilterApplied =
     !!filters.gender || !!filters.time || filters.sports.length > 0;
+
+  useEffect(() => {
+    if (filter.time || filter.sports.length) {
+      setShowTooltip(false);
+    }
+
+    return () => {
+      resetFilter();
+    };
+  }, []);
 
   const handleFilterApply = (newFilters: {
     gender: string | null;

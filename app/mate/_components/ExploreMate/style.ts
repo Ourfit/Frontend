@@ -136,6 +136,7 @@ export const ProfileInfoTitle = styled.div`
 
   width: auto;
   height: 24px;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const PreferenceTags = styled.div`

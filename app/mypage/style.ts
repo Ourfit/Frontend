@@ -235,6 +235,7 @@ export const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const ListItem = styled.li`

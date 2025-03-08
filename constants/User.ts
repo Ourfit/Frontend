@@ -13,7 +13,7 @@ export const GROUP_TYPES = {
   REGION: "동네",
   WORKOUT: "운동",
   TIME: "시간",
-};
+} as const;
 
 export const skillLevelMap: Record<string, string> = {
   BEGINNER: "운동초보",

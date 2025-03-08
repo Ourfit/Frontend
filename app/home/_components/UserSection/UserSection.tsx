@@ -46,9 +46,12 @@ export default function UserSection({
         return (
           <S.UserSectionWrapper key={group.type}>
             <UserSectionTitle
+              type={group.type}
               title={group.title}
               description={group.description}
               nickname={nickname}
+              favoriteWorkouts={favoriteWorkouts}
+              preferredWorkoutTime={preferredWorkoutTime}
             />
             <UserList
               isWorkout={isWorkout}

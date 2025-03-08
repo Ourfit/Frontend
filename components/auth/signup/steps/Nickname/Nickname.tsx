@@ -49,7 +49,7 @@ const Nickname = ({ nextStep, value }: StepProps) => {
     onSuccess: (status) => {
       if (status === 200) {
         showToast(TOAST_STATUSES.SUCCESS, TOAST_MESSAGES.SUCCESS);
-        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+        queryClient.invalidateQueries({ queryKey: ["myPageInfo"] });
       }
     },
     onError: (err) => {

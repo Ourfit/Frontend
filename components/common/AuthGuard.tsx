@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
-  const isLogin = sessionStorage.getItem("token");
+  const isLogin = localStorage.getItem("token");
   const router = useRouter();
   const pathname = usePathname();
   const isExcept =

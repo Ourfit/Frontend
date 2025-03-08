@@ -113,6 +113,7 @@ export const MateDetailInfo = styled.div`
 
   width: 302px;
   height: 27px;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const daysLeft = styled.div`
@@ -193,6 +194,7 @@ export const FacilityInfoHeader = styled.div`
 `;
 
 export const FacilityInfoHeaderTitle = styled.div<{ $hasData: boolean }>`
+  color: ${COLORS.GRAYSCALE_900};
   display: flex;
   flex-direction: row;
   justify-content: ${({ $hasData }) =>
@@ -221,6 +223,7 @@ export const FacilityCard = styled.div`
   border: 1px solid ${COLORS.GRAYSCALE_200};
   border-radius: 16px;
   background-color: #ffffff;
+  color: ${COLORS.GRAYSCALE_900};
 `;
 
 export const TimeCard = styled(FacilityCard)``;
