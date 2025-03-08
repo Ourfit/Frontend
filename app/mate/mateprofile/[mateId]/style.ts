@@ -474,9 +474,8 @@ export const ModalAlertContent = styled.div`
   text-align: center;
 
   flex-wrap: wrap;
-
-  width: 139px;
   height: 42px;
+  white-space: nowrap;
 `;
 
 export const ModalButtonWrapper = styled.div`
@@ -502,6 +501,7 @@ export const StyledButton = styled.button`
   align-items: center;
 
   color: #545862;
+  background-color: ${COLORS.GRAYSCALE_100};
 
   &:last-child {
     background-color: #004dff;
@@ -512,6 +512,11 @@ export const StyledButton = styled.button`
   font-weight: 500;
   line-height: 150%;
   letter-spacing: -0.16px;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const Line = styled.div`

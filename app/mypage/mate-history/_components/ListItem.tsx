@@ -47,6 +47,11 @@ export default function ListItem({
 
     if (isNotificationsPage) {
       if (!data.isRead) notificationReadReq(data.id);
+
+      if (data.actionType === "RECEIVE") {
+        addNotification({ type: "RECEIVE", id: data.mateId });
+      }
+
       router.push(
         `/mate/mateprofile/${data.actionType === "RECEIVE" ? data.actorId : data.targetId}`,
       );

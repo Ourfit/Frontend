@@ -6,9 +6,13 @@ import CircleCheckIcon from "@/assets/images/circle-check.svg";
 import ErrorIcon from "@/assets/images/error.svg";
 import { TOAST_STATUSES } from "@/constants/Toast";
 
-export default function Toast({ message, status }: Readonly<ToastProps>) {
+export default function Toast({
+  message,
+  status,
+  style,
+}: Readonly<ToastProps>) {
   return (
-    <S.ToastContainer>
+    <S.ToastContainer style={style}>
       {status &&
         (status === TOAST_STATUSES.SUCCESS ? (
           <CircleCheckIcon />

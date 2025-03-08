@@ -47,13 +47,19 @@ export default function MatchedMate() {
 
   const { myMate, workout } = mateInfo;
 
-  const daysInKorean = sortKoreanDays(
-    workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
-  );
+  const daysInKorean =
+    workout.workoutDayOfWeek.length &&
+    sortKoreanDays(
+      workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
+    );
 
-  const timeRange = `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
-    workout.workoutEndAt,
-  )}`;
+  const timeRange =
+    workout.workoutStartAt &&
+    workout.workoutEndAt &&
+    `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
+      workout.workoutEndAt,
+    )}`;
+
   console.log(myProfile);
 
   const matchedMates: MyPageData[] = [
@@ -220,7 +226,7 @@ export default function MatchedMate() {
             </Typography.H5Md>
           </S.FacilityInfoHeader>
 
-          {selectedFacility ? (
+          {selectedFacility?.name ? (
             <S.FacilityCard>
               <Typography.H4Sb>{selectedFacility.name}</Typography.H4Sb>
               <Typography.H6Md color="#8A92A3">
@@ -266,7 +272,7 @@ export default function MatchedMate() {
             </Typography.H5Md>
           </S.TimeInfoHeader>
 
-          {timeInfo ? (
+          {timeInfo && daysInKorean ? (
             <S.TimeCard>
               <Typography.H4Sb>{daysInKorean}</Typography.H4Sb>
               <Typography.H5Md color="#8A92A3">{timeRange}</Typography.H5Md>
