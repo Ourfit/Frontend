@@ -17,6 +17,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as S from "./style";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 interface FacilityItem {
   id: string;
@@ -148,7 +149,9 @@ export default function SportFacility() {
               key={result.id}
               onClick={() => handleSelectFacility(result)}
             >
-              <OurfitLogo width="40" height="40" color="#004DFF" />
+              <S.ImageWrapper>
+                <DefaultProfileImg size={20} />
+              </S.ImageWrapper>
               <S.FacilityInfo>
                 <Typography.H4Sb>{result.name}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">

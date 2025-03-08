@@ -100,6 +100,13 @@ export const ResultItem = styled.div`
   height: 43px;
 `;
 
+export const ImageWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 9.8px;
+  overflow: hidden;
+`;
+
 export const FacilityInfo = styled.div`
   display: flex;
   flex-direction: column;

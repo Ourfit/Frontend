@@ -67,7 +67,7 @@ export const ProfileOverviewWrapper = styled.div`
 
   width: 100%;
   height: auto;
-  padding: 0px 20px 20px 20px;
+  padding: 0px 20px 32px 20px;
   box-sizing: border-box;
 `;
 
@@ -233,15 +233,12 @@ export const PreferenceContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 
   width: 100%;
   max-width: 450px;
   height: auto;
 
   box-sizing: border-box;
-
-  margin-top: 16px;
 `;
 
 export const Line = styled.div`

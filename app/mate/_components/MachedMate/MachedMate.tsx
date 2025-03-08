@@ -140,12 +140,12 @@ export default function MatchedMate() {
         <S.MateCard>
           <S.MateCardHeader>
             <S.ProfileImageWrapper>
-              {matchedMates.map((mate) => {
+              {matchedMates.map((mate, idx) => {
                 const isError = errorMap[mate.id];
 
                 if (isError || !mate.profileUrl) {
                   return (
-                    <S.ImageWrapper key={mate.id}>
+                    <S.ImageWrapper key={idx}>
                       <DefaultProfileImg />
                     </S.ImageWrapper>
                   );

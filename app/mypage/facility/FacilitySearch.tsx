@@ -16,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 type FacilityRequestBody = {
   preferredWorkoutTime: string | null;
@@ -198,7 +199,9 @@ export default function FacilitySearch() {
                 })
               }
             >
-              <img src="/next.svg" width="40" height="40" />
+              <MS.ImageWrapper>
+                <DefaultProfileImg size={20} />
+              </MS.ImageWrapper>
               <MS.FacilityInfo>
                 <Typography.H4Sb>{result.placeName}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">

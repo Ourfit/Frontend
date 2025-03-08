@@ -110,7 +110,9 @@ export default function ViewProfile({
                       {link.label}
                     </Link>
                   )}
-                  {!isAccountInfo && <ChevronRight />}{" "}
+                  {!isAccountInfo && link.label !== "앱 버전" && (
+                    <ChevronRight />
+                  )}{" "}
                 </S.ListItem>
               );
             })}

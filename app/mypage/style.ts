@@ -276,6 +276,7 @@ export const LinksWrapper = styled.div`
   align-items: center;
   gap: 13px;
   width: 100%;
+  padding: 12px 0 66px;
 
   font-size: 12px;
   font-weight: 500;
