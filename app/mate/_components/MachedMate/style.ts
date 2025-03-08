@@ -21,19 +21,11 @@ export const MatchedMateContainer = styled.div`
 
   -ms-overflow-style: none;
   scrollbar-width: none;
-
-  gap: 16px;
 `;
 
 export const MateCardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   width: 100%;
-  max-width: 450px;
-  height: 255px;
-  max-height: 255px;
+  padding: 24px 20px;
 
   background-color: ${COLORS.GRAYSCALE_50};
 `;
@@ -46,7 +38,6 @@ export const MateFacilityInfoWrapper = styled.div`
   width: 100%;
   max-width: 450px;
   height: auto;
-  min-height: 169px;
   padding: 20px 20px 32px 20px;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -54,7 +45,7 @@ export const MateFacilityInfoWrapper = styled.div`
 
 export const MateTimeWrapper = styled(MateFacilityInfoWrapper)`
   height: 257px;
-  min-height: 257px;
+  padding-bottom: 70px;
 `;
 
 export const MateCard = styled.div`
@@ -64,9 +55,7 @@ export const MateCard = styled.div`
 
   gap: 12px;
 
-  width: 350px;
-  height: 207px;
-  padding: 24px 20px;
+  padding: 20px 24px;
   box-sizing: border-box;
 
   border-radius: 20px;
@@ -85,12 +74,9 @@ export const MateCardHeader = styled.div`
 export const MateCardContent = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 
-  align-items: flex-start;
   gap: 20px;
-
-  width: 302px;
-  height: 111px;
 `;
 
 export const MateCardInfo = styled.div`
@@ -99,9 +85,6 @@ export const MateCardInfo = styled.div`
   align-items: flex-start;
 
   gap: 4px;
-
-  width: 302px;
-  height: 51px;
 `;
 
 export const MateDetailInfo = styled.div`
@@ -111,8 +94,6 @@ export const MateDetailInfo = styled.div`
 
   gap: 4px;
 
-  width: 302px;
-  height: 27px;
   color: ${COLORS.GRAYSCALE_900};
 `;
 
@@ -232,7 +213,7 @@ export const TimeInfoHeader = styled(FacilityInfoHeader)``;
 
 export const Line = styled.div`
   width: 100%;
-  height: 10px;
+  min-height: 10px;
 
   background-color: ${COLORS.GRAYSCALE_50};
 `;
