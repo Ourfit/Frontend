@@ -53,8 +53,6 @@ export default function ChallengeState() {
     }
   }, [myChallenge, addChallenge]);
 
-  console.log(myChallenge);
-
   return (
     <>
       <NotificationBanner

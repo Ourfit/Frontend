@@ -40,6 +40,8 @@ export default function NotificationBanner({
   const { data, isLoading } = useQuery({
     queryKey: ["history"],
     queryFn: () => getMatesHistory({ actionTypes: "RECEIVE", size: 1 }),
+    enabled: !!isHome,
+    staleTime: 5 * 60 * 1000,
   });
 
   const mutation = useMutation({
