@@ -32,3 +32,7 @@ export const MateList = styled.div`
     display: none;
   }
 `;
+
+export const CalendarWrapper = styled.div`
+  padding: 16px 20px 20px;
+`;

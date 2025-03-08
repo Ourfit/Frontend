@@ -1,7 +1,8 @@
 import * as S from "./DateContainer.style";
-import { CALENDAR_BADGE, CalendarBadge } from "@/constants/Calendar";
+import { CALENDAR_BADGE, RecordType } from "@/constants/Calendar";
 import XIcon from "@/assets/images/xfail.svg";
 import { dateFormat } from "@/utils/monthList";
+import { calculateDaysElapsed } from "@/utils/dateUtils";
 
 interface DateContainerProps {
   day: Date;
@@ -9,7 +10,7 @@ interface DateContainerProps {
   clickedDate: Date | null;
   handleClickDate: (day: Date) => void;
   nowDate: Date;
-  data?: { [key: string]: CalendarBadge } | null;
+  data?: RecordType[];
 }
 
 export default function DateContainer({
@@ -28,8 +29,17 @@ export default function DateContainer({
   const clicked =
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();
+  const item = data?.find((v) => v.recordDate === dateFormat(day));
 
-  const TYPE = data && data[dateFormat(day)];
+  const getType = () => {
+    if (!item) return "";
+    if (item.isCompleted) return CALENDAR_BADGE.COMPLETE;
+    return calculateDaysElapsed(item.recordDate || dateFormat(day)) > 0
+      ? CALENDAR_BADGE.FAIL
+      : CALENDAR_BADGE.EXPECTED;
+  };
+
+  const TYPE = getType();
 
   return (
     <S.DateWrapper

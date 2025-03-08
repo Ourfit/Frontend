@@ -9,6 +9,7 @@ interface ChallengeStoreType {
 interface ChallengeStore {
   challenge: ChallengeStoreType | null;
   addChallenge: (challenge: ChallengeStoreType) => void;
+  resetChallenge: () => void;
 }
 
 export const useChallengeStore = create<ChallengeStore>((set) => ({
@@ -16,4 +17,5 @@ export const useChallengeStore = create<ChallengeStore>((set) => ({
   addChallenge: (challenge) => {
     set(() => ({ challenge }));
   },
+  resetChallenge: () => set({ challenge: null }),
 }));

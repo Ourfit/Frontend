@@ -7,4 +7,10 @@ export const CALENDAR_BADGE = {
 export type CalendarBadge =
   (typeof CALENDAR_BADGE)[keyof typeof CALENDAR_BADGE];
 
+export type RecordType = {
+  id: number;
+  isCompleted: boolean;
+  recordDate: string;
+};
+
 export const WEEKS = ["월", "화", "수", "목", "금", "토", "일"];

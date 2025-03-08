@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import * as S from "./Calendar.style";
 import { monthList } from "@/utils/monthList";
-import { CalendarBadge, WEEKS } from "@/constants/Calendar";
+import { RecordType, WEEKS } from "@/constants/Calendar";
 import DateContainer from "./DateContainer";
 
 interface CalendarProps {
   selectedDate: string;
-  onSelectionChange: (date: Date | null) => void;
+  onSelectionChange?: (date: Date | null) => void;
   isRegistration?: boolean;
-  data?: { [key: string]: CalendarBadge } | null;
+  data?: RecordType[];
 }
 
 export default function Calendar({
@@ -23,8 +23,10 @@ export default function Calendar({
   const allDay: Date[] = monthList(nowDate);
 
   const handleClickDate = (date: Date) => {
-    setClickedDate(date);
-    onSelectionChange(date);
+    if (onSelectionChange) {
+      setClickedDate(date);
+      onSelectionChange(date);
+    }
   };
 
   return (

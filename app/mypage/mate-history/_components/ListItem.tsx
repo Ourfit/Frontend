@@ -38,14 +38,12 @@ export default function ListItem({
 
   const handleClick = () => {
     if (data.actionType === "APPLY")
-      router.push(
-        `/mate/mateprofile/${encodeURIComponent(data.targetNickname)}`,
-      );
+      router.push(`/mate/mateprofile/${data.targetId}`);
 
     if (isNotificationsPage) {
       if (!data.isRead) notificationReadReq(data.id);
       router.push(
-        `/mate/mateprofile/${encodeURIComponent(data.actionType === "RECEIVE" ? data.actorNickname : data.targetNickname)}`,
+        `/mate/mateprofile/${data.actionType === "RECEIVE" ? data.actorId : data.targetId}`,
       );
     }
   };

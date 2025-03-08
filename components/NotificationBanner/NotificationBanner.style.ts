@@ -1,24 +1,25 @@
 import { COLORS } from "@/constants/Theme";
 import styled from "styled-components";
+import { Button } from "../common/Button/Button.style";
 
 export const BannerWrapper = styled.div`
   width: 100%;
   padding: 0 20px;
 `;
 
-export const BannerContainer = styled.div<{ $isChallenge?: boolean }>`
+export const BannerContainer = styled.div<{ $isHome?: boolean }>`
   width: 100%;
   background-color: ${COLORS.BLUE_50};
-  padding: ${({ $isChallenge }) => ($isChallenge ? "12px 16px" : "15px 16px")};
-  border-radius: ${({ $isChallenge }) => ($isChallenge ? "16px" : "12px")};
+  padding: ${({ $isHome }) => ($isHome ? "15px 16px" : "12px 16px")};
+  border-radius: ${({ $isHome }) => ($isHome ? "12px" : "16px")};
   display: flex;
   align-items: center;
   gap: 14px;
   margin: 0 auto;
-  cursor: ${({ $isChallenge }) => ($isChallenge ? "auto" : "pointer")};
+  cursor: ${({ $isHome }) => ($isHome ? "pointer" : "auto")};
 
-  border: ${({ $isChallenge }) =>
-    $isChallenge ? `1px solid ${COLORS.BLUE_200}` : "auto"};
+  border: ${({ $isHome }) =>
+    $isHome ? "auto" : `1px solid ${COLORS.BLUE_200}`};
 
   & > svg {
     width: 20px;
@@ -34,34 +35,43 @@ export const ContentWrapper = styled.div`
   flex-grow: 1;
 `;
 
-export const IconWrapper = styled.div<{ $isChallenge?: boolean }>`
+export const IconWrapper = styled.div<{ $isHome?: boolean }>`
   background-color: ${COLORS.BASE_WHITE};
-  width: ${({ $isChallenge }) => ($isChallenge ? "40px" : "36px")};
-  height: ${({ $isChallenge }) => ($isChallenge ? "40px" : "36px")};
-  border-radius: ${({ $isChallenge }) => ($isChallenge ? "13.33px" : "12px")};
+  width: ${({ $isHome }) => ($isHome ? "36px" : "40px")};
+  height: ${({ $isHome }) => ($isHome ? "36px" : "40px")};
+  border-radius: ${({ $isHome }) => ($isHome ? "12px" : "13.33px")};
   display: flex;
   justify-content: center;
   align-items: center;
 
   & > svg {
-    width: ${({ $isChallenge }) => ($isChallenge ? "20px" : "24px")};
-    height: ${({ $isChallenge }) => ($isChallenge ? "20px" : "24px")};
+    width: ${({ $isHome }) => ($isHome ? "24px" : "20px")};
+    height: ${({ $isHome }) => ($isHome ? "24px" : "20px")};
     color: ${COLORS.BLUE_500};
   }
 `;
 
-export const NotificationContent = styled.div<{ $isChallenge?: boolean }>`
+export const NotificationContent = styled.div<{ $isHome?: boolean }>`
   display: flex;
   flex-direction: column;
 
   & > span {
     &:first-child {
-      color: ${({ $isChallenge }) =>
-        $isChallenge ? COLORS.BLUE_300 : COLORS.BLUE_900};
+      color: ${({ $isHome }) => ($isHome ? COLORS.BLUE_900 : COLORS.BLUE_300)};
     }
 
     &:last-child {
       color: ${COLORS.BLUE_500};
     }
+  }
+`;
+
+export const CompleteButton = styled(Button)<{ $disabled?: boolean }>`
+  background-color: ${({ $disabled }) => $disabled && COLORS.BLUE_500};
+  opacity: ${({ $disabled }) => $disabled && 0.7};
+
+  &:hover {
+    background-color: ${({ $disabled }) => $disabled && COLORS.BLUE_500};
+    opacity: ${({ $disabled }) => $disabled && 0.7};
   }
 `;

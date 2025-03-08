@@ -66,7 +66,7 @@ export const dateFormat = (date: Date, type?: string) => {
   const formatDate = `${date.getDate()}`.padStart(2, "0");
 
   if (type === "MD") {
-    return `${formatMonth}월 ${formatDate}일`;
+    return `${date.getMonth() + 1}월 ${date.getDate()}일`;
   }
 
   if (type === "alarm") {
