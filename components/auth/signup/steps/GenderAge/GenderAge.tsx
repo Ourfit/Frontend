@@ -38,7 +38,7 @@ const GenderAge = ({ nextStep, value }: StepProps) => {
       if (status === 200) {
         setToast(TOAST_STATUSES.SUCCESS);
         setTimeout(() => setToast(""), 1500);
-        queryClient.invalidateQueries({ queryKey: ["userMe"] });
+        queryClient.invalidateQueries({ queryKey: ["myPageInfo"] });
       }
     },
     onError: () => {

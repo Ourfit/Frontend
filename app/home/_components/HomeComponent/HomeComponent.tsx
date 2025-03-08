@@ -11,10 +11,9 @@ import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useTokenStore } from "@/stores/tokenStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
-import getUserMe from "@/services/getUserMe";
 import { useQuery } from "@tanstack/react-query";
 import NotificationBanner from "@/components/NotificationBanner/NotificationBanner";
+import { getMypageInfo } from "@/services/mypage/getMypageInfo";
 
 const PageContainer = styled.div`
   overflow-y: scroll;
@@ -38,8 +37,8 @@ export default function HomeComponent() {
   const { clearOAuthId } = useOAuthIdStore.getState();
 
   const { data: user, isLoading } = useQuery({
-    queryKey: ["userMe"],
-    queryFn: () => getUserMe(),
+    queryKey: ["myPageInfo"],
+    queryFn: () => getMypageInfo(),
     staleTime: 5 * 60 * 1000,
     enabled: !!token,
   });

@@ -12,9 +12,8 @@ import {
 import Modal from "@/components/common/Modal/Modal";
 import { Typography } from "@/components/atoms/Typography";
 import { COLORS } from "@/constants/Theme";
-import { useQuery } from "@tanstack/react-query";
-import getUserMe from "@/services/getUserMe";
 import { deleteAccount, deleteToken } from "@/services/mypage/deleteAuth";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 
 interface EditBasicInfoProps {
   handleEditBasicInfo: () => void;
@@ -27,10 +26,7 @@ export default function EditBasicInfo({
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["userMe"],
-    queryFn: () => getUserMe(),
-  });
+  const { data, isLoading } = useMyPageInfo();
 
   const {
     nickname = "",
