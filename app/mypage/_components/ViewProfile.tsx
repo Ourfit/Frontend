@@ -115,14 +115,23 @@ export default function ViewProfile({
               );
             })}
           </S.List>
-        </S.ManagementSection>
 
-        <S.InfoSection>
           <S.LinksWrapper>
-            <Link href="/terms">이용약관</Link>
-            <Link href="/privacy">개인정보 처리방침</Link>
+            <Link href="/terms">
+              <S.UnderlinedWrapper>
+                <Typography.H6Md color="#ADB3C2">이용약관</Typography.H6Md>
+              </S.UnderlinedWrapper>
+            </Link>
+            <Link href="/privacy">
+              <S.UnderlinedWrapper>
+                {" "}
+                <Typography.H6Md color="#ADB3C2">
+                  개인정보 처리방침
+                </Typography.H6Md>
+              </S.UnderlinedWrapper>
+            </Link>
           </S.LinksWrapper>
-        </S.InfoSection>
+        </S.ManagementSection>
       </S.PageContainer>
     </>
   );

@@ -134,7 +134,6 @@ export const PrimaryButton = styled.button`
   padding: 8px 10px;
   width: 68px;
   height: 34px;
-  margin-top: 16px;
 
   font-size: 12px;
   font-weight: 600;

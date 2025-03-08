@@ -208,12 +208,6 @@ export const ManagementSection = styled.section`
 
   width: 100%;
   height: 432px;
-  max-height: 432px;
-
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   padding: 0px 20px;
   box-sizing: border-box;
@@ -403,4 +397,12 @@ export const DumbberIconWrapper = styled.div`
   height: 28px;
 
   border-radius: 50%;
+`;
+
+export const UnderlinedWrapper = styled.div`
+  width: auto;
+  height: auto;
+  border-bottom: 0.5px solid #adb3c2;
+
+  gap: 8px;
 `;
