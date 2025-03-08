@@ -143,17 +143,22 @@ export default function MatchedMate() {
               {matchedMates.map((mate) => {
                 const isError = errorMap[mate.id];
 
-                if (isError) {
-                  return <DefaultProfileImg key={mate.id} />;
+                if (isError || !mate.profileUrl) {
+                  return (
+                    <S.ImageWrapper key={mate.id}>
+                      <DefaultProfileImg />
+                    </S.ImageWrapper>
+                  );
                 }
 
                 return (
-                  <S.ProfileImage
-                    key={mate.id + mate.nickname}
-                    src={mate.profileUrl}
-                    alt={mate.nickname}
-                    onError={() => handleImageError(mate.id)}
-                  />
+                  <S.ImageWrapper key={mate.id + mate.nickname}>
+                    <S.ProfileImage
+                      src={mate.profileUrl}
+                      alt={mate.nickname}
+                      onError={() => handleImageError(mate.id)}
+                    />
+                  </S.ImageWrapper>
                 );
               })}
             </S.ProfileImageWrapper>

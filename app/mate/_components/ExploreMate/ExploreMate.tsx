@@ -15,6 +15,8 @@ import FilterPanel from "./FilterPanel/FilterPanel";
 
 import * as S from "./style";
 import { useMateFilterStore } from "@/stores/mateFilterStore";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 
 function getTimeSlot(
   timeKey: string,
@@ -167,9 +169,12 @@ export default function ExploreMate() {
                   )
                 }
               >
-                <S.MateProfileImageWrapper>
-                  <S.ProfileImage src={mate.profileUrl} alt={mate.nickname} />
-                </S.MateProfileImageWrapper>
+                <ProfileImgBadge
+                  imageUrl={mate.profileUrl}
+                  size={44}
+                  badgeSize={17}
+                  iconSize={11}
+                />
                 <S.MateInfoWrapper>
                   <S.ProfileInfo>
                     <S.ProfileInfoTitle>

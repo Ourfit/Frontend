@@ -125,17 +125,24 @@ export const ProfileImageWrapper = styled.div`
   position: relative;
 `;
 
-export const ProfileImage = styled.img`
+export const ImageWrapper = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid black;
-
-  background-color: ${COLORS.GRAYSCALE_300};
+  overflow: hidden;
+  border: 1.5px solid ${COLORS.GRAYSCALE_100};
 
   &:not(:first-child) {
     margin-left: -15px;
   }
+`;
+
+export const ProfileImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  background-color: ${COLORS.GRAYSCALE_300};
 `;
 
 export const MateInfo = styled.div`
