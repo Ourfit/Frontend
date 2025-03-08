@@ -1,6 +1,7 @@
 "use client";
 
 import ChevronRight from "@/assets/images/chevron-right.svg";
+import DumbbbelIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Header from "@/components/common/Header/Header";
 import Link from "next/link";
@@ -48,20 +49,30 @@ export default function ViewProfile({
       <Header />
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={false}>
-          <S.ProfileImageWrapper $isEditingProfile={false}>
-            <S.BackgroundImage
-              className="background-img"
-              src={profileImage}
-              alt="Profile"
-            />
-          </S.ProfileImageWrapper>
-          <S.ProfileName>{nickname}</S.ProfileName>
-          <S.ProfileInfo>
-            {gender === "M" ? "남성" : "여성"} · 만 {age}세
-          </S.ProfileInfo>
-          <S.PrimaryButton>
-            {skillLevelMap[skillLevel || "BEGINNER"]}
-          </S.PrimaryButton>
+          <S.ProfileContainerWrapper>
+            <S.ProfileImageWrapper $isEditingProfile={false}>
+              <S.BackgroundImage
+                className="background-img"
+                src={profileImage}
+                alt="Profile"
+              />
+            </S.ProfileImageWrapper>
+            <S.DumbberIconWrapper>
+              <DumbbbelIcon color="#FFFFFF" />
+            </S.DumbberIconWrapper>
+            <S.ProfileHeaderWrapper>
+              <S.ProfileNameInfoWrapper>
+                <S.ProfileName>{nickname}</S.ProfileName>
+                <S.ProfileInfo>
+                  {gender === "M" ? "남성" : "여성"} · 만 {age}세
+                </S.ProfileInfo>
+              </S.ProfileNameInfoWrapper>
+              <S.PrimaryButton>
+                {skillLevelMap[skillLevel || "BEGINNER"]}
+              </S.PrimaryButton>
+            </S.ProfileHeaderWrapper>
+          </S.ProfileContainerWrapper>
+
           <S.ButtonWrapper>
             <S.SecondaryButton onClick={handleEditProfile}>
               프로필 편집

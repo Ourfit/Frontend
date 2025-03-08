@@ -17,6 +17,30 @@ export const PageContainer = styled.div`
   }
 `;
 
+export const ProfileContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const ProfileHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileNameInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+`;
+
 export const ProfileOverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,13 +62,15 @@ export const PreferenceFacilityWrapper = styled.div`
 `;
 
 export const ProfileSection = styled.section<{ $isEditingProfile: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
 
   width: 100%;
   height: auto;
-  max-height: 300px;
+
   padding: 12px 0px 32px 0px;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -203,7 +229,7 @@ export const InfoSection = styled.section`
   font-size: 12px;
   color: #888888;
   background-color: #ffffff;
-  padding: 12px 20px;
+  padding: 12px 20px 30px 20px;
   box-sizing: border-box;
 
   width: 100%;
@@ -276,7 +302,6 @@ export const PrimaryButton = styled.button`
   padding: 8px 10px;
   width: 68px;
   height: 34px;
-  margin-top: 16px;
 
   font-size: 12px;
   font-weight: 600;
@@ -345,7 +370,7 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
 
   border-radius: 50%;
 
-  border: 1px solid gray;
+  border: 2px solid ${COLORS.GRAYSCALE_100};
 
   overflow: hidden;
 
@@ -361,4 +386,21 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
       opacity: 1; 
     }
   `}
+`;
+
+export const DumbberIconWrapper = styled.div`
+  position: absolute;
+  top: 60px;
+  right: calc(50% - 38px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #004dff;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
 `;

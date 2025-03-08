@@ -1,5 +1,6 @@
 "use client";
 
+import DumbbbelIcon from "@/assets/images/dumbbells.svg";
 import Header from "@/components/common/Header/Header";
 import { updateUserProfile } from "@/services/updateUserProfile";
 import { useUserInfoStore } from "@/stores/userInfoStore";
@@ -64,20 +65,6 @@ export default function EditProfile({
     }
   };
 
-  const preferences = ["헬스", "필라테스"];
-  const places = [
-    {
-      id: 1,
-      name: "에이블짐 잠실점",
-      address: "서울 송파구 올림픽로35가길 11 지하1층 001호",
-    },
-    {
-      id: 2,
-      name: "에이블짐 홍대점",
-      address: "서울 마포구 양화로12길 34 2층 201호",
-    },
-  ];
-
   const skillLevelMap: Record<string, string> = {
     BEGINNER: "운동초보",
     INTERMEDIATE: "운동중수",
@@ -104,21 +91,38 @@ export default function EditProfile({
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={true}>
           <S.ProfileOverviewWrapper>
-            <S.ProfileImageWrapper
-              $isEditingProfile={true}
-              onClick={handleProfileImageClick}
-            >
-              <S.BackgroundImage
-                className="background-img"
-                src={profileImage}
-                alt="Profile"
-              />
-              <S.OverlayImage
-                className="overlay"
-                src="/image-2.svg"
-                alt="Gallery"
-              />
-            </S.ProfileImageWrapper>
+            <S.ProfileContainerWrapper>
+              <S.ProfileImageWrapper
+                $isEditingProfile={true}
+                onClick={handleProfileImageClick}
+              >
+                <S.BackgroundImage
+                  className="background-img"
+                  src={profileImage}
+                  alt="Profile"
+                />
+                <S.OverlayImage
+                  className="overlay"
+                  src="/image-2.svg"
+                  alt="Gallery"
+                />
+              </S.ProfileImageWrapper>
+              <S.DumbberIconWrapper>
+                <DumbbbelIcon color="#FFFFFF" />
+              </S.DumbberIconWrapper>
+
+              <S.ProfileHeaderWrapper>
+                <S.ProfileNameInfoWrapper>
+                  <S.ProfileName>{nickname}</S.ProfileName>
+                  <S.ProfileInfo>
+                    {gender === "M" ? "남성" : "여성"} · 만 {age}세
+                  </S.ProfileInfo>
+                </S.ProfileNameInfoWrapper>
+                <S.PrimaryButton>
+                  {skillLevelMap[skillLevel || "BEGINNER"]}
+                </S.PrimaryButton>
+              </S.ProfileHeaderWrapper>
+            </S.ProfileContainerWrapper>
 
             <input
               type="file"
@@ -128,13 +132,6 @@ export default function EditProfile({
               onChange={handleFileChange}
             />
 
-            <S.ProfileName>{nickname}</S.ProfileName>
-            <S.ProfileInfo>
-              {gender === "M" ? "남성" : "여성"} · 만 {age}세
-            </S.ProfileInfo>
-            <S.PrimaryButton>
-              {skillLevelMap[skillLevel || "BEGINNER"]}
-            </S.PrimaryButton>
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>

@@ -3,7 +3,10 @@
 import Modal from "@/app/mate/_components/Modal/Modal";
 import * as S from "@/app/mate/mateprofile/[mateId]/style";
 import AfternoonIcon from "@/assets/images/afternoon.svg";
-import Dumbbels from "@/assets/images/dumbbells.svg";
+import {
+  default as DumbbbelIcon,
+  default as Dumbbels,
+} from "@/assets/images/dumbbells.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
@@ -86,21 +89,31 @@ export default function MateProfile() {
       <S.PageContainer>
         <S.ProfileSection $isEditingProfile={isEditingProfile}>
           <S.ProfileOverviewWrapper>
-            <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-              <S.BackgroundImage
-                className="background-img"
-                src={data?.profileUrl}
-                alt={data?.nickname}
-              />
-            </S.ProfileImageWrapper>
+            <S.ProfileContainerWrapper>
+              <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
+                <S.BackgroundImage
+                  className="background-img"
+                  src={data?.profileUrl}
+                  alt={data?.nickname}
+                />
+              </S.ProfileImageWrapper>
+              <S.DumbberIconWrapper>
+                <DumbbbelIcon color="#FFFFFF" />
+              </S.DumbberIconWrapper>
 
-            <S.ProfileName>{data?.nickname}</S.ProfileName>
-            <S.ProfileInfo>
-              {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
-            </S.ProfileInfo>
-            <S.PrimaryButton>
-              {skillLevelMap[data?.skillLevel || ""] || "미정"}
-            </S.PrimaryButton>
+              <S.ProfileHeaderWrapper>
+                <S.ProfileNameInfoWrapper>
+                  <S.ProfileName>{data?.nickname}</S.ProfileName>
+                  <S.ProfileInfo>
+                    {data?.gender === "F" ? "여" : "남"} · 만 {data?.age}세
+                  </S.ProfileInfo>
+                </S.ProfileNameInfoWrapper>
+              </S.ProfileHeaderWrapper>
+              <S.PrimaryButton>
+                {skillLevelMap[data?.skillLevel || ""] || "미정"}
+              </S.PrimaryButton>
+            </S.ProfileContainerWrapper>
+
             <S.ProfileDescription>
               <S.DescriptionHeader>
                 <S.DescriptionTitle>간단 소개</S.DescriptionTitle>
