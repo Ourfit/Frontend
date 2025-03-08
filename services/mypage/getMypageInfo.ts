@@ -1,5 +1,4 @@
 import { useTokenStore } from "@/stores/tokenStore";
-
 import { api } from "../axiosInterceptor";
 
 export const getMypageInfo = async () => {
@@ -13,12 +12,6 @@ export const getMypageInfo = async () => {
 
     const response = await api(
       `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/me`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      },
     );
 
     return response.data.data;
