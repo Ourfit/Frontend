@@ -10,10 +10,10 @@ export async function sendMateRequest(receiverId: number) {
   try {
     const response = await api.post(url, {});
 
-    console.log("✅ 메이트 신청 API 응답 성공:", response.data);
+    // console.log("✅ 메이트 신청 API 응답 성공:", response.data);
     return response.data;
   } catch (error) {
-    console.error("❌ 메이트 신청 API 요청 실패:", error);
+    // console.error("❌ 메이트 신청 API 요청 실패:", error);
     throw error;
   }
 }

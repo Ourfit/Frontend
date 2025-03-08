@@ -69,10 +69,10 @@ export async function fetchMates({
         },
       },
     );
-    console.log("✅ API 응답 성공:", data);
+    // console.log("✅ API 응답 성공:", data);
     return data.data;
   } catch (error) {
-    console.error("❌ fetchMates API 실패:", error);
+    // console.error("❌ fetchMates API 실패:", error);
     throw error;
   }
 }

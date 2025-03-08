@@ -45,8 +45,6 @@ export default function Mypage() {
     userInfo?.profileUrl,
   );
 
-  console.log(userInfo);
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
 

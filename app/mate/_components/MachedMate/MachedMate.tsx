@@ -60,8 +60,6 @@ export default function MatchedMate() {
       workout.workoutEndAt,
     )}`;
 
-  console.log(myProfile);
-
   const matchedMates: MyPageData[] = [
     {
       id: myProfile?.id,

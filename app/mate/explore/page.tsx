@@ -12,10 +12,10 @@ export default async function ExplorePage() {
     queryFn: ({ pageParam = 0 }) => fetchMates({ pageParam }),
   });
 
-  console.log(
-    "💡 prefetch 완료 후 데이터:",
-    queryClient.getQueryData(["mates"]),
-  );
+  // console.log(
+  //   "💡 prefetch 완료 후 데이터:",
+  //   queryClient.getQueryData(["mates"]),
+  // );
 
   const isEditingProfile = false;
 

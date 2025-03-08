@@ -45,8 +45,6 @@ export default function ExploreMate() {
     sports: string[];
   }>({ gender: null, time: filter.time, sports: filter.sports });
 
-  console.log(filters);
-
   const preferredTimes = filters.time ? [filters.time] : undefined;
   const workoutTypes = filters.sports.length > 0 ? filters.sports : undefined;
 
@@ -74,8 +72,6 @@ export default function ExploreMate() {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const mates = data?.pages.flatMap((page) => page.content) ?? [];
-
-  console.log(mates);
 
   const isFilterApplied =
     !!filters.gender || !!filters.time || filters.sports.length > 0;

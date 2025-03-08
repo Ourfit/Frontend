@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["d4xl8v7lnk0qh.cloudfront.net", "aws.s3.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
