@@ -109,7 +109,7 @@ export const PreferenceTimeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 28px 20px;
+  padding: 28px 20px 60px;
   box-sizing: border-box;
 
   width: 100%;

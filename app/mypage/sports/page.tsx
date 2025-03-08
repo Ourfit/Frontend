@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as S from "./style";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 
 export interface WorkoutType {
   code: string;
@@ -29,6 +30,7 @@ const SportsPreference = () => {
 
   const { data: userInfo } = useMyPageInfo();
   const { data: workoutTypes } = useWorkoutTypes();
+  const { addIsEdit } = useEditProfileStore();
 
   const handleSportClick = (sport: string) => {
     setSelectedSports((prev) => {
@@ -85,6 +87,7 @@ const SportsPreference = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
 
+      addIsEdit(true);
       router.back();
     },
   });
@@ -109,7 +112,12 @@ const SportsPreference = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        onClick={() => {
+          addIsEdit(true);
+          router.back();
+        }}
+      />
       <S.SportsPreferenceWrapper $isHeightFull={!isSignup}>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>

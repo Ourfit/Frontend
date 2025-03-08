@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 
 type FacilityRequestBody = {
   preferredWorkoutTime: string | null;
@@ -30,6 +31,7 @@ export default function FacilitySearch() {
 
   const { data: searchResults } = usePlacesSearch(facilityValue);
   const { data: userInfo } = useMyPageInfo();
+  const { addIsEdit } = useEditProfileStore();
 
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
     useState<
@@ -108,6 +110,7 @@ export default function FacilitySearch() {
 
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      addIsEdit(true);
       router.back();
     },
   });

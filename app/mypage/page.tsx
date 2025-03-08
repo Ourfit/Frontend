@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import EditBasicInfo from "./_components/EditBasicInfo";
 import EditProfile from "./_components/EditProfile";
 import ViewProfile from "./_components/ViewProfile";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
@@ -32,8 +33,9 @@ const managementLinks = [
 export default function Mypage() {
   const [toast, setToast] = useState<ToastProps | null>(null);
   const { data: userInfo, refetch } = useMyPageInfo();
+  const { isEdit, resetEdit } = useEditProfileStore();
 
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(isEdit);
   const [isEditingBasicInfo, setIsEditingBasicInfo] = useState(false);
 
   const [introduction, setIntroduction] = useState("");
@@ -97,6 +99,10 @@ export default function Mypage() {
       setIntroduction(userInfo.introduction);
     }
   }, [userInfo?.introduction]);
+
+  useEffect(() => {
+    return () => resetEdit();
+  }, []);
 
   return (
     <>
