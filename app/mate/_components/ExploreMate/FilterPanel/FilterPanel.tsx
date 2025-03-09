@@ -5,6 +5,7 @@ import { BUTTON_SIZES } from "@/constants/Button";
 import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { useCallback, useEffect, useState } from "react";
 import * as S from "./style";
+import TextButton from "@/components/common/TextButton";
 
 interface FilterPanelProps {
   onClose: () => void;
@@ -116,9 +117,9 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           <Typography.H4Sb>성별</Typography.H4Sb>
           <S.GenderOptionBox>
             {GENDER_OPTIONS.map((opt) => (
-              <S.GenderOption
+              <TextButton
                 key={opt.value}
-                $selected={selectedGender === opt.value}
+                isActive={selectedGender === opt.value}
                 onClick={() =>
                   setSelectedGender((prev) =>
                     prev === opt.value ? null : opt.value,
@@ -126,7 +127,7 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
                 }
               >
                 <Typography.H4Md>{opt.label}</Typography.H4Md>
-              </S.GenderOption>
+              </TextButton>
             ))}
           </S.GenderOptionBox>
         </S.GenderWrapper>
@@ -135,13 +136,13 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           <S.TimeOptionBox>
             <S.TimeOptionBox>
               {TIME_OPTIONS.map((time) => (
-                <S.TimeOption
+                <TextButton
                   key={time.value}
-                  $selected={selectedTime === time.value}
+                  isActive={selectedTime === time.value}
                   onClick={() => handleTimeClick(time.value)}
                 >
                   <Typography.H4Md>{time.label}</Typography.H4Md>
-                </S.TimeOption>
+                </TextButton>
               ))}
             </S.TimeOptionBox>
           </S.TimeOptionBox>
@@ -151,13 +152,13 @@ export default function FilterPanel({ onClose, onApply }: FilterPanelProps) {
           <S.FilterFlex>
             {workoutTypes &&
               workoutTypes.map((workout) => (
-                <S.FilterChip
+                <TextButton
                   key={workout.code}
-                  $selected={selectedSports.includes(workout.code)}
+                  isActive={selectedSports.includes(workout.code)}
                   onClick={() => handleSportClick(workout.code)}
                 >
                   <Typography.H4Md>{workout.name}</Typography.H4Md>
-                </S.FilterChip>
+                </TextButton>
               ))}
           </S.FilterFlex>
         </S.FilterWrapper>

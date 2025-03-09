@@ -58,6 +58,8 @@ const Gnb = () => {
         <S.GnbTabWrapper
           key={tab.id}
           $isActive={
+            ((pathname === "/mate/explore" || pathname === "/mate/search") &&
+              tab.path === "/mate") ||
             tab.path === pathname ||
             (tab.id === GNB_TAB_IDS.CHALLENGE && isChallengeActive)
           }

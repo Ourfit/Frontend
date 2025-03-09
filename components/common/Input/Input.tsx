@@ -21,6 +21,7 @@ interface InputProps {
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   inputStyle?: React.CSSProperties;
   borderColor?: boolean;
+  isNonIcon?: boolean;
 }
 
 export default function Input({
@@ -35,6 +36,7 @@ export default function Input({
   onKeyPress,
   inputStyle,
   borderColor,
+  isNonIcon,
 }: InputProps) {
   const StatusIconComponent = INPUT_STATUS_ICONS[status];
   const [isInputFocus, setIsInputFocus] = useState(false);
@@ -115,13 +117,15 @@ export default function Input({
         $borderColor={borderColor}
         $isInputFocus={isInputFocus}
       />
-      {status !== INPUT_STATUS.DEFAULT && deferredValue.trim() !== "" && (
-        <S.IconsContainer
-          $hasStatusIcon={status !== ("default" as InputStatus)}
-        >
-          {getStatusIcon()}
-        </S.IconsContainer>
-      )}
+      {status !== INPUT_STATUS.DEFAULT &&
+        deferredValue.trim() !== "" &&
+        !isNonIcon && (
+          <S.IconsContainer
+            $hasStatusIcon={status !== ("default" as InputStatus)}
+          >
+            {getStatusIcon()}
+          </S.IconsContainer>
+        )}
     </S.InputContainer>
   );
 }

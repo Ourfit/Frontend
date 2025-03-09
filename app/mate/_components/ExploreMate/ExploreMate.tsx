@@ -15,6 +15,8 @@ import FilterPanel from "./FilterPanel/FilterPanel";
 
 import * as S from "./style";
 import { useMateFilterStore } from "@/stores/mateFilterStore";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 
 function getTimeSlot(
   timeKey: string,
@@ -43,8 +45,6 @@ export default function ExploreMate() {
     sports: string[];
   }>({ gender: null, time: filter.time, sports: filter.sports });
 
-  console.log(filters);
-
   const preferredTimes = filters.time ? [filters.time] : undefined;
   const workoutTypes = filters.sports.length > 0 ? filters.sports : undefined;
 
@@ -72,8 +72,6 @@ export default function ExploreMate() {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const mates = data?.pages.flatMap((page) => page.content) ?? [];
-
-  console.log(mates);
 
   const isFilterApplied =
     !!filters.gender || !!filters.time || filters.sports.length > 0;
@@ -167,9 +165,12 @@ export default function ExploreMate() {
                   )
                 }
               >
-                <S.MateProfileImageWrapper>
-                  <S.ProfileImage src={mate.profileUrl} alt={mate.nickname} />
-                </S.MateProfileImageWrapper>
+                <ProfileImgBadge
+                  imageUrl={mate.profileUrl}
+                  size={44}
+                  badgeSize={17}
+                  iconSize={11}
+                />
                 <S.MateInfoWrapper>
                   <S.ProfileInfo>
                     <S.ProfileInfoTitle>

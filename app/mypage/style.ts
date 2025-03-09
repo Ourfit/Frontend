@@ -173,6 +173,7 @@ export const BackgroundImage = styled.img`
   max-width: 72px;
   height: 100%;
   max-height: 72px;
+  object-fit: cover;
 
   transition: all 0.3s ease;
 `;
@@ -276,6 +277,7 @@ export const LinksWrapper = styled.div`
   align-items: center;
   gap: 13px;
   width: 100%;
+  padding: 12px 0 66px;
 
   font-size: 12px;
   font-weight: 500;

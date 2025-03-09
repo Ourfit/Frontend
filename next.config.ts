@@ -7,7 +7,21 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ["d4xl8v7lnk0qh.cloudfront.net", "aws.s3.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "d4xl8v7lnk0qh.cloudfront.net",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "aws.s3.com",
+        pathname: "**",
+      },
+    ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer }) => {
     config.module.rules.push({

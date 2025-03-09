@@ -20,8 +20,6 @@ export default function MatePage() {
   const { data: mateInfo, isLoading } = useMateInfo();
   const isMatched = !!mateInfo;
 
-  console.log(mateInfo);
-
   const handleTabClick = (tab: string) => {
     if (tab === "탐색") {
       setShowTooltip(false);

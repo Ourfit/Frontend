@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as S from "./style";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 
 export interface WorkoutType {
   code: string;
@@ -22,6 +23,7 @@ export interface WorkoutType {
 
 const SportsPreference = () => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [initialValue, setInitialValue] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
   const isMypageSports = pathname === "/mypage/sports";
@@ -29,6 +31,7 @@ const SportsPreference = () => {
 
   const { data: userInfo } = useMyPageInfo();
   const { data: workoutTypes } = useWorkoutTypes();
+  const { addIsEdit } = useEditProfileStore();
 
   const handleSportClick = (sport: string) => {
     setSelectedSports((prev) => {
@@ -85,6 +88,7 @@ const SportsPreference = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
 
+      addIsEdit(true);
       router.back();
     },
   });
@@ -99,9 +103,17 @@ const SportsPreference = () => {
     updateWorkoutPreferences(requestBody);
   };
 
+  const isEqual = () => {
+    if (selectedSports.length !== initialValue.length) return false;
+    return selectedSports.sort().toString() === initialValue.sort().toString();
+  };
+
   useEffect(() => {
     if (userInfo?.favoriteWorkouts) {
       setSelectedSports(
+        userInfo.favoriteWorkouts.map((v: WorkoutType) => v.code),
+      );
+      setInitialValue(
         userInfo.favoriteWorkouts.map((v: WorkoutType) => v.code),
       );
     }
@@ -109,7 +121,12 @@ const SportsPreference = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        onClick={() => {
+          addIsEdit(true);
+          router.back();
+        }}
+      />
       <S.SportsPreferenceWrapper $isHeightFull={!isSignup}>
         <S.SignupIntroContainer>
           <S.SignupIntroTitleWrapper>
@@ -137,7 +154,7 @@ const SportsPreference = () => {
         </S.InfoContainer>
         <S.ButtonContainer>
           <Button
-            disabled={selectedSports.length === 0}
+            disabled={selectedSports.length === 0 || isEqual()}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}

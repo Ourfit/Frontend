@@ -5,7 +5,7 @@ import {
 import styled, { css } from "styled-components";
 
 export const TooltipContainer = styled.div<{
-  position: TooltipPosition;
+  $position: TooltipPosition;
   $left?: number;
 }>`
   position: absolute;
@@ -31,8 +31,8 @@ export const TooltipContainer = styled.div<{
     position: absolute;
     border-style: solid;
 
-    ${({ position }) => {
-      switch (position) {
+    ${({ $position }) => {
+      switch ($position) {
         case TOOLTIP_POSITIONS.TOP:
           return css`
             top: -7px;

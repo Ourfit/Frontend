@@ -100,9 +100,8 @@ export const MateListItem = styled.div`
 
 export const MateProfileImageWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MateInfoWrapper = styled.div`
@@ -189,9 +188,9 @@ export const ProfileText = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 
   background-color: ${COLORS.GRAYSCALE_300};
 `;

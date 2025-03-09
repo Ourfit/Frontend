@@ -1,7 +1,7 @@
 "use client";
 
 import LogoumbbellsIcon from "@/assets/images/LogoDumbbells.svg";
-import XIcon from "@/assets/images/x.svg";
+import XIcon from "@/assets/images/x-blue.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
@@ -16,6 +16,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 
 type FacilityRequestBody = {
   preferredWorkoutTime: string | null;
@@ -29,6 +31,7 @@ export default function FacilitySearch() {
 
   const { data: searchResults } = usePlacesSearch(facilityValue);
   const { data: userInfo } = useMyPageInfo();
+  const { addIsEdit } = useEditProfileStore();
 
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
     useState<
@@ -37,6 +40,12 @@ export default function FacilitySearch() {
         address: string;
       }[]
     >([]);
+  const [initialValue, setIntitialValue] = useState<
+    {
+      placeName: string;
+      address: string;
+    }[]
+  >([]);
 
   const handleSelectFacility = (facility: {
     placeName: string;
@@ -107,6 +116,7 @@ export default function FacilitySearch() {
 
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      addIsEdit(true);
       router.back();
     },
   });
@@ -125,9 +135,19 @@ export default function FacilitySearch() {
   const pathname = usePathname();
   const isMypageFacility = pathname === "/mypage/facility";
 
+  const isEqual = () => {
+    if (selectedPreferenceFacilities.length !== initialValue.length)
+      return false;
+    return (
+      selectedPreferenceFacilities.sort().toString() ===
+      initialValue.sort().toString()
+    );
+  };
+
   useEffect(() => {
     if (userInfo?.favoritePlaces) {
       setSelectedPreferenceFacilities(userInfo.favoritePlaces);
+      setIntitialValue(userInfo.favoritePlaces);
     }
   }, [userInfo]);
 
@@ -151,31 +171,33 @@ export default function FacilitySearch() {
         {selectedPreferenceFacilities.length > 0 && (
           <MS.AddText>나의 선호 시설</MS.AddText>
         )}
-        <MS.PreferencePlaceWrapper>
-          {selectedPreferenceFacilities.map((facility) => (
-            <MS.PreferencePlaceContainer key={facility.placeName}>
-              <MS.PreferencePlaceInfo2>
-                <MS.PreferenceInfoWrapper>
-                  <LogoumbbellsIcon
-                    alt="LogoumbbellsIcon"
-                    width={20}
-                    height={20}
-                  />
+        {selectedPreferenceFacilities.length > 0 && (
+          <MS.PreferencePlaceWrapper>
+            {selectedPreferenceFacilities.map((facility) => (
+              <MS.PreferencePlaceContainer key={facility.placeName}>
+                <MS.PreferencePlaceInfo2>
+                  <MS.PreferenceInfoWrapper>
+                    <LogoumbbellsIcon
+                      alt="LogoumbbellsIcon"
+                      width={20}
+                      height={20}
+                    />
 
-                  <Typography.H5Sb color="#004DFF">
-                    {facility.placeName}
-                  </Typography.H5Sb>
-                </MS.PreferenceInfoWrapper>
+                    <Typography.H5Sb color="#004DFF">
+                      {facility.placeName}
+                    </Typography.H5Sb>
+                  </MS.PreferenceInfoWrapper>
 
-                <MS.PreferenceButton
-                  onClick={() => handleRemoveFacility(facility.placeName)}
-                >
-                  <XIcon color="#8AADFF" />
-                </MS.PreferenceButton>
-              </MS.PreferencePlaceInfo2>
-            </MS.PreferencePlaceContainer>
-          ))}
-        </MS.PreferencePlaceWrapper>
+                  <MS.PreferenceButton
+                    onClick={() => handleRemoveFacility(facility.placeName)}
+                  >
+                    <XIcon />
+                  </MS.PreferenceButton>
+                </MS.PreferencePlaceInfo2>
+              </MS.PreferencePlaceContainer>
+            ))}
+          </MS.PreferencePlaceWrapper>
+        )}
 
         <MS.PlaceHolderWrapper>
           <Placeholder
@@ -198,7 +220,9 @@ export default function FacilitySearch() {
                 })
               }
             >
-              <img src="/next.svg" width="40" height="40" />
+              <MS.ImageWrapper>
+                <DefaultProfileImg size={20} />
+              </MS.ImageWrapper>
               <MS.FacilityInfo>
                 <Typography.H4Sb>{result.placeName}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">
@@ -211,7 +235,7 @@ export default function FacilitySearch() {
 
         <MS.ButtonContainer>
           <Button
-            disabled={selectedPreferenceFacilities.length === 0}
+            disabled={selectedPreferenceFacilities.length === 0 || isEqual()}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}

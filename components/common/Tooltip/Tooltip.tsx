@@ -12,7 +12,7 @@ interface TooltipProps {
 
 export default function Tooltip({ text, position, left }: TooltipProps) {
   return (
-    <S.TooltipContainer position={position} $left={left}>
+    <S.TooltipContainer $position={position} $left={left}>
       <Typography.H7Sb>{text}</Typography.H7Sb>
     </S.TooltipContainer>
   );

@@ -47,14 +47,18 @@ export default function MatchedMate() {
 
   const { myMate, workout } = mateInfo;
 
-  const daysInKorean = sortKoreanDays(
-    workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
-  );
+  const daysInKorean =
+    workout.workoutDayOfWeek.length &&
+    sortKoreanDays(
+      workout.workoutDayOfWeek.map((day: string) => toKoreanDay(day)),
+    );
 
-  const timeRange = `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
-    workout.workoutEndAt,
-  )}`;
-  console.log(myProfile);
+  const timeRange =
+    workout.workoutStartAt &&
+    workout.workoutEndAt &&
+    `${toKoreanTime(workout.workoutStartAt)} ~ ${toKoreanTime(
+      workout.workoutEndAt,
+    )}`;
 
   const matchedMates: MyPageData[] = [
     {
@@ -134,20 +138,25 @@ export default function MatchedMate() {
         <S.MateCard>
           <S.MateCardHeader>
             <S.ProfileImageWrapper>
-              {matchedMates.map((mate) => {
+              {matchedMates.map((mate, idx) => {
                 const isError = errorMap[mate.id];
 
-                if (isError) {
-                  return <DefaultProfileImg key={mate.id} />;
+                if (isError || !mate.profileUrl) {
+                  return (
+                    <S.ImageWrapper key={idx}>
+                      <DefaultProfileImg />
+                    </S.ImageWrapper>
+                  );
                 }
 
                 return (
-                  <S.ProfileImage
-                    key={mate.id + mate.nickname}
-                    src={mate.profileUrl}
-                    alt={mate.nickname}
-                    onError={() => handleImageError(mate.id)}
-                  />
+                  <S.ImageWrapper key={mate.id + mate.nickname}>
+                    <S.ProfileImage
+                      src={mate.profileUrl}
+                      alt={mate.nickname}
+                      onError={() => handleImageError(mate.id)}
+                    />
+                  </S.ImageWrapper>
                 );
               })}
             </S.ProfileImageWrapper>
@@ -220,7 +229,7 @@ export default function MatchedMate() {
             </Typography.H5Md>
           </S.FacilityInfoHeader>
 
-          {selectedFacility ? (
+          {selectedFacility?.name ? (
             <S.FacilityCard>
               <Typography.H4Sb>{selectedFacility.name}</Typography.H4Sb>
               <Typography.H6Md color="#8A92A3">
@@ -266,7 +275,7 @@ export default function MatchedMate() {
             </Typography.H5Md>
           </S.TimeInfoHeader>
 
-          {timeInfo ? (
+          {timeInfo && daysInKorean ? (
             <S.TimeCard>
               <Typography.H4Sb>{daysInKorean}</Typography.H4Sb>
               <Typography.H5Md color="#8A92A3">{timeRange}</Typography.H5Md>

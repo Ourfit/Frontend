@@ -82,6 +82,7 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  color: ${COLORS.GRAYSCALE_900};
 
   & > span:last-child {
     color: ${COLORS.GRAYSCALE_400};

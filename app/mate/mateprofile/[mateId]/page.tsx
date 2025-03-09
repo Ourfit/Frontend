@@ -14,13 +14,20 @@ import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
 import Toast from "@/components/common/Toast/Toast";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
+import { COLORS } from "@/constants/Theme";
 import { TIME_MAPPING } from "@/constants/Time";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
+import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { recevieMateRequest } from "@/services/mate/recevieMateRequest";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
+import { useNotificationStore } from "@/stores/NotificationStore";
 import getTimeSlot from "@/utils/getTimeSlot";
-import { useParams } from "next/navigation";
-import { JSX, useState, useTransition } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { JSX, use, useEffect, useState, useTransition } from "react";
+import LoadingIcon from "@/assets/images/loader-white.svg";
+import { AxiosError } from "axios";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -35,17 +42,24 @@ export default function MateProfile() {
     evening: <EveningIcon />,
   };
 
+  const router = useRouter();
   const params = useParams();
   const mateId = Number(params.mateId);
 
   const { data, isLoading, error } = useMateDetail(mateId);
+  const { data: myMate } = useMateInfo();
+  const { notification, resetNotification } = useNotificationStore();
 
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [toastStatus, setToastStatus] = useState<"success" | "error">(
-    TOAST_STATUSES.SUCCESS,
-  );
+  const [toastStatus, setToastStatus] = useState<
+    "success" | "error" | undefined
+  >(TOAST_STATUSES.SUCCESS);
+  const [buttonType, setButtonType] = useState("");
+  const [receiveId, setReceiveId] = useState(0);
+  const isDisable = buttonType === "APPLY" || data?.id === myMate?.myMate.id;
+  const isReceive = buttonType === "RECEIVE";
 
   const [isPending, startTransition] = useTransition();
 
@@ -54,6 +68,39 @@ export default function MateProfile() {
   };
 
   const handleSendMateRequest = () => {
+    if (myMate) {
+      setToastMessage("이미 메이트가 있습니다.");
+      setToastStatus(TOAST_STATUSES.ERROR);
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+
+      return;
+    }
+
+    if (isReceive) {
+      startTransition(async () => {
+        try {
+          await recevieMateRequest(receiveId);
+          router.push(`/mate/mateprofile/${mateId}/receive`);
+        } catch (error) {
+          setToastMessage("메이트 수락에 실패했습니다.");
+          setToastStatus(TOAST_STATUSES.ERROR);
+          setShowToast(true);
+
+          setTimeout(() => {
+            setShowToast(false);
+          }, 3000);
+
+          setShowModal(false);
+        }
+      });
+
+      return;
+    }
+
     startTransition(async () => {
       try {
         await sendMateRequest(mateId);
@@ -81,6 +128,33 @@ export default function MateProfile() {
     });
   };
 
+  useEffect(() => {
+    if (error) {
+      const err = error as AxiosError;
+
+      if (err.status === 404) {
+        setToastMessage("탈퇴한 사용자입니다.");
+        setToastStatus(TOAST_STATUSES.ERROR);
+        setShowToast(true);
+      }
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (notification.type) {
+      setButtonType(notification.type);
+
+      if (notification.type === "RECEIVE") {
+        setReceiveId(notification.id!);
+        setToastMessage("나에게 메이트를 신청한 유저에요");
+        setToastStatus(undefined);
+        setShowToast(true);
+      }
+    }
+
+    return () => resetNotification();
+  }, [buttonType]);
+
   const isEditingProfile = false;
 
   return (
@@ -91,11 +165,15 @@ export default function MateProfile() {
           <S.ProfileOverviewWrapper>
             <S.ProfileContainerWrapper>
               <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-                <S.BackgroundImage
-                  className="background-img"
-                  src={data?.profileUrl}
-                  alt={data?.nickname}
-                />
+                {data?.profileUrl ? (
+                  <S.BackgroundImage
+                    className="background-img"
+                    src={data.profileUrl}
+                    alt={data?.nickname}
+                  />
+                ) : (
+                  <DefaultProfileImg size={34} />
+                )}
               </S.ProfileImageWrapper>
               <S.DumbberIconWrapper>
                 <DumbbbelIcon color="#FFFFFF" />
@@ -213,12 +291,22 @@ export default function MateProfile() {
           <S.ButtonWrapper>
             <Button
               size={BUTTON_SIZES.MEDIUM}
-              variant="outline"
               disabled={!data?.openChatUrl}
               onClick={() => {
                 if (data?.openChatUrl) {
                   window.open(data.openChatUrl, "_blank");
                 }
+              }}
+              style={{
+                border: !data?.openChatUrl
+                  ? `1px solid ${COLORS.GRAYSCALE_300}`
+                  : "",
+                backgroundColor: data?.openChatUrl
+                  ? COLORS.BLUE_50
+                  : COLORS.BASE_WHITE,
+                color: !data?.openChatUrl
+                  ? COLORS.GRAYSCALE_400
+                  : COLORS.BLUE_500,
               }}
             >
               오픈 채팅방 이동
@@ -226,10 +314,10 @@ export default function MateProfile() {
             <Button
               size={BUTTON_SIZES.MEDIUM}
               variant={BUTTON_VARIANTS.PRIMARY}
-              disabled={false}
-              onClick={() => setShowModal(true)}
+              disabled={isDisable}
+              onClick={() => !isDisable && setShowModal(true)}
             >
-              메이트 신청
+              {isReceive ? "메이트 수락" : "메이트 신청"}
             </Button>
           </S.ButtonWrapper>
         </S.ProfileSection>
@@ -238,13 +326,26 @@ export default function MateProfile() {
           <S.ModalAlert>
             <S.ModalAlertHeader>
               <Typography.H2Sb color="#27282D">
-                메이트를 신청을 보낼까요?
+                {isReceive
+                  ? "메이트를 수락할까요?"
+                  : "메이트를 신청을 보낼까요?"}
               </Typography.H2Sb>
             </S.ModalAlertHeader>
 
             <S.ModalAlertContent>
               <Typography.H4Md color="#8A92A3">
-                상대가 메이트를 수락하면 알림을 보내드려요.
+                {isReceive ? (
+                  <>
+                    메이트 수락 시 나의 메이트 정보는
+                    <br />
+                    메이트 탭에서 확인 가능해요
+                  </>
+                ) : (
+                  <>
+                    상대가 메이트를 수락하면 <br />
+                    알림을 보내드려요.
+                  </>
+                )}
               </Typography.H4Md>
             </S.ModalAlertContent>
           </S.ModalAlert>
@@ -255,13 +356,19 @@ export default function MateProfile() {
             </S.StyledButton>
             <S.StyledButton onClick={handleSendMateRequest}>
               <Typography.H3Md color="#ffffff">
-                {isPending ? "처리 중..." : "신청"}
+                {isPending ? <LoadingIcon /> : isReceive ? "수락" : "신청"}
               </Typography.H3Md>
             </S.StyledButton>
           </S.ModalButtonWrapper>
         </Modal>
 
-        {showToast && <Toast message={toastMessage} status={toastStatus} />}
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            status={toastStatus}
+            style={{ marginTop: !toastStatus ? "-45px" : "" }}
+          />
+        )}
       </S.PageContainer>
     </>
   );

@@ -10,7 +10,6 @@ export async function GET(request: Request) {
   }
 
   const KAKAO_REST_API_KEY = process.env.KAKAO_REST_API_KEY;
-  console.log("REST_API_KEY:", process.env.KAKAO_REST_API_KEY);
   if (!KAKAO_REST_API_KEY) {
     return NextResponse.json(
       { message: "No Kakao REST API key" },

@@ -62,8 +62,15 @@ export default function NotificationBanner({
   });
 
   const mateHistory: MateHistory[] = data?.data.content;
-  const notification =
-    mateHistory?.filter((e) => e.roleType === "TARGET" && !e.isRead) || [];
+  const notification = mateHistory
+    ? mateHistory.filter(
+        (e) =>
+          e.roleType === "TARGET" &&
+          !e.isRead &&
+          new Date(e.createdAt).setHours(0, 0, 0, 0) ===
+            new Date().setHours(0, 0, 0, 0),
+      )
+    : [];
   const isCompolete = todayRecord?.isCompleted;
 
   const handleClose = () => {
@@ -75,7 +82,7 @@ export default function NotificationBanner({
     handleClose();
   };
 
-  if (isHome && (isLoading || !notification.length)) return <></>;
+  const isNoAlarm = !data || isLoading || !notification.length;
 
   return (
     <S.BannerWrapper>
@@ -86,11 +93,7 @@ export default function NotificationBanner({
           </S.IconWrapper>
           <S.NotificationContent $isHome={isHome}>
             <Typography.H6Md>
-              {isChallenge
-                ? "챌린지 도전"
-                : isRecord
-                  ? dateFormat(new Date(), "MD")
-                  : dateFormat(new Date(notification[0].createdAt), "MD")}
+              {isChallenge ? "챌린지 도전" : dateFormat(new Date(), "MD")}
             </Typography.H6Md>
             <Typography.H4Sb>
               {isChallenge
@@ -99,11 +102,13 @@ export default function NotificationBanner({
                   ? "오늘은 운동하는 날이에요!"
                   : isRecord
                     ? "오늘은 예정된 운동이 없어요!"
-                    : "운동 메이트 신청이 있어요!"}
+                    : isNoAlarm
+                      ? "오늘은 알림 소식이 없어요!"
+                      : "운동 메이트 신청이 있어요!"}
             </Typography.H4Sb>
           </S.NotificationContent>
         </S.ContentWrapper>
-        {isHome && <ChevroRightIcon />}
+        {isHome && !isNoAlarm && <ChevroRightIcon />}
         {todayRecord && (
           <S.CompleteButton
             $size={BUTTON_SIZES.EXTRA_SMALL}

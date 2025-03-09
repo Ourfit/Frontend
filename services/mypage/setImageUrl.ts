@@ -4,7 +4,6 @@ import axios from "axios";
 export const setImageUrl = async (file: File) => {
   try {
     const token = useTokenStore.getState().token;
-    console.log(token);
     if (!token) {
       console.error("토큰이 없습니다. 로그인하세요.");
       throw new Error("Unauthorized");

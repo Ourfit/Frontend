@@ -12,17 +12,24 @@ import { useUserInfoStore } from "@/stores/userInfoStore";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 
 export default function OpenChatPage() {
   const pathname = usePathname();
   const router = useRouter();
   const { fetchUserInfo, userInfo } = useUserInfoStore();
+  const { data } = useMyPageInfo();
   const introduction = userInfo?.introduction;
 
   const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showToast, setShowToast] = useState("");
+  const [toastStatus, setToastStatus] = useState<ToastStatus>();
 
   const deferredValue = useDeferredValue(linkValue);
 
@@ -69,9 +76,19 @@ export default function OpenChatPage() {
         introduction: introduction || null,
         openChatUrl: linkValue.trim() || null,
       });
-      router.push("/mypage");
+      queryClient.invalidateQueries({ queryKey: ["myPageInfo"] });
+      setShowToast(TOAST_MESSAGES.SUCCESS);
+      setToastStatus(TOAST_STATUSES.SUCCESS);
+      setTimeout(() => {
+        setShowToast("");
+      }, 2000);
     } catch (error) {
       console.error("오픈 채팅 링크 등록 실패:", error);
+      setShowToast(TOAST_MESSAGES.ERROR);
+      setToastStatus(TOAST_STATUSES.ERROR);
+      setTimeout(() => {
+        setShowToast("");
+      }, 2000);
     }
   };
 
@@ -89,6 +106,12 @@ export default function OpenChatPage() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [hasUnsubmittedData, isSubmitted]);
+
+  useEffect(() => {
+    if (data?.openChatUrl) {
+      setLinkValue(data.openChatUrl);
+    }
+  }, [data]);
 
   return (
     <>
@@ -123,6 +146,7 @@ export default function OpenChatPage() {
               onBlur={handleInputBlur}
               onClear={handleInputClear}
               onKeyPress={handleInputKeyPress}
+              isNonIcon
             />
           </S.InputWrapper>
         </S.Content>
@@ -131,11 +155,15 @@ export default function OpenChatPage() {
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={handleSubmit}
-            disabled={deferredValue.trim() === ""}
+            disabled={
+              deferredValue.trim() === "" ||
+              deferredValue.trim() === data?.openChatUrl
+            }
           >
             등록 완료
           </Button>
         </S.SubmitButtonWrapper>
+        {showToast && <Toast message={showToast} status={toastStatus} />}
       </S.Container>
     </>
   );
