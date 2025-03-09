@@ -15,10 +15,12 @@ export default function AnalyticsTracker() {
 
     const pagePath =
       pathname + (searchParams.toString() ? `?${searchParams}` : "");
-    window.gtag("config", GA_TRACKING_ID, {
-      page_path: pagePath,
-      user_id: String(userInfo?.id),
-    });
+    if (userInfo?.id) {
+      window.gtag("config", GA_TRACKING_ID, {
+        page_path: pagePath,
+        user_id: String(userInfo.id),
+      });
+    }
   }, [pathname, searchParams, userInfo]);
 
   return null;
