@@ -9,6 +9,7 @@ import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
 import Time from "../time/Time";
 import * as S from "./EditProfile.style";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
@@ -88,11 +89,15 @@ export default function EditProfile({
                 $isEditingProfile={true}
                 onClick={handleProfileImageClick}
               >
-                <S.BackgroundImage
-                  className="background-img"
-                  src={profileImage}
-                  alt="Profile"
-                />
+                {profileImage ? (
+                  <S.BackgroundImage
+                    className="background-img"
+                    src={profileImage}
+                    alt="Profile"
+                  />
+                ) : (
+                  <DefaultProfileImg size={34} />
+                )}
                 <S.OverlayImage
                   className="overlay"
                   src="/image-2.svg"

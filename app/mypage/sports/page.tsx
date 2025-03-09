@@ -23,6 +23,7 @@ export interface WorkoutType {
 
 const SportsPreference = () => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [initialValue, setInitialValue] = useState<string[]>([]);
   const router = useRouter();
   const pathname = usePathname();
   const isMypageSports = pathname === "/mypage/sports";
@@ -102,9 +103,17 @@ const SportsPreference = () => {
     updateWorkoutPreferences(requestBody);
   };
 
+  const isEqual = () => {
+    if (selectedSports.length !== initialValue.length) return false;
+    return selectedSports.sort().toString() === initialValue.sort().toString();
+  };
+
   useEffect(() => {
     if (userInfo?.favoriteWorkouts) {
       setSelectedSports(
+        userInfo.favoriteWorkouts.map((v: WorkoutType) => v.code),
+      );
+      setInitialValue(
         userInfo.favoriteWorkouts.map((v: WorkoutType) => v.code),
       );
     }
@@ -145,7 +154,7 @@ const SportsPreference = () => {
         </S.InfoContainer>
         <S.ButtonContainer>
           <Button
-            disabled={selectedSports.length === 0}
+            disabled={selectedSports.length === 0 || isEqual()}
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}

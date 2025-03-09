@@ -26,12 +26,10 @@ export default function EditPage() {
   const [toast, setToast] = useState("");
 
   const isEqual = () => {
-    if (selectedDays && initialDays)
-      return (
-        selectedDays.length === initialDays.length &&
-        selectedDays.every((v, i) => v === initialDays[i])
-      );
-    else return true;
+    if (selectedDays && initialDays) {
+      if (selectedDays.length !== initialDays.length) return false;
+      return selectedDays.sort().toString() === initialDays.sort().toString();
+    } else return true;
   };
 
   const handleSelection = (value: DayLabel) => {

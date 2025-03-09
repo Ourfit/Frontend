@@ -55,7 +55,7 @@ export const PreferencePlaceWrapper = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: row;
-  padding: 0px 20px;
+  padding: 12px 20px 0;
   width: 100%;
   gap: 8px;
 `;
@@ -156,8 +156,16 @@ export const PreferenceButton = styled.button`
   border: none;
   color: #8aadff;
   background: ${COLORS.BLUE_50};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -192,6 +200,7 @@ export const facilityNewContainer = styled.div`
   flex: 1;
 
   overflow-y: auto;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     display: none;
@@ -200,8 +209,6 @@ export const facilityNewContainer = styled.div`
   scrollbar-width: none;
 
   height: 100%;
-
-  gap: 36px;
 `;
 
 export const facilityContent = styled.div`
@@ -234,6 +241,7 @@ export const PlaceHolderWrapper = styled.div`
 
   width: 100%;
   padding: 0px 20px;
+  margin-top: 32px;
   box-sizing: border-box;
 
   height: auto;
@@ -249,6 +257,7 @@ export const ResultList = styled.div`
   width: 100%;
   max-width: 450px;
   padding: 0px 20px;
+  margin-top: 20px;
   box-sizing: border-box;
 
   overflow-y: auto;
@@ -279,8 +288,8 @@ export const ResultItem = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 9.8px;
   overflow: hidden;
 `;
@@ -292,13 +301,21 @@ export const FacilityInfo = styled.div`
   align-items: flex-start;
   gap: 2px;
 
-  width: 298px;
   height: 100%;
+  overflow: hidden;
+
+  & > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    width: 100%;
+  }
 `;
 
 export const AddText = styled.div`
   display: flex;
-  padding: 0px 20px;
+  padding: 24px 20px 0;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;

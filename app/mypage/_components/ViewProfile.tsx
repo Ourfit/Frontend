@@ -7,6 +7,7 @@ import Header from "@/components/common/Header/Header";
 import Link from "next/link";
 import { useMemo } from "react";
 import * as S from "../style";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 interface ViewProfileProps {
   profileImage?: string;
@@ -51,11 +52,15 @@ export default function ViewProfile({
         <S.ProfileSection $isEditingProfile={false}>
           <S.ProfileContainerWrapper>
             <S.ProfileImageWrapper $isEditingProfile={false}>
-              <S.BackgroundImage
-                className="background-img"
-                src={profileImage}
-                alt="Profile"
-              />
+              {profileImage ? (
+                <S.BackgroundImage
+                  className="background-img"
+                  src={profileImage}
+                  alt="Profile"
+                />
+              ) : (
+                <DefaultProfileImg size={34} />
+              )}
             </S.ProfileImageWrapper>
             <S.DumbberIconWrapper>
               <DumbbbelIcon color="#FFFFFF" />

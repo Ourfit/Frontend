@@ -119,7 +119,7 @@ const TimePreference = () => {
               </Typography.H1Sb>
             </S.SignupIntroTitleWrapper>
             <Typography.H4Md color={COLORS.GRAYSCALE_600}>
-              "메이트 매칭 시 필요한 정보에요."
+              메이트 매칭 시 필요한 정보에요.
             </Typography.H4Md>
           </S.SignupIntroContainer>
           <S.InfoWrapper>
@@ -157,7 +157,9 @@ const TimePreference = () => {
         </S.TimePreferenceWrapper>
         <S.ButtonContainer>
           <Button
-            disabled={!selectedTimes}
+            disabled={
+              !selectedTimes || userInfo.preferredWorkoutTime === selectedTimes
+            }
             size={BUTTON_SIZES.LARGE}
             variant={BUTTON_VARIANTS.PRIMARY}
             onClick={buttonClickHandler}
