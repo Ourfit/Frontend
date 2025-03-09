@@ -19,7 +19,7 @@ export default function AnalyticsTracker() {
       page_path: pagePath,
       user_id: String(userInfo?.id),
     });
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, userInfo]);
 
   return null;
 }
