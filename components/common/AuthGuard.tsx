@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+
   const isExcept =
     pathname !== "/" &&
     pathname !== "/auth/login" &&
