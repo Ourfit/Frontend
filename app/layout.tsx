@@ -1,9 +1,11 @@
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import AuthGuard from "@/components/common/AuthGuard";
 import ReactQueryProvider from "@/components/common/ReactQueryProvider";
 import ThemeClient from "@/components/common/ThemeClient";
 import GlobalStyle from "@/styles/GlobalStyle";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import React from "react";
 import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
 import "./globals.css";
@@ -48,11 +50,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body className={`${pretendard.variable} font-pretendard`}>
         <ReactQueryProvider>
           <ThemeClient>
             <GlobalStyle />
-            <AuthGuard>{children}</AuthGuard>
+            <AuthGuard>
+              <AnalyticsTracker />
+              {children}
+            </AuthGuard>
           </ThemeClient>
         </ReactQueryProvider>
       </body>
