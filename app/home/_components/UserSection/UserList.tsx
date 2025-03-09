@@ -9,6 +9,7 @@ import { PreferredWorkoutTime } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 import * as S from "./UserList.style";
+import { useRouter } from "next/navigation";
 
 const ICONS = {
   MORNING: <MorningIcon />,
@@ -29,6 +30,8 @@ export default function UserList({
   preferredTimes,
   workoutTypes,
 }: UserListProps) {
+  const router = useRouter();
+
   const { data, isLoading } = useQuery({
     queryKey: ["mates", preferredTimes, workoutTypes?.join(",")],
     queryFn: () => getMates({ preferredTimes, workoutTypes }),
@@ -65,7 +68,10 @@ export default function UserList({
             : user.favoriteWorkouts[0];
 
           return (
-            <S.UserWrapper key={idx}>
+            <S.UserWrapper
+              key={idx}
+              onClick={() => router.push(`/mate/mateprofile/${user.id}`)}
+            >
               <ProfileImgBadge imageUrl={user.profileUrl} />
               <S.UserInfoWrapper>
                 <S.UserInfo>
