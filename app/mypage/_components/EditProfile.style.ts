@@ -100,6 +100,7 @@ export const BackgroundImage = styled.img`
   max-width: 72px;
   height: 100%;
   max-height: 72px;
+  object-fit: cover;
 
   transition: all 0.3s ease;
 `;
