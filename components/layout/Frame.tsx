@@ -35,7 +35,7 @@ export default function Frame({
   return (
     <S.FrameContainer style={{ ...style }}>
       <S.Content
-        style={{ ...contentStyle, height: isHeightFull ? "100%" : "" }}
+        style={{ height: isHeightFull ? "100%" : "", ...contentStyle }}
       >
         {children}
       </S.Content>

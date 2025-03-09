@@ -33,6 +33,7 @@ export const UserWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 `;
 
 export const UserInfoWrapper = styled.div`
