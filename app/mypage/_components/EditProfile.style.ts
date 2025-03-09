@@ -73,8 +73,8 @@ export const ProfileOverviewWrapper = styled.div`
 
 export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 
   border: 2px solid ${COLORS.GRAYSCALE_100};
@@ -97,9 +97,9 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
 
 export const BackgroundImage = styled.img`
   width: 100%;
-  max-width: 72px;
+  max-width: 80px;
   height: 100%;
-  max-height: 72px;
+  max-height: 80px;
   object-fit: cover;
 
   transition: all 0.3s ease;
