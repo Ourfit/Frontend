@@ -24,7 +24,7 @@ export default function OpenChatPage() {
   const { data } = useMyPageInfo();
   const introduction = userInfo?.introduction;
 
-  const [linkValue, setLinkValue] = useState(data?.openChatUrl || "");
+  const [linkValue, setLinkValue] = useState("");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -106,6 +106,12 @@ export default function OpenChatPage() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [hasUnsubmittedData, isSubmitted]);
+
+  useEffect(() => {
+    if (data?.openChatUrl) {
+      setLinkValue(data.openChatUrl);
+    }
+  }, [data]);
 
   return (
     <>

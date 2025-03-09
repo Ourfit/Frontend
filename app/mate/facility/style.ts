@@ -9,8 +9,6 @@ export const facilityContainer = styled.div`
 
   width: 100%;
   height: 100%;
-
-  gap: 36px;
 `;
 
 export const facilityContainer2 = styled.div`
@@ -56,6 +54,7 @@ export const PlaceHolderWrapper = styled.div`
 
   width: 100%;
   padding: 0px 20px;
+  margin-top: 36px;
   box-sizing: border-box;
 
   height: auto;
@@ -72,6 +71,7 @@ export const ResultList = styled.div`
   max-width: 450px;
 
   padding: 0px 20px;
+  margin: 16px 0 20px;
   box-sizing: border-box;
   height: 100%;
 
@@ -101,8 +101,8 @@ export const ResultItem = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 9.8px;
   overflow: hidden;
 `;

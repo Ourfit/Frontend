@@ -30,9 +30,15 @@ export default function Frame({
 
   const isGnbHidden = hiddenGnbPaths.some((path) => pathname.startsWith(path));
 
+  const isHeightFull = pathname === "/mate/facility";
+
   return (
     <S.FrameContainer style={{ ...style }}>
-      <S.Content style={{ ...contentStyle }}>{children}</S.Content>
+      <S.Content
+        style={{ ...contentStyle, height: isHeightFull ? "100%" : "" }}
+      >
+        {children}
+      </S.Content>
       {!isGnbHidden && <Gnb />}
     </S.FrameContainer>
   );
