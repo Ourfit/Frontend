@@ -24,9 +24,11 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: "아워핏",
   description: "운동 메이트 매칭 서비스",
+  metadataBase: new URL("https://ourfit.life"),
   openGraph: {
     title: "아워핏",
     description: "운동 메이트 매칭 서비스",
+    url: "https://ourfit.life",
     images: [
       {
         url: "/og-image.png",
@@ -35,6 +37,7 @@ export const metadata: Metadata = {
         alt: "아워핏",
       },
     ],
+    type: "website",
   },
 };
 
