@@ -19,7 +19,12 @@ export default function Calendar({
 }: CalendarProps) {
   const [clickedDate, setClickedDate] = useState<Date | null>(null);
 
-  const nowDate = new Date(selectedDate.replace(/-/g, "/"));
+  const parseDate = (dateString: string) => {
+    const [year, month] = dateString.split(". ").map(Number);
+    return new Date(year, month - 1, 1);
+  };
+
+  const nowDate = parseDate(selectedDate);
   const allDay: Date[] = monthList(nowDate);
 
   const handleClickDate = (date: Date) => {
