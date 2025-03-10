@@ -6,7 +6,7 @@ import GlobalStyle from "@/styles/GlobalStyle";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
-import React from "react";
+import React, { Suspense } from "react";
 import KakaoScript from "./(beforeLogin)/auth/_components/KakaoScript";
 import "./globals.css";
 
@@ -76,7 +76,9 @@ export default function RootLayout({
           <ThemeClient>
             <GlobalStyle />
             <AuthGuard>
-              <AnalyticsTracker />
+              <Suspense fallback={null}>
+                <AnalyticsTracker />
+              </Suspense>
               {children}
             </AuthGuard>
           </ThemeClient>
