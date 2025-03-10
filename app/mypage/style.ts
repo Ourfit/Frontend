@@ -254,6 +254,8 @@ export const ListItem = styled.li`
   line-height: 150%;
   letter-spacing: -0.14px;
 
+  cursor: pointer;
+
   &:last-child {
     border-bottom: none;
   }
