@@ -3,11 +3,12 @@
 import ChevronRight from "@/assets/images/chevron-right.svg";
 import DumbbbelIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Header from "@/components/common/Header/Header";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import * as S from "../style";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 interface ViewProfileProps {
   profileImage?: string;
@@ -34,6 +35,8 @@ export default function ViewProfile({
   handleEditBasicInfo,
   managementLinks,
 }: ViewProfileProps) {
+  const router = useRouter();
+
   const skillLevelMap: Record<string, string> = {
     BEGINNER: "운동초보",
     INTERMEDIATE: "운동중수",
@@ -95,7 +98,10 @@ export default function ViewProfile({
                 link.label === "계정 정보" && sns === "KAKAO";
 
               return (
-                <S.ListItem key={link.href}>
+                <S.ListItem
+                  key={link.href}
+                  onClick={() => router.push(link.href)}
+                >
                   {isAccountInfo ? (
                     <>
                       <Link href={link.href} target={link.target}>
