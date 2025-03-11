@@ -83,7 +83,7 @@ export const ProfileDescription = styled.div`
   flex-direction: column;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 102px;
 
   margin-top: 29px;
@@ -159,7 +159,7 @@ export const PreferenceContainer = styled.div`
   gap: 16px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 
   padding: 0px 20px;

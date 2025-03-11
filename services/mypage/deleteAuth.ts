@@ -1,5 +1,6 @@
 import { api } from "@/services/axiosInterceptor";
 import { useTokenStore } from "@/stores/tokenStore";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 import { redirect } from "next/navigation";
 
 export async function deleteAccount() {
@@ -21,6 +22,7 @@ export async function deleteAccount() {
 
 export async function deleteToken() {
   const { clearToken } = useTokenStore.getState();
+  const { clearUserInfo } = useUserInfoStore.getState();
 
   try {
     const response = await api.delete(
@@ -29,6 +31,7 @@ export async function deleteToken() {
 
     if (response.status === 204) {
       clearToken();
+      clearUserInfo();
       redirect("/auth/login");
     }
   } catch (err) {

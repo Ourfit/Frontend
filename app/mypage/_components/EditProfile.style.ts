@@ -158,7 +158,7 @@ export const ProfileDescription = styled.div`
   flex-direction: column;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 102px;
 
   margin: 29px 0px 0px 0px;
@@ -236,7 +236,7 @@ export const PreferenceContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 
   box-sizing: border-box;
@@ -244,7 +244,7 @@ export const PreferenceContainer = styled.div`
 
 export const Line = styled.div`
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
 
   height: 10px;
   background-color: ${COLORS.GRAYSCALE_50};

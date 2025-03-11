@@ -9,7 +9,7 @@ export const BottomSheetContainer = styled.div`
   width: 100%;
   z-index: 10000;
   transform: translateX(-50%);
-  max-width: 450px;
+  max-width: 390px;
 `;
 
 export const BottomSheet = styled.div<{ $show: boolean }>`
