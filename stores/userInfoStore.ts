@@ -2,7 +2,6 @@
 
 import { getMypageInfo } from "@/services/mypage/getMypageInfo";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 interface FavoriteWorkout {
   code: string;
@@ -39,27 +38,24 @@ interface UserInfoStore {
   clearUserInfo: () => void;
 }
 
-export const useUserInfoStore = create(
-  persist<UserInfoStore>(
-    (set) => ({
-      userInfo: null,
+export const useUserInfoStore = create<UserInfoStore>((set) => ({
+  userInfo: null,
 
-      fetchUserInfo: async () => {
-        try {
-          const result = await getMypageInfo();
-          set({ userInfo: result });
-        } catch (error) {
-          console.error("유저 정보 가져오기 실패:", error);
-        }
-      },
+  fetchUserInfo: async () => {
+    try {
+      const result = await getMypageInfo();
+      set({ userInfo: result });
 
-      clearUserInfo: () => {
-        set({ userInfo: null });
-        localStorage.removeItem("ourfit-userInfo");
-      },
-    }),
-    {
-      name: "ourfit-userInfo",
-    },
-  ),
-);
+      if (result?.id) {
+        localStorage.setItem("userId", String(result.id));
+      }
+    } catch (error) {
+      console.error("유저 정보 가져오기 실패:", error);
+    }
+  },
+
+  clearUserInfo: () => {
+    set({ userInfo: null });
+    localStorage.removeItem("userId");
+  },
+}));
