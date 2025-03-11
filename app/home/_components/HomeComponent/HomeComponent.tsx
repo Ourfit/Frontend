@@ -7,6 +7,8 @@ import { COLORS } from "@/constants/Theme";
 import { getMypageInfo } from "@/services/mypage/getMypageInfo";
 import { useOAuthIdStore } from "@/stores/oAuthIdStore";
 import { useTokenStore } from "@/stores/tokenStore";
+import { useUserInfoStore } from "@/stores/userInfoStore";
+import { User } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -35,13 +37,26 @@ export default function HomeComponent() {
   const { token } = useTokenStore();
   const router = useRouter();
   const { clearOAuthId } = useOAuthIdStore.getState();
+  const { fetchUserInfo } = useUserInfoStore.getState();
 
-  const { data: user, isLoading } = useQuery({
+  const {
+    data: user,
+    isLoading,
+    isSuccess,
+  } = useQuery<User>({
     queryKey: ["myPageInfo"],
     queryFn: () => getMypageInfo(),
     staleTime: 5 * 60 * 1000,
     enabled: !!token,
   });
+
+  //tanstack-query 호출된 후 스토어에 동기화 되지 않아서 동기화 처리
+  //리액트쿼리 정상 작동되면 스토어, 로컬 스토리지에 동기화 되도록 저장
+  useEffect(() => {
+    if (isSuccess && user) {
+      fetchUserInfo();
+    }
+  }, [isSuccess, user, fetchUserInfo]);
 
   useEffect(() => {
     const accessToken = useTokenStore.getState().token;
@@ -59,8 +74,13 @@ export default function HomeComponent() {
     region2 = "",
     region3 = "",
     nickname = "",
-    favoriteWorkouts = "",
-    preferredWorkoutTime = "",
+    favoriteWorkouts = [
+      {
+        code: "",
+        name: "",
+      },
+    ],
+    preferredWorkoutTime = "WEEKDAY_MORNING",
   } = isLoading || !user ? {} : user;
 
   return (

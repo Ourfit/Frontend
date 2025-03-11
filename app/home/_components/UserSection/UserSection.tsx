@@ -1,10 +1,10 @@
 "use client";
 
-import UserSectionTitle from "./UserSectionTitle";
-import * as S from "./UserSection.style";
-import UserList from "./UserList";
-import { PreferredWorkoutTime } from "@/types/user";
 import { GROUP_TYPES } from "@/constants/User";
+import { PreferredWorkoutTime } from "@/types/user";
+import UserList from "./UserList";
+import * as S from "./UserSection.style";
+import UserSectionTitle from "./UserSectionTitle";
 
 interface UserSectionType {
   nickname: string;
