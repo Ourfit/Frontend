@@ -30,7 +30,7 @@ export const facilityContent = styled.div`
   gap: 8px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 
   padding: 48px 20px 0px 20px;
@@ -68,7 +68,7 @@ export const ResultList = styled.div`
   gap: 16px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
 
   padding: 0px 20px;
   margin: 16px 0 20px;

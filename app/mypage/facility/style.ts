@@ -171,7 +171,7 @@ export const PreferenceButton = styled.button`
 export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   justify-content: center;
   align-items: center;
   margin-top: auto;
@@ -217,7 +217,7 @@ export const facilityContent = styled.div`
   gap: 8px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 
   padding: 48px 20px 0px 20px;
@@ -255,7 +255,7 @@ export const ResultList = styled.div`
   gap: 16px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   padding: 0px 20px;
   margin-top: 20px;
   box-sizing: border-box;

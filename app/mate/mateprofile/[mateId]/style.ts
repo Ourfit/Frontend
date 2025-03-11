@@ -171,7 +171,7 @@ export const ProfileDescription = styled.div`
   flex-direction: column;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
 
   height: 102px;
 
@@ -244,7 +244,7 @@ export const PreferenceContainer = styled.div`
   flex-direction: column;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 `;
 
@@ -278,7 +278,7 @@ export const NoPreferenceView = styled.div`
   gap: 10px;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
 
   height: 73px;
   padding: 16px 20px;
@@ -329,7 +329,7 @@ export const PreferencePlaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
 
   gap: 16px;
@@ -430,7 +430,7 @@ export const ButtonWrapper = styled.div`
   align-items: flex-start;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 94px;
 
   padding: 12px 0px 28px 0px;
@@ -517,7 +517,7 @@ export const StyledButton = styled.button`
 
 export const Line = styled.div`
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 10px;
 
   background-color: ${COLORS.GRAYSCALE_50};

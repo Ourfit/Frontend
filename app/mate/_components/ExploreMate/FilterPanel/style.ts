@@ -14,7 +14,7 @@ export const FilterPanelContainer = styled.div`
   transform: translate(-50%, 0);
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 100%;
 
   background: #ffffff;
@@ -194,7 +194,7 @@ export const ApplyButtonWrapper = styled.div`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 93px;
 
   background: #ffffff;

@@ -18,7 +18,7 @@ export const Wrapper = styled.div<{
   align-items: center;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   gap: 8px;
   border: ${({ $isInputFocus, $borderColor = false }) =>
     $isInputFocus

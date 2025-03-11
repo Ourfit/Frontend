@@ -10,7 +10,7 @@ export const MatchedMateContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 100%;
 
   overflow-y: auto;
@@ -36,7 +36,7 @@ export const MateFacilityInfoWrapper = styled.div`
   align-items: flex-start;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: auto;
   padding: 20px 20px 32px 20px;
   box-sizing: border-box;

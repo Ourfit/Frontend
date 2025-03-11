@@ -9,7 +9,7 @@ export const FrameContainer = styled.div<{
     $bgColorGray ? "#F6F6F8" : "#ffffff"};
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 100svh;
   padding-top: 48px;
   box-sizing: border-box;

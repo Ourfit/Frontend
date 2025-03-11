@@ -10,7 +10,7 @@ export const matePageContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   height: 100%;
 `;
 
