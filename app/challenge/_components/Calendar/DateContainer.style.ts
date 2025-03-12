@@ -9,7 +9,7 @@ export const DateWrapper = styled.div<{
   padding-bottom: 4px;
   width: 32px;
   height: 40px;
-  color: ${COLORS.GRAYSCALE_500};
+  color: ${COLORS.GRAYSCALE_600};
   box-sizing: content-box;
 
   cursor: ${({ $afterToday = false }) => ($afterToday ? "pointer" : "")};
@@ -18,13 +18,18 @@ export const DateWrapper = styled.div<{
 export const Date = styled.div<{
   $sameDay: boolean;
   $isRegistration?: boolean;
+  $prevToday?: boolean;
+  $isHoliday: boolean;
 }>`
   ${({ $sameDay, $isRegistration }) =>
     $sameDay && !$isRegistration ? TypographyCss.H4Sb : TypographyCss.H4Md}
 
   position: relative;
+  color: ${({ $isHoliday }) => $isHoliday && "#EF7A7A"};
   color: ${({ $sameDay, $isRegistration }) =>
     $sameDay && !$isRegistration && COLORS.BLUE_500};
+
+  opacity: ${({ $prevToday }) => $prevToday && 0.4};
 `;
 
 export const Highlight = styled.div`

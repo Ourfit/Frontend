@@ -26,9 +26,12 @@ export default function DateContainer({
 
   const sameDay = today.toDateString() === day.toDateString();
   const afterToday = isRegistration && today <= day;
+  const prevToday = today > day;
   const clicked =
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();
+  const isHoliday = day.getDay() === 0;
+
   const item = data?.find((v) => v.recordDate === dateFormat(day));
 
   const getType = () => {
@@ -47,7 +50,16 @@ export default function DateContainer({
       onClick={() => afterToday && handleClickDate(day)}
     >
       {nowDate.getMonth() === day.getMonth() && (
-        <S.Date $sameDay={sameDay} $isRegistration={isRegistration}>
+        <S.Date
+          $sameDay={sameDay}
+          $isRegistration={isRegistration}
+          $prevToday={
+            prevToday &&
+            TYPE !== CALENDAR_BADGE.COMPLETE &&
+            TYPE !== CALENDAR_BADGE.FAIL
+          }
+          $isHoliday={isHoliday}
+        >
           {sameDay && !clickedDate && isRegistration && (
             <S.Highlight>{day.getDate()}</S.Highlight>
           )}
