@@ -13,4 +13,4 @@ export type RecordType = {
   recordDate: string;
 };
 
-export const WEEKS = ["월", "화", "수", "목", "금", "토", "일"];
+export const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];

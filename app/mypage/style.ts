@@ -168,14 +168,21 @@ export const PreferenceContainer = styled.div`
   margin-top: 16px;
 `;
 
-export const BackgroundImage = styled.img`
+export const BackgroundImage = styled.div`
   width: 100%;
   max-width: 72px;
   height: 100%;
   max-height: 72px;
-  object-fit: cover;
 
-  transition: all 0.3s ease;
+  & > img {
+    width: 100%;
+    max-width: 72px;
+    height: 100%;
+    max-height: 72px;
+    object-fit: cover;
+
+    transition: all 0.3s ease;
+  }
 `;
 
 export const OverlayImage = styled.img`

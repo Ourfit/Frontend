@@ -9,10 +9,7 @@ export const monthList = (nowDate: Date) => {
   const prevMonthEnd = new Date(nowYear, nowMonth, 0).getDate();
   const nowMonthEnd = new Date(nowYear, nowMonth + 1, 0).getDate();
 
-  const adjustedDayOneWeek = dayOneWeek === 0 ? 6 : dayOneWeek - 1;
-  const adjustedDayLastWeek = dayLastWeek === 0 ? 6 : dayLastWeek - 1;
-
-  for (let i = adjustedDayOneWeek - 1; i >= 0; i--) {
+  for (let i = dayOneWeek - 1; i >= 0; i--) {
     result.push(new Date(nowYear, nowMonth - 1, prevMonthEnd - i));
   }
 
@@ -20,7 +17,7 @@ export const monthList = (nowDate: Date) => {
     result.push(new Date(nowYear, nowMonth, i));
   }
 
-  for (let i = 1; i < 7 - adjustedDayLastWeek; i++) {
+  for (let i = 1; i < 7 - dayLastWeek; i++) {
     result.push(new Date(nowYear, nowMonth + 1, i));
   }
 

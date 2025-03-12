@@ -10,6 +10,7 @@ import Sports from "../sports/Sports";
 import Time from "../time/Time";
 import * as S from "./EditProfile.style";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import Image from "next/image";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
@@ -47,6 +48,7 @@ export default function EditProfile({
   descriptionInputRef,
 }: EditProfileProps) {
   const { userInfo, fetchUserInfo } = useUserInfoStore();
+  const [imgError, setImgError] = useState(false);
 
   const saveIntroduction = async () => {
     handleIntroductionBlur();
@@ -89,12 +91,17 @@ export default function EditProfile({
                 $isEditingProfile={true}
                 onClick={handleProfileImageClick}
               >
-                {profileImage ? (
-                  <S.BackgroundImage
-                    className="background-img"
-                    src={profileImage}
-                    alt="Profile"
-                  />
+                {profileImage && !imgError ? (
+                  <S.BackgroundImage>
+                    <Image
+                      className="background-img"
+                      src={profileImage}
+                      alt="Profile"
+                      width={80}
+                      height={80}
+                      onError={() => setImgError(true)}
+                    />
+                  </S.BackgroundImage>
                 ) : (
                   <DefaultProfileImg size={34} />
                 )}

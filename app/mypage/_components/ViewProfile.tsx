@@ -7,8 +7,9 @@ import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProf
 import Header from "@/components/common/Header/Header";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import * as S from "../style";
+import Image from "next/image";
 
 interface ViewProfileProps {
   profileImage?: string;
@@ -36,6 +37,7 @@ export default function ViewProfile({
   managementLinks,
 }: ViewProfileProps) {
   const router = useRouter();
+  const [imgError, setImgError] = useState(false);
 
   const skillLevelMap: Record<string, string> = {
     BEGINNER: "운동초보",
@@ -55,12 +57,17 @@ export default function ViewProfile({
         <S.ProfileSection $isEditingProfile={false}>
           <S.ProfileContainerWrapper>
             <S.ProfileImageWrapper $isEditingProfile={false}>
-              {profileImage ? (
-                <S.BackgroundImage
-                  className="background-img"
-                  src={profileImage}
-                  alt="Profile"
-                />
+              {profileImage && !imgError ? (
+                <S.BackgroundImage>
+                  <Image
+                    className="background-img"
+                    src={profileImage}
+                    alt="Profile"
+                    width={72}
+                    height={72}
+                    onError={() => setImgError(true)}
+                  />
+                </S.BackgroundImage>
               ) : (
                 <DefaultProfileImg size={34} />
               )}

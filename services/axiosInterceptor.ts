@@ -1,7 +1,6 @@
 import { useTokenStore } from "@/stores/tokenStore";
 import axios from "axios";
 import { refreshAccessToken } from "./getTokens";
-import { redirect } from "next/navigation";
 import base64 from "base-64";
 
 axios.defaults.withCredentials = true;
@@ -32,14 +31,14 @@ api.interceptors.request.use(
         } catch (err) {
           console.error("토큰 갱신 실패:", err);
           clearToken();
-          redirect("/auth/login");
+          window.location.replace("/auth/login");
         }
       } else {
         config.headers.Authorization = `Bearer ${token}`;
       }
     } else {
       clearToken();
-      redirect("/auth/login");
+      window.location.replace("/auth/login");
     }
 
     return config;
