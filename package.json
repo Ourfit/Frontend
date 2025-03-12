@@ -12,6 +12,7 @@
     "@apollo/client": "^3.12.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@kokr/date": "^0.4.0",
     "@mui/material": "^6.4.2",
     "@mui/x-date-pickers": "^7.24.1",
     "@svgr/webpack": "^8.1.0",
