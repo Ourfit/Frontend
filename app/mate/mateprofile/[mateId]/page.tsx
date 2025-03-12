@@ -28,6 +28,7 @@ import { JSX, use, useEffect, useState, useTransition } from "react";
 import LoadingIcon from "@/assets/images/loader-white.svg";
 import { AxiosError } from "axios";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import Image from "next/image";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -58,6 +59,8 @@ export default function MateProfile() {
   >(TOAST_STATUSES.SUCCESS);
   const [buttonType, setButtonType] = useState("");
   const [receiveId, setReceiveId] = useState(0);
+  const [imgError, setImgError] = useState(false);
+
   const isDisable = buttonType === "APPLY" || data?.id === myMate?.myMate.id;
   const isReceive = buttonType === "RECEIVE";
 
@@ -165,12 +168,17 @@ export default function MateProfile() {
           <S.ProfileOverviewWrapper>
             <S.ProfileContainerWrapper>
               <S.ProfileImageWrapper $isEditingProfile={isEditingProfile}>
-                {data?.profileUrl ? (
-                  <S.BackgroundImage
-                    className="background-img"
-                    src={data.profileUrl}
-                    alt={data?.nickname}
-                  />
+                {data?.profileUrl && !imgError ? (
+                  <S.BackgroundImage>
+                    <Image
+                      className="background-img"
+                      src={data.profileUrl}
+                      alt={data?.nickname}
+                      width={80}
+                      height={80}
+                      onError={() => setImgError(true)}
+                    />
+                  </S.BackgroundImage>
                 ) : (
                   <DefaultProfileImg size={34} />
                 )}

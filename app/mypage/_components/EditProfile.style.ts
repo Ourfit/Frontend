@@ -95,14 +95,21 @@ export const ProfileImageWrapper = styled.div<{ $isEditingProfile: boolean }>`
   `}
 `;
 
-export const BackgroundImage = styled.img`
+export const BackgroundImage = styled.div`
   width: 100%;
   max-width: 80px;
   height: 100%;
   max-height: 80px;
-  object-fit: cover;
 
-  transition: all 0.3s ease;
+  & > img {
+    width: 100%;
+    max-width: 80px;
+    height: 100%;
+    max-height: 80px;
+    object-fit: cover;
+
+    transition: all 0.3s ease;
+  }
 `;
 
 export const OverlayImage = styled.img`
