@@ -1,16 +1,19 @@
 "use client";
 
 import DumbbbelIcon from "@/assets/images/dumbbells.svg";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Header from "@/components/common/Header/Header";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import { useMateDetail } from "@/hooks/queries/useMateDetails";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { updateUserProfile } from "@/services/updateUserProfile";
 import { useUserInfoStore } from "@/stores/userInfoStore";
+import Image from "next/image";
 import React, { useState } from "react";
 import Facility from "../facility/Facility";
 import Sports from "../sports/Sports";
 import Time from "../time/Time";
 import * as S from "./EditProfile.style";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
-import Image from "next/image";
 
 interface EditProfileProps {
   handleEditProfile: () => void;
@@ -49,6 +52,8 @@ export default function EditProfile({
 }: EditProfileProps) {
   const { userInfo, fetchUserInfo } = useUserInfoStore();
   const [imgError, setImgError] = useState(false);
+  const { data: userData } = useMyPageInfo();
+  const { data: myDataInfo } = useMateDetail(userData?.id);
 
   const saveIntroduction = async () => {
     handleIntroductionBlur();
@@ -63,6 +68,12 @@ export default function EditProfile({
         openChatUrl: openChatUrlValue,
       });
       await fetchUserInfo();
+      if (myDataInfo?.id) {
+        await queryClient.refetchQueries({
+          queryKey: ["mateDetail", myDataInfo.id],
+          exact: true,
+        });
+      }
     } catch (error) {
       console.error("자기소개 업데이트 실패:", error);
     }

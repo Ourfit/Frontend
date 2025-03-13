@@ -15,10 +15,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as S from "./style";
 
+import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { setTimePreference } from "@/services/mypage/setTimePreference";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEditProfileStore } from "@/stores/editProfileStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ICONS = {
   MorningIcon: <MorningIcon />,
@@ -29,6 +30,7 @@ const ICONS = {
 const TimePreference = () => {
   const [selectedTimes, setSelectedTimes] = useState<string>("");
   const { data: userInfo } = useMyPageInfo();
+  const { data: mydataInfo } = useMateDetail(userInfo?.id);
   const { addIsEdit } = useEditProfileStore();
 
   const router = useRouter();
@@ -80,6 +82,10 @@ const TimePreference = () => {
 
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      await queryClient.refetchQueries({
+        queryKey: ["mateDetail", mydataInfo?.id],
+        exact: true,
+      });
 
       if (isMypageTime) {
         addIsEdit(true);

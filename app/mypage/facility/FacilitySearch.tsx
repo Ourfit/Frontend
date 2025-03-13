@@ -13,11 +13,12 @@ import { setFacilityPreference } from "@/services/mypage/setFacilityPreferences"
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
+import { useMateDetail } from "@/hooks/queries/useMateDetails";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 import { useEffect, useState } from "react";
 import { WorkoutType } from "../sports/page";
 import * as MS from "./style";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
-import { useEditProfileStore } from "@/stores/editProfileStore";
 
 type FacilityRequestBody = {
   preferredWorkoutTime: string | null;
@@ -31,6 +32,7 @@ export default function FacilitySearch() {
 
   const { data: searchResults } = usePlacesSearch(facilityValue);
   const { data: userInfo } = useMyPageInfo();
+  const { data: mydataInfo } = useMateDetail(userInfo?.id);
   const { addIsEdit } = useEditProfileStore();
 
   const [selectedPreferenceFacilities, setSelectedPreferenceFacilities] =
@@ -116,6 +118,10 @@ export default function FacilitySearch() {
 
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      await queryClient.refetchQueries({
+        queryKey: ["mateDetail", mydataInfo?.id],
+        exact: true,
+      });
       addIsEdit(true);
       router.back();
     },
