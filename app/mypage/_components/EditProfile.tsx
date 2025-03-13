@@ -4,7 +4,6 @@ import DumbbbelIcon from "@/assets/images/dumbbells.svg";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Header from "@/components/common/Header/Header";
 import { queryClient } from "@/components/common/ReactQueryProvider";
-import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { updateUserProfile } from "@/services/updateUserProfile";
 import { useUserInfoStore } from "@/stores/userInfoStore";
@@ -53,7 +52,6 @@ export default function EditProfile({
   const { userInfo, fetchUserInfo } = useUserInfoStore();
   const [imgError, setImgError] = useState(false);
   const { data: userData } = useMyPageInfo();
-  const { data: myDataInfo } = useMateDetail(userData?.id);
 
   const saveIntroduction = async () => {
     handleIntroductionBlur();
@@ -68,9 +66,9 @@ export default function EditProfile({
         openChatUrl: openChatUrlValue,
       });
       await fetchUserInfo();
-      if (myDataInfo?.id) {
+      if (userData?.id) {
         await queryClient.refetchQueries({
-          queryKey: ["mateDetail", myDataInfo.id],
+          queryKey: ["mateDetail", userData?.id],
           exact: true,
         });
       }
@@ -84,12 +82,6 @@ export default function EditProfile({
     INTERMEDIATE: "운동중수",
     ADVANCED: "운동고수",
   };
-
-  const [selectedPreferenceFacility, setSelectedPreferenceFacility] = useState<{
-    id: number;
-    name: string;
-    address: string;
-  } | null>(null);
 
   return (
     <>

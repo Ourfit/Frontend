@@ -7,7 +7,6 @@ import { queryClient } from "@/components/common/ReactQueryProvider";
 import TextButton from "@/components/common/TextButton";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
-import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
@@ -31,7 +30,7 @@ const SportsPreference = () => {
   const isSignup = pathname === "/auth/signup";
 
   const { data: userInfo } = useMyPageInfo();
-  const { data: mydataInfo } = useMateDetail(userInfo?.id);
+
   const { data: workoutTypes } = useWorkoutTypes();
   const { addIsEdit } = useEditProfileStore();
 
@@ -90,7 +89,7 @@ const SportsPreference = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
       await queryClient.refetchQueries({
-        queryKey: ["mateDetail", mydataInfo?.id],
+        queryKey: ["mateDetail", userInfo?.id],
         exact: true,
       });
 
