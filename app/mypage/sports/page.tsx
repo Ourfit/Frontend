@@ -10,11 +10,11 @@ import { COLORS } from "@/constants/Theme";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { useWorkoutTypes } from "@/hooks/queries/useWorkoutTypes";
 import { setWorkoutPreferences } from "@/services/mypage/setWorkoutPreferences";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as S from "./style";
-import { useEditProfileStore } from "@/stores/editProfileStore";
 
 export interface WorkoutType {
   code: string;
@@ -30,6 +30,7 @@ const SportsPreference = () => {
   const isSignup = pathname === "/auth/signup";
 
   const { data: userInfo } = useMyPageInfo();
+
   const { data: workoutTypes } = useWorkoutTypes();
   const { addIsEdit } = useEditProfileStore();
 
@@ -87,6 +88,10 @@ const SportsPreference = () => {
 
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
+      await queryClient.refetchQueries({
+        queryKey: ["mateDetail", userInfo?.id],
+        exact: true,
+      });
 
       addIsEdit(true);
       router.back();

@@ -5,11 +5,11 @@ import DumbbbelIcon from "@/assets/images/dumbbells.svg";
 import { Typography } from "@/components/atoms/Typography";
 import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Header from "@/components/common/Header/Header";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import * as S from "../style";
-import Image from "next/image";
 
 interface ViewProfileProps {
   profileImage?: string;
@@ -103,17 +103,22 @@ export default function ViewProfile({
             {memoizedManagementLinks.map((link) => {
               const isAccountInfo =
                 link.label === "계정 정보" && sns === "KAKAO";
+              const isAppVersion = link.label === "앱 버전";
+              const disableClick = isAccountInfo || isAppVersion;
 
               return (
                 <S.ListItem
                   key={link.href}
-                  onClick={() => router.push(link.href)}
+                  $disableClick={disableClick}
+                  onClick={() => {
+                    if (!disableClick) {
+                      router.push(link.href);
+                    }
+                  }}
                 >
                   {isAccountInfo ? (
                     <>
-                      <Link href={link.href} target={link.target}>
-                        {link.label}
-                      </Link>
+                      <Typography.H4Sb>{link.label}</Typography.H4Sb>
                       <S.SNSLoginInfo>
                         <Typography.H6Md color="#ADB3C2">
                           SNS 로그인(카카오)
@@ -123,14 +128,14 @@ export default function ViewProfile({
                         </Typography.H6Md>
                       </S.SNSLoginInfo>
                     </>
+                  ) : isAppVersion ? (
+                    <Typography.H4Sb>{link.label}</Typography.H4Sb>
                   ) : (
                     <Link href={link.href} target={link.target}>
-                      {link.label}
+                      <Typography.H4Sb>{link.label}</Typography.H4Sb>
                     </Link>
                   )}
-                  {!isAccountInfo && link.label !== "앱 버전" && (
-                    <ChevronRight />
-                  )}{" "}
+                  {!isAccountInfo && !isAppVersion && <ChevronRight />}{" "}
                 </S.ListItem>
               );
             })}

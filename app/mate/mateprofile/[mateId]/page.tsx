@@ -8,9 +8,11 @@ import {
   default as Dumbbels,
 } from "@/assets/images/dumbbells.svg";
 import EveningIcon from "@/assets/images/evening.svg";
+import LoadingIcon from "@/assets/images/loader-white.svg";
 import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Header from "@/components/common/Header/Header";
 import Toast from "@/components/common/Toast/Toast";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
@@ -19,16 +21,15 @@ import { TIME_MAPPING } from "@/constants/Time";
 import { TOAST_STATUSES } from "@/constants/Toast";
 import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { recevieMateRequest } from "@/services/mate/recevieMateRequest";
 import { sendMateRequest } from "@/services/mate/sendMateRequest";
 import { useNotificationStore } from "@/stores/NotificationStore";
 import getTimeSlot from "@/utils/getTimeSlot";
-import { useParams, useRouter } from "next/navigation";
-import { JSX, use, useEffect, useState, useTransition } from "react";
-import LoadingIcon from "@/assets/images/loader-white.svg";
 import { AxiosError } from "axios";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { JSX, useEffect, useState, useTransition } from "react";
 
 export default function MateProfile() {
   const skillLevelMap: Record<string, string> = {
@@ -49,6 +50,7 @@ export default function MateProfile() {
 
   const { data, isLoading, error } = useMateDetail(mateId);
   const { data: myMate } = useMateInfo();
+  const { data: myInfo } = useMyPageInfo();
   const { notification, resetNotification } = useNotificationStore();
 
   const [showModal, setShowModal] = useState(false);
@@ -61,7 +63,10 @@ export default function MateProfile() {
   const [receiveId, setReceiveId] = useState(0);
   const [imgError, setImgError] = useState(false);
 
-  const isDisable = buttonType === "APPLY" || data?.id === myMate?.myMate.id;
+  const isDisable =
+    buttonType === "APPLY" ||
+    data?.id === myMate?.myMate.id ||
+    data?.id === myInfo?.id;
   const isReceive = buttonType === "RECEIVE";
 
   const [isPending, startTransition] = useTransition();

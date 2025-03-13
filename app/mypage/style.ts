@@ -246,7 +246,7 @@ export const List = styled.ul`
   color: ${COLORS.GRAYSCALE_900};
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled.li<{ $disableClick?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -261,7 +261,7 @@ export const ListItem = styled.li`
   line-height: 150%;
   letter-spacing: -0.14px;
 
-  cursor: pointer;
+  cursor: ${({ $disableClick }) => ($disableClick ? "default" : "pointer")};
 
   &:last-child {
     border-bottom: none;
