@@ -16,13 +16,14 @@ export default function ChallengeState() {
 
   const { data: user } = useMyPageInfo();
 
+  const mate = useMateInfo();
+
   const { data: challenge } = useQuery({
     queryKey: ["myChallenge"],
     queryFn: () => getChallenge(),
     staleTime: 5 * 60 * 1000,
+    enabled: !!mate.data,
   });
-
-  const mate = useMateInfo();
 
   const userInfo = {
     id: user?.id || "",
