@@ -3,7 +3,6 @@ import { CALENDAR_BADGE, RecordType } from "@/constants/Calendar";
 import XIcon from "@/assets/images/xfail.svg";
 import { dateFormat } from "@/utils/monthList";
 import { calculateDaysElapsed } from "@/utils/dateUtils";
-import { useEffect, useState } from "react";
 
 interface DateContainerProps {
   day: Date;
@@ -11,6 +10,10 @@ interface DateContainerProps {
   clickedDate: Date | null;
   handleClickDate: (day: Date) => void;
   nowDate: Date;
+  holidays: {
+    name: string;
+    date: string;
+  }[];
   data?: RecordType[];
 }
 
@@ -20,9 +23,12 @@ export default function DateContainer({
   clickedDate,
   handleClickDate,
   nowDate,
+  holidays,
   data,
 }: DateContainerProps) {
-  const [isHoliday, setIsHoliday] = useState(false);
+  const isHoliday =
+    holidays.findIndex((holiday) => holiday.date === dateFormat(day)) !== -1 ||
+    day.getDay() === 0;
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -34,16 +40,6 @@ export default function DateContainer({
     clickedDate?.getMonth() === day.getMonth() &&
     clickedDate?.getDate() === day.getDate();
   const item = data?.find((v) => v.recordDate === dateFormat(day));
-
-  const getHoliday = async () => {
-    const response = await fetch(`/api/holiday?date=${dateFormat(day)}`);
-    const json = await response.json();
-    setIsHoliday(json.holiday && day.getDay() !== 6);
-  };
-
-  useEffect(() => {
-    getHoliday();
-  }, []);
 
   const getType = () => {
     if (!item) return "";
@@ -82,7 +78,9 @@ export default function DateContainer({
             </S.Fail>
           )}
           {TYPE === CALENDAR_BADGE.EXPECTED && (
-            <S.Expected $sameDay={sameDay}>{day.getDate()}</S.Expected>
+            <S.Expected $sameDay={sameDay} $isHoliday={isHoliday}>
+              {day.getDate()}
+            </S.Expected>
           )}
           {day.getDate()}
         </S.Date>

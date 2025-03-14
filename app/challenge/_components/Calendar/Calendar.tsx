@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import * as S from "./Calendar.style";
-import { monthList } from "@/utils/monthList";
+import { dateFormat, monthList } from "@/utils/monthList";
 import { RecordType, WEEKS } from "@/constants/Calendar";
 import DateContainer from "./DateContainer";
+import { useQuery } from "@tanstack/react-query";
+import getHolidays from "@/services/challenge/getHolidays";
 
 interface CalendarProps {
   selectedDate: string;
@@ -34,6 +36,13 @@ export default function Calendar({
     }
   };
 
+  const { data: holidays, isLoading } = useQuery({
+    queryKey: ["holidays", selectedDate],
+    queryFn: () => getHolidays(dateFormat(nowDate).slice(0, -3)),
+    staleTime: 1000 * 60 * 60 * 24 * 30,
+    gcTime: 1000 * 60 * 60 * 24 * 365,
+  });
+
   return (
     <S.CalendarContainer $clickedDate={isRegistration ? !!clickedDate : true}>
       <S.WeekContainer>
@@ -50,6 +59,9 @@ export default function Calendar({
             clickedDate={clickedDate}
             handleClickDate={handleClickDate}
             nowDate={nowDate}
+            holidays={
+              !holidays || !holidays.length || isLoading ? [] : holidays
+            }
             data={data}
           />
         ))}
