@@ -25,6 +25,7 @@ interface EditProfileProps {
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   introduction?: string;
+  openChatUrl: string;
   handleIntroductionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleIntroductionBlur: () => void;
   descriptionInputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -43,11 +44,12 @@ export default function EditProfile({
   fileInputRef,
   handleFileChange,
   introduction,
+  openChatUrl,
   handleIntroductionChange,
   handleIntroductionBlur,
   descriptionInputRef,
 }: EditProfileProps) {
-  const { userInfo, fetchUserInfo } = useUserInfoStore();
+  const { fetchUserInfo } = useUserInfoStore();
   const [imgError, setImgError] = useState(false);
 
   const saveIntroduction = async () => {
@@ -56,7 +58,7 @@ export default function EditProfile({
     try {
       const introductionValue = introduction?.trim() || null;
 
-      const openChatUrlValue = userInfo?.openChatUrl || null;
+      const openChatUrlValue = openChatUrl.trim() || null;
 
       await updateUserProfile({
         introduction: introductionValue,
