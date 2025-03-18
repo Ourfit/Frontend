@@ -28,6 +28,7 @@ import { useNotificationStore } from "@/stores/NotificationStore";
 import getTimeSlot from "@/utils/getTimeSlot";
 import { AxiosError } from "axios";
 import Image from "next/image";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 import { useParams, useRouter } from "next/navigation";
 import { JSX, useEffect, useState, useTransition } from "react";
 
@@ -91,8 +92,11 @@ export default function MateProfile() {
     if (isReceive) {
       startTransition(async () => {
         try {
-          await recevieMateRequest(receiveId);
-          router.push(`/mate/mateprofile/${mateId}/receive`);
+          const res = await recevieMateRequest(receiveId);
+          if (res === 200) {
+            queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
+            router.push(`/mate/mateprofile/${mateId}/receive`);
+          }
         } catch (error) {
           setToastMessage("메이트 수락에 실패했습니다.");
           setToastStatus(TOAST_STATUSES.ERROR);

@@ -128,6 +128,7 @@ export default function Mypage() {
           fileInputRef={fileInputRef}
           handleFileChange={handleFileChange}
           introduction={introduction}
+          openChatUrl={userInfo?.openChatUrl}
           handleIntroductionChange={handleIntroductionChange}
           handleIntroductionBlur={handleIntroductionBlur}
           descriptionInputRef={descriptionInputRef}

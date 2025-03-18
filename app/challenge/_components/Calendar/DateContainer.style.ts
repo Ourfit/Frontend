@@ -61,11 +61,14 @@ export const Fail = styled(Highlight)`
   }
 `;
 
-export const Expected = styled(Highlight)<{ $sameDay: boolean }>`
+export const Expected = styled(Highlight)<{
+  $sameDay: boolean;
+  $isHoliday: boolean;
+}>`
   ${({ $sameDay }) => ($sameDay ? TypographyCss.H4Sb : TypographyCss.H4Md)}
 
   background-color: ${COLORS.BASE_WHITE};
   border: 1.08px dashed ${COLORS.GRAYSCALE_400};
-  color: ${({ $sameDay }) =>
-    $sameDay ? COLORS.BLUE_500 : COLORS.GRAYSCALE_600};
+  color: ${({ $sameDay, $isHoliday }) =>
+    $sameDay ? COLORS.BLUE_500 : $isHoliday ? "#EF7A7A" : COLORS.GRAYSCALE_600};
 `;

@@ -8,7 +8,6 @@ import Image from "next/image";
 
 import Header from "@/components/common/Header/Header";
 import { updateUserProfile } from "@/services/updateUserProfile";
-import { useUserInfoStore } from "@/stores/userInfoStore";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
@@ -20,11 +19,10 @@ import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 export default function OpenChatPage() {
   const pathname = usePathname();
   const router = useRouter();
-  const { fetchUserInfo, userInfo } = useUserInfoStore();
   const { data } = useMyPageInfo();
-  const introduction = userInfo?.introduction;
+  const introduction = data?.introduction;
 
-  const [linkValue, setLinkValue] = useState("");
+  const [linkValue, setLinkValue] = useState(data?.openChatUrl || "");
   const [status, setStatus] = useState<InputStatus>(INPUT_STATUS.DEFAULT);
   const [isTyping, setIsTyping] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -84,7 +82,7 @@ export default function OpenChatPage() {
       }, 2000);
     } catch (error) {
       console.error("오픈 채팅 링크 등록 실패:", error);
-      setShowToast(TOAST_MESSAGES.ERROR);
+      setShowToast("올바른 형식이 아닙니다.");
       setToastStatus(TOAST_STATUSES.ERROR);
       setTimeout(() => {
         setShowToast("");

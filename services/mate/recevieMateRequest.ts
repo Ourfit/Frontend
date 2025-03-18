@@ -11,7 +11,7 @@ export async function recevieMateRequest(receiverId: number) {
   try {
     const response = await api.post(url, {});
 
-    return response.data;
+    return response.status;
   } catch (error) {
     throw error;
   }
