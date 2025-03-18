@@ -1,9 +1,12 @@
 "use client";
 
+import { queryClient } from "@/components/common/ReactQueryProvider";
 import Toast from "@/components/common/Toast/Toast";
 import { TOAST_STATUSES } from "@/constants/Toast";
+import { useMateDetail } from "@/hooks/queries/useMateDetails";
 import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { setImageUrl } from "@/services/mypage/setImageUrl";
+import { useEditProfileStore } from "@/stores/editProfileStore";
 import { ToastProps } from "@/types/toast";
 import { readFileAsDataURL } from "@/utils/readFileAsDataURL";
 import { AxiosError } from "axios";
@@ -11,7 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import EditBasicInfo from "./_components/EditBasicInfo";
 import EditProfile from "./_components/EditProfile";
 import ViewProfile from "./_components/ViewProfile";
-import { useEditProfileStore } from "@/stores/editProfileStore";
 
 const managementLinks = [
   { href: "/mypage/openchat", label: "오픈 채팅 관리" },
@@ -33,6 +35,7 @@ const managementLinks = [
 export default function Mypage() {
   const [toast, setToast] = useState<ToastProps | null>(null);
   const { data: userInfo, refetch } = useMyPageInfo();
+  const { data: myDataInfo } = useMateDetail(userInfo?.id);
   const { isEdit, resetEdit } = useEditProfileStore();
 
   const [isEditingProfile, setIsEditingProfile] = useState(isEdit);
@@ -78,6 +81,13 @@ export default function Mypage() {
         await setImageUrl(file);
 
         await refetch();
+
+        if (myDataInfo?.id) {
+          await queryClient.refetchQueries({
+            queryKey: ["mateDetail", myDataInfo.id],
+            exact: true,
+          });
+        }
       } catch (error: unknown) {
         if (error instanceof AxiosError && error.response?.status === 429) {
           setToast({
