@@ -71,13 +71,6 @@ export const PlaceHolderWrapper = styled.div`
   margin-top: 19px;
 `;
 
-export const MateProfileImageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  justify-content: flex-start;
-`;
-
 export const MateInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -160,12 +153,4 @@ export const ProfileText = styled.div`
   text-overflow: ellipsis;
 
   color: ${COLORS.GRAYSCALE_600};
-`;
-
-export const ProfileImage = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-
-  background-color: ${COLORS.GRAYSCALE_300};
 `;
