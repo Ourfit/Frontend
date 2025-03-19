@@ -3,6 +3,7 @@ import AfternoonIcon from "@/assets/images/afternoon.svg";
 import EveningIcon from "@/assets/images/evening.svg";
 import MorningIcon from "@/assets/images/morning.svg";
 import { Typography } from "@/components/atoms/Typography";
+import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 import Header from "@/components/common/Header/Header";
 import Placeholder from "@/components/common/Placeholder/Placeholder";
 import { useSearchMates } from "@/hooks/queries/useSearchMates";
@@ -76,12 +77,12 @@ export default function SearchPage() {
                       )
                     }
                   >
-                    <S.MateProfileImageWrapper>
-                      <S.ProfileImage
-                        src={mate.profileUrl}
-                        alt={mate.nickname}
-                      />
-                    </S.MateProfileImageWrapper>
+                    <ProfileImgBadge
+                      imageUrl={mate.profileUrl}
+                      size={44}
+                      badgeSize={17}
+                      iconSize={11}
+                    />
 
                     <S.MateInfoWrapper>
                       <S.ProfileInfo>
