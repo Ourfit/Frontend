@@ -61,7 +61,7 @@ export default function EditProfile({
     try {
       const introductionValue = introduction?.trim() || null;
 
-      const openChatUrlValue = openChatUrl.trim() || null;
+      const openChatUrlValue = openChatUrl?.trim() || null;
 
       await updateUserProfile({
         introduction: introductionValue,
