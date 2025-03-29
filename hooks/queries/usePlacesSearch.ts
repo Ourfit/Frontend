@@ -1,6 +1,6 @@
 // hooks/queries/usePlacesSearch.ts
 import { useDebounce } from "@/hooks/useDebounce";
-import { getPlacesBySearch } from "@/services/mypage/getPlaceBySearch";
+import { getPlacesBySearch } from "@/services/getPlaceBySearch";
 import { useQuery } from "@tanstack/react-query";
 
 export function usePlacesSearch(searchTerm: string) {
