@@ -69,7 +69,7 @@ export default function EditProfile({
       });
       await fetchUserInfo();
       if (userData?.id) {
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["mateDetail", userData?.id],
           refetchType: "all",
         });
