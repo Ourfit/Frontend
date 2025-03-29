@@ -87,10 +87,13 @@ const SportsPreference = () => {
     },
 
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
-      await queryClient.refetchQueries({
+      await queryClient.invalidateQueries({
+        queryKey: ["myPageInfo"],
+        refetchType: "all",
+      });
+      await queryClient.invalidateQueries({
         queryKey: ["mateDetail", userInfo?.id],
-        exact: true,
+        refetchType: "all",
       });
 
       addIsEdit(true);

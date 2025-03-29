@@ -3,6 +3,7 @@
 import { Typography } from "@/components/atoms/Typography";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header/Header";
+import { queryClient } from "@/components/common/ReactQueryProvider";
 import SelectBar from "@/components/common/SelectBar/SelectBar";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
@@ -81,7 +82,8 @@ export default function SportTime() {
         endAt: parsedEndTime,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["mateInfo"] });
           router.push("/mate");
         },
         onError: (err: Error) => {
