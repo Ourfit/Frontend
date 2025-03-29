@@ -1,6 +1,5 @@
 "use client";
 
-import OurfitLogo from "@/assets/images/ourfit-logo.svg";
 import { Typography } from "@/components/atoms/Typography";
 import * as TS from "@/components/auth/signup/steps/TimePreference/TimePreference.style";
 import Button from "@/components/common/Button";
@@ -10,28 +9,20 @@ import { BUTTON_SIZES, BUTTON_VARIANTS } from "@/constants/Button";
 import { COLORS } from "@/constants/Theme";
 import { useMateInfo } from "@/hooks/queries/useMateInfo";
 
+import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import { queryClient } from "@/components/common/ReactQueryProvider";
+import { usePlacesSearch } from "@/hooks/queries/usePlacesSearch";
 import { useUpdateMatePlace } from "@/hooks/queries/useUpdateMatePlace";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as S from "./style";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 
 interface FacilityItem {
-  id: string;
-  name: string;
-  address: string;
-}
-
-interface KakaoPlaceResponse {
-  documents: {
-    id: string;
-    place_name: string;
-    road_address_name?: string;
-    address_name?: string;
-  }[];
+  addressName: string;
+  roadAddressName: string;
+  placeName: string;
+  distance: number;
 }
 
 export default function SportFacility() {
@@ -39,7 +30,6 @@ export default function SportFacility() {
   const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(
     null,
   );
-  const [debouncedValue, setDebouncedValue] = useState(facilityValue);
 
   const router = useRouter();
 
@@ -47,45 +37,15 @@ export default function SportFacility() {
   const mateId = mateInfo?.mateId;
   const { mutate: updatePlaceMutate } = useUpdateMatePlace(mateId);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedValue(facilityValue);
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [facilityValue]);
-
-  const {
-    data: searchData,
-    isLoading: isSearchLoading,
-    error: searchError,
-  } = useQuery<KakaoPlaceResponse, Error>({
-    queryKey: ["kakaoPlaceSearch", debouncedValue],
-    queryFn: async () => {
-      const res = await fetch(
-        `/api/kakaoPlaceSearch?query=${encodeURIComponent(debouncedValue)}`,
-      );
-      if (!res.ok) {
-        throw new Error(`API 요청 실패: ${res.status}`);
-      }
-      return res.json();
-    },
-    enabled: !!debouncedValue.trim(),
-  });
-
-  const searchResults: FacilityItem[] =
-    searchData?.documents?.map((doc: any) => ({
-      id: doc.id,
-      name: doc.place_name,
-      address: doc.road_address_name || doc.address_name,
-    })) || [];
+  const { data: searchResults } = usePlacesSearch(facilityValue);
 
   const handleSelectFacility = (facility: FacilityItem) => {
     setSelectedFacility(facility);
 
     updatePlaceMutate(
       {
-        placeName: facility.name,
-        address: facility.address,
+        placeName: facility.placeName,
+        address: facility.addressName,
       },
       {
         onSuccess: async () => {
@@ -146,16 +106,16 @@ export default function SportFacility() {
         <S.ResultList>
           {searchResults.map((result) => (
             <S.ResultItem
-              key={result.id}
+              key={result.placeName}
               onClick={() => handleSelectFacility(result)}
             >
               <S.ImageWrapper>
                 <DefaultProfileImg size={20} />
               </S.ImageWrapper>
               <S.FacilityInfo>
-                <Typography.H4Sb>{result.name}</Typography.H4Sb>
+                <Typography.H4Sb>{result.placeName}</Typography.H4Sb>
                 <Typography.H5Md color="#8A92A3">
-                  {result.address}
+                  {result.addressName}
                 </Typography.H5Md>
               </S.FacilityInfo>
             </S.ResultItem>

@@ -7,14 +7,14 @@ import { INPUT_STATUS, InputStatus } from "@/constants/InputStatus";
 import Image from "next/image";
 
 import Header from "@/components/common/Header/Header";
+import { queryClient } from "@/components/common/ReactQueryProvider";
+import Toast from "@/components/common/Toast/Toast";
+import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
+import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
 import { updateUserProfile } from "@/services/updateUserProfile";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import * as S from "./style";
-import { useMyPageInfo } from "@/hooks/queries/useMypageInfo";
-import { queryClient } from "@/components/common/ReactQueryProvider";
-import Toast from "@/components/common/Toast/Toast";
-import { TOAST_MESSAGES, TOAST_STATUSES, ToastStatus } from "@/constants/Toast";
 
 export default function OpenChatPage() {
   const pathname = usePathname();
@@ -74,7 +74,10 @@ export default function OpenChatPage() {
         introduction: introduction || null,
         openChatUrl: linkValue.trim() || null,
       });
-      queryClient.invalidateQueries({ queryKey: ["myPageInfo"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["myPageInfo"],
+        refetchType: "all",
+      });
       setShowToast(TOAST_MESSAGES.SUCCESS);
       setToastStatus(TOAST_STATUSES.SUCCESS);
       setTimeout(() => {

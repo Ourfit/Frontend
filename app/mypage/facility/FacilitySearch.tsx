@@ -116,10 +116,13 @@ export default function FacilitySearch() {
     },
 
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ["myPageInfo"] });
-      await queryClient.refetchQueries({
+      await queryClient.invalidateQueries({
+        queryKey: ["myPageInfo"],
+        refetchType: "all",
+      });
+      await queryClient.invalidateQueries({
         queryKey: ["mateDetail", userInfo?.id],
-        exact: true,
+        refetchType: "all",
       });
       addIsEdit(true);
       router.back();
@@ -141,12 +144,17 @@ export default function FacilitySearch() {
   const isMypageFacility = pathname === "/mypage/facility";
 
   const isEqual = () => {
-    if (selectedPreferenceFacilities.length !== initialValue.length)
+    if (selectedPreferenceFacilities.length !== initialValue.length) {
       return false;
-    return (
-      selectedPreferenceFacilities.sort().toString() ===
-      initialValue.sort().toString()
+    }
+    const sortedSelected = [...selectedPreferenceFacilities].sort((a, b) =>
+      a.placeName.localeCompare(b.placeName),
     );
+    const sortedInitial = [...initialValue].sort((a, b) =>
+      a.placeName.localeCompare(b.placeName),
+    );
+
+    return JSON.stringify(sortedSelected) === JSON.stringify(sortedInitial);
   };
 
   useEffect(() => {

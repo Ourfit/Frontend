@@ -13,5 +13,6 @@ export function useMyPageInfo() {
     queryKey: ["myPageInfo"],
     queryFn: getMypageInfo,
     staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 }

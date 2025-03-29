@@ -1,4 +1,4 @@
-import { api } from "../axiosInterceptor";
+import { api } from "./axiosInterceptor";
 
 interface PlacesResponse {
   data: {
