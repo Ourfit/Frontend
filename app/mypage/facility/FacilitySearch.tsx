@@ -141,12 +141,17 @@ export default function FacilitySearch() {
   const isMypageFacility = pathname === "/mypage/facility";
 
   const isEqual = () => {
-    if (selectedPreferenceFacilities.length !== initialValue.length)
+    if (selectedPreferenceFacilities.length !== initialValue.length) {
       return false;
-    return (
-      selectedPreferenceFacilities.sort().toString() ===
-      initialValue.sort().toString()
+    }
+    const sortedSelected = [...selectedPreferenceFacilities].sort((a, b) =>
+      a.placeName.localeCompare(b.placeName),
     );
+    const sortedInitial = [...initialValue].sort((a, b) =>
+      a.placeName.localeCompare(b.placeName),
+    );
+
+    return JSON.stringify(sortedSelected) === JSON.stringify(sortedInitial);
   };
 
   useEffect(() => {
