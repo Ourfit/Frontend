@@ -22,7 +22,7 @@ export function useSearchMates({
     (string | string[] | undefined)[],
     number //명시적 지정
   >({
-    queryKey: ["mates", nickname, gender, preferredTimes, workoutTypes],
+    queryKey: ["mates"],
     queryFn: ({ pageParam = 0 }) =>
       fetchMates({
         pageParam,

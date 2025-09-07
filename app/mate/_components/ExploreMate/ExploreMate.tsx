@@ -15,7 +15,6 @@ import FilterPanel from "./FilterPanel/FilterPanel";
 
 import * as S from "./style";
 import { useMateFilterStore } from "@/stores/mateFilterStore";
-import DefaultProfileImg from "@/components/common/DefaultProfileImg/DefaultProfileImg";
 import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
 
 function getTimeSlot(
