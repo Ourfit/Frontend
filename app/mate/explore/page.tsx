@@ -1,7 +1,11 @@
 import Header from "@/components/common/Header/Header";
 import { fetchMates } from "@/services/mate/searchMate";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import HydratedExploreMate from "./HydratedExploreMate";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import ExploreMate from "../_components/ExploreMate/ExploreMate";
 
 export default async function ExplorePage() {
   const queryClient = new QueryClient();
@@ -19,7 +23,9 @@ export default async function ExplorePage() {
   return (
     <>
       <Header isEditingProfile={isEditingProfile} />
-      <HydratedExploreMate dehydratedState={dehydratedState} />
+      <HydrationBoundary state={dehydratedState}>
+        <ExploreMate />
+      </HydrationBoundary>
     </>
   );
 }
