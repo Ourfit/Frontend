@@ -1,12 +1,12 @@
 "use client";
 
 import ExploreMate from "@/app/mate/_components/ExploreMate/ExploreMate";
-import { HydrationBoundary } from "@tanstack/react-query";
+import { DehydratedState, HydrationBoundary } from "@tanstack/react-query";
 
 export default function HydratedExploreMate({
   dehydratedState,
 }: {
-  dehydratedState: unknown;
+  dehydratedState: DehydratedState;
 }) {
   return (
     <HydrationBoundary state={dehydratedState}>
