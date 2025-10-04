@@ -50,7 +50,6 @@ export default function Header({
   const isSubPage = pathname.split("/").length - 1 === 1;
 
   const isSearchPage = pathname === "/mate/search";
-  const isExplorePage = pathname === "/mate/explore";
   const isChellengePage = pathname === "/challenge";
   const isSettingsPage = pathname.startsWith("/mypage");
   const isProfilePage = pathname.startsWith("/mate/mateprofile/");
