@@ -118,11 +118,11 @@ export default function FacilitySearch() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["myPageInfo"],
-        refetchType: "all",
+        refetchType: "none",
       });
       await queryClient.invalidateQueries({
         queryKey: ["mateDetail", userInfo?.id],
-        refetchType: "all",
+        refetchType: "none",
       });
       addIsEdit(true);
       router.back();

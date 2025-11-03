@@ -71,7 +71,7 @@ export default function EditProfile({
       if (userData?.id) {
         queryClient.invalidateQueries({
           queryKey: ["mateDetail", userData?.id],
-          refetchType: "all",
+          refetchType: "none",
         });
       }
     } catch (error) {

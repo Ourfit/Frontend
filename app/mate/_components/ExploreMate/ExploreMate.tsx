@@ -13,9 +13,9 @@ import { useRouter } from "next/navigation";
 import { JSX, useEffect, useRef, useState } from "react";
 import FilterPanel from "./FilterPanel/FilterPanel";
 
-import * as S from "./style";
-import { useMateFilterStore } from "@/stores/mateFilterStore";
 import ProfileImgBadge from "@/components/common/DefaultProfileImg/ProfileImgBadge";
+import { useMateFilterStore } from "@/stores/mateFilterStore";
+import * as S from "./style";
 
 function getTimeSlot(
   timeKey: string,

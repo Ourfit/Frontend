@@ -76,7 +76,7 @@ export default function OpenChatPage() {
       });
       await queryClient.invalidateQueries({
         queryKey: ["myPageInfo"],
-        refetchType: "all",
+        refetchType: "none",
       });
       setShowToast(TOAST_MESSAGES.SUCCESS);
       setToastStatus(TOAST_STATUSES.SUCCESS);

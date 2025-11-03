@@ -14,10 +14,18 @@ export const useTokenStore = create(
 
       addToken: (token) => {
         set(() => ({ token }));
+
+        if (typeof window !== "undefined") {
+          document.cookie = `accessToken=${token}; path=/; max-age=${60 * 60 * 24}; SameSite=Lax`;
+        }
       },
       clearToken: () => {
         set({ token: null });
         localStorage.removeItem("token");
+
+        if (typeof window !== "undefined") {
+          document.cookie = "accessToken=; path=/; max-age=0";
+        }
       },
     }),
     {

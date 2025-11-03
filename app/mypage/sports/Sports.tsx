@@ -26,12 +26,14 @@ export default function Sports() {
       </S.PreferenceHeader>
 
       <S.PreferenceContent>
-        {userInfo?.favoriteWorkouts?.map((workout: WorkoutProps) => (
-          <S.PreferenceBadge key={workout.code}>
-            <Dumbbels color={"#004DFF"} />
-            <Typography.H4Md>{workout.name}</Typography.H4Md>
-          </S.PreferenceBadge>
-        ))}
+        {userInfo?.favoriteWorkouts?.map(
+          (workout: WorkoutProps, index: number) => (
+            <S.PreferenceBadge key={`${workout.code}-${index}`}>
+              <Dumbbels color={"#004DFF"} />
+              <Typography.H4Md>{workout.name}</Typography.H4Md>
+            </S.PreferenceBadge>
+          ),
+        )}
       </S.PreferenceContent>
     </S.PreferenceSectionWrapper>
   );

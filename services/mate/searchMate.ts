@@ -1,4 +1,5 @@
 import { useTokenStore } from "@/stores/tokenStore";
+import axios from "axios";
 import { api } from "../axiosInterceptor";
 
 interface MateApiResponse {
@@ -31,6 +32,7 @@ export interface MateItem {
  * @param preferredTimes
  * @param workoutTypes
  * @param size
+ * @param serverToken
  */
 export async function fetchMates({
   pageParam = 0,
@@ -39,6 +41,7 @@ export async function fetchMates({
   preferredTimes,
   workoutTypes,
   size = 10,
+  serverToken,
 }: {
   pageParam?: number;
   nickname?: string;
@@ -46,7 +49,46 @@ export async function fetchMates({
   preferredTimes?: string[];
   workoutTypes?: string[];
   size?: number;
+  serverToken?: string;
 }): Promise<MateListResponse> {
+  if (serverToken) {
+    console.log("📡 [fetchMates] 서버사이드 모드 - 직접 axios 사용");
+
+    try {
+      const preferredTimesParam = preferredTimes?.join(",");
+      const workoutTypesParam = workoutTypes?.join(",");
+
+      const { data } = await axios.get<MateApiResponse>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/mates`,
+        {
+          params: {
+            nickname,
+            gender,
+            preferredTimes: preferredTimesParam,
+            workoutTypes: workoutTypesParam,
+            page: pageParam,
+            size,
+          },
+          headers: {
+            Authorization: `Bearer ${serverToken}`,
+          },
+        },
+      );
+
+      console.log(
+        "✅ [fetchMates] 서버사이드 API 성공, 데이터 개수:",
+        data.data.content?.length,
+      );
+      return data.data;
+    } catch (error: unknown) {
+      console.error(
+        "❌ [fetchMates] 서버사이드 API 실패:",
+        error instanceof Error ? error.message : "알 수 없는 오류",
+      );
+      throw error;
+    }
+  }
+
   const token = useTokenStore.getState().token;
   if (!token) {
     throw new Error("인증 토큰이 없습니다. 로그인하세요.");
